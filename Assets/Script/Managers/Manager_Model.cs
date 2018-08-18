@@ -10,4 +10,13 @@ public class Manager_Model : MonoBehaviour, IManager {
 
 		State = ManagerState.Started;
 	}
+
+	public string ExportData(){
+		//TO DO
+		return "";
+	}
+
+	public void ImportData(List<string> data){
+		//TO DO
+	}
 }
