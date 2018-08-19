@@ -10,46 +10,64 @@ using UnityEngine;
 
 public class Manager_Data : MonoBehaviour, IManager {
 	public ManagerState State {get; private set;}
-	private string _datFilename;
-	private string _jsonFilename;
 
 	public void Startup(){
 		Debug.Log("Manager_Data Starting...");
-		_datFilename = Path.Combine(Application.persistentDataPath + "/Data/", "auto.dat");
-		_jsonFilename = Path.Combine(Application.persistentDataPath + "/Data/", "auto.json");
 
 		State = ManagerState.Started;
 	}
 
-	public void SaveDat(){
-		List<string> data = new List<string>();
-		data.Add(Managers.Model.ExportData());
+	private string DirectoryDAT(string filename = "auto"){
+		return Path.Combine(Application.persistentDataPath + "/Data/", filename + ".dat");
+	}
+	private string DirecoryJSON(string filename = "auto"){
+		return Path.Combine(Application.persistentDataPath + "/Data/", filename + ".json");
+	}
 
-		FileStream stream = File.Create(_datFilename);
+	public void SaveDAT(string filename){
+		string dir = this.DirectoryDAT(filename);
+
+		List<string> data = Managers.Model.ExportDataList();
+
+		FileStream stream = File.Create(dir);
 		BinaryFormatter formatter = new BinaryFormatter();
 		formatter.Serialize(stream, data);
 		stream.Close();
 	}
 
-	public void LoadDat(){
-		if(!File.Exists(_datFilename)){
-			Debug.Log(_datFilename + ".dat doesn't exist");
-		}
+	public void LoadDAT(string filename){
+		string dir = this.DirectoryDAT(filename);
 
+		if(!File.Exists(dir)){
+			Debug.Log(dir + " doesn't exist");
+		}
 		List<string> data = new List<string>();
 		
-		FileStream stream = File.Open(_datFilename, FileMode.Open);
+		FileStream stream = File.Open(dir, FileMode.Open);
 		BinaryFormatter formatter = new BinaryFormatter();
+		
 		data = formatter.Deserialize(stream) as List<string>;
-
-		Managers.Model.ImportData(data);
+		Managers.Model.ImportDataList(data);
 	}
 
-	public void SaveJSON(){
+	//classes need "[SERIALIZABLE]" to be converted to JSON
+	//currently JSON set up to save the instance of Manager_Model at Managers.Model
+	public void SaveJSON(string filename = "auto"){
+		string dir = this.DirecoryJSON(filename);
+		string json = JsonUtility.ToJson(Managers.Model);
 
+		if (File.Exists(dir)){
+			File.Delete(dir);
+		}
+		File.WriteAllText(dir, json);
 	}
 
-	public void LoadJSON(){
+	public void LoadJSON(string filename = "auto"){
+		string dir = this.DirecoryJSON(filename);
+		string json = File.ReadAllText(dir);
 
+		Manager_Model importedModelManager = new Manager_Model();
+		importedModelManager = JsonUtility.FromJson<Manager_Model>(json);
+		Managers.Model.ImportInstance(importedModelManager);
 	}
 }
