@@ -6,7 +6,8 @@ public class Manager_GO : MonoBehaviour, IManager {
 	public ManagerState State {get; private set;}
 	
 	public void Startup(){
-		Debug.Log("Manager_GO Starting...");
+		State = ManagerState.Initializing;
+		Debug.Log("Manager_GO Initializing...");
 
 		State = ManagerState.Started;
 	}

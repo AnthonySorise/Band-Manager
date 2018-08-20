@@ -6,7 +6,8 @@ public class Manager_Camera : MonoBehaviour, IManager {
 	public ManagerState State {get; private set;}
 	
 	public void Startup(){
-		Debug.Log("Manager_Camera Starting...");
+		State = ManagerState.Initializing;
+		Debug.Log("Manager_Camera Initializing...");
 
 		State = ManagerState.Started;
 	}

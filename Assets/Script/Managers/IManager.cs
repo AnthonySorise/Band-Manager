@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public enum ManagerState{
+	Initializing,
 	Started,
-	Initialized,
+	Error,
 	Shutdown
 }
 

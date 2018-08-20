@@ -7,8 +7,8 @@ using UnityEngine;
 [RequireComponent(typeof(Manager_Audio))]
 [RequireComponent(typeof(Manager_Camera))]
 [RequireComponent(typeof(Manager_GO))]
-[RequireComponent(typeof(Manager_Input))]
 [RequireComponent(typeof(Manager_UI))]
+[RequireComponent(typeof(Manager_Input))]
 [RequireComponent(typeof(Manager_Data))]
 
 public class Managers : MonoBehaviour {
@@ -17,8 +17,8 @@ public class Managers : MonoBehaviour {
     public static Manager_Audio Audio {get; private set;}
     public static Manager_Camera Camera {get; private set;}
     public static Manager_GO GO {get; private set;}
-    public static Manager_Input Input {get; private set;}
     public static Manager_UI UI {get; private set;}
+    public static Manager_Input Input {get; private set;}
     public static Manager_Data Data {get; private set;}
 
     private List<IManager> _startSequence;
@@ -31,8 +31,8 @@ public class Managers : MonoBehaviour {
         Audio = GetComponent<Manager_Audio>();
         Camera = GetComponent<Manager_Camera>();
         GO = GetComponent<Manager_GO>();
-        Input = GetComponent<Manager_Input>();
         UI = GetComponent<Manager_UI>();
+        Input = GetComponent<Manager_Input>();
         Data = GetComponent<Manager_Data>();
 
         _startSequence = new List<IManager>();
@@ -40,8 +40,8 @@ public class Managers : MonoBehaviour {
         _startSequence.Add(Audio);
         _startSequence.Add(Camera);
         _startSequence.Add(GO);
-        _startSequence.Add(Input);
         _startSequence.Add(UI);
+        _startSequence.Add(Input);
         _startSequence.Add(Data);
 
         //asynchronously start up managers
@@ -58,8 +58,14 @@ public class Managers : MonoBehaviour {
         int numStarted = 0;
         //loop until all managers have started
         while(numToStart > numStarted){
+            numStarted = 0;
             int numStartedAtLoop = numStarted;
             foreach(IManager manager in _startSequence){
+                if(manager.State == ManagerState.Error){
+                    Debug.Log("Manager startup halted: " + manager.ToString() + " failed to initialize");
+                    yield break;
+                }
+                
                 if(manager.State == ManagerState.Started){
                     numStarted ++;
                 }
@@ -72,9 +78,5 @@ public class Managers : MonoBehaviour {
             yield return null;
         }
         Debug.Log("All managers started");
-    }
-
-    public void LoadManager_Model(Manager_Model managerModel){
-        Model = managerModel;
     }
 }

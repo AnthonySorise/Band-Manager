@@ -11,7 +11,8 @@ public class Manager_Model : MonoBehaviour, IManager {
 	public ManagerState State {get; private set;}
 	
 	public void Startup(){
-		Debug.Log("Manager_Model Starting...");
+		State = ManagerState.Initializing;
+		Debug.Log("Manager_Model Initializing...");
 
 		State = ManagerState.Started;
 	}
