@@ -117,19 +117,24 @@ public class Manager_Audio : MonoBehaviour, IManager {
     }
 
     public void playAudio(AudioChannel audioChannel, string trigger, GameObject go = null){
+        AudioClip audioClip = GetAudioClip(audioChannel.ToString().ToLower() + "_" + trigger);
+        if(audioClip == null){
+            Debug.LogError(go.name + " failed to play audio for trigger: " + trigger);
+            return;
+        }
+
         float spatialBlend = 1;
         if(go == null){
             go = _go_Channels[(int)audioChannel];
             spatialBlend = 0;
         }
         AudioSource audioSource = GetAudioSource(go);
-        AudioClip audioClip = GetAudioClip(trigger);
     
-        bool loops = false;
+        bool doesLoop = false;
         if(_channelsThatLoop.Contains(audioChannel)){
-            loops = true;
+            doesLoop = true;
         }
 
-        PlayAudioSource(audioSource, audioClip, audioChannel, 1, spatialBlend, loops);
+        PlayAudioSource(audioSource, audioClip, audioChannel, 1, spatialBlend, doesLoop);
     }
 }
