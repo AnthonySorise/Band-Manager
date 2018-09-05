@@ -10,12 +10,18 @@ using UnityEngine;
 //https://docs.unity3d.com/Manual/script-Serialization-Custom.html
 //https://blogs.unity3d.com/2014/06/24/serialization-in-unity/
 
+public enum INIFilename{
+	preferences
+}
+
 public class Manager_Data : MonoBehaviour, IManager {
 	public ManagerState State {get; private set;}
 
 	private string _dirDAT;
 	private string _dirJSON;
-	private string _dirINI;
+	//private string _dirINI;
+
+	private INIFile[] _iniFiles = new INIFile[INIFilename.GetNames(typeof(INIFilename)).Length];
 
 	public void Startup(){
 		State = ManagerState.Initializing;
@@ -24,7 +30,14 @@ public class Manager_Data : MonoBehaviour, IManager {
 		//paths
 		_dirDAT = Application.persistentDataPath + "/Data/";
 		_dirJSON = Application.persistentDataPath + "/Data/";
-		_dirINI = Application.persistentDataPath + "/";
+		//_dirINI = Application.persistentDataPath + "/";
+
+		//ini files
+		foreach (INIFilename ini in INIFilename.GetValues(typeof(INIFilename))){
+			INIFile iniFile = new INIFile(ini.ToString()+".ini");
+			iniFile.Flush();
+			_iniFiles[(int)ini] = iniFile;
+		}
 
 		State = ManagerState.Started;
 	}
@@ -37,23 +50,21 @@ public class Manager_Data : MonoBehaviour, IManager {
 		filename = filename ?? "auto";
 		return Path.Combine(_dirJSON, (filename ?? "auto") + ".json");
 	}
-	private string FilePathINI(string filename = null){
-		filename = filename ?? "auto";
-		return Path.Combine(_dirINI, (filename ?? "auto") + ".ini");
-	} 
+	// private string FilePathINI(string filename = null){
+	// 	filename = filename ?? "auto";
+	// 	return Path.Combine(_dirINI, (filename ?? "auto") + ".ini");
+	// } 
 
 	//DAT
-	public void DATSave(string filename){
+	public void DATSave(List<string> data, string filename){
 		string path = this.FilePathDAT(filename);
-
-		List<string> data = Managers.Model.ExportDataList();
 
 		FileStream stream = File.Create(path);
 		BinaryFormatter formatter = new BinaryFormatter();
 		formatter.Serialize(stream, data);
 		stream.Close();
 	}
-	public void DATLoad(string filename){
+	public List<string> DATLoad(string filename){
 		string path = this.FilePathDAT(filename);
 
 		if(!File.Exists(path)){
@@ -65,62 +76,49 @@ public class Manager_Data : MonoBehaviour, IManager {
 		BinaryFormatter formatter = new BinaryFormatter();
 		
 		data = formatter.Deserialize(stream) as List<string>;
-		Managers.Model.ImportDataList(data);
+		return data;
 	}
 
 	//JSON
-	//classes need "[SERIALIZABLE]" to be converted to JSON
-	//currently JSON set up to save the instance of Manager_Model at Managers.Model
-	public void JSONsave(string filename = "auto"){
+	//classes passed in as data need "[SERIALIZABLE]" to be converted to JSON
+	public void JSONSave(object data, string filename = "auto"){
 		string path = this.FilePathJSON(filename);
-		string json = JsonUtility.ToJson(Managers.Model);
+		string json = JsonUtility.ToJson(data);
 
 		if (File.Exists(path)){
 			File.Delete(path);
 		}
 		File.WriteAllText(path, json);
 	}
-	public void JSONload(string filename = "auto"){
+	public object JSONLoad(string filename = "auto"){
 		string dir = this.FilePathJSON(filename);
 		string json = File.ReadAllText(dir);
 
-		Manager_Model importedModelManager = new Manager_Model();
-		importedModelManager = JsonUtility.FromJson<Manager_Model>(json);
-		Managers.Model.ImportInstance(importedModelManager);
+		object data = new object();
+		data = JsonUtility.FromJson<Manager_Model>(json);
+		return data;
 	}
 
 	//INI
-	//https://stackoverflow.com/questions/217902/reading-writing-an-ini-file
-	[DllImport("kernel32", CharSet = CharSet.Unicode)]//what about Linux?
-	static extern long WritePrivateProfileString(string Section, string Key, string Value, string FilePath);
-
-	[DllImport("kernel32", CharSet = CharSet.Unicode)]//what about Linux?
-	static extern int GetPrivateProfileString(string Section, string Key, string Default, StringBuilder RetVal, int Size, string FilePath);
-
-	public void INISave(string key, string value, string filename = null, string section = null)
-	{
-		WritePrivateProfileString(section ?? "main", key, value, FilePathINI(filename));
+	public void INISave(Dictionary<string,string> data, INIFilename ini, string section){
+		INIFile iniFile = _iniFiles[(int)ini];
+		try{
+			foreach(string key in data.Keys){
+				iniFile.SetValue(section, key, data[key]);
+			}
+		}
+		finally{
+			//commit the save
+			iniFile.Flush();
+		} 
 	}
 
-	public string INILoad(string key,  string filename = null, string section = null)
-	{
-		var RetVal = new StringBuilder(255);
-		GetPrivateProfileString(section ?? "main", key, "", RetVal, 255, FilePathINI(filename));
-		return RetVal.ToString();
-	}
-
-	public void INIDeleteKey(string key, string filename = null, string section = null)
-	{
-		INISave(key, null, section ?? "main", filename);
-	}
-
-	public void INIDeleteSection(string filename = null, string section = null)
-	{
-		INISave(null, null, section ?? "main", filename);
-	}
-
-	public bool INIKeyExists(string key, string section = null, string filename = null)
-	{
-		return INILoad(key, section).Length > 0;
+	public Dictionary<string, string> INILoad(Dictionary<string,string> defaultData, INIFilename ini, string section){
+		INIFile iniFile = _iniFiles[(int)ini];
+		Dictionary<string, string> data = new Dictionary<string, string>();
+		foreach(string key in defaultData.Keys){
+			data[key] = iniFile.GetValue(section, key, defaultData[key]);
+		}
+		return data;
 	}
 }

@@ -16,17 +16,4 @@ public class Manager_Model : MonoBehaviour, IManager {
 
 		State = ManagerState.Started;
 	}
-
-	public List<string> ExportDataList(){
-		List<string> data = new List<string>();
-		return data;
-	}
-
-	public void ImportDataList(List<string> data){
-		//TO DO
-	}
-
-	public void ImportInstance(Manager_Model modelManager){
-		//TO DO    set all properties to equal modelManager
-	}
 }
