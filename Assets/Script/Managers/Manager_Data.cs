@@ -114,6 +114,8 @@ public class Manager_Data : MonoBehaviour, IManager {
 			INIInit(ini);
 		}
 		GameObject iniFileCreator = _iniFileCreators[(int)ini];
+		iniFileCreator.transform.parent = GameObject.Find("Managers").transform;
+		iniFileCreator.name = "Data_" + ini.ToString() + ".ini";
         return iniFileCreator.GetComponent<INIFile>();
     }
 
