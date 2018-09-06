@@ -21,7 +21,7 @@ public class Manager_Data : MonoBehaviour, IManager {
 	private string _dirJSON;
 	//private string _dirINI;
 
-	private INIFile[] _iniFiles = new INIFile[INIFilename.GetNames(typeof(INIFilename)).Length];
+	private GameObject[] _iniFileCreators = new GameObject[INIFilename.GetNames(typeof(INIFilename)).Length];
 
 	public void Startup(){
 		State = ManagerState.Initializing;
@@ -34,10 +34,11 @@ public class Manager_Data : MonoBehaviour, IManager {
 
 		//ini files
 		foreach (INIFilename ini in INIFilename.GetValues(typeof(INIFilename))){
-			INIFile iniFile = new INIFile(ini.ToString()+".ini");
-			iniFile.Flush();
-			_iniFiles[(int)ini] = iniFile;
+			INIGet(ini);
 		}
+		Dictionary<string, string> preferencesData = new Dictionary<string, string>();
+		preferencesData.Add("key", "value");
+		this.INISave(preferencesData, INIFilename.preferences, "section");
 
 		State = ManagerState.Started;
 	}
@@ -100,8 +101,24 @@ public class Manager_Data : MonoBehaviour, IManager {
 	}
 
 	//INI
+	private void INIInit(INIFilename ini){
+		GameObject newGO = new GameObject();
+		newGO.AddComponent<INIFile>();
+		newGO.GetComponent<INIFile>().Initialize(ini.ToString()+".ini", false, false);
+		_iniFileCreators[(int)ini] = newGO;
+	}
+
+    private INIFile INIGet(INIFilename ini)
+    {
+		if(_iniFileCreators[(int)ini] ==  null){
+			INIInit(ini);
+		}
+		GameObject iniFileCreator = _iniFileCreators[(int)ini];
+        return iniFileCreator.GetComponent<INIFile>();
+    }
+
 	public void INISave(Dictionary<string,string> data, INIFilename ini, string section){
-		INIFile iniFile = _iniFiles[(int)ini];
+		INIFile iniFile = this.INIGet(ini);
 		try{
 			foreach(string key in data.Keys){
 				iniFile.SetValue(section, key, data[key]);
@@ -114,7 +131,7 @@ public class Manager_Data : MonoBehaviour, IManager {
 	}
 
 	public Dictionary<string, string> INILoad(Dictionary<string,string> defaultData, INIFilename ini, string section){
-		INIFile iniFile = _iniFiles[(int)ini];
+		INIFile iniFile = this.INIGet(ini);
 		Dictionary<string, string> data = new Dictionary<string, string>();
 		foreach(string key in defaultData.Keys){
 			data[key] = iniFile.GetValue(section, key, defaultData[key]);

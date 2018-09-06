@@ -19,6 +19,7 @@ public class INIFile : MonoBehaviour {
 	private object m_Lock = new object();
 
 	// *** File name ***
+	//CHANGED m_FileName to public so can use as component
 	private string m_FileName = null;
 	internal string FileName
 	{
@@ -41,18 +42,19 @@ public class INIFile : MonoBehaviour {
 	// *** Local cache modified flag ***
 	private bool m_CacheModified = false;
 
-	//CONSTRUCTOR
-	public INIFile(string FileName)
-	{
-		Initialize(FileName, false, false);
-	}
+	//CONSTRUCTOR  - not used, using MonoBehavior
+	// public INIFile(string FileName)
+	// {
+	// 	Initialize(FileName, false, false);
+	// }
 
-	public INIFile(string FileName, bool Lazy, bool AutoFlush)
-	{
-		Initialize(FileName, Lazy, AutoFlush);
-	}
+	// public INIFile(string FileName, bool Lazy, bool AutoFlush)
+	// {
+	// 	Initialize(FileName, Lazy, AutoFlush);
+	// }
+
 	// *** Initialization ***
-	private void Initialize(string FileName, bool Lazy, bool AutoFlush)
+	public void Initialize(string FileName, bool Lazy, bool AutoFlush)
 	{
 		m_FileName = FileName;
 		m_Lazy = Lazy;
