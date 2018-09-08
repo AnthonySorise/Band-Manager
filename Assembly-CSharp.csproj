@@ -62,8 +62,11 @@
      <Compile Include="Assets\Script\Managers\Manager_Model.cs" />
      <Compile Include="Assets\Script\Managers\Manager_UI.cs" />
      <Compile Include="Assets\Script\Managers\Managers.cs" />
+     <Compile Include="Assets\Script\Models\Map.cs" />
+     <Compile Include="Assets\Script\Models\NPC.cs" />
      <Compile Include="Assets\Script\Utilities\GOPool.cs" />
      <Compile Include="Assets\Script\Utilities\INIFile.cs" />
+     <Compile Include="Assets\Script\Utilities\JSONFile.cs" />
  <Reference Include="UnityEditor.StandardEvents">
  <HintPath>/home/anthony/Documents/UnityProjects/UnityTemplate_ManagerSystem/Library/ScriptAssemblies/UnityEditor.StandardEvents.dll</HintPath>
  </Reference>

@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Runtime.InteropServices;
@@ -12,6 +13,10 @@ using UnityEngine;
 
 public enum INIFilename{
 	preferences
+}
+public enum JSONType{
+	Map,
+	NPC
 }
 
 public class Manager_Data : MonoBehaviour, IManager {
@@ -28,17 +33,32 @@ public class Manager_Data : MonoBehaviour, IManager {
 		Debug.Log("Manager_Data Initializing...");
 
 		//paths
-		_dirDAT = Application.persistentDataPath + "/Data/";
-		_dirJSON = Application.persistentDataPath + "/Data/";
+		_dirDAT = Application.dataPath + "/Data/";
+		_dirJSON = Application.dataPath + "/Data/";
 		//_dirINI = Application.persistentDataPath + "/";
 
 		//ini files
 		foreach (INIFilename ini in INIFilename.GetValues(typeof(INIFilename))){
-			INIGet(ini);
+			INIInit(ini);
 		}
+		//preferences.ini
 		Dictionary<string, string> preferencesData = new Dictionary<string, string>();
 		preferencesData.Add("key", "value");
 		this.INISave(preferencesData, INIFilename.preferences, "section");
+
+
+		//JSON TESTING***************************************************
+		List<object> data = new List<object>();
+		NPC npc = new NPC("NPC 01", 10);
+		NPC npc2 = new NPC("NPC 02", 15);
+		NPC npc3 = new NPC("NPC 03", 20);
+		data.Add(npc);
+		data.Add(npc2);
+		data.Add(npc3);
+		JSONSave(data, JSONType.NPC, "test");
+		JSONLoad(JSONType.NPC, "test");
+		//JSON TESTING***************************************************
+
 
 		State = ManagerState.Started;
 	}
@@ -47,9 +67,12 @@ public class Manager_Data : MonoBehaviour, IManager {
 	private string FilePathDAT(string filename = null){
 		return Path.Combine(_dirDAT, (filename ?? "auto") + ".dat");
 	}
-	private string FilePathJSON(string filename = null){
-		filename = filename ?? "auto";
-		return Path.Combine(_dirJSON, (filename ?? "auto") + ".json");
+	private string FilePathJSON(JSONType jsonType, string filenameTag = null){
+		string filename = jsonType.ToString();
+		if(filenameTag != null){
+			filename = filename + "_" + filenameTag;
+		}
+		return Path.Combine(_dirJSON, filename + ".json");
 	}
 	// private string FilePathINI(string filename = null){
 	// 	filename = filename ?? "auto";
@@ -81,46 +104,78 @@ public class Manager_Data : MonoBehaviour, IManager {
 	}
 
 	//JSON
-	//classes passed in as data need "[SERIALIZABLE]" to be converted to JSON
-	public void JSONSave(object data, string filename = "auto"){
-		string path = this.FilePathJSON(filename);
-		string json = JsonUtility.ToJson(data);
+	public void JSONSave(List<object> data, JSONType jsonType, string filenameTag = null){
+		string path = this.FilePathJSON(jsonType, filenameTag);
+		string json = null;
 
-		if (File.Exists(path)){
-			File.Delete(path);
+		//Make JSON
+		switch (jsonType)
+      	{
+			case JSONType.Map:
+				List<Map> mapList = data.OfType<Map>().ToList();
+				JSONFile_Map jsonMap = new JSONFile_Map(mapList);
+				json = JsonUtility.ToJson(jsonMap);
+				break;
+			case JSONType.NPC:
+				List<NPC> npcList = data.OfType<NPC>().ToList();
+				JSONFile_NPC jsonNPC = new JSONFile_NPC(npcList);
+				json = JsonUtility.ToJson(jsonNPC);
+				break;
+			default:
+				Debug.Log("Cannot save " + jsonType);
+				return;
+      	}
+
+		//Save JSON
+		if(json != null){
+			if (File.Exists(path)){
+				File.Delete(path);
+			}
+			File.WriteAllText(path, json);
 		}
-		File.WriteAllText(path, json);
 	}
-	public object JSONLoad(string filename = "auto"){
-		string dir = this.FilePathJSON(filename);
-		string json = File.ReadAllText(dir);
-
-		object data = new object();
-		data = JsonUtility.FromJson<Manager_Model>(json);
+	public List<object> JSONLoad(JSONType jsonType, string filenameTag = "auto"){
+		string path = this.FilePathJSON(jsonType, filenameTag);
+		string json = File.ReadAllText(path);
+		List<object> data = new List<object>();
+		//TO DO    IN PROGRESS
+		switch (jsonType)
+      	{
+			case JSONType.Map:
+				JSONFile_Map jsonFileMap = JsonUtility.FromJson<JSONFile_Map>(json);
+				break;
+			case JSONType.NPC:
+				JSONFile_NPC jsonFileNPC = JsonUtility.FromJson<JSONFile_NPC>(json); 
+				break;
+			default:
+				Debug.Log("Cannot load " + jsonType);
+				return data;
+      	}
 		return data;
 	}
 
 	//INI
 	private void INIInit(INIFilename ini){
 		GameObject newGO = new GameObject();
+		newGO.transform.parent = GameObject.Find("Managers").transform;
+		newGO.name = "Data_" + ini.ToString() + ".ini";
+
 		newGO.AddComponent<INIFile>();
 		newGO.GetComponent<INIFile>().Initialize(ini.ToString()+".ini", false, false);
+		
 		_iniFileCreators[(int)ini] = newGO;
 	}
-
     private INIFile INIGet(INIFilename ini)
     {
 		if(_iniFileCreators[(int)ini] ==  null){
 			INIInit(ini);
 		}
 		GameObject iniFileCreator = _iniFileCreators[(int)ini];
-		iniFileCreator.transform.parent = GameObject.Find("Managers").transform;
-		iniFileCreator.name = "Data_" + ini.ToString() + ".ini";
         return iniFileCreator.GetComponent<INIFile>();
     }
-
 	public void INISave(Dictionary<string,string> data, INIFilename ini, string section){
 		INIFile iniFile = this.INIGet(ini);
+
 		try{
 			foreach(string key in data.Keys){
 				iniFile.SetValue(section, key, data[key]);
@@ -131,9 +186,9 @@ public class Manager_Data : MonoBehaviour, IManager {
 			iniFile.Flush();
 		} 
 	}
-
 	public Dictionary<string, string> INILoad(Dictionary<string,string> defaultData, INIFilename ini, string section){
 		INIFile iniFile = this.INIGet(ini);
+		
 		Dictionary<string, string> data = new Dictionary<string, string>();
 		foreach(string key in defaultData.Keys){
 			data[key] = iniFile.GetValue(section, key, defaultData[key]);
