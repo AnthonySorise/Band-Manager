@@ -2,12 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-//https://unity3d.com/learn/tutorials/topics/scripting/loading-game-data-json
-//https://forum.unity.com/threads/using-fromjson-when-the-type-is-not-known-ahead-of-time.434945/
-//https://msdn.microsoft.com/en-us/library/ms973893.aspx
-//https://answers.unity.com/questions/1123326/jsonutility-array-not-supported.html
-
-
 //**MAP**
 [System.Serializable]
 public class JSONFile_Map{
@@ -20,7 +14,7 @@ public class JSONFile_Map{
 			Maps.Add(jsonObj);
 		}
 	}
-};
+};	
 [System.Serializable]
 public class JSONObj_Map{
 	public int X;

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,11 +7,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.Runtime.InteropServices;
 using System.IO;
 using UnityEngine;
-
-//https://docs.unity3d.com/Manual/script-Serialization.html
-//https://docs.unity3d.com/Manual/script-Serialization-Custom.html
-//https://blogs.unity3d.com/2014/06/24/serialization-in-unity/
-
+//Enums
 public enum INIFilename{
 	preferences
 }
@@ -18,7 +15,7 @@ public enum JSONType{
 	Map,
 	NPC
 }
-
+//Manager_Data
 public class Manager_Data : MonoBehaviour, IManager {
 	public ManagerState State {get; private set;}
 
@@ -37,7 +34,7 @@ public class Manager_Data : MonoBehaviour, IManager {
 		_dirJSON = Application.dataPath + "/Data/";
 		//_dirINI = Application.persistentDataPath + "/";
 
-		//ini files
+		//initialize ini files
 		foreach (INIFilename ini in INIFilename.GetValues(typeof(INIFilename))){
 			INIInit(ini);
 		}
@@ -45,20 +42,6 @@ public class Manager_Data : MonoBehaviour, IManager {
 		Dictionary<string, string> preferencesData = new Dictionary<string, string>();
 		preferencesData.Add("key", "value");
 		this.INISave(preferencesData, INIFilename.preferences, "section");
-
-
-		//JSON TESTING***************************************************
-		List<object> data = new List<object>();
-		NPC npc = new NPC("NPC 01", 10);
-		NPC npc2 = new NPC("NPC 02", 15);
-		NPC npc3 = new NPC("NPC 03", 20);
-		data.Add(npc);
-		data.Add(npc2);
-		data.Add(npc3);
-		JSONSave(data, JSONType.NPC, "test");
-		JSONLoad(JSONType.NPC, "test");
-		//JSON TESTING***************************************************
-
 
 		State = ManagerState.Started;
 	}
@@ -104,53 +87,87 @@ public class Manager_Data : MonoBehaviour, IManager {
 	}
 
 	//JSON
-	public void JSONSave(List<object> data, JSONType jsonType, string filenameTag = null){
-		string path = this.FilePathJSON(jsonType, filenameTag);
-		string json = null;
-
-		//Make JSON
-		switch (jsonType)
-      	{
-			case JSONType.Map:
-				List<Map> mapList = data.OfType<Map>().ToList();
-				JSONFile_Map jsonMap = new JSONFile_Map(mapList);
-				json = JsonUtility.ToJson(jsonMap);
-				break;
-			case JSONType.NPC:
-				List<NPC> npcList = data.OfType<NPC>().ToList();
-				JSONFile_NPC jsonNPC = new JSONFile_NPC(npcList);
-				json = JsonUtility.ToJson(jsonNPC);
-				break;
-			default:
-				Debug.Log("Cannot save " + jsonType);
-				return;
-      	}
-
-		//Save JSON
+	private void JSONWriteToDisk(string path, string json){
 		if(json != null){
 			if (File.Exists(path)){
 				File.Delete(path);
 			}
 			File.WriteAllText(path, json);
 		}
+		else{
+			Debug.Log("Failed to save " + path);
+		}
 	}
-	public List<object> JSONLoad(JSONType jsonType, string filenameTag = "auto"){
-		string path = this.FilePathJSON(jsonType, filenameTag);
+
+	public void JSONSave_Map(List<Map> data, string filenameTag = null){		
+		string path = this.FilePathJSON(JSONType.Map, filenameTag);
+		string json = null;
+
+		JSONFile_Map jsonMap = new JSONFile_Map(data);
+		if(jsonMap.Maps.Count != 0){
+			json = JsonUtility.ToJson(jsonMap);
+		}
+		JSONWriteToDisk(path, json);
+	}
+
+	public void JSONSave_NPC(List<NPC> data, string filenameTag = null){
+		string path = this.FilePathJSON(JSONType.NPC, filenameTag);
+		string json = null;
+
+		JSONFile_NPC jsonNPC = new JSONFile_NPC(data);
+		if(jsonNPC.NPCs.Count != 0){
+			json = JsonUtility.ToJson(jsonNPC);
+		}
+		JSONWriteToDisk(path, json);
+	}
+
+	public List<Map> JSONLoad_Map(string filenameTag = null){
+		string path = this.FilePathJSON(JSONType.Map, filenameTag);
+		if(File.Exists(path) == false){
+			Debug.Log("Failed to load " + path + ": File not found");
+			return null;
+		}
 		string json = File.ReadAllText(path);
-		List<object> data = new List<object>();
-		//TO DO    IN PROGRESS
-		switch (jsonType)
-      	{
-			case JSONType.Map:
-				JSONFile_Map jsonFileMap = JsonUtility.FromJson<JSONFile_Map>(json);
-				break;
-			case JSONType.NPC:
-				JSONFile_NPC jsonFileNPC = JsonUtility.FromJson<JSONFile_NPC>(json); 
-				break;
-			default:
-				Debug.Log("Cannot load " + jsonType);
-				return data;
-      	}
+
+		List<JSONObj_Map> jsonFile = null;
+		try{
+			jsonFile = JsonUtility.FromJson<JSONFile_Map>(json).Maps;
+		}
+		catch{
+			Debug.Log("Failed to load " + path + ": Couldn't parse data");
+			return null;
+		}
+
+		List<Map> data = new List<Map>();
+		foreach(JSONObj_Map jsonObj in jsonFile){
+			Map map = new Map(jsonObj.X, jsonObj.Y);
+			data.Add(map);
+		}
+		return data;
+	}
+
+	public List<NPC> JSONLoad_NPC(string filenameTag = null){
+		string path = this.FilePathJSON(JSONType.NPC, filenameTag);
+		if(File.Exists(path) == false){
+			Debug.Log("Failed to load " + path + ": File not found");
+			return null;
+		}
+		string json = File.ReadAllText(path);;
+		
+		List<JSONObj_NPC> jsonFile = null;
+		try{
+			jsonFile = JsonUtility.FromJson<JSONFile_NPC>(json).NPCs;
+		}
+		catch{
+			Debug.Log("Failed to load " + path + ": Couldn't parse data");
+			return null;
+		}
+
+		List<NPC> data = new List<NPC>();
+		foreach(JSONObj_NPC jsonObj in jsonFile){
+			NPC npc = new NPC(jsonObj.Name, jsonObj.Age);
+			data.Add(npc);
+		}
 		return data;
 	}
 
