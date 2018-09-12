@@ -32,7 +32,6 @@ public class Manager_Data : MonoBehaviour, IManager {
 		//paths
 		_dirDAT = Application.dataPath + "/Data/";
 		_dirJSON = Application.dataPath + "/Data/";
-		//_dirINI = Application.persistentDataPath + "/";
 
 		//initialize ini files
 		foreach (INIFilename ini in INIFilename.GetValues(typeof(INIFilename))){
@@ -57,13 +56,10 @@ public class Manager_Data : MonoBehaviour, IManager {
 		}
 		return Path.Combine(_dirJSON, filename + ".json");
 	}
-	// private string FilePathINI(string filename = null){
-	// 	filename = filename ?? "auto";
-	// 	return Path.Combine(_dirINI, (filename ?? "auto") + ".ini");
-	// } 
 
 	//DAT
-	public void DATSave(List<string> data, string filename){
+	//**Saves and loads string lists**
+	public void DATSave(List<string> data, string filename = null){
 		string path = this.FilePathDAT(filename);
 
 		FileStream stream = File.Create(path);
@@ -71,22 +67,75 @@ public class Manager_Data : MonoBehaviour, IManager {
 		formatter.Serialize(stream, data);
 		stream.Close();
 	}
-	public List<string> DATLoad(string filename){
+	public List<string> DATLoad(string filename = null){
 		string path = this.FilePathDAT(filename);
-
+		
 		if(!File.Exists(path)){
-			Debug.Log(path + " doesn't exist");
+			Debug.Log("Failed to load " + path + ": File not found");
+			return null;
 		}
+		
 		List<string> data = new List<string>();
+		try{
+			
+			FileStream stream = File.Open(path, FileMode.Open);
+			BinaryFormatter formatter = new BinaryFormatter();
+			data = formatter.Deserialize(stream) as List<string>;
+		}
+		catch{
+			Debug.Log("Failed to load " + path + ": Couldn't extract data");
+			return null;
+		}
+		return data;
+	}
+
+	//INI
+	//**Saves and loads string dictionaries**
+	//**Uses Monobehavior in INIFile.cs, which requires it to be used as a component on a GO
+	private void INIInit(INIFilename ini){
+		GameObject newGO = new GameObject();
+		newGO.transform.parent = GameObject.Find("Managers").transform;
+		newGO.name = "Data_" + ini.ToString() + ".ini";
+
+		newGO.AddComponent<INIFile>();
+		newGO.GetComponent<INIFile>().Initialize(ini.ToString()+".ini", false, false);
 		
-		FileStream stream = File.Open(path, FileMode.Open);
-		BinaryFormatter formatter = new BinaryFormatter();
+		_iniFileCreators[(int)ini] = newGO;
+	}
+    private INIFile INIGet(INIFilename ini)
+    {
+		if(_iniFileCreators[(int)ini] ==  null){
+			INIInit(ini);
+		}
+		GameObject iniFileCreator = _iniFileCreators[(int)ini];
+        return iniFileCreator.GetComponent<INIFile>();
+    }
+	public void INISave(Dictionary<string,string> data, INIFilename ini, string section){
+		INIFile iniFile = this.INIGet(ini);
+
+		try{
+			foreach(string key in data.Keys){
+				iniFile.SetValue(section, key, data[key]);
+			}
+		}
+		finally{
+			//commit the save
+			iniFile.Flush();
+		} 
+	}
+	public Dictionary<string, string> INILoad(Dictionary<string,string> defaultData, INIFilename ini, string section){
+		INIFile iniFile = this.INIGet(ini);
 		
-		data = formatter.Deserialize(stream) as List<string>;
+		Dictionary<string, string> data = new Dictionary<string, string>();
+		foreach(string key in defaultData.Keys){
+			data[key] = iniFile.GetValue(section, key, defaultData[key]);
+		}
 		return data;
 	}
 
 	//JSON
+	//**Save and load objects instantiated from classes**
+	//**Requires a custom SERIALIZABLE class in JSONFile.cs**
 	private void JSONWriteToDisk(string path, string json){
 		if(json != null){
 			if (File.Exists(path)){
@@ -134,7 +183,7 @@ public class Manager_Data : MonoBehaviour, IManager {
 			jsonFile = JsonUtility.FromJson<JSONFile_Map>(json).Maps;
 		}
 		catch{
-			Debug.Log("Failed to load " + path + ": Couldn't parse data");
+			Debug.Log("Failed to load " + path + ": Couldn't extract data");
 			return null;
 		}
 
@@ -159,7 +208,7 @@ public class Manager_Data : MonoBehaviour, IManager {
 			jsonFile = JsonUtility.FromJson<JSONFile_NPC>(json).NPCs;
 		}
 		catch{
-			Debug.Log("Failed to load " + path + ": Couldn't parse data");
+			Debug.Log("Failed to load " + path + ": Couldn't extract data");
 			return null;
 		}
 
@@ -167,48 +216,6 @@ public class Manager_Data : MonoBehaviour, IManager {
 		foreach(JSONObj_NPC jsonObj in jsonFile){
 			NPC npc = new NPC(jsonObj.Name, jsonObj.Age);
 			data.Add(npc);
-		}
-		return data;
-	}
-
-	//INI
-	private void INIInit(INIFilename ini){
-		GameObject newGO = new GameObject();
-		newGO.transform.parent = GameObject.Find("Managers").transform;
-		newGO.name = "Data_" + ini.ToString() + ".ini";
-
-		newGO.AddComponent<INIFile>();
-		newGO.GetComponent<INIFile>().Initialize(ini.ToString()+".ini", false, false);
-		
-		_iniFileCreators[(int)ini] = newGO;
-	}
-    private INIFile INIGet(INIFilename ini)
-    {
-		if(_iniFileCreators[(int)ini] ==  null){
-			INIInit(ini);
-		}
-		GameObject iniFileCreator = _iniFileCreators[(int)ini];
-        return iniFileCreator.GetComponent<INIFile>();
-    }
-	public void INISave(Dictionary<string,string> data, INIFilename ini, string section){
-		INIFile iniFile = this.INIGet(ini);
-
-		try{
-			foreach(string key in data.Keys){
-				iniFile.SetValue(section, key, data[key]);
-			}
-		}
-		finally{
-			//commit the save
-			iniFile.Flush();
-		} 
-	}
-	public Dictionary<string, string> INILoad(Dictionary<string,string> defaultData, INIFilename ini, string section){
-		INIFile iniFile = this.INIGet(ini);
-		
-		Dictionary<string, string> data = new Dictionary<string, string>();
-		foreach(string key in defaultData.Keys){
-			data[key] = iniFile.GetValue(section, key, defaultData[key]);
 		}
 		return data;
 	}
