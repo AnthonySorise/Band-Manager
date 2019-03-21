@@ -1,12 +1,13 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Runtime.Serialization.Formatters.Binary;
-using System.Runtime.InteropServices;
 using System.IO;
 using UnityEngine;
+//using System;
+//using System.Collections;
+//using System.Linq;
+//using System.Text;
+//using System.Runtime.InteropServices;
+
 //Enums
 public enum INIFilename{
 	preferences
@@ -27,7 +28,7 @@ public class Manager_Data : MonoBehaviour, IManager {
 
 	public void Startup(){
 		State = ManagerState.Initializing;
-		Debug.Log("Manager_Data Initializing...");
+		Debug.Log("Manager_Data initializing...");
 
 		//paths
 		_dirDAT = Application.dataPath + "/Data/";
@@ -43,7 +44,8 @@ public class Manager_Data : MonoBehaviour, IManager {
 		this.INISave(preferencesData, INIFilename.preferences, "section");
 
 		State = ManagerState.Started;
-	}
+        Debug.Log("Manager_Data started...");
+    }
 
 	//File Locations
 	private string FilePathDAT(string filename = null){

@@ -12,7 +12,7 @@ using UnityEngine;
 [RequireComponent(typeof(Manager_Data))]
 
 public class Managers : MonoBehaviour {
-    //managers can be accessed from outside via these properties
+    //managers accessed from Unity Hierarchy via these properties
     public static Manager_Model Model {get; private set;}
     public static Manager_Audio Audio {get; private set;}
     public static Manager_Camera Camera {get; private set;}
@@ -37,13 +37,13 @@ public class Managers : MonoBehaviour {
 
         _startSequence = new List<IManager>();
         _startSequence.Add(Model);
+        _startSequence.Add(Data);
         _startSequence.Add(Audio);
         _startSequence.Add(Camera);
         _startSequence.Add(GO);
         _startSequence.Add(UI);
         _startSequence.Add(Input);
-        _startSequence.Add(Data);
-
+        
         //asynchronously start up managers
         StartCoroutine(StartupManagers());
     }
@@ -58,9 +58,9 @@ public class Managers : MonoBehaviour {
         int numStarted = 0;
         //loop until all managers have started
         while(numToStart > numStarted){
-            numStarted = 0;
             int numStartedAtLoop = numStarted;
-            foreach(IManager manager in _startSequence){
+            numStarted = 0;
+            foreach (IManager manager in _startSequence){
                 if(manager.State == ManagerState.Error){
                     Debug.Log("Manager startup halted: " + manager.ToString() + " failed to initialize");
                     yield break;

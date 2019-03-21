@@ -1,8 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Audio;
+//using System.Collections;
+
 
 public enum AudioChannel{
     SFX,
@@ -27,7 +28,7 @@ public class Manager_Audio : MonoBehaviour, IManager {
 
 	public void Startup(){
         State = ManagerState.Initializing;
-		Debug.Log("Manager_Audio Initializing...");
+		Debug.Log("Manager_Audio initializing...");
         
         //MIXER
         if(mixer == null){
@@ -54,7 +55,8 @@ public class Manager_Audio : MonoBehaviour, IManager {
 		}
         
         State = ManagerState.Started;
-	}
+        Debug.Log("Manager_Audio started...");
+    }
 
     //MIXER
     public void ChangeMixerVolume(string group, float vol){

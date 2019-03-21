@@ -1,6 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+//using System.Collections;
+//using System.Collections.Generic;
 
 [System.Serializable]//allows this class to be turned into JSON.  Attributes below that are private/protected need "[SerializeField]"
 //https://docs.unity3d.com/ScriptReference/JsonUtility.html
@@ -12,8 +12,9 @@ public class Manager_Model : MonoBehaviour, IManager {
 	
 	public void Startup(){
 		State = ManagerState.Initializing;
-		Debug.Log("Manager_Model Initializing...");
+		Debug.Log("Manager_Model initializing...");
 
 		State = ManagerState.Started;
-	}
+        Debug.Log("Manager_Model started");
+    }
 }

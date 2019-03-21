@@ -1,6 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
+//using System.Collections;
 
 //https://docs.unity3d.com/ScriptReference/Input.GetKey.html
 //https://docs.unity3d.com/ScriptReference/KeyCode.html
@@ -15,7 +15,7 @@ public class Manager_Input : MonoBehaviour, IManager {
 
 	public void Startup(){
 		State = ManagerState.Initializing;
-		Debug.Log("Manager_Input Initializing...");
+		Debug.Log("Manager_Input initializing...");
 
 		//Initiate key map
 		_keyMap = new Dictionary<KeyCode, InputCommand>();
@@ -23,7 +23,8 @@ public class Manager_Input : MonoBehaviour, IManager {
 		_keyMap.Add(KeyCode.KeypadMinus, InputCommand.MasterVolumeDown);
 
 		State = ManagerState.Started;
-	}
+        Debug.Log("Manager_Input started");
+    }
 
 	private void Update() {
 		foreach(KeyCode key in _keyMap.Keys){
