@@ -9,7 +9,7 @@ public class Manager_Input : MonoBehaviour, IManager {
 	public ManagerState State {get; private set;}
 	private enum InputCommand{
 		MasterVolumeUp,
-		MasterVolumeDown,
+		MasterVolumeDown
 	}
 	private Dictionary<KeyCode, InputCommand> _keyMap;
 

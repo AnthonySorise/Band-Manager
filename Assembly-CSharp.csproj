@@ -10,7 +10,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace>
     </RootNamespace>
-    <ProjectGuid>{B2AAAB81-EDC1-B6E8-343D-0D8F1C7176CE}</ProjectGuid>
+    <ProjectGuid>{D2CAB0DD-5AEF-F950-09EE-78706656BE92}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>Assembly-CSharp</AssemblyName>
@@ -70,22 +70,23 @@
     <Compile Include="Assets\Script\Managers\Manager_GO.cs" />
     <Compile Include="Assets\Script\Managers\Manager_Input.cs" />
     <Compile Include="Assets\Script\Managers\Manager_Model.cs" />
+    <Compile Include="Assets\Script\Managers\Manager_Time.cs" />
     <Compile Include="Assets\Script\Managers\Manager_UI.cs" />
     <Compile Include="Assets\Script\Managers\Managers.cs" />
     <Compile Include="Assets\Script\Models\Map.cs" />
     <Compile Include="Assets\Script\Models\NPC.cs" />
     <Compile Include="Assets\Script\Utilities\GOPool.cs" />
     <Reference Include="UnityEditor.StandardEvents">
-      <HintPath>C:/_GameDev/UnityTemplate_ManagerSystem/Library/ScriptAssemblies/UnityEditor.StandardEvents.dll</HintPath>
+      <HintPath>C:/_GameDev/Band-Manager/Library/ScriptAssemblies/UnityEditor.StandardEvents.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro.Editor">
-      <HintPath>C:/_GameDev/UnityTemplate_ManagerSystem/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
+      <HintPath>C:/_GameDev/Band-Manager/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.PackageManagerUI.Editor">
-      <HintPath>C:/_GameDev/UnityTemplate_ManagerSystem/Library/ScriptAssemblies/Unity.PackageManagerUI.Editor.dll</HintPath>
+      <HintPath>C:/_GameDev/Band-Manager/Library/ScriptAssemblies/Unity.PackageManagerUI.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro">
-      <HintPath>C:/_GameDev/UnityTemplate_ManagerSystem/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
+      <HintPath>C:/_GameDev/Band-Manager/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.AIModule">
       <HintPath>C:/Program Files/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.AIModule.dll</HintPath>

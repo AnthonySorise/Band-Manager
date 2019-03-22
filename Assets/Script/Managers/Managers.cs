@@ -4,6 +4,7 @@ using UnityEngine;
 
 //All managers must exist
 [RequireComponent(typeof(Manager_Model))]
+[RequireComponent(typeof(Manager_Time))]
 [RequireComponent(typeof(Manager_Audio))]
 [RequireComponent(typeof(Manager_Camera))]
 [RequireComponent(typeof(Manager_GO))]
@@ -14,7 +15,8 @@ using UnityEngine;
 public class Managers : MonoBehaviour {
     //managers accessed from Unity Hierarchy via these properties
     public static Manager_Model Model {get; private set;}
-    public static Manager_Audio Audio {get; private set;}
+    public static Manager_Time Time {get; private set;}
+    public static Manager_Audio Audio { get; private set; }
     public static Manager_Camera Camera {get; private set;}
     public static Manager_GO GO {get; private set;}
     public static Manager_UI UI {get; private set;}
@@ -28,6 +30,7 @@ public class Managers : MonoBehaviour {
         DontDestroyOnLoad(gameObject);
 
         Model = GetComponent<Manager_Model>();
+        Time = GetComponent<Manager_Time>();
         Audio = GetComponent<Manager_Audio>();
         Camera = GetComponent<Manager_Camera>();
         GO = GetComponent<Manager_GO>();
@@ -37,13 +40,14 @@ public class Managers : MonoBehaviour {
 
         _startSequence = new List<IManager>();
         _startSequence.Add(Model);
-        _startSequence.Add(Data);
+        _startSequence.Add(Time);
         _startSequence.Add(Audio);
         _startSequence.Add(Camera);
         _startSequence.Add(GO);
         _startSequence.Add(UI);
         _startSequence.Add(Input);
-        
+        _startSequence.Add(Data);
+
         //asynchronously start up managers
         StartCoroutine(StartupManagers());
     }

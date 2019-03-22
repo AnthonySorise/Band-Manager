@@ -122,13 +122,14 @@ GameObject:
   m_Component:
   - component: {fileID: 364967764}
   - component: {fileID: 364967759}
+  - component: {fileID: 364967763}
+  - component: {fileID: 364967768}
   - component: {fileID: 364967765}
   - component: {fileID: 364967760}
-  - component: {fileID: 364967767}
   - component: {fileID: 364967761}
   - component: {fileID: 364967762}
-  - component: {fileID: 364967763}
   - component: {fileID: 364967766}
+  - component: {fileID: 364967767}
   m_Layer: 0
   m_Name: Managers
   m_TagString: Untagged
@@ -175,7 +176,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 364967758}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 871f23696584e4de889b05c26ad4b2b7, type: 3}
   m_Name: 
@@ -236,6 +237,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 61a2944ee5e044ec3aebc39e4e1be846, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &364967768
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 364967758}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08dfcdd177ed0d042a0760326a4b7c7c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &519420028
