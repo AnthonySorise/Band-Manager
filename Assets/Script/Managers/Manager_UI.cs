@@ -168,9 +168,9 @@ public class Manager_UI : MonoBehaviour, IManager {
         {
             _toggleStatusText.text = Managers.Time.CurrentSpeedLevel.ToString();
 
-            _timeText.text = Managers.Time.CurrentDT.ToString("hh:mm tt");
+            _timeText.text = Managers.Time.CurrentDT.ToString("h:mm tt");
             _dayOfWeekText.text = Managers.Time.CurrentDT.DayOfWeek.ToString();
-            _dateText.text = Managers.Time.CurrentDT.ToString("MMMM/dd/yyyy");
+            _dateText.text = Managers.Time.CurrentDT.ToString("MMMM/d/yyyy");
         }
     }
 }
