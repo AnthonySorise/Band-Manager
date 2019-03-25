@@ -17,4 +17,9 @@ public class Manager_Model : MonoBehaviour, IManager {
 		State = ManagerState.Started;
         Debug.Log("Manager_Model started");
     }
+
+    public void SimulateTick()
+    {
+
+    }
 }
