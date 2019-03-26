@@ -126,6 +126,7 @@ public class Manager_UI : MonoBehaviour, IManager {
     //Main Menu Panel - Key Functions
     public void KeyDown_ToggleMainMenu()
     {
+        Managers.Time.Pause();
         _mainMenuCanvas.gameObject.SetActive(!_mainMenuCanvas.activeSelf);
     }
 
