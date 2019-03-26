@@ -8,6 +8,9 @@ using UnityEngine;
 public class Manager_Input : MonoBehaviour, IManager {
 	public ManagerState State {get; private set;}
 	private enum InputCommand{
+        //Menu
+        ToggleMainMenuPanel,
+
         //Time
         ToggleTime,
         IncreaseSpeed,
@@ -25,6 +28,9 @@ public class Manager_Input : MonoBehaviour, IManager {
 
         _keyMap = new Dictionary<KeyCode, InputCommand>
         {
+            //Menu
+            { KeyCode.Escape, InputCommand.ToggleMainMenuPanel },
+
             //Time
             { KeyCode.Space, InputCommand.ToggleTime },
             { KeyCode.Plus, InputCommand.IncreaseSpeed },
@@ -48,6 +54,10 @@ public class Manager_Input : MonoBehaviour, IManager {
                 //key down
                 switch (_keyMap[key])
                 {
+                    //Menu
+                    case InputCommand.ToggleMainMenuPanel:
+                        Managers.UI.KeyDown_ToggleMainMenu();
+                        return;
                     //Time
                     case InputCommand.ToggleTime:
                         Managers.UI.KeyDown_ToggleTimeButon();

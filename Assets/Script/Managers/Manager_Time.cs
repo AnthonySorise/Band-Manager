@@ -43,8 +43,8 @@ public class Manager_Time : MonoBehaviour, IManager {
 
     public void SetSimDT(int year, int month, int day, int hrs, int mins)
     {
+        Pause();
         CurrentDT = new DateTime(year, month, day, hrs, mins, 0);
-        IsPaused = true;
     }
 
     public void ToggleTime()
@@ -52,13 +52,11 @@ public class Manager_Time : MonoBehaviour, IManager {
         if (CurrentDT != null) {
             if (IsPaused == true)
             {
-                IsPaused = false;
-                PlayTick();
+                Play();
             }
             else
             {
-                StopCoroutine("FinishTickAndPlayNewTick");
-                IsPaused = true;
+                Pause();
             }
         }
         else
@@ -108,6 +106,19 @@ public class Manager_Time : MonoBehaviour, IManager {
         PlayTick();
     }
 
+    public void Play()
+    {
+        IsPaused = false;
+        PlayTick();
+    }
+
+    public void Pause()
+    {
+        StopCoroutine("TrackSecondToWait");
+        StopCoroutine("FinishTickAndPlayNewTick");
+        IsPaused = true;
+    }
+
     private int MSPerTick()
     {
         int ms = _baseMSPerTick;
@@ -127,7 +138,7 @@ public class Manager_Time : MonoBehaviour, IManager {
             float newSecondsPerTick = MSPerTick() / 1000f;
             if (IsPaused == false)
             {
-                ReadjustSecondsToWait(newSecondsPerTick - oldSecondsPerTick);
+                AdjustSecondsToWait(newSecondsPerTick - oldSecondsPerTick);
             }
         }
     }
@@ -140,11 +151,11 @@ public class Manager_Time : MonoBehaviour, IManager {
             float newSecondsPerTick = MSPerTick() / 1000f;
             if (IsPaused == false)
             {
-                ReadjustSecondsToWait(newSecondsPerTick - oldSecondsPerTick);
+                AdjustSecondsToWait(newSecondsPerTick - oldSecondsPerTick);
             }
         }
     }
-    private void ReadjustSecondsToWait(float adjustment)
+    private void AdjustSecondsToWait(float adjustment)
     {
         StopCoroutine("FinishTickAndPlayNewTick");
 

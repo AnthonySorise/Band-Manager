@@ -7,10 +7,13 @@ using UnityEngine.UI;
 public class Manager_UI : MonoBehaviour, IManager {
 	public ManagerState State {get; private set;}
 
+    //Menu Panel
+    private GameObject _mainMenuCanvas;
+
     //Time Panel
-    public Button ToggleTimeButton;
-    public Button IncreaseSpeedButton;
-    public Button DecreaseSpeedButton;
+    public Button _toggleTimeButton;
+    public Button _increaseSpeedButton;
+    public Button _decreaseSpeedButton;
     private Text _timeText;
     private Text _dayOfWeekText;
     private Text _dateText;
@@ -21,10 +24,23 @@ public class Manager_UI : MonoBehaviour, IManager {
 		Debug.Log("Manager_UI initializing...");
 
 
+        //Main Menu Panel - Initiate
+        if (GameObject.Find("Panel_MainMenu") != null)
+        {
+            _mainMenuCanvas = GameObject.Find("Canvas_MainMenu");
+            _mainMenuCanvas.gameObject.SetActive(false);
+        }
+        else
+        {
+            State = ManagerState.Error;
+            Debug.Log("Error: Cannot find Panel_MainMenu");
+            return;
+        }
+
         //Time Panel - Initiate
         if (GameObject.Find("Button_ToggleTime") != null)
         {
-            ToggleTimeButton = GameObject.Find("Button_ToggleTime").GetComponent<Button>();
+            _toggleTimeButton = GameObject.Find("Button_ToggleTime").GetComponent<Button>();
         }
         else
         {
@@ -34,7 +50,7 @@ public class Manager_UI : MonoBehaviour, IManager {
         }
         if (GameObject.Find("Button_IncreaseSpeed") != null)
         {
-            IncreaseSpeedButton = GameObject.Find("Button_IncreaseSpeed").GetComponent<Button>();
+            _increaseSpeedButton = GameObject.Find("Button_IncreaseSpeed").GetComponent<Button>();
         }
         else
         {
@@ -44,7 +60,7 @@ public class Manager_UI : MonoBehaviour, IManager {
         }
         if (GameObject.Find("Button_DecreaseSpeed") != null)
         {
-            DecreaseSpeedButton = GameObject.Find("Button_DecreaseSpeed").GetComponent<Button>();
+            _decreaseSpeedButton = GameObject.Find("Button_DecreaseSpeed").GetComponent<Button>();
         }
         else
         {
@@ -94,9 +110,9 @@ public class Manager_UI : MonoBehaviour, IManager {
         }
 
         //Time Panel - Listeners
-        ToggleTimeButton.onClick.AddListener(Click_ToggleTimeButton);
-        IncreaseSpeedButton.onClick.AddListener(Click_IncreaseSpeedButton);
-        DecreaseSpeedButton.onClick.AddListener(Click_DecreaseSpeedButton);
+        _toggleTimeButton.onClick.AddListener(Click_ToggleTimeButton);
+        _increaseSpeedButton.onClick.AddListener(Click_IncreaseSpeedButton);
+        _decreaseSpeedButton.onClick.AddListener(Click_DecreaseSpeedButton);
 
         State = ManagerState.Started;
         Debug.Log("Manager_UI started");
@@ -107,6 +123,11 @@ public class Manager_UI : MonoBehaviour, IManager {
         UpdateTimePanel();
     }
 
+    //Main Menu Panel - Key Functions
+    public void KeyDown_ToggleMainMenu()
+    {
+        _mainMenuCanvas.gameObject.SetActive(!_mainMenuCanvas.activeSelf);
+    }
 
     //Time Panel - Click Functions
     private void Click_ToggleTimeButton()
@@ -130,29 +151,29 @@ public class Manager_UI : MonoBehaviour, IManager {
     //Time Panel - Key Functions
     public void KeyDown_ToggleTimeButon()
     {
-        ToggleTimeButton.image.color = ToggleTimeButton.colors.pressedColor;
+        _toggleTimeButton.image.color = _toggleTimeButton.colors.pressedColor;
     }
     public void KeyUp_ToggleTimeButon()
     {
-        ToggleTimeButton.image.color = ToggleTimeButton.colors.normalColor;
+        _toggleTimeButton.image.color = _toggleTimeButton.colors.normalColor;
         Managers.Time.ToggleTime();
     }
     public void KeyDown_IncreaseSpeedButton()
     {
-        IncreaseSpeedButton.image.color = IncreaseSpeedButton.colors.pressedColor;
+        _increaseSpeedButton.image.color = _increaseSpeedButton.colors.pressedColor;
     }
     public void KeyUp_IncreaseSpeedButton()
     {
-        IncreaseSpeedButton.image.color = IncreaseSpeedButton.colors.normalColor;
+        _increaseSpeedButton.image.color = _increaseSpeedButton.colors.normalColor;
         Managers.Time.IncreaseSpeed();
     }
     public void KeyDown_DecreaseSpeedButton()
     {
-        DecreaseSpeedButton.image.color = DecreaseSpeedButton.colors.pressedColor;
+        _decreaseSpeedButton.image.color = _decreaseSpeedButton.colors.pressedColor;
     }
     public void KeyUp_DecreaseSpeedButton()
     {
-        DecreaseSpeedButton.image.color = DecreaseSpeedButton.colors.normalColor;
+        _decreaseSpeedButton.image.color = _decreaseSpeedButton.colors.normalColor;
         Managers.Time.DecreaseSpeed();
     }
 
