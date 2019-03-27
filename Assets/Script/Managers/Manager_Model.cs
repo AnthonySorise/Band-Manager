@@ -10,7 +10,8 @@
 public class Manager_Model : MonoBehaviour, IManager {
 	public ManagerState State {get; private set;}
 	
-	public void Startup(){
+	public void Startup()
+    {
 		State = ManagerState.Initializing;
 		Debug.Log("Manager_Model initializing...");
 

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 //All managers must exist
+[RequireComponent(typeof(Manager_Assets))]
 [RequireComponent(typeof(Manager_Model))]
 [RequireComponent(typeof(Manager_Time))]
 [RequireComponent(typeof(Manager_Audio))]
@@ -14,6 +15,7 @@ using UnityEngine;
 
 public class Managers : MonoBehaviour {
     //managers accessed from Unity Hierarchy via these properties
+    public static Manager_Assets Assets { get; private set; }
     public static Manager_Model Model {get; private set;}
     public static Manager_Time Time {get; private set;}
     public static Manager_Audio Audio { get; private set; }
@@ -23,12 +25,14 @@ public class Managers : MonoBehaviour {
     public static Manager_Input Input {get; private set;}
     public static Manager_Data Data {get; private set;}
 
-    private List<IManager> _startSequence;
+    private List<IManager> _preStartsSequence;//loads first and synchronously
+    private List<IManager> _startSequence;//loads asynchronously 
 
     //Awake
     void Awake(){
         DontDestroyOnLoad(gameObject);
 
+        Assets = GetComponent<Manager_Assets>();
         Model = GetComponent<Manager_Model>();
         Time = GetComponent<Manager_Time>();
         Audio = GetComponent<Manager_Audio>();
@@ -38,17 +42,34 @@ public class Managers : MonoBehaviour {
         Input = GetComponent<Manager_Input>();
         Data = GetComponent<Manager_Data>();
 
-        _startSequence = new List<IManager>();
-        _startSequence.Add(Model);
-        _startSequence.Add(Time);
-        _startSequence.Add(Audio);
-        _startSequence.Add(Camera);
-        _startSequence.Add(GO);
-        _startSequence.Add(UI);
-        _startSequence.Add(Input);
-        _startSequence.Add(Data);
+        _preStartsSequence = new List<IManager>
+        {
+            Assets
+        };
+        _startSequence = new List<IManager>
+        {
+            Model,
+            Time,
+            Audio,
+            Camera,
+            GO,
+            UI,
+            Input,
+            Data
+        };
 
-        //asynchronously start up managers
+        //synchronously start managers in _preStartsSequence
+        foreach(IManager manager in _preStartsSequence)
+        {
+            manager.Startup();
+            if(manager.State == ManagerState.Error)
+            {
+                Debug.Log("Manager startup halted: " + manager.ToString() + " failed to initialize");
+                return;
+            }
+        }
+
+        //asynchronously start managers in _startsSequence
         StartCoroutine(StartupManagers());
     }
 
@@ -58,12 +79,12 @@ public class Managers : MonoBehaviour {
         }
         yield return null;
 
-        int numToStart = _startSequence.Count;
+        int numToStart = _startSequence.Count + _preStartsSequence.Count;
         int numStarted = 0;
         //loop until all managers have started
         while(numToStart > numStarted){
             int numStartedAtLoop = numStarted;
-            numStarted = 0;
+            numStarted = _preStartsSequence.Count;
             foreach (IManager manager in _startSequence){
                 if(manager.State == ManagerState.Error){
                     Debug.Log("Manager startup halted: " + manager.ToString() + " failed to initialize");
