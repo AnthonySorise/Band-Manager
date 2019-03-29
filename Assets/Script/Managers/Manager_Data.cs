@@ -2,11 +2,6 @@
 using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
 using UnityEngine;
-//using System;
-//using System.Collections;
-//using System.Linq;
-//using System.Text;
-//using System.Runtime.InteropServices;
 
 //Enums
 public enum INIFilename{

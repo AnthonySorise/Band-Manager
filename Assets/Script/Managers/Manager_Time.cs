@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections;
 using UnityEngine;
-//using System.Collections;
-//using System.Collections.Generic;
 
 public class Manager_Time : MonoBehaviour, IManager {
     public ManagerState State { get; private set; }
@@ -49,8 +47,9 @@ public class Manager_Time : MonoBehaviour, IManager {
 
     public void ToggleTime()
     {
-        if (CurrentDT != null) {
-            if (IsPaused == true)
+        if (CurrentDT != null)
+        {
+            if (IsPaused)
             {
                 Play();
             }
@@ -67,7 +66,7 @@ public class Manager_Time : MonoBehaviour, IManager {
 
     public void PlayTick()
     {
-        if (IsPaused == false)
+        if (!IsPaused)
         {
             DateTime startTime = DateTime.Now;
 
@@ -122,7 +121,7 @@ public class Manager_Time : MonoBehaviour, IManager {
     private int MSPerTick()
     {
         int ms = _baseMSPerTick;
-        for (var i = 0; i < CurrentSpeedLevel; i++)
+        for (int i = 0; i < CurrentSpeedLevel; i++)
         {
             ms = Convert.ToInt32(ms / _speedLevelDenominator);
         }
@@ -136,7 +135,7 @@ public class Manager_Time : MonoBehaviour, IManager {
             float oldSecondsPerTick = MSPerTick() / 1000f;
             CurrentSpeedLevel++;
             float newSecondsPerTick = MSPerTick() / 1000f;
-            if (IsPaused == false)
+            if (!IsPaused)
             {
                 AdjustSecondsToWait(newSecondsPerTick - oldSecondsPerTick);
             }
@@ -149,7 +148,7 @@ public class Manager_Time : MonoBehaviour, IManager {
             float oldSecondsPerTick = MSPerTick() / 1000f;
             CurrentSpeedLevel--;
             float newSecondsPerTick = MSPerTick() / 1000f;
-            if (IsPaused == false)
+            if (!IsPaused)
             {
                 AdjustSecondsToWait(newSecondsPerTick - oldSecondsPerTick);
             }

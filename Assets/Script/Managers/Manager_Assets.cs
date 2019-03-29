@@ -4,7 +4,9 @@ using System.IO;
 using UnityEngine;
 
 public enum Assets_png
-{
+{   
+    //curosr images
+        //should be 32X32, horizontally centered and vertically pushed all the way to the top
     Cursor_Default,
     Cursor_Hover
 }
@@ -22,10 +24,8 @@ public class Manager_Assets : MonoBehaviour, IManager {
         Debug.Log("Manager_Assets initializing...");
 
 
-
         string artPath = Application.dataPath + "/Art/";
         string audioPath = Application.dataPath + "/Audio/";
-
 
 
         _pngTextures = new Dictionary<Assets_png, Texture2D>();
@@ -50,8 +50,6 @@ public class Manager_Assets : MonoBehaviour, IManager {
             }
         }
 
-
-
         if(State != ManagerState.Error)
         {
             State = ManagerState.Started;
@@ -66,5 +64,4 @@ public class Manager_Assets : MonoBehaviour, IManager {
         else
             { return null; }
     }
-    
 }

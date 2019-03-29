@@ -2,7 +2,6 @@
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Audio;
-//using System.Collections;
 
 
 public enum AudioChannel{
@@ -118,7 +117,7 @@ public class Manager_Audio : MonoBehaviour, IManager {
         audioSource.Play();
     }
 
-    public void playAudio(AudioChannel audioChannel, string trigger, GameObject go = null){
+    public void PlayAudio(AudioChannel audioChannel, string trigger, GameObject go = null){
         string audioClipName;
         float spatialBlend;
         if(go == null){
@@ -137,14 +136,8 @@ public class Manager_Audio : MonoBehaviour, IManager {
             return;
         }
         AudioSource audioSource = GetAudioSource(go);
-    
-        bool doesLoop;
-        if(_channelsThatLoop.Contains(audioChannel)){
-            doesLoop = true;
-        }
-        else{
-            doesLoop = false;
-        }
+
+        bool doesLoop = _channelsThatLoop.Contains(audioChannel);
 
         PlayAudioSource(audioSource, audioClip, audioChannel, 1, spatialBlend, doesLoop);
     }

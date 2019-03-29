@@ -1,15 +1,9 @@
 ﻿using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
-//using System.Collections;
-//using System.Collections.Generic;
 
 public class Manager_UI : MonoBehaviour, IManager {
 	public ManagerState State {get; private set;}
-
-    //Button Arrays
-
 
     //Menu Panel
     private GameObject _mainMenuCanvas;
@@ -190,7 +184,6 @@ public class Manager_UI : MonoBehaviour, IManager {
         {
             CursorHover_Button(buttons[i]);
         }
-
     }
 
     //Main Menu Panel - Key Functions
@@ -250,11 +243,10 @@ public class Manager_UI : MonoBehaviour, IManager {
     }
 
 
-
     //Time Panel - Update
     private void UpdateTimePanel()
     {
-        if (Managers.Time.IsPaused == true)
+        if (Managers.Time.IsPaused)
         {
             _toggleStatusText.text = "||";
             return;
@@ -262,7 +254,6 @@ public class Manager_UI : MonoBehaviour, IManager {
         else
         {
             _toggleStatusText.text = Managers.Time.CurrentSpeedLevel.ToString();
-
             _timeText.text = Managers.Time.CurrentDT.ToString("h:mm tt");
             _dayOfWeekText.text = Managers.Time.CurrentDT.DayOfWeek.ToString();
             _dateText.text = Managers.Time.CurrentDT.ToString("MMMM/d/yyyy");

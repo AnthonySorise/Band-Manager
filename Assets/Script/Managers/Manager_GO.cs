@@ -1,6 +1,4 @@
 ﻿using UnityEngine;
-//using System.Collections;
-//using System.Collections.Generic;
 
 public class Manager_GO : MonoBehaviour, IManager {
 	public ManagerState State {get; private set;}

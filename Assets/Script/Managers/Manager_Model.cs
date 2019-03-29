@@ -1,6 +1,4 @@
 ﻿using UnityEngine;
-//using System.Collections;
-//using System.Collections.Generic;
 
 [System.Serializable]//allows this class to be turned into JSON.  Attributes below that are private/protected need "[SerializeField]"
 //https://docs.unity3d.com/ScriptReference/JsonUtility.html
