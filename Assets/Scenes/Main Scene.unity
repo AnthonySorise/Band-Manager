@@ -271,6 +271,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 364967764}
+  - component: {fileID: 364967769}
   - component: {fileID: 364967759}
   - component: {fileID: 364967763}
   - component: {fileID: 364967768}
@@ -403,6 +404,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08dfcdd177ed0d042a0760326a4b7c7c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &364967769
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 364967758}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c59cd37370abed84ba2ab51601144b9b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &377765073
 GameObject:
   m_ObjectHideFlags: 0
@@ -526,6 +538,9 @@ GameObject:
   - component: {fileID: 389675307}
   - component: {fileID: 389675306}
   - component: {fileID: 389675305}
+  - component: {fileID: 389675308}
+  - component: {fileID: 389675310}
+  - component: {fileID: 389675309}
   m_Layer: 5
   m_Name: Button_IncreaseSpeed
   m_TagString: Untagged
@@ -627,6 +642,43 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 389675303}
   m_CullTransparentMesh: 0
+--- !u!114 &389675308
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 389675303}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1862395651, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates: []
+  delegates: []
+--- !u!114 &389675309
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 389675303}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83dba075dcc6a4e46b5c989bdf9f8491, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &389675310
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 389675303}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1862395651, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates: []
+  delegates: []
 --- !u!1 &396980130
 GameObject:
   m_ObjectHideFlags: 0
@@ -638,6 +690,8 @@ GameObject:
   - component: {fileID: 396980134}
   - component: {fileID: 396980133}
   - component: {fileID: 396980132}
+  - component: {fileID: 396980136}
+  - component: {fileID: 396980135}
   m_Layer: 5
   m_Name: Button_ToggleTime
   m_TagString: Untagged
@@ -742,6 +796,42 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 396980130}
   m_CullTransparentMesh: 0
+--- !u!114 &396980135
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 396980130}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83dba075dcc6a4e46b5c989bdf9f8491, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &396980136
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 396980130}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1862395651, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 0
+    callback:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: UnityEngine.EventSystems.EventTrigger+TriggerEvent, UnityEngine.UI,
+        Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  - eventID: 1
+    callback:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: UnityEngine.EventSystems.EventTrigger+TriggerEvent, UnityEngine.UI,
+        Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  delegates: []
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -2206,6 +2296,9 @@ GameObject:
   - component: {fileID: 2118566274}
   - component: {fileID: 2118566273}
   - component: {fileID: 2118566272}
+  - component: {fileID: 2118566275}
+  - component: {fileID: 2118566277}
+  - component: {fileID: 2118566276}
   m_Layer: 5
   m_Name: Button_DecreaseSpeed
   m_TagString: Untagged
@@ -2307,3 +2400,40 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2118566270}
   m_CullTransparentMesh: 0
+--- !u!114 &2118566275
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2118566270}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1862395651, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates: []
+  delegates: []
+--- !u!114 &2118566276
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2118566270}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83dba075dcc6a4e46b5c989bdf9f8491, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &2118566277
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2118566270}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1862395651, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates: []
+  delegates: []

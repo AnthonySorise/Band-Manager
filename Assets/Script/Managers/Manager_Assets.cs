@@ -3,15 +3,17 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
+public enum Assets_png
+{
+    Cursor_Default,
+    Cursor_Hover
+}
+
 public class Manager_Assets : MonoBehaviour, IManager {
     public ManagerState State { get; private set; }
 
-    private enum UIImage
-    {
-        Cursor_Default,
-        Cursor_Hover
-    }
-    private Dictionary<UIImage, Texture2D> _uiImages;
+
+    private Dictionary<Assets_png, Texture2D> _pngTextures;
 
 
     public void Startup()
@@ -26,19 +28,20 @@ public class Manager_Assets : MonoBehaviour, IManager {
 
 
 
-        _uiImages = new Dictionary<UIImage, Texture2D>();
-        foreach(UIImage image in Enum.GetValues(typeof(UIImage)))
+        _pngTextures = new Dictionary<Assets_png, Texture2D>();
+        foreach(Assets_png png in Enum.GetValues(typeof(Assets_png)))
         {
             Texture2D texture = null;
             byte[] fileData;
-            string fileName = image.ToString().ToLower();
+            string fileName = png.ToString().ToLower();
             string filePath = artPath + "UI/" + fileName + ".png";
             if (File.Exists(filePath))
             {
                 fileData = File.ReadAllBytes(filePath);
                 texture = new Texture2D(2, 2);
                 texture.LoadImage(fileData);
-                _uiImages.Add(image, texture);
+
+                _pngTextures.Add(png, texture);
             }
             else
             {
@@ -56,7 +59,12 @@ public class Manager_Assets : MonoBehaviour, IManager {
         }
     }
 	
-	void Update () {
-		
-	}
+    public Texture2D GetPNGTexture(Assets_png png)
+    {
+        if (_pngTextures.ContainsKey(png))
+            { return _pngTextures[png]; }
+        else
+            { return null; }
+    }
+    
 }

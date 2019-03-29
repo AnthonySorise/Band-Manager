@@ -1,16 +1,21 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 //using System.Collections;
 //using System.Collections.Generic;
 
 public class Manager_UI : MonoBehaviour, IManager {
 	public ManagerState State {get; private set;}
 
+    //Button Arrays
+
+
     //Menu Panel
     private GameObject _mainMenuCanvas;
 
     //Time Panel
+    private GameObject _timeCanvas;
     public Button _toggleTimeButton;
     public Button _increaseSpeedButton;
     public Button _decreaseSpeedButton;
@@ -38,6 +43,16 @@ public class Manager_UI : MonoBehaviour, IManager {
         }
 
         //Time Panel - Initiate
+        if (GameObject.Find("Panel_Time") != null)
+        {
+            _timeCanvas = GameObject.Find("Panel_Time");
+        }
+        else
+        {
+            State = ManagerState.Error;
+            Debug.Log("Error: Cannot find Panel_Time");
+            return;
+        }
         if (GameObject.Find("Button_ToggleTime") != null)
         {
             _toggleTimeButton = GameObject.Find("Button_ToggleTime").GetComponent<Button>();
@@ -109,10 +124,22 @@ public class Manager_UI : MonoBehaviour, IManager {
             return;
         }
 
+
+        //Cursor
+        SetCursorToDefault();
+
+        Button[] mainMenuButtons = _mainMenuCanvas.GetComponentsInChildren<Button>(true);
+        Button[] timePanelButtons = _timeCanvas.GetComponentsInChildren<Button>(true);
+
+        CursorHover_Button(mainMenuButtons);
+        CursorHover_Button(timePanelButtons);
+
         //Time Panel - Listeners
         _toggleTimeButton.onClick.AddListener(Click_ToggleTimeButton);
         _increaseSpeedButton.onClick.AddListener(Click_IncreaseSpeedButton);
         _decreaseSpeedButton.onClick.AddListener(Click_DecreaseSpeedButton);
+
+
 
         State = ManagerState.Started;
         Debug.Log("Manager_UI started");
@@ -123,11 +150,55 @@ public class Manager_UI : MonoBehaviour, IManager {
         UpdateTimePanel();
     }
 
+    private void SetCursorToDefault ()
+    {
+        Cursor.SetCursor(Managers.Assets.GetPNGTexture(Assets_png.Cursor_Default), Vector2.zero, CursorMode.Auto);
+    }
+
+    private void CursorHover_Button( Button button)
+    {
+        if (button.GetComponent<EventTrigger>() == null)
+        {
+            button.gameObject.AddComponent<EventTrigger>();
+        }
+        EventTrigger eventTrigger = button.GetComponent<EventTrigger>();
+
+        EventTrigger.Entry entry01 = new EventTrigger.Entry();
+        entry01.eventID = EventTriggerType.PointerEnter;
+        entry01.callback.AddListener((data) => { Callback_PointerEnter_Button((PointerEventData)data); });
+        EventTrigger.Entry entry02 = new EventTrigger.Entry();
+        entry02.eventID = EventTriggerType.PointerExit;
+        entry02.callback.AddListener((data) => { Callback_PointerExit_Button((PointerEventData)data); });
+
+        eventTrigger.triggers.Add(entry01);
+        eventTrigger.triggers.Add(entry02);
+    }
+    public void Callback_PointerEnter_Button( PointerEventData data)
+    {
+        Texture2D texture = Managers.Assets.GetPNGTexture(Assets_png.Cursor_Hover);
+        Vector2 vector = new Vector2(texture.width / 2, 0);
+        Cursor.SetCursor(texture, vector, CursorMode.Auto);
+    }
+    public void Callback_PointerExit_Button(PointerEventData data)
+    {
+        Texture2D texture = Managers.Assets.GetPNGTexture(Assets_png.Cursor_Default);
+        Vector2 vector = new Vector2(texture.width / 2, 0);
+        Cursor.SetCursor(texture, vector, CursorMode.Auto);
+    }
+    private void CursorHover_Button(Button[] buttons) {
+        for (int i = 0; i < buttons.Length; i++)
+        {
+            CursorHover_Button(buttons[i]);
+        }
+
+    }
+
     //Main Menu Panel - Key Functions
     public void KeyDown_ToggleMainMenu()
     {
         Managers.Time.Pause();
         _mainMenuCanvas.gameObject.SetActive(!_mainMenuCanvas.activeSelf);
+        SetCursorToDefault();
     }
 
     //Time Panel - Click Functions
@@ -177,6 +248,8 @@ public class Manager_UI : MonoBehaviour, IManager {
         _decreaseSpeedButton.image.color = _decreaseSpeedButton.colors.normalColor;
         Managers.Time.DecreaseSpeed();
     }
+
+
 
     //Time Panel - Update
     private void UpdateTimePanel()
