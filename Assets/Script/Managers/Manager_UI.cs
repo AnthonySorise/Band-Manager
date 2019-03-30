@@ -5,8 +5,17 @@ using UnityEngine.EventSystems;
 public class Manager_UI : MonoBehaviour, IManager {
 	public ManagerState State {get; private set;}
 
-    //Menu Panel
-    private GameObject _mainMenuCanvas;
+    //Bools
+    bool isMainMenuOpen;
+
+    //Screen Cover Canvas
+    private GameObject _screenCoverCanvasGO;
+
+    //Menu Canvas
+    private GameObject _mainMenuCanvasGO;
+
+    //Game UI Canvas
+    private GameObject _gameUIGO;
 
     //Time Panel
     private GameObject _timeCanvas;
@@ -22,17 +31,45 @@ public class Manager_UI : MonoBehaviour, IManager {
 		State = ManagerState.Initializing;
 		Debug.Log("Manager_UI initializing...");
 
-
-        //Main Menu Panel - Initiate
-        if (GameObject.Find("Panel_MainMenu") != null)
+        //Screen Cover Canvas - Initiate
+        if (GameObject.Find("Canvas_ScreenCover") != null)
         {
-            _mainMenuCanvas = GameObject.Find("Canvas_MainMenu");
-            _mainMenuCanvas.gameObject.SetActive(false);
+            _screenCoverCanvasGO = GameObject.Find("Canvas_ScreenCover");
+            _screenCoverCanvasGO.gameObject.SetActive(false);
+            SetCanvasToBeTheCover(_screenCoverCanvasGO);
         }
         else
         {
             State = ManagerState.Error;
-            Debug.Log("Error: Cannot find Panel_MainMenu");
+            Debug.Log("Error: Cannot find Canvas_ScreenCover");
+            return;
+        }
+
+        //Main Menu Canvas - Initiate
+        if (GameObject.Find("Canvas_MainMenu") != null)
+        {
+            _mainMenuCanvasGO = GameObject.Find("Canvas_MainMenu");
+            _mainMenuCanvasGO.gameObject.SetActive(false);
+            SetCanvasToBeUncoverable(_mainMenuCanvasGO);
+        }
+        else
+        {
+            State = ManagerState.Error;
+            Debug.Log("Error: Cannot find Canvas_MainMenu");
+            return;
+        }
+
+        //Game UI Canvas - Initiate
+        if (GameObject.Find("Canvas_GameUI") != null)
+        {
+            _gameUIGO = GameObject.Find("Canvas_GameUI");
+            _gameUIGO.gameObject.SetActive(true);
+            SetCanvasToBeCoverable(_gameUIGO);
+        }
+        else
+        {
+            State = ManagerState.Error;
+            Debug.Log("Error: Cannot find Canvas_GameUI");
             return;
         }
 
@@ -122,7 +159,7 @@ public class Manager_UI : MonoBehaviour, IManager {
         //Cursor
         SetCursorToDefault();
 
-        Button[] mainMenuButtons = _mainMenuCanvas.GetComponentsInChildren<Button>(true);
+        Button[] mainMenuButtons = _mainMenuCanvasGO.GetComponentsInChildren<Button>(true);
         Button[] timePanelButtons = _timeCanvas.GetComponentsInChildren<Button>(true);
 
         CursorHover_Button(mainMenuButtons);
@@ -132,7 +169,6 @@ public class Manager_UI : MonoBehaviour, IManager {
         _toggleTimeButton.onClick.AddListener(Click_ToggleTimeButton);
         _increaseSpeedButton.onClick.AddListener(Click_IncreaseSpeedButton);
         _decreaseSpeedButton.onClick.AddListener(Click_DecreaseSpeedButton);
-
 
 
         State = ManagerState.Started;
@@ -185,20 +221,51 @@ public class Manager_UI : MonoBehaviour, IManager {
         }
     }
 
+    //Screen Cover
+    public bool IsScreenCovered()
+    {
+        return _screenCoverCanvasGO.activeSelf;
+    }
+    public void ScreenCover()
+    {
+        _screenCoverCanvasGO.SetActive(true);
+    }
+    public void ScreenUncover()
+    {
+        _screenCoverCanvasGO.SetActive(false);
+    }
+    private void SetCanvasToBeCoverable(GameObject canvasGO)
+    {
+        canvasGO.GetComponent<Canvas>().sortingOrder = 1;
+    }
+    private void SetCanvasToBeUncoverable(GameObject canvasGO)
+    {
+        canvasGO.GetComponent<Canvas>().sortingOrder = 3;
+    }
+    private void SetCanvasToBeTheCover(GameObject canvasGO)
+    {
+        canvasGO.GetComponent<Canvas>().sortingOrder = 2;
+    }
+
     //Main Menu Panel - Key Functions
     public void KeyDown_ToggleMainMenu()
     {
-        OpenMainMenu();
+        ToggleMainMenu();
     }
-    private void OpenMainMenu()
+    private void ToggleMainMenu()
     {
         Managers.Time.Pause();
-        _mainMenuCanvas.gameObject.SetActive(!_mainMenuCanvas.activeSelf);
-        SetCursorToDefault();
-        if (_mainMenuCanvas.activeSelf)
+        _mainMenuCanvasGO.gameObject.SetActive(!_mainMenuCanvasGO.activeSelf);
+        if (_mainMenuCanvasGO.activeSelf)
         {
+            ScreenCover();
             Managers.Audio.PlayAudio(Asset_wav.MenuOpen, AudioChannel.UI);
         }
+        else
+        {
+            ScreenUncover();
+        }
+        SetCursorToDefault();
     }
 
     //Time Panel - Click Functions
@@ -221,28 +288,52 @@ public class Manager_UI : MonoBehaviour, IManager {
     //Time Panel - Key Functions
     public void KeyDown_ToggleTimeButon()
     {
+        if (IsScreenCovered())
+        {
+            return;
+        }
         _toggleTimeButton.image.color = _toggleTimeButton.colors.pressedColor;
     }
     public void KeyUp_ToggleTimeButon()
     {
+        if (IsScreenCovered())
+        {
+            return;
+        }
         _toggleTimeButton.image.color = _toggleTimeButton.colors.normalColor;
         Managers.Time.ToggleTime();
     }
     public void KeyDown_IncreaseSpeedButton()
     {
+        if (IsScreenCovered())
+        {
+            return;
+        }
         _increaseSpeedButton.image.color = _increaseSpeedButton.colors.pressedColor;
     }
     public void KeyUp_IncreaseSpeedButton()
     {
+        if (IsScreenCovered())
+        {
+            return;
+        }
         _increaseSpeedButton.image.color = _increaseSpeedButton.colors.normalColor;
         Managers.Time.IncreaseSpeed();
     }
     public void KeyDown_DecreaseSpeedButton()
     {
+        if (IsScreenCovered())
+        {
+            return;
+        }
         _decreaseSpeedButton.image.color = _decreaseSpeedButton.colors.pressedColor;
     }
     public void KeyUp_DecreaseSpeedButton()
     {
+        if (IsScreenCovered())
+        {
+            return;
+        }
         _decreaseSpeedButton.image.color = _decreaseSpeedButton.colors.normalColor;
         Managers.Time.DecreaseSpeed();
     }

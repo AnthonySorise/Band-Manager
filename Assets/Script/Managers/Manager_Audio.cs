@@ -111,15 +111,12 @@ public class Manager_Audio : MonoBehaviour, IManager {
         else{
             spatialBlend = 1;
         }
-
         if(audioClip == null){
             Debug.LogError(go.name + " failed to play audio: " + wav.ToString());
             return;
         }
         AudioSource audioSource = GetAudioSource(go);
-
         bool doesLoop = _channelsThatLoop.Contains(audioChannel);
-
         PlayAudioSource(audioSource, audioClip, audioChannel, spatialBlend, 1, doesLoop);
     }
 }
