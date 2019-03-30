@@ -139,14 +139,13 @@ public class Manager_UI : MonoBehaviour, IManager {
         Debug.Log("Manager_UI started");
     }
 
-    void Update()
-    {
-        UpdateTimePanel();
-    }
 
+    //Cursor
     private void SetCursorToDefault ()
     {
-        Cursor.SetCursor(Managers.Assets.GetPNGTexture(Assets_png.Cursor_Default), Vector2.zero, CursorMode.Auto);
+        Texture2D texture = Managers.Assets.GetPNGTexture(Asset_png.Cursor_Default);
+        Vector2 vector = new Vector2(texture.width / 2, 0);
+        Cursor.SetCursor(texture, vector, CursorMode.Auto);
     }
 
     private void CursorHover_Button( Button button)
@@ -169,13 +168,13 @@ public class Manager_UI : MonoBehaviour, IManager {
     }
     public void Callback_PointerEnter_Button( PointerEventData data)
     {
-        Texture2D texture = Managers.Assets.GetPNGTexture(Assets_png.Cursor_Hover);
+        Texture2D texture = Managers.Assets.GetPNGTexture(Asset_png.Cursor_Hover);
         Vector2 vector = new Vector2(texture.width / 2, 0);
         Cursor.SetCursor(texture, vector, CursorMode.Auto);
     }
     public void Callback_PointerExit_Button(PointerEventData data)
     {
-        Texture2D texture = Managers.Assets.GetPNGTexture(Assets_png.Cursor_Default);
+        Texture2D texture = Managers.Assets.GetPNGTexture(Asset_png.Cursor_Default);
         Vector2 vector = new Vector2(texture.width / 2, 0);
         Cursor.SetCursor(texture, vector, CursorMode.Auto);
     }
@@ -189,30 +188,36 @@ public class Manager_UI : MonoBehaviour, IManager {
     //Main Menu Panel - Key Functions
     public void KeyDown_ToggleMainMenu()
     {
+        OpenMainMenu();
+    }
+    private void OpenMainMenu()
+    {
         Managers.Time.Pause();
         _mainMenuCanvas.gameObject.SetActive(!_mainMenuCanvas.activeSelf);
         SetCursorToDefault();
+        if (_mainMenuCanvas.activeSelf)
+        {
+            Managers.Audio.PlayAudio(Asset_wav.MenuOpen, AudioChannel.UI);
+        }
     }
 
     //Time Panel - Click Functions
     private void Click_ToggleTimeButton()
     {
         Managers.Time.ToggleTime();
-        //prevent selecting the button
-        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(null);//prevent selecting the button
     }
     private void Click_IncreaseSpeedButton()
     {
         Managers.Time.IncreaseSpeed();
-        //prevent selecting the button
-        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(null);//prevent selecting the button
     }
     private void Click_DecreaseSpeedButton()
     {
         Managers.Time.DecreaseSpeed();
-        //prevent selecting the button
-        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(null);//prevent selecting the button
     }
+
     //Time Panel - Key Functions
     public void KeyDown_ToggleTimeButon()
     {
@@ -242,6 +247,12 @@ public class Manager_UI : MonoBehaviour, IManager {
         Managers.Time.DecreaseSpeed();
     }
 
+
+    //UPDATE
+    void Update()
+    {
+        UpdateTimePanel();
+    }
 
     //Time Panel - Update
     private void UpdateTimePanel()

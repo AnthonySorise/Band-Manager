@@ -12,8 +12,8 @@ public class Manager_Time : MonoBehaviour, IManager {
 
     //game speed
     public int CurrentSpeedLevel { get; private set; }
-    public int MaxSpeedLevel { get; private set; }
-    public int MinSpeedLevel { get; private set; }
+    private int _maxSpeedLevel;
+    private int _minSpeedLevel;
     private int _baseMSPerTick;
     private double _speedLevelDenominator;
     private float _secondsToWait;
@@ -29,7 +29,7 @@ public class Manager_Time : MonoBehaviour, IManager {
         _baseMSPerTick = 1000;
         _speedLevelDenominator = 2.5;
         CurrentSpeedLevel = 1;
-        MaxSpeedLevel = 5;
+        _maxSpeedLevel = 5;
 
         //temporary, will need to be initated elsewhere
         CurrentDT = new DateTime(1985, 10, 23, 0, 0, 0);
@@ -57,6 +57,7 @@ public class Manager_Time : MonoBehaviour, IManager {
             {
                 Pause();
             }
+            Managers.Audio.PlayAudio(Asset_wav.TimeToggleClick, AudioChannel.UI);
         }
         else
         {
@@ -130,7 +131,7 @@ public class Manager_Time : MonoBehaviour, IManager {
 
     public void IncreaseSpeed()
     {
-        if (CurrentSpeedLevel < MaxSpeedLevel)
+        if (CurrentSpeedLevel < _maxSpeedLevel)
         {
             float oldSecondsPerTick = MSPerTick() / 1000f;
             CurrentSpeedLevel++;
@@ -139,6 +140,7 @@ public class Manager_Time : MonoBehaviour, IManager {
             {
                 AdjustSecondsToWait(newSecondsPerTick - oldSecondsPerTick);
             }
+            Managers.Audio.PlayAudio(Asset_wav.GenericClick, AudioChannel.UI);
         }
     }
     public void DecreaseSpeed()
@@ -152,6 +154,7 @@ public class Manager_Time : MonoBehaviour, IManager {
             {
                 AdjustSecondsToWait(newSecondsPerTick - oldSecondsPerTick);
             }
+            Managers.Audio.PlayAudio(Asset_wav.GenericClick, AudioChannel.UI);
         }
     }
     private void AdjustSecondsToWait(float adjustment)

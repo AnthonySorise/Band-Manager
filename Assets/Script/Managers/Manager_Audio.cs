@@ -47,11 +47,6 @@ public class Manager_Audio : MonoBehaviour, IManager {
             _go_Channels[(int)channel] = GO_Channel;
         }
 
-        //ASSETS
-		Object[] audioClipArray = Resources.LoadAll("Audio/");
-		foreach (Object clip in audioClipArray){
-			_audioClips.Add(clip.name, clip as AudioClip);
-		}
         
         State = ManagerState.Started;
         Debug.Log("Manager_Audio started...");
@@ -86,17 +81,6 @@ public class Manager_Audio : MonoBehaviour, IManager {
     }
 
     //AUDIO
-    private AudioClip GetAudioClip(string clipName){
-        AudioClip audioClip = null;
-        if(_audioClips.ContainsKey(clipName)){
-            audioClip = _audioClips[clipName];
-        }
-        else{
-            Debug.Log("Audio Clip " + clipName + " doesn't exist");
-        }
-        return audioClip;
-    }
-
     private AudioSource GetAudioSource(GameObject gameObject)
     {
         if (gameObject.GetComponent<AudioSource>() == null)
@@ -117,28 +101,25 @@ public class Manager_Audio : MonoBehaviour, IManager {
         audioSource.Play();
     }
 
-    public void PlayAudio(AudioChannel audioChannel, string trigger, GameObject go = null){
-        string audioClipName;
+    public void PlayAudio(Asset_wav wav, AudioChannel audioChannel, GameObject go = null){
+        AudioClip audioClip = Managers.Assets.GetAudio(wav);
         float spatialBlend;
         if(go == null){
-            audioClipName = audioChannel.ToString().ToLower() + "_" + trigger;
             go = _go_Channels[(int)audioChannel];
             spatialBlend = 0;
         }
         else{
-            audioClipName = audioChannel.ToString().ToLower() + "_" + go.name + "_" + trigger;
             spatialBlend = 1;
         }
 
-        AudioClip audioClip = GetAudioClip(audioClipName);
         if(audioClip == null){
-            Debug.LogError(go.name + " failed to play audio for trigger: " + trigger);
+            Debug.LogError(go.name + " failed to play audio: " + wav.ToString());
             return;
         }
         AudioSource audioSource = GetAudioSource(go);
 
         bool doesLoop = _channelsThatLoop.Contains(audioChannel);
 
-        PlayAudioSource(audioSource, audioClip, audioChannel, 1, spatialBlend, doesLoop);
+        PlayAudioSource(audioSource, audioClip, audioChannel, spatialBlend, 1, doesLoop);
     }
 }
