@@ -14,8 +14,8 @@ public class Manager_Time : MonoBehaviour, IManager {
 
     //game speed
     public int CurrentSpeedLevel { get; private set; }
-    private int _maxSpeedLevel;
     private int _minSpeedLevel;
+    private int _maxSpeedLevel;
     private int _baseMSPerSimMinute;
     private double _speedLevelDenominator;
     private float _secondsToWait;
@@ -30,10 +30,11 @@ public class Manager_Time : MonoBehaviour, IManager {
         _IsDelayedWhileTickProcesses = false;
         _simMinutesPerTick = 11;
         _simMinutesSinceLastTick = 0;
-        _baseMSPerSimMinute = 250;
+        _baseMSPerSimMinute = 100;  //for speedLevel of 0
         _speedLevelDenominator = 2.5;
-        CurrentSpeedLevel = 1;
-        _maxSpeedLevel = 5; //min = 0
+        CurrentSpeedLevel = 0;
+        _minSpeedLevel = -2;
+        _maxSpeedLevel = 4;
 
         //temporary, will need to be initated elsewhere
         CurrentDT = new DateTime(1985, 10, 23, 0, 0, 0);
@@ -84,9 +85,22 @@ public class Manager_Time : MonoBehaviour, IManager {
     private int RealMSPerSimMinute()
     {
         int ms = _baseMSPerSimMinute;
-        for (int i = 0; i < CurrentSpeedLevel; i++)
+        if(CurrentSpeedLevel > 0)
         {
-            ms = Convert.ToInt32(ms / _speedLevelDenominator);
+            for (int i = 0; i < CurrentSpeedLevel; i++)
+            {
+                ms = Convert.ToInt32(ms / _speedLevelDenominator);
+            }
+        }
+        else if(CurrentSpeedLevel < 0)
+        {
+
+        }
+
+
+        for (int i = 0; i > CurrentSpeedLevel; i--)
+        {
+            ms = Convert.ToInt32(ms * _speedLevelDenominator);
         }
         return ms;
     }
@@ -94,8 +108,6 @@ public class Manager_Time : MonoBehaviour, IManager {
     {
         switch (CurrentSpeedLevel)
         {
-            case 3:
-                return 2;
             case 4:
                 return 2;
             case 5:
@@ -125,6 +137,7 @@ public class Manager_Time : MonoBehaviour, IManager {
             else
             {
                 _IsDelayedWhileTickProcesses = true;
+                Debug.Log("Time Delay due to tick processing");
             }
         }
     }
@@ -153,7 +166,7 @@ public class Manager_Time : MonoBehaviour, IManager {
     }
     public void DecreaseSpeed()
     {
-        if (CurrentSpeedLevel > 0)
+        if (CurrentSpeedLevel > _minSpeedLevel)
         {
             CurrentSpeedLevel--;
             Managers.Audio.PlayAudio(Asset_wav.GenericClick, AudioChannel.UI);
