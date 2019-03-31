@@ -155,7 +155,6 @@ public class Manager_UI : MonoBehaviour, IManager {
             Debug.Log("Error: Cannot find Text_ToggleStatus");
             return;
         }
-        UpdateTimePanel(true);
 
         //Cursor
         SetCursorToDefault();
@@ -351,19 +350,25 @@ public class Manager_UI : MonoBehaviour, IManager {
     }
 
     //Time Panel - Update
-    private void UpdateTimePanel(bool isUpdatedWhilePaused = false)
+    private void UpdateTimePanel()
     {
-        if (Managers.Time.IsPaused && !isUpdatedWhilePaused)
+        if (Managers.Time.IsPaused)
         {
             _toggleStatusText.text = "||";
-            return;
         }
         else
         {
             _toggleStatusText.text = Managers.Time.CurrentSpeedLevel.ToString();
-            _timeText.text = Managers.Time.CurrentDT.ToString("h:mm tt");
-            _dayOfWeekText.text = Managers.Time.CurrentDT.DayOfWeek.ToString();
-            _dateText.text = Managers.Time.CurrentDT.ToString("MMMM/d/yyyy");
         }
+
+        var timeString = Managers.Time.CurrentDT.ToString("h:mm tt");
+        if(!(timeString.Contains("10:") || timeString.Contains("11:") || timeString.Contains("12:")))
+        {
+            timeString = "".PadLeft(2) + timeString;
+        }
+        _timeText.text = timeString;
+
+        _dayOfWeekText.text = Managers.Time.CurrentDT.DayOfWeek.ToString();
+        _dateText.text = Managers.Time.CurrentDT.ToString("MMMM/d/yyyy");
     }
 }

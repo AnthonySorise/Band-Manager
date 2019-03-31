@@ -78,6 +78,7 @@ public class Manager_Time : MonoBehaviour, IManager {
     public void Pause()
     {
         IsPaused = true;
+        StopCoroutine("WaitAndIncrementDT");
     }
 
     private int RealMSPerSimMinute()
