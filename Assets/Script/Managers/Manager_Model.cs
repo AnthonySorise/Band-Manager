@@ -7,11 +7,15 @@
 
 public class Manager_Model : MonoBehaviour, IManager {
 	public ManagerState State {get; private set;}
-	
+
+    public bool IsProcessingTick { get; private set; }
+
 	public void Startup()
     {
 		State = ManagerState.Initializing;
 		Debug.Log("Manager_Model initializing...");
+
+        IsProcessingTick = false;
 
 		State = ManagerState.Started;
         Debug.Log("Manager_Model started");
@@ -19,6 +23,19 @@ public class Manager_Model : MonoBehaviour, IManager {
 
     public void SimulateTick()
     {
+        IsProcessingTick = true;
 
+
+
+
+
+
+
+
+
+
+
+
+        IsProcessingTick = false;
     }
 }

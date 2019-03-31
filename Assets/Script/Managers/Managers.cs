@@ -29,6 +29,8 @@ public class Managers : MonoBehaviour {
     private List<IManager> _startSequence;//loads asynchronously 
     private List<IManager> _postStartSequence;//loads first and synchronously
 
+    private bool _failed;
+
     //Awake
     void Awake(){
         DontDestroyOnLoad(gameObject);
@@ -69,13 +71,16 @@ public class Managers : MonoBehaviour {
             if(manager.State == ManagerState.Error)
             {
                 Debug.Log("Manager startup halted: " + manager.ToString() + " failed to initialize");
+                _failed = true;
                 return;
             }
         }
 
         //asynchronously start managers in _startsSequence
-        StartCoroutine(StartupManagers());
-
+        if (!_failed)
+        {
+            StartCoroutine(StartupManagers());
+        }
     }
 
     private IEnumerator StartupManagers(){
@@ -93,6 +98,7 @@ public class Managers : MonoBehaviour {
             foreach (IManager manager in _startSequence){
                 if(manager.State == ManagerState.Error){
                     Debug.Log("Manager startup halted: " + manager.ToString() + " failed to initialize");
+                    _failed = true;
                     yield break;
                 }
                 
@@ -111,9 +117,17 @@ public class Managers : MonoBehaviour {
             if (manager.State == ManagerState.Error)
             {
                 Debug.Log("Manager startup halted: " + manager.ToString() + " failed to initialize");
-                yield return null;
+                _failed = true;
             }
         }
-        Debug.Log("All managers started");
+
+        if (!_failed)
+        {
+            Debug.Log("All managers started");
+        }
+        else
+        {
+            Debug.Log("Managers failed to initialize");
+        }
     }
 }
