@@ -47,6 +47,11 @@ public class Manager_Input : MonoBehaviour, IManager {
     }
 
 	private void Update() {
+        if (State != ManagerState.Started)
+        {
+            return;
+        }
+
 		foreach(KeyCode key in _keyMap.Keys){
             if (Input.GetKeyDown(key))
             {

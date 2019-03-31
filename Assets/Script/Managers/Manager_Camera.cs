@@ -15,6 +15,10 @@ public class Manager_Camera : MonoBehaviour, IManager {
 
     public void Update()
     {
+        if (State != ManagerState.Started)
+        {
+            return;
+        }
         SetCameraToResolution();
     }
 

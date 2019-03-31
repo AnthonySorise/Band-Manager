@@ -6,7 +6,7 @@ public class Manager_UI : MonoBehaviour, IManager {
 	public ManagerState State {get; private set;}
 
     //Bools
-    bool isMainMenuOpen;
+    bool IsMainMenuOpen;
 
     //Screen Cover Canvas
     private GameObject _screenCoverCanvasGO;
@@ -137,6 +137,7 @@ public class Manager_UI : MonoBehaviour, IManager {
         if (GameObject.Find("Text_Date") != null)
         {
             _dateText = GameObject.Find("Text_Date").GetComponent<Text>();
+
         }
         else
         {
@@ -154,7 +155,7 @@ public class Manager_UI : MonoBehaviour, IManager {
             Debug.Log("Error: Cannot find Text_ToggleStatus");
             return;
         }
-
+        UpdateTimePanel(true);
 
         //Cursor
         SetCursorToDefault();
@@ -342,13 +343,17 @@ public class Manager_UI : MonoBehaviour, IManager {
     //UPDATE
     void Update()
     {
+        if (State != ManagerState.Started)
+        {
+            return;
+        }
         UpdateTimePanel();
     }
 
     //Time Panel - Update
-    private void UpdateTimePanel()
+    private void UpdateTimePanel(bool isUpdatedWhilePaused = false)
     {
-        if (Managers.Time.IsPaused)
+        if (Managers.Time.IsPaused && !isUpdatedWhilePaused)
         {
             _toggleStatusText.text = "||";
             return;

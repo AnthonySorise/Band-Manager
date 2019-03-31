@@ -25,8 +25,9 @@ public class Managers : MonoBehaviour {
     public static Manager_Input Input {get; private set;}
     public static Manager_Data Data {get; private set;}
 
-    private List<IManager> _preStartsSequence;//loads first and synchronously
+    private List<IManager> _preStartSequence;//loads first and synchronously
     private List<IManager> _startSequence;//loads asynchronously 
+    private List<IManager> _postStartSequence;//loads first and synchronously
 
     //Awake
     void Awake(){
@@ -42,7 +43,7 @@ public class Managers : MonoBehaviour {
         Input = GetComponent<Manager_Input>();
         Data = GetComponent<Manager_Data>();
 
-        _preStartsSequence = new List<IManager>
+        _preStartSequence = new List<IManager>
         {
             Assets
         };
@@ -51,7 +52,10 @@ public class Managers : MonoBehaviour {
             Model,
             Time,
             Audio,
-            Camera,
+            Camera
+        };
+        _postStartSequence = new List<IManager>
+        {
             GO,
             UI,
             Input,
@@ -59,7 +63,7 @@ public class Managers : MonoBehaviour {
         };
 
         //synchronously start managers in _preStartsSequence
-        foreach(IManager manager in _preStartsSequence)
+        foreach (IManager manager in _preStartSequence)
         {
             manager.Startup();
             if(manager.State == ManagerState.Error)
@@ -71,6 +75,7 @@ public class Managers : MonoBehaviour {
 
         //asynchronously start managers in _startsSequence
         StartCoroutine(StartupManagers());
+
     }
 
     private IEnumerator StartupManagers(){
@@ -79,12 +84,12 @@ public class Managers : MonoBehaviour {
         }
         yield return null;
 
-        int numToStart = _startSequence.Count + _preStartsSequence.Count;
+        int numToStartNextGroup = _startSequence.Count + _preStartSequence.Count;
         int numStarted = 0;
         //loop until all managers have started
-        while(numToStart > numStarted){
+        while(numToStartNextGroup > numStarted){
             int numStartedAtLoop = numStarted;
-            numStarted = _preStartsSequence.Count;
+            numStarted = _preStartSequence.Count;
             foreach (IManager manager in _startSequence){
                 if(manager.State == ManagerState.Error){
                     Debug.Log("Manager startup halted: " + manager.ToString() + " failed to initialize");
@@ -95,12 +100,19 @@ public class Managers : MonoBehaviour {
                     numStarted ++;
                 }
             }
-            //if new manager was started this loop
-            if (numStarted > numStartedAtLoop){
-                Debug.Log(numStarted + " out of " + numToStart + " managers started");
-            }
             //pause for one frame before the next loop
             yield return null;
+        }
+
+        //synchronously start managers in _postStartsSequence
+        foreach (IManager manager in _postStartSequence)
+        {
+            manager.Startup();
+            if (manager.State == ManagerState.Error)
+            {
+                Debug.Log("Manager startup halted: " + manager.ToString() + " failed to initialize");
+                yield return null;
+            }
         }
         Debug.Log("All managers started");
     }

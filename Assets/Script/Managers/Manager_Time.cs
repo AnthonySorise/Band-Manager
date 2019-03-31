@@ -26,6 +26,7 @@ public class Manager_Time : MonoBehaviour, IManager {
 
         IsPaused = true;
         _simMinutesPerTick = 10;
+        _simMinutesSinceLastTick = 0;
         _baseMSPerTick = 1000;
         _speedLevelDenominator = 2.5;
         CurrentSpeedLevel = 1;
@@ -65,7 +66,7 @@ public class Manager_Time : MonoBehaviour, IManager {
         }
     }
 
-    public void PlayTick()
+    private void PlayTick()
     {
         if (!IsPaused)
         {
