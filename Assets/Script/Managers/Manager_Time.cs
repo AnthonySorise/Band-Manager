@@ -108,10 +108,10 @@ public class Manager_Time : MonoBehaviour, IManager {
     {
         switch (CurrentSpeedLevel)
         {
-            case 4:
+            case 3:
                 return 2;
-            case 5:
-                return 7;
+            case 4:
+                return 3;
             default:
                 return 1;
         }
