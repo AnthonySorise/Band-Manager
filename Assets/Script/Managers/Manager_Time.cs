@@ -34,7 +34,7 @@ public class Manager_Time : MonoBehaviour, IManager {
         _speedLevelDenominator = 2.5;
         CurrentSpeedLevel = 0;
         _minSpeedLevel = -2;
-        _maxSpeedLevel = 4;
+        _maxSpeedLevel = 4;//NumMinutesToIncrementDt() should be calibrated if adjustments to speed variables are made
 
         //temporary, will need to be initated elsewhere
         CurrentDT = new DateTime(1985, 10, 23, 0, 0, 0);
@@ -96,8 +96,6 @@ public class Manager_Time : MonoBehaviour, IManager {
         {
 
         }
-
-
         for (int i = 0; i > CurrentSpeedLevel; i--)
         {
             ms = Convert.ToInt32(ms * _speedLevelDenominator);

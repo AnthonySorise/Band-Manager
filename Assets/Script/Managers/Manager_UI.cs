@@ -1,12 +1,14 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using System.Collections;
 
 public class Manager_UI : MonoBehaviour, IManager {
 	public ManagerState State {get; private set;}
 
-    //Bools
-    bool IsMainMenuOpen;
+    //Global Variables
+    private float _timeToInitiateHoldBehavior = 0.5f;
+    private float _timeToRepeatHoldBehavior = 0.25f;
 
     //Screen Cover Canvas
     private GameObject _screenCoverCanvasGO;
@@ -222,15 +224,15 @@ public class Manager_UI : MonoBehaviour, IManager {
     }
 
     //Screen Cover
-    public bool IsScreenCovered()
+    private bool IsScreenCovered()
     {
         return _screenCoverCanvasGO.activeSelf;
     }
-    public void ScreenCover()
+    private void ScreenCover()
     {
         _screenCoverCanvasGO.SetActive(true);
     }
-    public void ScreenUncover()
+    private void ScreenUncover()
     {
         _screenCoverCanvasGO.SetActive(false);
     }
@@ -268,24 +270,12 @@ public class Manager_UI : MonoBehaviour, IManager {
         SetCursorToDefault();
     }
 
-    //Time Panel - Click Functions
+    //Time Panel - Toggle Time
     private void Click_ToggleTimeButton()
     {
         Managers.Time.ToggleTime();
         EventSystem.current.SetSelectedGameObject(null);//prevent selecting the button
     }
-    private void Click_IncreaseSpeedButton()
-    {
-        Managers.Time.IncreaseSpeed();
-        EventSystem.current.SetSelectedGameObject(null);//prevent selecting the button
-    }
-    private void Click_DecreaseSpeedButton()
-    {
-        Managers.Time.DecreaseSpeed();
-        EventSystem.current.SetSelectedGameObject(null);//prevent selecting the button
-    }
-
-    //Time Panel - Key Functions
     public void KeyDown_ToggleTimeButon()
     {
         if (IsScreenCovered())
@@ -303,6 +293,20 @@ public class Manager_UI : MonoBehaviour, IManager {
         _toggleTimeButton.image.color = _toggleTimeButton.colors.normalColor;
         Managers.Time.ToggleTime();
     }
+
+    //Time Panel - Increase Speed Button
+    private void Click_IncreaseSpeedButton()
+    {
+        if (!HoldingIncreaseSpeedButtonStarted)
+        {
+            Managers.Time.IncreaseSpeed();
+        }
+        else
+        {
+            HoldingIncreaseSpeedButtonStarted = false;
+        }
+        EventSystem.current.SetSelectedGameObject(null);//prevent selecting the button
+    }
     public void KeyDown_IncreaseSpeedButton()
     {
         if (IsScreenCovered())
@@ -311,14 +315,57 @@ public class Manager_UI : MonoBehaviour, IManager {
         }
         _increaseSpeedButton.image.color = _increaseSpeedButton.colors.pressedColor;
     }
+    public void Hold_IncreaseSpeedButton()
+    {
+        if (!IsRunningIncreaseSpeedButtonBeingHeld)
+        {
+            StartCoroutine("IncreaseSpeedButtonBeingHeld");
+        }
+    }
+    private bool IsRunningIncreaseSpeedButtonBeingHeld;
+    private bool HoldingIncreaseSpeedButtonStarted;
+    IEnumerator IncreaseSpeedButtonBeingHeld()
+    {
+        IsRunningIncreaseSpeedButtonBeingHeld = true;
+        float timeToWait = _timeToRepeatHoldBehavior;
+        if (!HoldingIncreaseSpeedButtonStarted)
+        {
+            timeToWait = _timeToInitiateHoldBehavior;
+        }
+        yield return new WaitForSecondsRealtime(timeToWait);
+        HoldingIncreaseSpeedButtonStarted = true;
+        Managers.Time.IncreaseSpeed();
+        IsRunningIncreaseSpeedButtonBeingHeld = false;
+    }
     public void KeyUp_IncreaseSpeedButton()
     {
+        _increaseSpeedButton.image.color = _increaseSpeedButton.colors.normalColor;
+        StopCoroutine("IncreaseSpeedButtonBeingHeld");
+        IsRunningIncreaseSpeedButtonBeingHeld = false;
+        if (HoldingIncreaseSpeedButtonStarted)
+        {
+            HoldingIncreaseSpeedButtonStarted = false;
+            return;
+        }
         if (IsScreenCovered())
         {
             return;
         }
-        _increaseSpeedButton.image.color = _increaseSpeedButton.colors.normalColor;
         Managers.Time.IncreaseSpeed();
+    }
+
+    //Time Panel - Decrease Speed Button
+    private void Click_DecreaseSpeedButton()
+    {
+        if (!HoldingDecreaseSpeedButtonStarted)
+        {
+            Managers.Time.DecreaseSpeed();
+        }
+        else
+        {
+            HoldingDecreaseSpeedButtonStarted = false;
+        }
+        EventSystem.current.SetSelectedGameObject(null);//prevent selecting the button
     }
     public void KeyDown_DecreaseSpeedButton()
     {
@@ -328,25 +375,107 @@ public class Manager_UI : MonoBehaviour, IManager {
         }
         _decreaseSpeedButton.image.color = _decreaseSpeedButton.colors.pressedColor;
     }
+    public void Hold_DecreaseSpeedButton()
+    {
+        if (!IsRunningDecreaseSpeedButtonBeingHeld)
+        {
+            StartCoroutine("DecreaseSpeedButtonBeingHeld");
+        }
+    }
+    private bool IsRunningDecreaseSpeedButtonBeingHeld;
+    private bool HoldingDecreaseSpeedButtonStarted;
+    IEnumerator DecreaseSpeedButtonBeingHeld()
+    {
+        IsRunningDecreaseSpeedButtonBeingHeld = true;
+        float timeToWait = _timeToRepeatHoldBehavior;
+        if (!HoldingDecreaseSpeedButtonStarted)
+        {
+            timeToWait = _timeToInitiateHoldBehavior;
+        }
+        yield return new WaitForSecondsRealtime(timeToWait);
+        HoldingDecreaseSpeedButtonStarted = true;
+        Managers.Time.DecreaseSpeed();
+        IsRunningDecreaseSpeedButtonBeingHeld = false;
+    }
     public void KeyUp_DecreaseSpeedButton()
     {
+        _decreaseSpeedButton.image.color = _decreaseSpeedButton.colors.normalColor;
+        StopCoroutine("DecreaseSpeedButtonBeingHeld");
+        IsRunningDecreaseSpeedButtonBeingHeld = false;
+        if (HoldingDecreaseSpeedButtonStarted)
+        {
+            HoldingDecreaseSpeedButtonStarted = false;
+            return;
+        }
         if (IsScreenCovered())
         {
             return;
         }
-        _decreaseSpeedButton.image.color = _decreaseSpeedButton.colors.normalColor;
         Managers.Time.DecreaseSpeed();
     }
 
-
-    //UPDATE
-    void Update()
+    //OnGUI
+    void OnGUI()
     {
-        if (State != ManagerState.Started)
-        {
-            return;
-        }
+        //Update
         UpdateTimePanel();
+
+        //mouse listeners
+        string gameObjectSelected = "";
+        if (EventSystem.current.currentSelectedGameObject && !string.IsNullOrEmpty(EventSystem.current.currentSelectedGameObject.name))
+        {
+            gameObjectSelected = EventSystem.current.currentSelectedGameObject.name;
+        }
+        if (gameObjectSelected != "")
+        {
+            //left mouse Down listener
+            if (Input.GetMouseButtonDown(0))
+            {
+            }
+
+            //left mouse hold listener
+            if (Input.GetMouseButton(0))
+            {
+                switch (gameObjectSelected)
+                {
+                    case "Button_IncreaseSpeed":
+                        if (!IsRunningIncreaseSpeedButtonBeingHeld)
+                        {
+                            StartCoroutine("IncreaseSpeedButtonBeingHeld");
+                        }
+                        break;
+                    case "Button_DecreaseSpeed":
+                        if (!IsRunningDecreaseSpeedButtonBeingHeld)
+                        {
+                            StartCoroutine("DecreaseSpeedButtonBeingHeld");
+                        }
+                        break;
+                    default:
+                        return;
+                }
+            }
+
+            //left mouse up listener
+            if (Input.GetMouseButtonUp(0))
+            {
+                switch (gameObjectSelected)
+                {
+                    case "Button_IncreaseSpeed":
+                        StopCoroutine("IncreaseSpeedButtonBeingHeld");
+                        IsRunningIncreaseSpeedButtonBeingHeld = false;
+
+                        break;
+                    case "Button_DecreaseSpeed":
+                        StopCoroutine("DecreaseSpeedButtonBeingHeld");
+                        IsRunningDecreaseSpeedButtonBeingHeld = false;
+                        break;
+                    default:
+                        return;
+                }
+
+            }
+        }
+
     }
 
     //Time Panel - Update
