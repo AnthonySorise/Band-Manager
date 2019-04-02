@@ -7,14 +7,22 @@ public class Manager_UI : MonoBehaviour, IManager {
 	public ManagerState State {get; private set;}
 
     //Global Variables
-    private float _timeToInitiateHoldBehavior = 0.5f;
-    private float _timeToRepeatHoldBehavior = 0.25f;
+    private float _timeToInitiateHoldBehavior = 0.4f;
+    private float _timeToRepeatHoldBehavior = 0.2f;
+
+
+
+    //Menu Canvas
+    private GameObject _mainMenuCanvasGO;
+
+    //Popus Canvas that Covers
+    private GameObject _popupCanvasThatCovers;
 
     //Screen Cover Canvas
     private GameObject _screenCoverCanvasGO;
 
-    //Menu Canvas
-    private GameObject _mainMenuCanvasGO;
+    //Popup Canvas
+    private GameObject _popupCanvas;
 
     //Game UI Canvas
     private GameObject _gameUIGO;
@@ -33,6 +41,34 @@ public class Manager_UI : MonoBehaviour, IManager {
 		State = ManagerState.Initializing;
 		Debug.Log("Manager_UI initializing...");
 
+        //Main Menu Canvas - Initiate
+        if (GameObject.Find("Canvas_MainMenu") != null)
+        {
+            _mainMenuCanvasGO = GameObject.Find("Canvas_MainMenu");
+            _mainMenuCanvasGO.gameObject.SetActive(false);
+            SetCanvasToBeMenuLayer(_mainMenuCanvasGO);
+        }
+        else
+        {
+            State = ManagerState.Error;
+            Debug.Log("Error: Cannot find Canvas_MainMenu");
+            return;
+        }
+
+        //Popup Canvas that Covers - Initiate
+        if (GameObject.Find("Canvas_PopupsThatCover") != null)
+        {
+            _popupCanvasThatCovers = GameObject.Find("Canvas_PopupsThatCover");
+            _popupCanvasThatCovers.gameObject.SetActive(true);
+            SetCanvasToBeUncoverable(_popupCanvasThatCovers);
+        }
+        else
+        {
+            State = ManagerState.Error;
+            Debug.Log("Error: Cannot find Canvas_PopupsThatCover");
+            return;
+        }
+
         //Screen Cover Canvas - Initiate
         if (GameObject.Find("Canvas_ScreenCover") != null)
         {
@@ -47,17 +83,17 @@ public class Manager_UI : MonoBehaviour, IManager {
             return;
         }
 
-        //Main Menu Canvas - Initiate
-        if (GameObject.Find("Canvas_MainMenu") != null)
+        //Popup Canvas - Initiate
+        if (GameObject.Find("Canvas_Popups") != null)
         {
-            _mainMenuCanvasGO = GameObject.Find("Canvas_MainMenu");
-            _mainMenuCanvasGO.gameObject.SetActive(false);
-            SetCanvasToBeUncoverable(_mainMenuCanvasGO);
+            _popupCanvasThatCovers = GameObject.Find("Canvas_Popups");
+            _popupCanvasThatCovers.gameObject.SetActive(true);
+            SetCanvasToBeCoverable(_popupCanvasThatCovers);
         }
         else
         {
             State = ManagerState.Error;
-            Debug.Log("Error: Cannot find Canvas_MainMenu");
+            Debug.Log("Error: Cannot find Canvas_PopupsThatCover");
             return;
         }
 
@@ -240,14 +276,19 @@ public class Manager_UI : MonoBehaviour, IManager {
     {
         canvasGO.GetComponent<Canvas>().sortingOrder = 1;
     }
-    private void SetCanvasToBeUncoverable(GameObject canvasGO)
-    {
-        canvasGO.GetComponent<Canvas>().sortingOrder = 3;
-    }
     private void SetCanvasToBeTheCover(GameObject canvasGO)
     {
         canvasGO.GetComponent<Canvas>().sortingOrder = 2;
     }
+    private void SetCanvasToBeUncoverable(GameObject canvasGO)
+    {
+        canvasGO.GetComponent<Canvas>().sortingOrder = 3;
+    }
+    private void SetCanvasToBeMenuLayer(GameObject canvasGO)
+    {
+        canvasGO.GetComponent<Canvas>().sortingOrder = 4;
+    }
+
 
     //Main Menu Panel - Key Functions
     public void KeyDown_ToggleMainMenu()
@@ -260,12 +301,7 @@ public class Manager_UI : MonoBehaviour, IManager {
         _mainMenuCanvasGO.gameObject.SetActive(!_mainMenuCanvasGO.activeSelf);
         if (_mainMenuCanvasGO.activeSelf)
         {
-            ScreenCover();
             Managers.Audio.PlayAudio(Asset_wav.MenuOpen, AudioChannel.UI);
-        }
-        else
-        {
-            ScreenUncover();
         }
         SetCursorToDefault();
     }
@@ -500,4 +536,13 @@ public class Manager_UI : MonoBehaviour, IManager {
         _dayOfWeekText.text = Managers.Time.CurrentDT.DayOfWeek.ToString();
         _dateText.text = Managers.Time.CurrentDT.ToString("MMMM/d/yyyy");
     }
+
+
+    public void CreatePopup()
+    {
+
+
+
+    }
+
 }
