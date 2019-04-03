@@ -10,8 +10,21 @@ public class Manager_UI : MonoBehaviour, IManager {
     private float _timeToInitiateHoldBehavior = 0.4f;
     private float _timeToRepeatHoldBehavior = 0.2f;
 
+
+
+
     //Game UI Canvas
     private GameObject _gameUICoverableGO;
+
+        //Time Panel
+        private GameObject _timeCanvas;
+        public Button _toggleTimeButton;
+        public Button _increaseSpeedButton;
+        public Button _decreaseSpeedButton;
+        private Text _timeText;
+        private Text _dayOfWeekText;
+        private Text _dateText;
+        private Text _toggleStatusText;
 
     //Popus Canvas that Covers
     private GameObject _popupCanvasCoverableGO;
@@ -31,106 +44,10 @@ public class Manager_UI : MonoBehaviour, IManager {
 
 
 
-
-
-
-
-
-    //Time Panel
-    private GameObject _timeCanvas;
-    public Button _toggleTimeButton;
-    public Button _increaseSpeedButton;
-    public Button _decreaseSpeedButton;
-    private Text _timeText;
-    private Text _dayOfWeekText;
-    private Text _dateText;
-    private Text _toggleStatusText;
-
     public void Startup(){
 		State = ManagerState.Initializing;
 		Debug.Log("Manager_UI initializing...");
 
-        //Time Panel
-        if (GameObject.Find("Panel_Time") != null)
-        {
-            _timeCanvas = GameObject.Find("Panel_Time");
-        }
-        else
-        {
-            State = ManagerState.Error;
-            Debug.Log("Error: Cannot find Panel_Time");
-            return;
-        }
-        if (GameObject.Find("Button_ToggleTime") != null)
-        {
-            _toggleTimeButton = GameObject.Find("Button_ToggleTime").GetComponent<Button>();
-        }
-        else
-        {
-            State = ManagerState.Error;
-            Debug.Log("Error: Cannot find Button_ToggleTime");
-            return;
-        }
-        if (GameObject.Find("Button_IncreaseSpeed") != null)
-        {
-            _increaseSpeedButton = GameObject.Find("Button_IncreaseSpeed").GetComponent<Button>();
-        }
-        else
-        {
-            State = ManagerState.Error;
-            Debug.Log("Error: Cannot find Button_IncreaseSpeed");
-            return;
-        }
-        if (GameObject.Find("Button_DecreaseSpeed") != null)
-        {
-            _decreaseSpeedButton = GameObject.Find("Button_DecreaseSpeed").GetComponent<Button>();
-        }
-        else
-        {
-            State = ManagerState.Error;
-            Debug.Log("Error: Cannot find Button_DecreaseSpeed");
-            return;
-        }
-        if (GameObject.Find("Text_DayOfWeek") != null)
-        {
-            _dayOfWeekText = GameObject.Find("Text_DayOfWeek").GetComponent<Text>();
-        }
-        else
-        {
-            State = ManagerState.Error;
-            Debug.Log("Error: Cannot find Text_DayOfWeek");
-            return;
-        }
-        if (GameObject.Find("Text_Time") != null)
-        {
-            _timeText = GameObject.Find("Text_Time").GetComponent<Text>();
-        }
-        else
-        {
-            State = ManagerState.Error;
-            Debug.Log("Error: Cannot find Text_Time");
-            return;
-        }
-        if (GameObject.Find("Text_Date") != null)
-        {
-            _dateText = GameObject.Find("Text_Date").GetComponent<Text>();
-        }
-        else
-        {
-            State = ManagerState.Error;
-            Debug.Log("Error: Cannot find Text_Date");
-            return;
-        }
-        if (GameObject.Find("Text_ToggleStatus") != null)
-        {
-            _toggleStatusText = GameObject.Find("Text_ToggleStatus").GetComponent<Text>();
-        }
-        else
-        {
-            State = ManagerState.Error;
-            Debug.Log("Error: Cannot find Text_ToggleStatus");
-            return;
-        }
 
         //Canvas_GameUI_Coverable
         if (GameObject.Find("Canvas_GameUI_Coverable") != null)
@@ -145,6 +62,88 @@ public class Manager_UI : MonoBehaviour, IManager {
             Debug.Log("Error: Cannot find Canvas_GameUI");
             return;
         }
+
+            //Time Panel
+            if (GameObject.Find("Panel_Time") != null)
+            {
+                _timeCanvas = GameObject.Find("Panel_Time");
+            }
+            else
+            {
+                State = ManagerState.Error;
+                Debug.Log("Error: Cannot find Panel_Time");
+                return;
+            }
+            if (GameObject.Find("Button_ToggleTime") != null)
+            {
+                _toggleTimeButton = GameObject.Find("Button_ToggleTime").GetComponent<Button>();
+            }
+            else
+            {
+                State = ManagerState.Error;
+                Debug.Log("Error: Cannot find Button_ToggleTime");
+                return;
+            }
+            if (GameObject.Find("Button_IncreaseSpeed") != null)
+            {
+                _increaseSpeedButton = GameObject.Find("Button_IncreaseSpeed").GetComponent<Button>();
+            }
+            else
+            {
+                State = ManagerState.Error;
+                Debug.Log("Error: Cannot find Button_IncreaseSpeed");
+                return;
+            }
+            if (GameObject.Find("Button_DecreaseSpeed") != null)
+            {
+                _decreaseSpeedButton = GameObject.Find("Button_DecreaseSpeed").GetComponent<Button>();
+            }
+            else
+            {
+                State = ManagerState.Error;
+                Debug.Log("Error: Cannot find Button_DecreaseSpeed");
+                return;
+            }
+            if (GameObject.Find("Text_DayOfWeek") != null)
+            {
+                _dayOfWeekText = GameObject.Find("Text_DayOfWeek").GetComponent<Text>();
+            }
+            else
+            {
+                State = ManagerState.Error;
+                Debug.Log("Error: Cannot find Text_DayOfWeek");
+                return;
+            }
+            if (GameObject.Find("Text_Time") != null)
+            {
+                _timeText = GameObject.Find("Text_Time").GetComponent<Text>();
+            }
+            else
+            {
+                State = ManagerState.Error;
+                Debug.Log("Error: Cannot find Text_Time");
+                return;
+            }
+            if (GameObject.Find("Text_Date") != null)
+            {
+                _dateText = GameObject.Find("Text_Date").GetComponent<Text>();
+            }
+            else
+            {
+                State = ManagerState.Error;
+                Debug.Log("Error: Cannot find Text_Date");
+                return;
+            }
+            if (GameObject.Find("Text_ToggleStatus") != null)
+            {
+                _toggleStatusText = GameObject.Find("Text_ToggleStatus").GetComponent<Text>();
+            }
+            else
+            {
+                State = ManagerState.Error;
+                Debug.Log("Error: Cannot find Text_ToggleStatus");
+                return;
+            }
 
         //Canvas_Popups_Coverable
         if (GameObject.Find("Canvas_Popups_Coverable") != null)
