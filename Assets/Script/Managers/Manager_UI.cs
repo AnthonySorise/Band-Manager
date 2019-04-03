@@ -17,7 +17,7 @@ public class Manager_UI : MonoBehaviour, IManager {
     private GameObject _gameUICoverableGO;
 
         //Time Panel
-        private GameObject _timeCanvas;
+        private GameObject _timePanelGO;
         public Button _toggleTimeButton;
         public Button _increaseSpeedButton;
         public Button _decreaseSpeedButton;
@@ -66,7 +66,7 @@ public class Manager_UI : MonoBehaviour, IManager {
             //Time Panel
             if (GameObject.Find("Panel_Time") != null)
             {
-                _timeCanvas = GameObject.Find("Panel_Time");
+                _timePanelGO = GameObject.Find("Panel_Time");
             }
             else
             {
@@ -216,7 +216,7 @@ public class Manager_UI : MonoBehaviour, IManager {
         SetCursorToDefault();
 
         Button[] mainMenuButtons = _mainMenuCanvasGO.GetComponentsInChildren<Button>(true);
-        Button[] timePanelButtons = _timeCanvas.GetComponentsInChildren<Button>(true);
+        Button[] timePanelButtons = _timePanelGO.GetComponentsInChildren<Button>(true);
 
         CursorHover_Button(mainMenuButtons);
         CursorHover_Button(timePanelButtons);
