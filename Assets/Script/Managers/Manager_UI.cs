@@ -10,22 +10,31 @@ public class Manager_UI : MonoBehaviour, IManager {
     private float _timeToInitiateHoldBehavior = 0.4f;
     private float _timeToRepeatHoldBehavior = 0.2f;
 
-
-
-    //Menu Canvas
-    private GameObject _mainMenuCanvasGO;
+    //Game UI Canvas
+    private GameObject _gameUICoverableGO;
 
     //Popus Canvas that Covers
-    private GameObject _popupCanvasThatCovers;
+    private GameObject _popupCanvasCoverableGO;
 
     //Screen Cover Canvas
     private GameObject _screenCoverCanvasGO;
 
-    //Popup Canvas
-    private GameObject _popupCanvas;
-
     //Game UI Canvas
     private GameObject _gameUIGO;
+
+    //Popup Canvas
+    private GameObject _popupCanvasGO;
+
+    //Menu Canvas
+    private GameObject _mainMenuCanvasGO;
+
+
+
+
+
+
+
+
 
     //Time Panel
     private GameObject _timeCanvas;
@@ -41,77 +50,7 @@ public class Manager_UI : MonoBehaviour, IManager {
 		State = ManagerState.Initializing;
 		Debug.Log("Manager_UI initializing...");
 
-        //Main Menu Canvas - Initiate
-        if (GameObject.Find("Canvas_MainMenu") != null)
-        {
-            _mainMenuCanvasGO = GameObject.Find("Canvas_MainMenu");
-            _mainMenuCanvasGO.gameObject.SetActive(false);
-            SetCanvasToBeMenuLayer(_mainMenuCanvasGO);
-        }
-        else
-        {
-            State = ManagerState.Error;
-            Debug.Log("Error: Cannot find Canvas_MainMenu");
-            return;
-        }
-
-        //Popup Canvas that Covers - Initiate
-        if (GameObject.Find("Canvas_PopupsThatCover") != null)
-        {
-            _popupCanvasThatCovers = GameObject.Find("Canvas_PopupsThatCover");
-            _popupCanvasThatCovers.gameObject.SetActive(true);
-            SetCanvasToBeUncoverable(_popupCanvasThatCovers);
-        }
-        else
-        {
-            State = ManagerState.Error;
-            Debug.Log("Error: Cannot find Canvas_PopupsThatCover");
-            return;
-        }
-
-        //Screen Cover Canvas - Initiate
-        if (GameObject.Find("Canvas_ScreenCover") != null)
-        {
-            _screenCoverCanvasGO = GameObject.Find("Canvas_ScreenCover");
-            _screenCoverCanvasGO.gameObject.SetActive(false);
-            SetCanvasToBeTheCover(_screenCoverCanvasGO);
-        }
-        else
-        {
-            State = ManagerState.Error;
-            Debug.Log("Error: Cannot find Canvas_ScreenCover");
-            return;
-        }
-
-        //Popup Canvas - Initiate
-        if (GameObject.Find("Canvas_Popups") != null)
-        {
-            _popupCanvasThatCovers = GameObject.Find("Canvas_Popups");
-            _popupCanvasThatCovers.gameObject.SetActive(true);
-            SetCanvasToBeCoverable(_popupCanvasThatCovers);
-        }
-        else
-        {
-            State = ManagerState.Error;
-            Debug.Log("Error: Cannot find Canvas_PopupsThatCover");
-            return;
-        }
-
-        //Game UI Canvas - Initiate
-        if (GameObject.Find("Canvas_GameUI") != null)
-        {
-            _gameUIGO = GameObject.Find("Canvas_GameUI");
-            _gameUIGO.gameObject.SetActive(true);
-            SetCanvasToBeCoverable(_gameUIGO);
-        }
-        else
-        {
-            State = ManagerState.Error;
-            Debug.Log("Error: Cannot find Canvas_GameUI");
-            return;
-        }
-
-        //Time Panel - Initiate
+        //Time Panel
         if (GameObject.Find("Panel_Time") != null)
         {
             _timeCanvas = GameObject.Find("Panel_Time");
@@ -175,7 +114,6 @@ public class Manager_UI : MonoBehaviour, IManager {
         if (GameObject.Find("Text_Date") != null)
         {
             _dateText = GameObject.Find("Text_Date").GetComponent<Text>();
-
         }
         else
         {
@@ -193,6 +131,87 @@ public class Manager_UI : MonoBehaviour, IManager {
             Debug.Log("Error: Cannot find Text_ToggleStatus");
             return;
         }
+
+        //Canvas_GameUI_Coverable
+        if (GameObject.Find("Canvas_GameUI_Coverable") != null)
+        {
+            _gameUICoverableGO = GameObject.Find("Canvas_GameUI_Coverable");
+            _gameUICoverableGO.gameObject.SetActive(true);
+            SetCanvasToBeCoverable(_gameUICoverableGO);
+        }
+        else
+        {
+            State = ManagerState.Error;
+            Debug.Log("Error: Cannot find Canvas_GameUI");
+            return;
+        }
+
+        //Canvas_Popups_Coverable
+        if (GameObject.Find("Canvas_Popups_Coverable") != null)
+        {
+            _popupCanvasCoverableGO = GameObject.Find("Canvas_Popups_Coverable");
+            _popupCanvasCoverableGO.gameObject.SetActive(true);
+            SetCanvasToBeUncoverable(_popupCanvasCoverableGO);
+        }
+        else
+        {
+            State = ManagerState.Error;
+            Debug.Log("Error: Cannot find Canvas_Popups_Coverable");
+            return;
+        }
+        //Canvas_ScreenCover
+        if (GameObject.Find("Canvas_ScreenCover") != null)
+        {
+            _screenCoverCanvasGO = GameObject.Find("Canvas_ScreenCover");
+            _screenCoverCanvasGO.gameObject.SetActive(false);
+            SetCanvasToBeTheCover(_screenCoverCanvasGO);
+        }
+        else
+        {
+            State = ManagerState.Error;
+            Debug.Log("Error: Cannot find Canvas_ScreenCover");
+            return;
+        }
+        //Canvas_GameUI
+        if (GameObject.Find("Canvas_GameUI") != null)
+        {
+            _gameUIGO = GameObject.Find("Canvas_GameUI");
+            _gameUIGO.gameObject.SetActive(true);
+            SetCanvasToBeUncoverable(_gameUIGO);
+        }
+        else
+        {
+            State = ManagerState.Error;
+            Debug.Log("Error: Cannot find Canvas_GameUI");
+            return;
+        }
+        //Canvas_Popups
+        if (GameObject.Find("Canvas_Popups") != null)
+        {
+            _popupCanvasCoverableGO = GameObject.Find("Canvas_Popups");
+            _popupCanvasCoverableGO.gameObject.SetActive(true);
+            SetCanvasToBeCoverable(_popupCanvasCoverableGO);
+        }
+        else
+        {
+            State = ManagerState.Error;
+            Debug.Log("Error: Cannot find Canvas_PopupsThatCover");
+            return;
+        }
+        //Canvas_MainMenu
+        if (GameObject.Find("Canvas_MainMenu") != null)
+        {
+            _mainMenuCanvasGO = GameObject.Find("Canvas_MainMenu");
+            _mainMenuCanvasGO.gameObject.SetActive(false);
+            SetCanvasToBeMenuLayer(_mainMenuCanvasGO);
+        }
+        else
+        {
+            State = ManagerState.Error;
+            Debug.Log("Error: Cannot find Canvas_MainMenu");
+            return;
+        }
+
 
         //Cursor
         SetCursorToDefault();
@@ -262,7 +281,7 @@ public class Manager_UI : MonoBehaviour, IManager {
     //Screen Cover
     private bool IsScreenCovered()
     {
-        return _screenCoverCanvasGO.activeSelf;
+        return (_screenCoverCanvasGO.activeSelf || _mainMenuCanvasGO.activeSelf);
     }
     private void ScreenCover()
     {
@@ -324,6 +343,7 @@ public class Manager_UI : MonoBehaviour, IManager {
     {
         if (IsScreenCovered())
         {
+            _toggleTimeButton.image.color = _toggleTimeButton.colors.normalColor;
             return;
         }
         _toggleTimeButton.image.color = _toggleTimeButton.colors.normalColor;
@@ -333,6 +353,10 @@ public class Manager_UI : MonoBehaviour, IManager {
     //Time Panel - Increase Speed Button
     private void Click_IncreaseSpeedButton()
     {
+        if (IsScreenCovered())
+        {
+            return;
+        }
         if (!HoldingIncreaseSpeedButtonStarted)
         {
             Managers.Time.IncreaseSpeed();
@@ -353,6 +377,10 @@ public class Manager_UI : MonoBehaviour, IManager {
     }
     public void Hold_IncreaseSpeedButton()
     {
+        if (IsScreenCovered())
+        {
+            return;
+        }
         if (!IsRunningIncreaseSpeedButtonBeingHeld)
         {
             StartCoroutine("IncreaseSpeedButtonBeingHeld");
@@ -376,15 +404,15 @@ public class Manager_UI : MonoBehaviour, IManager {
     public void KeyUp_IncreaseSpeedButton()
     {
         _increaseSpeedButton.image.color = _increaseSpeedButton.colors.normalColor;
+        if (IsScreenCovered())
+        {
+            return;
+        }
         StopCoroutine("IncreaseSpeedButtonBeingHeld");
         IsRunningIncreaseSpeedButtonBeingHeld = false;
         if (HoldingIncreaseSpeedButtonStarted)
         {
             HoldingIncreaseSpeedButtonStarted = false;
-            return;
-        }
-        if (IsScreenCovered())
-        {
             return;
         }
         Managers.Time.IncreaseSpeed();
@@ -393,6 +421,10 @@ public class Manager_UI : MonoBehaviour, IManager {
     //Time Panel - Decrease Speed Button
     private void Click_DecreaseSpeedButton()
     {
+        if (IsScreenCovered())
+        {
+            return;
+        }
         if (!HoldingDecreaseSpeedButtonStarted)
         {
             Managers.Time.DecreaseSpeed();
@@ -413,6 +445,10 @@ public class Manager_UI : MonoBehaviour, IManager {
     }
     public void Hold_DecreaseSpeedButton()
     {
+        if (IsScreenCovered())
+        {
+            return;
+        }
         if (!IsRunningDecreaseSpeedButtonBeingHeld)
         {
             StartCoroutine("DecreaseSpeedButtonBeingHeld");
@@ -436,15 +472,16 @@ public class Manager_UI : MonoBehaviour, IManager {
     public void KeyUp_DecreaseSpeedButton()
     {
         _decreaseSpeedButton.image.color = _decreaseSpeedButton.colors.normalColor;
+        if (IsScreenCovered())
+        {
+            return;
+        }
+
         StopCoroutine("DecreaseSpeedButtonBeingHeld");
         IsRunningDecreaseSpeedButtonBeingHeld = false;
         if (HoldingDecreaseSpeedButtonStarted)
         {
             HoldingDecreaseSpeedButtonStarted = false;
-            return;
-        }
-        if (IsScreenCovered())
-        {
             return;
         }
         Managers.Time.DecreaseSpeed();
