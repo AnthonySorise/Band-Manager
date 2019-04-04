@@ -18,8 +18,12 @@ public class Manager_Input : MonoBehaviour, IManager {
 
         //Audio
 		MasterVolumeUp,
-		MasterVolumeDown
-	}
+		MasterVolumeDown,
+
+        //POPUP TESTING
+        TESTING_Popup,
+        TESTING_PopupCoverable
+    }
 	private Dictionary<KeyCode, InputCommand> _keyMap;
 
 	public void Startup(){
@@ -40,7 +44,11 @@ public class Manager_Input : MonoBehaviour, IManager {
 
             //Audio
             { KeyCode.PageUp, InputCommand.MasterVolumeUp },
-            { KeyCode.PageDown, InputCommand.MasterVolumeDown }
+            { KeyCode.PageDown, InputCommand.MasterVolumeDown },
+
+            //POPUP TESTING
+            { KeyCode.Z, InputCommand.TESTING_Popup },
+            { KeyCode.X, InputCommand.TESTING_PopupCoverable }
         };
 
         State = ManagerState.Started;
@@ -72,6 +80,15 @@ public class Manager_Input : MonoBehaviour, IManager {
                         return;
                     case InputCommand.DecreaseSpeed:
                         Managers.UI.KeyDown_DecreaseSpeedButton();
+                        return;
+
+
+                    //POPUP TESTING
+                    case InputCommand.TESTING_Popup:
+                        Managers.UI.CreatePopup("01", false);
+                        return;
+                    case InputCommand.TESTING_PopupCoverable:
+                        Managers.UI.CreatePopup("02", true);
                         return;
                 }
             }

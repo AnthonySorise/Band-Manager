@@ -187,9 +187,9 @@ public class Manager_UI : MonoBehaviour, IManager {
         //Canvas_Popups
         if (GameObject.Find("Canvas_Popups") != null)
         {
-            _popupCanvasCoverableGO = GameObject.Find("Canvas_Popups");
-            _popupCanvasCoverableGO.gameObject.SetActive(true);
-            SetCanvasToBeCoverable(_popupCanvasCoverableGO);
+            _popupCanvasGO = GameObject.Find("Canvas_Popups");
+            _popupCanvasGO.gameObject.SetActive(true);
+            SetCanvasToBeCoverable(_popupCanvasGO);
         }
         else
         {
@@ -574,10 +574,29 @@ public class Manager_UI : MonoBehaviour, IManager {
     }
 
 
-    public void CreatePopup()
+    public void CreatePopup(string key, bool isCoverable)
     {
 
+        GameObject panel = new GameObject("Popup_" + key);
+        panel.AddComponent<CanvasRenderer>();
+        Image i = panel.AddComponent<Image>();
+        i.color = Color.red;
+        
 
+        if (isCoverable)
+        {
+            panel.transform.SetParent(_popupCanvasCoverableGO.transform, false);
+        }
+        else
+        {
+            panel.transform.SetParent(_popupCanvasGO.transform, false);
+        }
+
+
+    }
+
+    //for overloading - pass in stored string that references an object with all params preset
+    public void CreatePopup(string popupeKey) {
 
     }
 
