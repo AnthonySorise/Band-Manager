@@ -61,6 +61,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Script\GameObjects\PopUp.cs" />
+    <Compile Include="Assets\Script\GameObjects\PopUpOption.cs" />
     <Compile Include="Assets\Script\Managers\IManager.cs" />
     <Compile Include="Assets\Script\Managers\Manager_Assets.cs" />
     <Compile Include="Assets\Script\Managers\Manager_Audio.cs" />

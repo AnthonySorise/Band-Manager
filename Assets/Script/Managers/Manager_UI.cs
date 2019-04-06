@@ -26,7 +26,7 @@ public class Manager_UI : MonoBehaviour, IManager {
             public Button _decreaseSpeedButton;
 
     //Popus Canvas that Covers
-    private GameObject _popupCanvasCoverableGO;
+    public GameObject _popupCanvasCoverableGO;
 
     //Screen Cover Canvas
     private GameObject _screenCoverCanvasGO;
@@ -35,7 +35,7 @@ public class Manager_UI : MonoBehaviour, IManager {
     private GameObject _gameUIGO;
 
     //Popup Canvas
-    private GameObject _popupCanvasGO;
+    public GameObject _popupCanvasGO;
 
     //Menu Canvas
     private GameObject _mainMenuCanvasGO;
@@ -278,15 +278,15 @@ public class Manager_UI : MonoBehaviour, IManager {
     }
 
     //Screen Cover
-    private bool IsScreenCovered()
+    public bool IsScreenCovered()
     {
         return (_screenCoverCanvasGO.activeSelf || _mainMenuCanvasGO.activeSelf);
     }
-    private void ScreenCover()
+    public void ScreenCover()
     {
         _screenCoverCanvasGO.SetActive(true);
     }
-    private void ScreenUncover()
+    public void ScreenUncover()
     {
         _screenCoverCanvasGO.SetActive(false);
     }
@@ -573,30 +573,8 @@ public class Manager_UI : MonoBehaviour, IManager {
         _dateText.text = Managers.Time.CurrentDT.ToString("MMMM/d/yyyy");
     }
 
-
-    public void CreatePopup(string key, bool isCoverable)
-    {
-
-        GameObject panel = new GameObject("Popup_" + key);
-        panel.AddComponent<CanvasRenderer>();
-        Image i = panel.AddComponent<Image>();
-        i.color = Color.red;
-        
-
-        if (isCoverable)
-        {
-            panel.transform.SetParent(_popupCanvasCoverableGO.transform, false);
-        }
-        else
-        {
-            panel.transform.SetParent(_popupCanvasGO.transform, false);
-        }
-
-
-    }
-
     //for overloading - pass in stored string that references an object with all params preset
-    public void CreatePopup(string popupeKey) {
+    public void CreatePopup(string popupKey) {
 
     }
 

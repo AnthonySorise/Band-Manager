@@ -5,6 +5,15 @@
 //https://docs.unity3d.com/Manual/JSONSerialization.html
 //https://gamedev.stackexchange.com/questions/126178/unity-how-to-serialize-show-private-fields-and-custom-types-in-inspector
 
+
+public enum SimEvent
+{
+    Test_PopupNoHalt,
+    Test_PopupHalt
+}
+
+
+
 public class Manager_Model : MonoBehaviour, IManager {
 	public ManagerState State {get; private set;}
 

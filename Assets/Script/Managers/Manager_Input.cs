@@ -85,10 +85,12 @@ public class Manager_Input : MonoBehaviour, IManager {
 
                     //POPUP TESTING
                     case InputCommand.TESTING_Popup:
-                        Managers.UI.CreatePopup("01", false);
+                        PopUp popupNoHalt = new PopUp(SimEvent.Test_PopupNoHalt, false, "", "", null, null);
+                        popupNoHalt.CreateAndDisplayGO();
                         return;
                     case InputCommand.TESTING_PopupCoverable:
-                        Managers.UI.CreatePopup("02", true);
+                        PopUp popupHalt = new PopUp(SimEvent.Test_PopupHalt, true, "", "", null, null);
+                        popupHalt.CreateAndDisplayGO();
                         return;
                 }
             }
