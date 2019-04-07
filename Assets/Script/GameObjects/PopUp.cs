@@ -31,6 +31,7 @@ public class PopUp : MonoBehaviour {
         }
         GameObject panel = new GameObject("Popup_" + _simEvent.ToString());
         panel.AddComponent<CanvasRenderer>();
+        panel.AddComponent<Draggable>();
         Image i = panel.AddComponent<Image>();
         i.color = Color.red;
 

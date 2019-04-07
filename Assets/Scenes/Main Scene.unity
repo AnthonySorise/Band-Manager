@@ -382,6 +382,8 @@ MonoBehaviour:
   _toggleTimeButton: {fileID: 0}
   _increaseSpeedButton: {fileID: 0}
   _decreaseSpeedButton: {fileID: 0}
+  _popupCanvasCoverableGO: {fileID: 0}
+  _popupCanvasGO: {fileID: 0}
 --- !u!114 &364967767
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1693,10 +1695,10 @@ RectTransform:
   m_Father: {fileID: 2071563545}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: -0.00024414062, y: 0}
+  m_SizeDelta: {x: 1379.9998, y: 792}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1159252069
 MonoBehaviour:
@@ -2426,7 +2428,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -198.35999, y: -16.53003}
+  m_AnchoredPosition: {x: -198.35938, y: -16.53125}
   m_SizeDelta: {x: 396.72, y: 33.03}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1897104426
