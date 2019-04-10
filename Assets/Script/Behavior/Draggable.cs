@@ -15,8 +15,15 @@ public class Draggable : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     private Vector3 _startPosition;
     public bool _shouldReturn;
 
+
+
     public void OnPointerDown(PointerEventData dt)
     {
+        if (Input.GetMouseButton(1))
+        {
+            return;
+        }
+
         _isMouseDown = true;
         _startPosition = this.gameObject.transform.position;
         _startMousePosition = Input.mousePosition;
@@ -24,6 +31,10 @@ public class Draggable : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
     public void OnPointerUp(PointerEventData dt)
     {
+        if (Input.GetMouseButton(0))
+        {
+            return;
+        }
         _isMouseDown = false;
         if (_shouldReturn)
         {
@@ -42,21 +53,21 @@ public class Draggable : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
             float halfWidth = GetComponent<RectTransform>().sizeDelta.x / 2f;
             float halfHeight = GetComponent<RectTransform>().sizeDelta.y /2f;
 
-            if (pos.x < halfWidth)
+            if (pos.x < halfWidth + 5)
             {
                 pos.x = halfWidth + 5;
             }
-            else if(pos.x > Screen.width - halfWidth)
+            else if(pos.x > Screen.width - halfWidth - 5)
             {
                 pos.x = Screen.width - halfWidth - 5;
             }
-            if (pos.y < halfHeight)
+            if (pos.y < halfHeight + 5)
             {
                 pos.y = halfHeight + 5;
             }
-            else if (pos.y > Screen.height - halfHeight)
+            else if (pos.y > Screen.height - halfHeight - 35)
             {
-                pos.y = Screen.height - halfHeight - 5;
+                pos.y = Screen.height - halfHeight - 35;
             }
 
             this.gameObject.transform.position = pos;

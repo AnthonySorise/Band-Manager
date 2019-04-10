@@ -10,6 +10,8 @@ public class Manager_UI : MonoBehaviour, IManager {
     private float _timeToInitiateHoldBehavior = 0.4f;
     private float _timeToRepeatHoldBehavior = 0.2f;
 
+    //Font
+    public Font mainFont;
 
 
     //Game UI Canvas
@@ -45,6 +47,10 @@ public class Manager_UI : MonoBehaviour, IManager {
     public void Startup(){
 		State = ManagerState.Initializing;
 		Debug.Log("Manager_UI initializing...");
+
+
+        //Font
+        mainFont = Resources.Load<Font>("ConcertOne-Regular");
 
 
         //Canvas_GameUI_Coverable
@@ -235,7 +241,7 @@ public class Manager_UI : MonoBehaviour, IManager {
     //Cursor
     private void SetCursorToDefault ()
     {
-        Texture2D texture = Managers.Assets.GetPNGTexture(Asset_png.Cursor_Default);
+        Texture2D texture = Managers.Assets.GetTexture(Asset_png.Cursor_Default);
         Vector2 vector = new Vector2(texture.width / 2, 0);
         Cursor.SetCursor(texture, vector, CursorMode.Auto);
     }
@@ -260,13 +266,13 @@ public class Manager_UI : MonoBehaviour, IManager {
     }
     public void Callback_PointerEnter_Button( PointerEventData data)
     {
-        Texture2D texture = Managers.Assets.GetPNGTexture(Asset_png.Cursor_Hover);
+        Texture2D texture = Managers.Assets.GetTexture(Asset_png.Cursor_Hover);
         Vector2 vector = new Vector2(texture.width / 2, 0);
         Cursor.SetCursor(texture, vector, CursorMode.Auto);
     }
     public void Callback_PointerExit_Button(PointerEventData data)
     {
-        Texture2D texture = Managers.Assets.GetPNGTexture(Asset_png.Cursor_Default);
+        Texture2D texture = Managers.Assets.GetTexture(Asset_png.Cursor_Default);
         Vector2 vector = new Vector2(texture.width / 2, 0);
         Cursor.SetCursor(texture, vector, CursorMode.Auto);
     }

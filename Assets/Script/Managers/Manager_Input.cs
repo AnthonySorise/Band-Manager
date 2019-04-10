@@ -85,11 +85,11 @@ public class Manager_Input : MonoBehaviour, IManager {
 
                     //POPUP TESTING
                     case InputCommand.TESTING_Popup:
-                        PopUp popupNoHalt = new PopUp(SimEvent.Test_PopupNoHalt, false, "", "", null, null);
+                        PopUp popupNoHalt = new PopUp(SimEvent.Test_PopupNoHalt, false, "This is a test Header", "This is a test body message.", Asset_png.Popup_Vinyl, null);
                         popupNoHalt.CreateAndDisplayGO();
                         return;
                     case InputCommand.TESTING_PopupCoverable:
-                        PopUp popupHalt = new PopUp(SimEvent.Test_PopupHalt, true, "", "", null, null);
+                        PopUp popupHalt = new PopUp(SimEvent.Test_PopupHalt, true, "This is a test Header", "This is a test body message.", Asset_png.Popup_Vinyl, null);
                         popupHalt.CreateAndDisplayGO();
                         return;
                 }

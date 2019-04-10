@@ -4,15 +4,19 @@ using System.IO;
 using UnityEngine;
 
 public enum Asset_png
-{   
+{  
+    None = 0,
     //curosr images
         //should be 32X32, horizontally centered and vertically pushed all the way to the top
     Cursor_Default,
-    Cursor_Hover
+    Cursor_Hover,
+    //popup images
+    Popup_Vinyl
 }
 
 public enum Asset_wav
 {
+    None = 0,
     //ui Audio
     MenuOpen,
     GenericClick,
@@ -42,6 +46,11 @@ public class Manager_Assets : MonoBehaviour, IManager {
         _pngTextures = new Dictionary<Asset_png, Texture2D>();
         foreach(Asset_png png in Enum.GetValues(typeof(Asset_png)))
         {
+            if(png == Asset_png.None)
+            {
+                continue;
+            }
+
             Texture2D texture = null;
             byte[] fileData;
             string fileName = png.ToString().ToLower();
@@ -77,6 +86,11 @@ public class Manager_Assets : MonoBehaviour, IManager {
         _wavAudio = new Dictionary<Asset_wav, AudioClip>();
         foreach (Asset_wav wav in Enum.GetValues(typeof(Asset_wav)))
         {
+            if (wav == Asset_wav.None)
+            {
+                continue;
+            }
+
             AudioClip audioClip = null;
             string fileName = wav.ToString().ToLower();
 
@@ -111,13 +125,20 @@ public class Manager_Assets : MonoBehaviour, IManager {
         Debug.Log("Manager_Assets started");
     }
 	
-    public Texture2D GetPNGTexture(Asset_png png)
+    public Texture2D GetTexture(Asset_png png)
     {
         if (_pngTextures.ContainsKey(png))
             { return _pngTextures[png]; }
         else
             { return null; }
     }
+    public Sprite GetSprite(Asset_png png, float pixelPerUnit = 1f)
+    {
+        Texture2D texture = GetTexture(png);
+        Sprite newSprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0, 0), 1);
+        return newSprite;
+    }
+
     public AudioClip GetAudio(Asset_wav wav)
     {
         if (_wavAudio.ContainsKey(wav))

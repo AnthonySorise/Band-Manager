@@ -64,6 +64,7 @@
     <Compile Include="Assets\Script\Behavior\Draggable.cs" />
     <Compile Include="Assets\Script\GameObjects\PopUp.cs" />
     <Compile Include="Assets\Script\GameObjects\PopUpOption.cs" />
+    <Compile Include="Assets\Script\GameObjects\UIcomponents.cs" />
     <Compile Include="Assets\Script\Managers\IManager.cs" />
     <Compile Include="Assets\Script\Managers\Manager_Assets.cs" />
     <Compile Include="Assets\Script\Managers\Manager_Audio.cs" />
@@ -80,6 +81,7 @@
     <Compile Include="Assets\Script\Models\Map.cs" />
     <Compile Include="Assets\Script\Models\NPC.cs" />
     <Compile Include="Assets\Script\Utilities\GOPool.cs" />
+    <Compile Include="Assets\Script\Utilities\SetAnchor.cs" />
     <Reference Include="UnityEditor.StandardEvents">
       <HintPath>C:/_GameDev/Band-Manager/Library/ScriptAssemblies/UnityEditor.StandardEvents.dll</HintPath>
     </Reference>
