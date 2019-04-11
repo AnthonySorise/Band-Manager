@@ -19,7 +19,8 @@ public enum Asset_wav
     None = 0,
     //ui Audio
     MenuOpen,
-    GenericClick,
+    GenericClick_01,
+    GenericClick_02,
     TimeToggleClick
 }
 

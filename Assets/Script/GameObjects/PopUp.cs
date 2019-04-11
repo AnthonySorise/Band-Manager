@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class PopUp : MonoBehaviour {
@@ -45,21 +46,42 @@ public class PopUp : MonoBehaviour {
             UIcomponents.BuildVertAlignImg(imgName, _bodyImg, popupTransform);
         }
 
+        //body text
+        string bodyTextName = "Popup_" + _simEvent.ToString() + "_bodyText";
+        UIcomponents.BuildVertAlignText(bodyTextName, _bodyText, popupTransform);
+
+
         //buttons
         string buttonContainerName = "Popup_" + _simEvent.ToString() + "_buttonContainer";
-        GameObject buttonContainer = UIcomponents.BuildVertAlignPanelContainer(buttonContainerName, 280, popupTransform);
+        GameObject buttonContainer = UIcomponents.BuildVertAlignButtonContainer(buttonContainerName, popupTransform);
         Transform buttonsTransform = buttonContainer.GetComponent<Transform>();
         if (_options == null || _options.Count == 0)
         {
             //generic close popup button
             //create PopUpOption for closing this popup
+
+
+            string buttonName = "Popup_" + _simEvent.ToString() + "_buttonClose";
+            UnityAction callBack = () => {
+                Destroy(panel);
+                //unhalt game
+                if (_haltsGame)
+                {
+                    if (Managers.UI.IsScreenCovered() == true)
+                    {
+                        Managers.UI.ScreenUncover();
+                    }
+                }
+                Managers.Audio.PlayAudio(Asset_wav.GenericClick_02, AudioChannel.UI);
+            };
+            UIcomponents.BuildVertAlignButton(buttonName, "OK", callBack, buttonsTransform);
         }
         else
         {
             for (int i = 0; i < _options.Count; i++)
             {
                 var buttonName = "Popup_" + _simEvent.ToString() + "_button_0" + i;
-                UIcomponents.BuildVertAlignButton(buttonName, _options[i], buttonsTransform);
+                //UIcomponents.BuildVertAlignButton(buttonName, 30, _options[i], buttonsTransform);
             }
         }
         
