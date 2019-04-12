@@ -10,15 +10,17 @@ public class PopUp : MonoBehaviour {
     private string _headerText;
     private string _bodyText;
     private Asset_png _bodyImg;
+    private Asset_wav _triggerSound;
     private List<PopUpOption> _options;
 
-    public PopUp(SimEvent simEvent, bool haltsGame, string headerText, string bodyText, Asset_png bodyImg, List<PopUpOption> options)
+    public PopUp(SimEvent simEvent, bool haltsGame, string headerText, string bodyText, Asset_png bodyImg, Asset_wav triggerSound, List<PopUpOption> options)
     {
         _simEvent = simEvent;
         _haltsGame = haltsGame;
         _headerText = headerText;
         _bodyText = bodyText;
         _bodyImg = bodyImg;
+        _triggerSound = triggerSound;
         _options = options;
     }
 
@@ -31,7 +33,7 @@ public class PopUp : MonoBehaviour {
             Debug.Log("Error: " + panelName + " already exists");
             return;
         }
-        Transform containerTransform = _haltsGame ?  Managers.UI._popupCanvasCoverableGO.transform : Managers.UI._popupCanvasGO.transform;
+        Transform containerTransform = _haltsGame ?  Managers.UI._popupCanvasGO.transform : Managers.UI._popupCanvasCoverableGO.transform;
         GameObject panel = UIcomponents.BuildVertAlignPanelContainer(panelName, 300, containerTransform);
         Transform popupTransform = panel.GetComponent<Transform>();
 
@@ -55,36 +57,40 @@ public class PopUp : MonoBehaviour {
         string buttonContainerName = "Popup_" + _simEvent.ToString() + "_buttonContainer";
         GameObject buttonContainer = UIcomponents.BuildVertAlignButtonContainer(buttonContainerName, popupTransform);
         Transform buttonsTransform = buttonContainer.GetComponent<Transform>();
+        UnityAction closePopup = () => {
+            Destroy(panel);
+            //unhalt game
+            if (_haltsGame)
+            {
+                if (Managers.UI.IsScreenCovered() == true)
+                {
+                    Managers.UI.ScreenUncover();
+                }
+            }
+            Managers.Audio.PlayAudio(Asset_wav.Click_02, AudioChannel.UI);
+        };
+
         if (_options == null || _options.Count == 0)
         {
-            //generic close popup button
-            //create PopUpOption for closing this popup
-
-
             string buttonName = "Popup_" + _simEvent.ToString() + "_buttonClose";
-            UnityAction callBack = () => {
-                Destroy(panel);
-                //unhalt game
-                if (_haltsGame)
-                {
-                    if (Managers.UI.IsScreenCovered() == true)
-                    {
-                        Managers.UI.ScreenUncover();
-                    }
-                }
-                Managers.Audio.PlayAudio(Asset_wav.GenericClick_02, AudioChannel.UI);
-            };
-            UIcomponents.BuildVertAlignButton(buttonName, "OK", callBack, buttonsTransform);
+            UIcomponents.BuildVertAlignButton(buttonName, "OK", closePopup, buttonsTransform);
         }
         else
         {
             for (int i = 0; i < _options.Count; i++)
             {
-                var buttonName = "Popup_" + _simEvent.ToString() + "_button_0" + i;
-                //UIcomponents.BuildVertAlignButton(buttonName, 30, _options[i], buttonsTransform);
+                var buttonName = "Popup_" + _simEvent.ToString() + "_button_0" + (i+1).ToString();
+                _options[i].CreateAndDisplayGO(buttonName, buttonsTransform);
+                GameObject.Find(buttonName).GetComponent<Button>().onClick.AddListener(closePopup);
             }
         }
-        
+
+        //trigger sound
+        if (_triggerSound != Asset_wav.None)
+        {
+            Managers.Audio.PlayAudio(_triggerSound, AudioChannel.SFX);
+        }
+
         //halt game
         if (_haltsGame)
         {

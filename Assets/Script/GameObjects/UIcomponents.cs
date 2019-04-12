@@ -9,9 +9,9 @@ public class UIcomponents : MonoBehaviour {
     //dynamically creates Unity UI game components and immediatly returns them for convenient access
 
     private static int _defaultPanelPadding = 15;
+    private static float _defaultLineSpacing = 1.5f;
     private static int _defaultBodyFontSize = 16;
     private static int _defaultHeaderFontSize = 24;
-    private static int _defaultHeaderFontElementSize = 30;
     private static int _defaultButtonWidth = 260;
     private static int _defaultButtonHeight = 30;
 
@@ -21,8 +21,7 @@ public class UIcomponents : MonoBehaviour {
 
         panel.AddComponent<CanvasRenderer>();
         panel.AddComponent<Image>();
-        panel.AddComponent<Draggable>();
-
+        
         RectTransform rectTransform_Popup = panel.GetComponent<RectTransform>();
         rectTransform_Popup.sizeDelta = new Vector2(sizeX, 0);
         rectTransform_Popup.SetAnchor(AnchorPresets.MiddleCenter);
@@ -32,10 +31,13 @@ public class UIcomponents : MonoBehaviour {
         verticalLayout.childAlignment = TextAnchor.UpperCenter;
         verticalLayout.childControlWidth = true;
         verticalLayout.childControlHeight = false;
-        verticalLayout.childForceExpandWidth = false;
-        verticalLayout.childForceExpandHeight = false;
+        verticalLayout.childForceExpandWidth = true;
+        verticalLayout.childForceExpandHeight = true;
         verticalLayout.padding.top = _defaultPanelPadding;
         verticalLayout.padding.bottom = _defaultPanelPadding;
+        verticalLayout.padding.left = _defaultPanelPadding;
+        verticalLayout.padding.right = _defaultPanelPadding;
+        verticalLayout.spacing = _defaultPanelPadding;
 
         panel.transform.SetParent(containerTransform, false);
 
@@ -45,6 +47,8 @@ public class UIcomponents : MonoBehaviour {
     public static GameObject BuildVertAlignPanelContainer(string goName, int sizeX, Transform containerTransform)
     {
         GameObject panel = BuildVertAlignPanel(goName, sizeX, containerTransform);
+
+        panel.AddComponent<Draggable>();
 
         ContentSizeFitter contentSizeFitter = panel.AddComponent<ContentSizeFitter>();
         contentSizeFitter.verticalFit = ContentSizeFitter.FitMode.MinSize;
@@ -64,11 +68,15 @@ public class UIcomponents : MonoBehaviour {
         text.color = Color.black;
         text.font = Managers.UI.mainFont;
         text.fontSize = _defaultBodyFontSize;
+        text.lineSpacing = _defaultLineSpacing;
+        text.alignment = TextAnchor.UpperLeft;
 
-        RectTransform rectTransform_Heading = textGO.GetComponent<RectTransform>();
-        rectTransform_Heading.sizeDelta = new Vector2(containerTransform.parent.GetComponent<RectTransform>().sizeDelta.x, _defaultHeaderFontElementSize);
-        rectTransform_Heading.SetAnchor(AnchorPresets.TopCenter);
-        rectTransform_Heading.SetPivot(PivotPresets.TopCenter);
+        RectTransform rectTransform = textGO.GetComponent<RectTransform>();
+        rectTransform.SetAnchor(AnchorPresets.TopCenter);
+        rectTransform.SetPivot(PivotPresets.TopCenter);
+
+        ContentSizeFitter contentSizeFitter = textGO.AddComponent<ContentSizeFitter>();
+        contentSizeFitter.verticalFit = ContentSizeFitter.FitMode.PreferredSize;
 
         LayoutElement layoutElement = textGO.AddComponent<LayoutElement>();
 
@@ -80,8 +88,9 @@ public class UIcomponents : MonoBehaviour {
     public static GameObject BuildVertAlignHeader(string goName, string headerText, Transform containerTransform)
     {
         GameObject headerGO = BuildVertAlignText(goName, headerText, containerTransform);
-        headerGO.GetComponent<Text>().fontSize = _defaultHeaderFontSize;
-
+        Text textComponent = headerGO.GetComponent<Text>();
+        textComponent.fontSize = _defaultHeaderFontSize;
+        textComponent.alignment = TextAnchor.MiddleCenter;
         return headerGO;
     }
 
@@ -108,13 +117,16 @@ public class UIcomponents : MonoBehaviour {
 
     public static GameObject BuildVertAlignButtonContainer(string goName, Transform containerTransform)
     {
-        GameObject panel = BuildVertAlignPanelContainer(goName, 0, containerTransform);
+        GameObject panel = BuildVertAlignPanel(goName, 0, containerTransform);
+        ContentSizeFitter contentSizeFitter = panel.AddComponent<ContentSizeFitter>();
+        contentSizeFitter.verticalFit = ContentSizeFitter.FitMode.MinSize;
         LayoutElement layoutElement = panel.AddComponent<LayoutElement>();
         VerticalLayoutGroup verticalLayout = panel.GetComponent<VerticalLayoutGroup>();
         verticalLayout.childControlWidth = false;
         verticalLayout.childForceExpandWidth = true;
-        verticalLayout.padding.top = 0;
+        verticalLayout.padding.top = 15;
         verticalLayout.padding.bottom = 0;
+        verticalLayout.spacing = 5;
         return panel;
     }
 
@@ -132,6 +144,7 @@ public class UIcomponents : MonoBehaviour {
         rectTransform_Button.SetAnchor(AnchorPresets.TopCenter);
 
         LayoutElement layoutElement = button.AddComponent<LayoutElement>();
+
 
         button.transform.SetParent(buttonContainerTransform);
 

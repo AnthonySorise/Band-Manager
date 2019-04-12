@@ -8,8 +8,10 @@
 
 public enum SimEvent
 {
-    Test_PopupNoHalt,
-    Test_PopupHalt
+    Test_Popup01,
+    Test_Popup02,
+    Test_Popup03,
+    Test_Popup04
 }
 
 

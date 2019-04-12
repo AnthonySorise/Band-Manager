@@ -15,7 +15,7 @@ public class PopUpOption : MonoBehaviour {
         _callBack = callBack;
     }
 
-    private void CreateAndDisplayGO(string goName, Transform containerTransform)
+    public void CreateAndDisplayGO(string goName, Transform containerTransform)
     {
         GameObject button = UIcomponents.BuildVertAlignButton(goName, _buttonText, _callBack, containerTransform);
     }

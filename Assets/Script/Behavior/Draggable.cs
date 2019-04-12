@@ -47,6 +47,7 @@ public class Draggable : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     {
         if (_isMouseDown)
         {
+            transform.SetAsLastSibling();
             Vector3 currentPosition = Input.mousePosition;
             Vector3 diff = currentPosition - _startMousePosition;
             Vector3 pos = _startPosition + diff;

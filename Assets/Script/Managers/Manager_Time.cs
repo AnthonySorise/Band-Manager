@@ -159,7 +159,7 @@ public class Manager_Time : MonoBehaviour, IManager {
         if (CurrentSpeedLevel < _maxSpeedLevel)
         {
             CurrentSpeedLevel++;
-            Managers.Audio.PlayAudio(Asset_wav.GenericClick_01, AudioChannel.UI);
+            Managers.Audio.PlayAudio(Asset_wav.Click_03, AudioChannel.UI);
         }
     }
     public void DecreaseSpeed()
@@ -167,7 +167,7 @@ public class Manager_Time : MonoBehaviour, IManager {
         if (CurrentSpeedLevel > _minSpeedLevel)
         {
             CurrentSpeedLevel--;
-            Managers.Audio.PlayAudio(Asset_wav.GenericClick_01, AudioChannel.UI);
+            Managers.Audio.PlayAudio(Asset_wav.Click_03, AudioChannel.UI);
         }
     }
 }

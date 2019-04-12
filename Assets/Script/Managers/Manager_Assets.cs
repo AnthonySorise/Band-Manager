@@ -18,10 +18,12 @@ public enum Asset_wav
 {
     None = 0,
     //ui Audio
-    MenuOpen,
-    GenericClick_01,
-    GenericClick_02,
-    TimeToggleClick
+    TimeToggleClick,
+    Click_01,
+    Click_02,
+    Click_03,
+    Click_04,
+    event_generic
 }
 
 public class Manager_Assets : MonoBehaviour, IManager {

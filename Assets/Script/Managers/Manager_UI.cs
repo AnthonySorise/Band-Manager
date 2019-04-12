@@ -160,7 +160,7 @@ public class Manager_UI : MonoBehaviour, IManager {
         {
             _popupCanvasCoverableGO = GameObject.Find("Canvas_Popups_Coverable");
             _popupCanvasCoverableGO.gameObject.SetActive(true);
-            SetCanvasToBeUncoverable(_popupCanvasCoverableGO);
+            SetCanvasToBeCoverable(_popupCanvasCoverableGO);
         }
         else
         {
@@ -199,7 +199,7 @@ public class Manager_UI : MonoBehaviour, IManager {
         {
             _popupCanvasGO = GameObject.Find("Canvas_Popups");
             _popupCanvasGO.gameObject.SetActive(true);
-            SetCanvasToBeCoverable(_popupCanvasGO);
+            SetCanvasToBeUncoverable(_popupCanvasGO);
         }
         else
         {
@@ -329,7 +329,7 @@ public class Manager_UI : MonoBehaviour, IManager {
         _mainMenuCanvasGO.gameObject.SetActive(!_mainMenuCanvasGO.activeSelf);
         if (_mainMenuCanvasGO.activeSelf)
         {
-            Managers.Audio.PlayAudio(Asset_wav.MenuOpen, AudioChannel.UI);
+            Managers.Audio.PlayAudio(Asset_wav.Click_04, AudioChannel.UI);
         }
         SetCursorToDefault();
     }
