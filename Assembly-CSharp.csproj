@@ -61,6 +61,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Script\Behavior\CursorResetter.cs" />
     <Compile Include="Assets\Script\Behavior\Draggable.cs" />
     <Compile Include="Assets\Script\GameObjects\PopUp.cs" />
     <Compile Include="Assets\Script\GameObjects\PopUpOption.cs" />

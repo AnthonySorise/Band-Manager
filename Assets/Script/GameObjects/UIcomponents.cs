@@ -133,7 +133,6 @@ public class UIcomponents : MonoBehaviour {
     public static GameObject BuildVertAlignButton(string goName, string text, UnityAction onClickAction, Transform buttonContainerTransform)
     {
         GameObject button = Instantiate(Managers.UI.prefab_Button);
-        //button.AddComponent<CanvasRenderer>();
         button.name = goName;
         button.GetComponent<Button>().onClick.AddListener(onClickAction);
         button.GetComponentInChildren<Text>().text = text;

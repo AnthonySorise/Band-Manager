@@ -33,7 +33,7 @@ public class PopUp : MonoBehaviour {
             Debug.Log("Error: " + panelName + " already exists");
             return;
         }
-        Transform containerTransform = _haltsGame ?  Managers.UI._popupCanvasGO.transform : Managers.UI._popupCanvasCoverableGO.transform;
+        Transform containerTransform = _haltsGame ?  Managers.UI._popupCanvasGO_AboveCover.transform : Managers.UI._popupCanvasGO.transform;
         GameObject panel = UIcomponents.BuildVertAlignPanelContainer(panelName, 300, containerTransform);
         Transform popupTransform = panel.GetComponent<Transform>();
 
@@ -51,7 +51,6 @@ public class PopUp : MonoBehaviour {
         //body text
         string bodyTextName = "Popup_" + _simEvent.ToString() + "_bodyText";
         UIcomponents.BuildVertAlignText(bodyTextName, _bodyText, popupTransform);
-
 
         //buttons
         string buttonContainerName = "Popup_" + _simEvent.ToString() + "_buttonContainer";
@@ -74,6 +73,7 @@ public class PopUp : MonoBehaviour {
         {
             string buttonName = "Popup_" + _simEvent.ToString() + "_buttonClose";
             UIcomponents.BuildVertAlignButton(buttonName, "OK", closePopup, buttonsTransform);
+            Managers.UI.CursorHover_Button(GameObject.Find(buttonName).GetComponent<Button>());
         }
         else
         {
@@ -81,10 +81,11 @@ public class PopUp : MonoBehaviour {
             {
                 var buttonName = "Popup_" + _simEvent.ToString() + "_button_0" + (i+1).ToString();
                 _options[i].CreateAndDisplayGO(buttonName, buttonsTransform);
-                GameObject.Find(buttonName).GetComponent<Button>().onClick.AddListener(closePopup);
+                Button buttonComponent = GameObject.Find(buttonName).GetComponent<Button>();
+                Managers.UI.CursorHover_Button(buttonComponent);
+                buttonComponent.onClick.AddListener(closePopup);
             }
         }
-
         //trigger sound
         if (_triggerSound != Asset_wav.None)
         {
