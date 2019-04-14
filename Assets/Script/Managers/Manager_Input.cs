@@ -141,7 +141,7 @@ public class Manager_Input : MonoBehaviour, IManager {
                         popupOptionsList02.Add(PopUpOption01b);
                         popupOptionsList02.Add(PopUpOption02b);
 
-                        PopUp popup04 = new PopUp(SimEvent.Test_Popup04, true, "This is a test Header", "This is a test body message.  This popup halts the game! You MUST choose one of these two options to continue!", Asset_png.Popup_Vinyl, Asset_wav.event_generic, popupOptionsList02);
+                        PopUp popup04 = new PopUp(SimEvent.Test_Popup04, true, "This is a test Header", "This is a test body message.  This popup halts the game! You MUST choose one of these two options to continue!  Also, <color=#ff0000ff>RED</color>", Asset_png.Popup_Vinyl, Asset_wav.event_generic, popupOptionsList02);
                         popup04.CreateAndDisplayGO();
                         return;
                 }

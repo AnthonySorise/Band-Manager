@@ -25,7 +25,7 @@ public class UIcomponents : MonoBehaviour {
         RectTransform rectTransform_Popup = panel.GetComponent<RectTransform>();
         rectTransform_Popup.sizeDelta = new Vector2(sizeX, 0);
         rectTransform_Popup.SetAnchor(AnchorPresets.MiddleCenter);
-        rectTransform_Popup.SetAnchor(AnchorPresets.MiddleCenter);
+        rectTransform_Popup.SetPivot(PivotPresets.MiddleCenter);
 
         VerticalLayoutGroup verticalLayout = panel.AddComponent<VerticalLayoutGroup>();
         verticalLayout.childAlignment = TextAnchor.UpperCenter;
@@ -64,17 +64,17 @@ public class UIcomponents : MonoBehaviour {
 
         Text text = textGO.GetComponent<Text>();
         text.alignment = TextAnchor.UpperCenter;
-        text.text = bodyText;
         text.color = Color.black;
         text.font = Managers.UI.mainFont;
         text.fontSize = _defaultBodyFontSize;
         text.lineSpacing = _defaultLineSpacing;
         text.alignment = TextAnchor.UpperLeft;
+        text.text = bodyText;
 
         RectTransform rectTransform = textGO.GetComponent<RectTransform>();
         rectTransform.SetAnchor(AnchorPresets.TopCenter);
         rectTransform.SetPivot(PivotPresets.TopCenter);
-        rectTransform.sizeDelta = new Vector2(0, 0);
+        rectTransform.sizeDelta = new Vector2(text.preferredWidth, text.preferredHeight);
 
         ContentSizeFitter contentSizeFitter = textGO.AddComponent<ContentSizeFitter>();
         contentSizeFitter.verticalFit = ContentSizeFitter.FitMode.PreferredSize;
