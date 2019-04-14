@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
-public class PopUpOption : MonoBehaviour {
+public class PopUpOption {
     private string _buttonText;
     private UnityAction _callBack;
 

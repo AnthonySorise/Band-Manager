@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
-public class PopUp : MonoBehaviour {
+public class PopUp {
     SimEvent _simEvent;
     private bool _haltsGame;
     private string _headerText;
@@ -36,7 +36,7 @@ public class PopUp : MonoBehaviour {
         GameObject panel = UIcomponents.BuildVertAlignPanelContainer(panelName, 300, Managers.UI._hiddenCanvasGO.transform);
 
         Transform containerTransform = _haltsGame ? Managers.UI._popupCanvasGO_AboveCover.transform : Managers.UI._popupCanvasGO.transform;
-        panel.transform.parent = containerTransform.transform;
+        panel.transform.SetParent(containerTransform);
         Transform popupTransform = panel.GetComponent<Transform>();
 
         //header
@@ -67,7 +67,7 @@ public class PopUp : MonoBehaviour {
                     Managers.UI.ScreenUncover();
                 }
             }
-            Destroy(panel);
+            MonoBehaviour.Destroy(panel.gameObject);
             Managers.Audio.PlayAudio(Asset_wav.Click_02, AudioChannel.UI);
         };
 

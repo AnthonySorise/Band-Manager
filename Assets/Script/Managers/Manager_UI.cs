@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System.Collections;
 using TMPro;
+using System.Collections.Generic;
 
 public class Manager_UI : MonoBehaviour, IManager {
 	public ManagerState State {get; private set;}
@@ -42,7 +43,7 @@ public class Manager_UI : MonoBehaviour, IManager {
             public Button _decreaseSpeedButton;
     private GameObject _screenCoverCanvasGO;
     public GameObject _popupCanvasGO_AboveCover;
-    private GameObject _gameUICanvasGO_AboveCover;
+    public GameObject _gameUICanvasGO_AboveCover;
     private GameObject _mainMenuCanvasGO;
 
     public void Startup(){
