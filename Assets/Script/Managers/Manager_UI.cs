@@ -21,7 +21,7 @@ public class Manager_UI : MonoBehaviour, IManager {
     private float _timeToRepeatHoldBehavior = 0.2f;
 
     //Font
-    public Font mainFont;
+    //public Font mainFont;
 
     //UI Prefabs
     public GameObject prefab_Button;
@@ -50,7 +50,7 @@ public class Manager_UI : MonoBehaviour, IManager {
 
 
         //Font
-        mainFont = Resources.Load<Font>("Fonts/ConcertOne-Regular");
+        //mainFont = Resources.Load<Font>("Fonts/ConcertOne-Regular");
 
         //UI Prefabs
         prefab_Button = Resources.Load<GameObject>("Prefabs/UI/Button");

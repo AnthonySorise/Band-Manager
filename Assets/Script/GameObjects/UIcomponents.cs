@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
@@ -59,16 +60,13 @@ public class UIcomponents : MonoBehaviour {
     public static GameObject BuildVertAlignText(string goName, string bodyText, Transform containerTransform)
     {
         GameObject textGO = new GameObject(goName);
-        textGO.AddComponent<CanvasRenderer>();
-        textGO.AddComponent<Text>();
-
-        Text text = textGO.GetComponent<Text>();
-        text.alignment = TextAnchor.UpperCenter;
+        //textGO.AddComponent<CanvasRenderer>();
+        textGO.AddComponent<TextMeshProUGUI>();
+        TextMeshProUGUI text = textGO.GetComponent<TextMeshProUGUI>();
         text.color = Color.black;
-        text.font = Managers.UI.mainFont;
         text.fontSize = _defaultBodyFontSize;
         text.lineSpacing = _defaultLineSpacing;
-        text.alignment = TextAnchor.UpperLeft;
+        text.alignment = TextAlignmentOptions.TopLeft;
         text.text = bodyText;
 
         RectTransform rectTransform = textGO.GetComponent<RectTransform>();
@@ -89,9 +87,9 @@ public class UIcomponents : MonoBehaviour {
     public static GameObject BuildVertAlignHeader(string goName, string headerText, Transform containerTransform)
     {
         GameObject headerGO = BuildVertAlignText(goName, headerText, containerTransform);
-        Text textComponent = headerGO.GetComponent<Text>();
+        TextMeshProUGUI textComponent = headerGO.GetComponent<TextMeshProUGUI>();
         textComponent.fontSize = _defaultHeaderFontSize;
-        textComponent.alignment = TextAnchor.MiddleCenter;
+        textComponent.alignment = TextAlignmentOptions.Center;
         return headerGO;
     }
 
