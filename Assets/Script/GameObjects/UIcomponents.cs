@@ -68,6 +68,7 @@ public class UIcomponents : MonoBehaviour {
         text.lineSpacing = _defaultLineSpacing;
         text.alignment = TextAlignmentOptions.TopLeft;
         text.text = bodyText;
+        text.extraPadding = true;
 
         RectTransform rectTransform = textGO.GetComponent<RectTransform>();
         rectTransform.SetAnchor(AnchorPresets.TopCenter);
@@ -134,7 +135,9 @@ public class UIcomponents : MonoBehaviour {
         GameObject button = Instantiate(Managers.UI.prefab_Button);
         button.name = goName;
         button.GetComponent<Button>().onClick.AddListener(onClickAction);
-        button.GetComponentInChildren<Text>().text = text;
+
+        TextMeshProUGUI tmpText = button.GetComponentInChildren<TextMeshProUGUI>();
+        tmpText.text = text;
 
         RectTransform rectTransform_Button = button.GetComponent<RectTransform>();
         rectTransform_Button.sizeDelta = new Vector2(_defaultButtonWidth, _defaultButtonHeight);
@@ -142,7 +145,6 @@ public class UIcomponents : MonoBehaviour {
         rectTransform_Button.SetAnchor(AnchorPresets.TopCenter);
 
         LayoutElement layoutElement = button.AddComponent<LayoutElement>();
-
 
         button.transform.SetParent(buttonContainerTransform);
 

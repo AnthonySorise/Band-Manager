@@ -2,6 +2,7 @@
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System.Collections;
+using TMPro;
 
 public class Manager_UI : MonoBehaviour, IManager {
 	public ManagerState State {get; private set;}
@@ -33,10 +34,10 @@ public class Manager_UI : MonoBehaviour, IManager {
     private GameObject _gameUICanvasGO;
         private GameObject _timePanelGO;
             public Button _toggleTimeButton;
-                private Text _timeText;
-                private Text _dayOfWeekText;
-                private Text _dateText;
-                private Text _toggleStatusText;
+                private TextMeshProUGUI _timeText;
+                private TextMeshProUGUI _dayOfWeekText;
+                private TextMeshProUGUI _dateText;
+                private TextMeshProUGUI _toggleStatusText;
             public Button _increaseSpeedButton;
             public Button _decreaseSpeedButton;
     private GameObject _screenCoverCanvasGO;
@@ -62,10 +63,10 @@ public class Manager_UI : MonoBehaviour, IManager {
         InitiateCanvas(ref _gameUICanvasGO, "Canvas_GameUI", CanvasLayer.BelowCover);
             InitiateGO(ref _timePanelGO, "Panel_Time");
                 InitiateButton(ref _toggleTimeButton, "Button_ToggleTime");
-                    InitiateText(ref _dayOfWeekText, "Text_DayOfWeek");
-                    InitiateText(ref _timeText, "Text_Time");
-                    InitiateText(ref _dateText, "Text_Date");
-                    InitiateText(ref _toggleStatusText, "Text_ToggleStatus");
+                    InitiateText(ref _dayOfWeekText, "TMPText_DayOfWeek");
+                    InitiateText(ref _timeText, "TMPText_Time");
+                    InitiateText(ref _dateText, "TMPText_Date");
+                    InitiateText(ref _toggleStatusText, "TMPText_ToggleStatus");
                 InitiateButton(ref _increaseSpeedButton, "Button_IncreaseSpeed");
                 InitiateButton(ref _decreaseSpeedButton, "Button_DecreaseSpeed");
         InitiateCanvas(ref _screenCoverCanvasGO, "Canvas_ScreenCover", CanvasLayer.TheCover, true);
@@ -138,13 +139,13 @@ public class Manager_UI : MonoBehaviour, IManager {
 
     }
 
-    private void InitiateText(ref Text TextToSet, string goName)
+    private void InitiateText(ref TextMeshProUGUI TextToSet, string goName)
     {
         GameObject textGO = null;
         InitiateGO(ref textGO, goName);
         if (textGO != null)
         {
-            TextToSet = GameObject.Find(goName).GetComponent<Text>();
+            TextToSet = GameObject.Find(goName).GetComponent<TextMeshProUGUI>();
             if (!TextToSet)
             {
                 GameObject.Find(goName).AddComponent<Button>();
