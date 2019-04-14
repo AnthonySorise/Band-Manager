@@ -33,8 +33,7 @@ public class PopUp : MonoBehaviour {
             Debug.Log("Error: " + panelName + " already exists");
             return;
         }
-        Transform containerTransform = _haltsGame ?  Managers.UI._popupCanvasGO_AboveCover.transform : Managers.UI._popupCanvasGO.transform;
-        GameObject panel = UIcomponents.BuildVertAlignPanelContainer(panelName, 300, containerTransform);
+        GameObject panel = UIcomponents.BuildVertAlignPanelContainer(panelName, 300, Managers.UI._hiddenCanvasGO.transform);
         Transform popupTransform = panel.GetComponent<Transform>();
 
         //header
@@ -86,6 +85,10 @@ public class PopUp : MonoBehaviour {
                 buttonComponent.onClick.AddListener(closePopup);
             }
         }
+        
+        Transform containerTransform = _haltsGame ? Managers.UI._popupCanvasGO_AboveCover.transform : Managers.UI._popupCanvasGO.transform;
+        
+
         //trigger sound
         if (_triggerSound != Asset_wav.None)
         {
@@ -104,6 +107,10 @@ public class PopUp : MonoBehaviour {
                 Managers.Time.Pause();
             }
         }
+
+
+        panel.transform.parent = containerTransform.transform;
+
     }
 }
 

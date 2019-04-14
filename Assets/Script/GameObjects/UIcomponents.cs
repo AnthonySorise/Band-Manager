@@ -74,6 +74,7 @@ public class UIcomponents : MonoBehaviour {
         RectTransform rectTransform = textGO.GetComponent<RectTransform>();
         rectTransform.SetAnchor(AnchorPresets.TopCenter);
         rectTransform.SetPivot(PivotPresets.TopCenter);
+        rectTransform.sizeDelta = new Vector2(0, 0);
 
         ContentSizeFitter contentSizeFitter = textGO.AddComponent<ContentSizeFitter>();
         contentSizeFitter.verticalFit = ContentSizeFitter.FitMode.PreferredSize;
