@@ -34,6 +34,9 @@ public class PopUp : MonoBehaviour {
             return;
         }
         GameObject panel = UIcomponents.BuildVertAlignPanelContainer(panelName, 300, Managers.UI._hiddenCanvasGO.transform);
+
+        Transform containerTransform = _haltsGame ? Managers.UI._popupCanvasGO_AboveCover.transform : Managers.UI._popupCanvasGO.transform;
+        panel.transform.parent = containerTransform.transform;
         Transform popupTransform = panel.GetComponent<Transform>();
 
         //header
@@ -56,15 +59,15 @@ public class PopUp : MonoBehaviour {
         GameObject buttonContainer = UIcomponents.BuildVertAlignButtonContainer(buttonContainerName, popupTransform);
         Transform buttonsTransform = buttonContainer.GetComponent<Transform>();
         UnityAction closePopup = () => {
-            Destroy(panel);
             //unhalt game
             if (_haltsGame)
             {
-                if (Managers.UI.IsScreenCovered() == true)
+                if (Managers.UI.IsScreenCovered() == true && Managers.UI._popupCanvasGO_AboveCover.transform.childCount == 1)
                 {
                     Managers.UI.ScreenUncover();
                 }
             }
+            Destroy(panel);
             Managers.Audio.PlayAudio(Asset_wav.Click_02, AudioChannel.UI);
         };
 
@@ -86,9 +89,6 @@ public class PopUp : MonoBehaviour {
             }
         }
         
-        Transform containerTransform = _haltsGame ? Managers.UI._popupCanvasGO_AboveCover.transform : Managers.UI._popupCanvasGO.transform;
-        
-
         //trigger sound
         if (_triggerSound != Asset_wav.None)
         {
@@ -107,10 +107,6 @@ public class PopUp : MonoBehaviour {
                 Managers.Time.Pause();
             }
         }
-
-
-        panel.transform.parent = containerTransform.transform;
-
     }
 }
 
