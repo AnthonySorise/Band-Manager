@@ -1,0 +1,5 @@
+
+2019-04-14
+Building requires the following
+	Copying Audio And Art folders from "Assets" into "BandManager_Data"
+	Coping the preferences.ini file into the root build folder

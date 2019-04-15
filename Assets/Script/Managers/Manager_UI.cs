@@ -15,6 +15,7 @@ public class Manager_UI : MonoBehaviour, IManager {
         BelowCover,
         TheCover,
         AboveCover,
+        MainMenuScreenCover,
         MainMenu
     }
 
@@ -44,6 +45,7 @@ public class Manager_UI : MonoBehaviour, IManager {
     private GameObject _screenCoverCanvasGO;
     public GameObject _popupCanvasGO_AboveCover;
     public GameObject _gameUICanvasGO_AboveCover;
+    private GameObject _screenCoverMainMenuCanvasGO;
     private GameObject _mainMenuCanvasGO;
 
     public void Startup(){
@@ -73,6 +75,7 @@ public class Manager_UI : MonoBehaviour, IManager {
         InitiateCanvas(ref _screenCoverCanvasGO, "Canvas_ScreenCover", CanvasLayer.TheCover, true);
         InitiateCanvas(ref _popupCanvasGO_AboveCover, "Canvas_Popups_AboveCover", CanvasLayer.AboveCover);
         InitiateCanvas(ref _gameUICanvasGO_AboveCover, "Canvas_GameUI_AboveCover", CanvasLayer.AboveCover);
+        InitiateCanvas(ref _screenCoverMainMenuCanvasGO, "Canvas_ScreenCoverMainMenu", CanvasLayer.MainMenuScreenCover, true);
         InitiateCanvas(ref _mainMenuCanvasGO, "Canvas_MainMenu", CanvasLayer.MainMenu, true);
 
         //Cursor
@@ -223,9 +226,15 @@ public class Manager_UI : MonoBehaviour, IManager {
     {
         Managers.Time.Pause();
         _mainMenuCanvasGO.gameObject.SetActive(!_mainMenuCanvasGO.activeSelf);
+        
         if (_mainMenuCanvasGO.activeSelf)
         {
+            _screenCoverMainMenuCanvasGO.gameObject.SetActive(true);
             Managers.Audio.PlayAudio(Asset_wav.Click_04, AudioChannel.UI);
+        }
+        else
+        {
+            _screenCoverMainMenuCanvasGO.gameObject.SetActive(false);
         }
     }
 
@@ -394,6 +403,11 @@ public class Manager_UI : MonoBehaviour, IManager {
     //OnGUI
     void OnGUI()
     {
+        if(State != ManagerState.Started)
+        {
+            return;
+        }
+
         //Update
         UpdateTimePanel();
 
@@ -458,6 +472,11 @@ public class Manager_UI : MonoBehaviour, IManager {
     //Time Panel - Update
     private void UpdateTimePanel()
     {
+        if (State != ManagerState.Started)
+        {
+            return;
+        }
+
         if (Managers.Time.IsPaused)
         {
             _toggleStatusText.text = "||";

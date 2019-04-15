@@ -39,9 +39,11 @@ public class Manager_Assets : MonoBehaviour, IManager {
         State = ManagerState.Initializing;
         Debug.Log("Manager_Assets initializing...");
 
+        string artFolder = "Art/";
+        string audioFolder = "Audio/";
 
-        string artPath = Application.dataPath + "/Art/";
-        string audioPath = Application.dataPath + "/Audio/";
+        string artPath = Application.dataPath + "/" + artFolder;
+        string audioPath = Application.dataPath + "/" + audioFolder;
 
         var artPathSubFolders = Directory.GetDirectories(artPath);
         var audioPathSubFolders = Directory.GetDirectories(audioPath);
@@ -57,33 +59,37 @@ public class Manager_Assets : MonoBehaviour, IManager {
             Texture2D texture = null;
             byte[] fileData;
             string fileName = png.ToString().ToLower();
-
+            string filePath;
             foreach (var path in artPathSubFolders)
             {
-                string filePath = path + "/" + fileName + ".png";
+                //Asset Folder User has access to
+                filePath = path + "/" + fileName + ".png";
                 if (File.Exists(filePath))
                 {
                     fileData = File.ReadAllBytes(filePath);
                     texture = new Texture2D(2, 2);
                     texture.LoadImage(fileData);
-                    if (!_pngTextures.ContainsKey(png))
-                    {
-                        _pngTextures.Add(png, texture);
-                    }
-                    else
-                    {
-                        Debug.Log("Error - Duplicate Asset Name: " + fileName);
-                        State = ManagerState.Error;
-                        return;
-                    }
                 }
             }
             if(!texture)
             {
-                Debug.Log("Error - Missing Asset: " + fileName);
+                //Unity Resource Folder User does NOT have access to
+                filePath = artFolder + fileName;
+                texture = Resources.Load<Texture2D>(filePath);
+
+                if (!texture) {
+                    Debug.Log("Error - Missing Asset: " + fileName);
+                    State = ManagerState.Error;
+                    return;
+                }
+            }
+            if (_pngTextures.ContainsKey(png))
+            {
+                Debug.Log("Error - Duplicate Asset Name: " + fileName);
                 State = ManagerState.Error;
                 return;
             }
+            _pngTextures.Add(png, texture);
         }
 
         _wavAudio = new Dictionary<Asset_wav, AudioClip>();
@@ -96,31 +102,35 @@ public class Manager_Assets : MonoBehaviour, IManager {
 
             AudioClip audioClip = null;
             string fileName = wav.ToString().ToLower();
-
+            string filePath;
             foreach (var path in audioPathSubFolders)
             {
-                string filePath = path + "/" + fileName + ".wav";
+                filePath = path + "/" + fileName + ".wav";
                 if (File.Exists(filePath))
                 {
+                    //Asset Folder User has access to
                     audioClip = new WWW(filePath).GetAudioClip(false, true, AudioType.WAV);
-                    if (!_wavAudio.ContainsKey(wav))
-                    {
-                        _wavAudio.Add(wav, audioClip);
-                    }
-                    else
-                    {
-                        Debug.Log("Error - Duplicate Asset Name: " + fileName);
-                        State = ManagerState.Error;
-                        return;
-                    }
                 }
             }
             if (!audioClip)
             {
-                Debug.Log("Error - Missing Asset: " + fileName);
+                //Unity Resource Folder User does NOT have access to
+                filePath = audioFolder + fileName;
+                audioClip = Resources.Load<AudioClip>(filePath);
+
+                if (!audioClip) {
+                    Debug.Log("Error - Missing Asset: " + fileName);
+                    State = ManagerState.Error;
+                    return;
+                }
+            }
+            if (_wavAudio.ContainsKey(wav))
+            {
+                Debug.Log("Error - Duplicate Asset Name: " + fileName);
                 State = ManagerState.Error;
                 return;
             }
+            _wavAudio.Add(wav, audioClip);
         }
 
 
