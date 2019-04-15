@@ -28,6 +28,7 @@ public class Manager_UI : MonoBehaviour, IManager {
 
     //UI Prefabs
     public GameObject prefab_Button;
+    public GameObject prefab_Popup;
 
     //UI Gos and Elements
     public GameObject _hiddenCanvasGO;
@@ -58,6 +59,7 @@ public class Manager_UI : MonoBehaviour, IManager {
 
         //UI Prefabs
         prefab_Button = Resources.Load<GameObject>("Prefabs/UI/Button");
+        prefab_Popup = Resources.Load<GameObject>("Prefabs/UI/Popup");
 
         //Initiate UI GOs and Elements
         InitiateCanvas(ref _hiddenCanvasGO, "Canvas_Hidden", CanvasLayer.Hidden);

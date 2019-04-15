@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
@@ -26,38 +27,48 @@ public class PopUp {
 
     public void CreateAndDisplayGO()
     {
+        Transform containerTransform = _haltsGame ? Managers.UI._popupCanvasGO_AboveCover.transform : Managers.UI._popupCanvasGO.transform;
+        GameObject popup = MonoBehaviour.Instantiate(Managers.UI.prefab_Popup, containerTransform);
+        popup.transform.SetParent(containerTransform, false);
+
+
+        GameObject popup_header = popup.transform.GetChild(0).gameObject;
+        GameObject popup_image = popup.transform.GetChild(1).gameObject;
+        GameObject popup_bodyText = popup.transform.GetChild(2).gameObject;
+        GameObject popup_buttonContainer = popup.transform.GetChild(3).gameObject;
+
         //popup panel
-        string panelName = "Popup_" + _simEvent.ToString();
-        if (GameObject.Find(panelName))
+        string popupName = "Popup_" + _simEvent.ToString();
+        if (GameObject.Find(popupName))
         {
-            Debug.Log("Error: " + panelName + " already exists");
+            Debug.Log("Error: " + popupName + " already exists");
             return;
         }
-        GameObject panel = UIcomponents.BuildVertAlignPanelContainer(panelName, 300, Managers.UI._hiddenCanvasGO.transform);
-
-        Transform containerTransform = _haltsGame ? Managers.UI._popupCanvasGO_AboveCover.transform : Managers.UI._popupCanvasGO.transform;
-        panel.transform.SetParent(containerTransform);
-        Transform popupTransform = panel.GetComponent<Transform>();
+        popup.name = popupName;
 
         //header
         string headerName = "Popup_" + _simEvent.ToString() + "_header";
-        UIcomponents.BuildVertAlignHeader(headerName, _headerText, popupTransform);
+        popup_header.name = headerName;
+        popup_header.GetComponent<TextMeshProUGUI>().text = _headerText;
 
         //image
         string imgName = "Popup_" + _simEvent.ToString() + "_image";
         if (_bodyImg != Asset_png.None)
         {
-            UIcomponents.BuildVertAlignImg(imgName, _bodyImg, popupTransform);
+            popup_image.name = imgName;
+            popup_image.GetComponent<Image>().sprite = Managers.Assets.GetSprite(_bodyImg);
         }
 
         //body text
         string bodyTextName = "Popup_" + _simEvent.ToString() + "_bodyText";
-        UIcomponents.BuildVertAlignText(bodyTextName, _bodyText, popupTransform);
+        popup_bodyText.name = bodyTextName;
+        popup_bodyText.GetComponent<TextMeshProUGUI>().text = _bodyText;
 
         //buttons
-        string buttonContainerName = "Popup_" + _simEvent.ToString() + "_buttonContainer";
-        GameObject buttonContainer = UIcomponents.BuildVertAlignButtonContainer(buttonContainerName, popupTransform);
-        Transform buttonsTransform = buttonContainer.GetComponent<Transform>();
+        string buttonContainerName = "Popup_buttonContainer" + _simEvent.ToString();
+        popup_buttonContainer.name = buttonContainerName;
+
+        Transform buttonsTransform = popup_buttonContainer.GetComponent<Transform>();
         UnityAction closePopup = () => {
             //unhalt game
             if (_haltsGame)
@@ -67,14 +78,17 @@ public class PopUp {
                     Managers.UI.ScreenUncover();
                 }
             }
-            MonoBehaviour.Destroy(panel.gameObject);
+            MonoBehaviour.Destroy(popup.gameObject);
             Managers.Audio.PlayAudio(Asset_wav.Click_02, AudioChannel.UI);
         };
 
         if (_options == null || _options.Count == 0)
         {
             string buttonName = "Popup_" + _simEvent.ToString() + "_buttonClose";
-            UIcomponents.BuildVertAlignButton(buttonName, "OK", closePopup, buttonsTransform);
+            //UIcomponents.BuildVertAlignButton(buttonName, "OK", closePopup, buttonsTransform);
+            PopUpOption option = new PopUpOption("OK", closePopup);
+            option.CreateAndDisplayGO(buttonName, buttonsTransform);
+
             Managers.UI.CursorHover_Button(GameObject.Find(buttonName).GetComponent<Button>());
         }
         else
@@ -83,6 +97,7 @@ public class PopUp {
             {
                 var buttonName = "Popup_" + _simEvent.ToString() + "_button_0" + (i+1).ToString();
                 _options[i].CreateAndDisplayGO(buttonName, buttonsTransform);
+
                 Button buttonComponent = GameObject.Find(buttonName).GetComponent<Button>();
                 Managers.UI.CursorHover_Button(buttonComponent);
                 buttonComponent.onClick.AddListener(closePopup);
