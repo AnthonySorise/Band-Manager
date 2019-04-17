@@ -27,10 +27,9 @@ public class PopUp {
 
     public void CreateAndDisplayGO()
     {
-        Transform containerTransform = _haltsGame ? Managers.UI._popupCanvasGO_AboveCover.transform : Managers.UI._popupCanvasGO.transform;
+        Transform containerTransform = _haltsGame ? Managers.UI.PopupCanvasGO_AboveCover.transform : Managers.UI.PopupCanvasGO.transform;
         GameObject popup = MonoBehaviour.Instantiate(Managers.UI.prefab_Popup, containerTransform);
         popup.transform.SetParent(containerTransform, false);
-
 
         GameObject popup_header = popup.transform.GetChild(0).gameObject;
         GameObject popup_image = popup.transform.GetChild(1).gameObject;
@@ -73,7 +72,7 @@ public class PopUp {
             //unhalt game
             if (_haltsGame)
             {
-                if (Managers.UI.IsScreenCovered() == true && Managers.UI._popupCanvasGO_AboveCover.transform.childCount == 1)
+                if (Managers.UI.IsScreenCovered() == true && Managers.UI.PopupCanvasGO_AboveCover.transform.childCount == 1)
                 {
                     Managers.UI.ScreenUncover();
                 }

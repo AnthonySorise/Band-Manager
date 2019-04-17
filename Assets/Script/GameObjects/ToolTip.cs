@@ -5,15 +5,19 @@ using UnityEngine;
 
 public class ToolTip {
     private string _header;
-    private List<string> _text;
-    private RectTransform _hoveredRectTransform;
+    private List<string> _textList;
+    //private RectTransform _hoveredRectTransform;
 
-    public ToolTip(string header, List<string> text, RectTransform hoveredRectTransform) {
+    public ToolTip(string header, List<string> textList, RectTransform hoveredRectTransform)
+    {
         _header = header;
-        _text = text;
-        _hoveredRectTransform = hoveredRectTransform;
+        _textList = textList;
     }
-    public ToolTip(Manager_Input managerInput, GameObject button) {
+    public ToolTip(string text) {
+        _textList = new List<string>{text};
+    }
+    public ToolTip(Manager_Input managerInput, GameObject button)
+    {
 
     }
     public ToolTip(Dictionary<bool, string>conditionalLog)
@@ -27,40 +31,20 @@ public class ToolTip {
 
     public void CreateAndDisplayGO()
     {
-        //GameObject toolTip;
+        foreach (string textLine in _textList)
+        {
+            Managers.UI.ToolTipText.text = Managers.UI.ToolTipText.text + textLine +'\n';
+        }
 
-        //if (GameObject.Find("Panel_Tooltip")) {
-        //    toolTip = GameObject.Find("Panel_Tooltip");
-        //    toolTip.SetActive(true);
-        //    if (toolTip.GetComponent<TextMeshProUGUI>() == null) {
-        //        Debug.Log("!!!!!!!!!!!!!!!!!!!!!!");
-        //        toolTip.AddComponent<TextMeshProUGUI>();
-        //    }
-        //}
-        //else
-        //{
-        //   toolTip = UIcomponents.BuildVertAlignText("Panel_Tooltip", 100, Managers.UI._gameUICanvasGO_AboveCover.GetComponent<Transform>());
-        //   toolTip.AddComponent<TextMeshProUGUI>();
-        //}
-        //TextMeshProUGUI tmpText = toolTip.GetComponent<TextMeshProUGUI>();
 
-        //var toolTipText = "";
+        Managers.UI.ToolTip.SetActive(true);
+        float halfPadding = 10f;
+        Vector2 backgroundSize = new Vector2((Managers.UI.ToolTipText.preferredWidth / 2f) + (halfPadding * 2f), Managers.UI.ToolTipText.preferredHeight + halfPadding);
+        Managers.UI.ToolTipBackground.GetComponent<RectTransform>().sizeDelta = backgroundSize;
 
-        ////TESTING
-        //toolTipText = "TEST TOOLTIP THIS IS A TEST TOOLTIP.  IT IS FOR TESTING.  A TEST TOOLTIP.";
-
-        //tmpText.text = toolTipText;
-        //float textPaddingSize = 4f;
-        //Vector2 toolTipSize = new Vector2(tmpText.preferredWidth + (textPaddingSize * 2f), tmpText.preferredHeight + (textPaddingSize * 2f));
-        //toolTip.GetComponent<RectTransform>().sizeDelta = toolTipSize;
-
-        
     }
     private void Hide()
     {
-        if (GameObject.Find("Panel_Tooltip"))
-        {
-            GameObject.Find("Panel_Tooltip").SetActive(false);
-        }
+        Managers.UI.ToolTip.SetActive(false);
     }
 }

@@ -19,33 +19,35 @@ public class Manager_UI : MonoBehaviour, IManager {
         MainMenu
     }
 
-    //Global Variables
+    //Behavior Variables
     private float _timeToInitiateHoldBehavior = 0.4f;
     private float _timeToRepeatHoldBehavior = 0.2f;
 
     //Font
-    //public Font mainFont;
 
     //UI Prefabs
     public GameObject prefab_Button;
     public GameObject prefab_Popup;
 
     //UI Gos and Elements
-    public GameObject _hiddenCanvasGO;
-    public GameObject _backgroundCanvasGO;
-    public GameObject _popupCanvasGO;
+    public GameObject HiddenCanvasGO;
+    public GameObject BackgroundCanvasGO;
+    public GameObject PopupCanvasGO;
     private GameObject _gameUICanvasGO;
         private GameObject _timePanelGO;
-            public Button _toggleTimeButton;
+            public Button ToggleTimeButton;
                 private TextMeshProUGUI _timeText;
                 private TextMeshProUGUI _dayOfWeekText;
                 private TextMeshProUGUI _dateText;
                 private TextMeshProUGUI _toggleStatusText;
-            public Button _increaseSpeedButton;
-            public Button _decreaseSpeedButton;
+            public Button IncreaseSpeedButton;
+            public Button DecreaseSpeedButton;
     private GameObject _screenCoverCanvasGO;
-    public GameObject _popupCanvasGO_AboveCover;
-    public GameObject _gameUICanvasGO_AboveCover;
+    public GameObject PopupCanvasGO_AboveCover;
+    public GameObject GameUICanvasGO_AboveCover;
+        public GameObject ToolTip;
+            public GameObject ToolTipBackground;
+            public TextMeshProUGUI ToolTipText;
     private GameObject _screenCoverMainMenuCanvasGO;
     private GameObject _mainMenuCanvasGO;
 
@@ -62,21 +64,24 @@ public class Manager_UI : MonoBehaviour, IManager {
         prefab_Popup = Resources.Load<GameObject>("Prefabs/UI/Popup");
 
         //Initiate UI GOs and Elements
-        InitiateCanvas(ref _hiddenCanvasGO, "Canvas_Hidden", CanvasLayer.Hidden);
-        InitiateCanvas(ref _backgroundCanvasGO, "Canvas_Background", CanvasLayer.Background);
-        InitiateCanvas(ref _popupCanvasGO, "Canvas_Popups", CanvasLayer.BelowCover);
+        InitiateCanvas(ref HiddenCanvasGO, "Canvas_Hidden", CanvasLayer.Hidden);
+        InitiateCanvas(ref BackgroundCanvasGO, "Canvas_Background", CanvasLayer.Background);
+        InitiateCanvas(ref PopupCanvasGO, "Canvas_Popups", CanvasLayer.BelowCover);
         InitiateCanvas(ref _gameUICanvasGO, "Canvas_GameUI", CanvasLayer.BelowCover);
             InitiateGO(ref _timePanelGO, "Panel_Time");
-                InitiateButton(ref _toggleTimeButton, "Button_ToggleTime");
+                InitiateButton(ref ToggleTimeButton, "Button_ToggleTime");
                     InitiateText(ref _dayOfWeekText, "TMPText_DayOfWeek");
                     InitiateText(ref _timeText, "TMPText_Time");
                     InitiateText(ref _dateText, "TMPText_Date");
                     InitiateText(ref _toggleStatusText, "TMPText_ToggleStatus");
-                InitiateButton(ref _increaseSpeedButton, "Button_IncreaseSpeed");
-                InitiateButton(ref _decreaseSpeedButton, "Button_DecreaseSpeed");
+                InitiateButton(ref IncreaseSpeedButton, "Button_IncreaseSpeed");
+                InitiateButton(ref DecreaseSpeedButton, "Button_DecreaseSpeed");
         InitiateCanvas(ref _screenCoverCanvasGO, "Canvas_ScreenCover", CanvasLayer.TheCover, true);
-        InitiateCanvas(ref _popupCanvasGO_AboveCover, "Canvas_Popups_AboveCover", CanvasLayer.AboveCover);
-        InitiateCanvas(ref _gameUICanvasGO_AboveCover, "Canvas_GameUI_AboveCover", CanvasLayer.AboveCover);
+        InitiateCanvas(ref PopupCanvasGO_AboveCover, "Canvas_Popups_AboveCover", CanvasLayer.AboveCover);
+        InitiateCanvas(ref GameUICanvasGO_AboveCover, "Canvas_GameUI_AboveCover", CanvasLayer.AboveCover);
+            InitiateGO(ref ToolTip, "ToolTip");
+                InitiateGO(ref ToolTipBackground, "Panel_ToolTipBackground");
+                InitiateText(ref ToolTipText, "Text_ToolTip");
         InitiateCanvas(ref _screenCoverMainMenuCanvasGO, "Canvas_ScreenCoverMainMenu", CanvasLayer.MainMenuScreenCover, true);
         InitiateCanvas(ref _mainMenuCanvasGO, "Canvas_MainMenu", CanvasLayer.MainMenu, true);
 
@@ -89,10 +94,15 @@ public class Manager_UI : MonoBehaviour, IManager {
         CursorHover_Button(mainMenuButtons);
         CursorHover_Button(timePanelButtons);
 
+        //ToolTips
+        //TEST
+        ToolTip tooltip = new ToolTip("THIS IS A TEST.  Aren't tests great!?  \nYEAH, \nTHEY'RE \nPRETTY \nFANTASTIC!!!");
+        tooltip.CreateAndDisplayGO();
+
         //Time Panel - Listeners
-        _toggleTimeButton.onClick.AddListener(Click_ToggleTimeButton);
-        _increaseSpeedButton.onClick.AddListener(Click_IncreaseSpeedButton);
-        _decreaseSpeedButton.onClick.AddListener(Click_DecreaseSpeedButton);
+        ToggleTimeButton.onClick.AddListener(Click_ToggleTimeButton);
+        IncreaseSpeedButton.onClick.AddListener(Click_IncreaseSpeedButton);
+        DecreaseSpeedButton.onClick.AddListener(Click_DecreaseSpeedButton);
 
 
         State = ManagerState.Started;
@@ -117,8 +127,6 @@ public class Manager_UI : MonoBehaviour, IManager {
         InitiateGO(ref CanvasGOtoSet, goName);
         if (CanvasGOtoSet != null)
         {
-            
-
             CanvasGOtoSet = GameObject.Find(goName);
             CanvasGOtoSet.gameObject.SetActive(!isDisabled);
             Canvas canvasComponent = CanvasGOtoSet.GetComponent<Canvas>();
@@ -252,16 +260,16 @@ public class Manager_UI : MonoBehaviour, IManager {
         {
             return;
         }
-        _toggleTimeButton.image.color = _toggleTimeButton.colors.pressedColor;
+        ToggleTimeButton.image.color = ToggleTimeButton.colors.pressedColor;
     }
     public void KeyUp_ToggleTimeButon()
     {
         if (IsScreenCovered())
         {
-            _toggleTimeButton.image.color = _toggleTimeButton.colors.normalColor;
+            ToggleTimeButton.image.color = ToggleTimeButton.colors.normalColor;
             return;
         }
-        _toggleTimeButton.image.color = _toggleTimeButton.colors.normalColor;
+        ToggleTimeButton.image.color = ToggleTimeButton.colors.normalColor;
         Managers.Time.ToggleTime();
     }
 
@@ -288,7 +296,7 @@ public class Manager_UI : MonoBehaviour, IManager {
         {
             return;
         }
-        _increaseSpeedButton.image.color = _increaseSpeedButton.colors.pressedColor;
+        IncreaseSpeedButton.image.color = IncreaseSpeedButton.colors.pressedColor;
     }
     public void Hold_IncreaseSpeedButton()
     {
@@ -318,7 +326,7 @@ public class Manager_UI : MonoBehaviour, IManager {
     }
     public void KeyUp_IncreaseSpeedButton()
     {
-        _increaseSpeedButton.image.color = _increaseSpeedButton.colors.normalColor;
+        IncreaseSpeedButton.image.color = IncreaseSpeedButton.colors.normalColor;
         if (IsScreenCovered())
         {
             return;
@@ -356,7 +364,7 @@ public class Manager_UI : MonoBehaviour, IManager {
         {
             return;
         }
-        _decreaseSpeedButton.image.color = _decreaseSpeedButton.colors.pressedColor;
+        DecreaseSpeedButton.image.color = DecreaseSpeedButton.colors.pressedColor;
     }
     public void Hold_DecreaseSpeedButton()
     {
@@ -386,7 +394,7 @@ public class Manager_UI : MonoBehaviour, IManager {
     }
     public void KeyUp_DecreaseSpeedButton()
     {
-        _decreaseSpeedButton.image.color = _decreaseSpeedButton.colors.normalColor;
+        DecreaseSpeedButton.image.color = DecreaseSpeedButton.colors.normalColor;
         if (IsScreenCovered())
         {
             return;
@@ -402,6 +410,23 @@ public class Manager_UI : MonoBehaviour, IManager {
         Managers.Time.DecreaseSpeed();
     }
 
+    //OnUpdate
+    void Update()
+    {
+        if (State != ManagerState.Started)
+        {
+            return;
+        }
+
+        //update Tooltip position
+        if (ToolTip.activeSelf)
+        {
+            var toolTipPosition = new Vector2(Input.mousePosition.x, Input.mousePosition.y + (ToolTipBackground.GetComponent<RectTransform>().sizeDelta.y / 2) + 10);
+
+            ToolTip.GetComponent<RectTransform>().position = toolTipPosition;
+        }
+    }
+
     //OnGUI
     void OnGUI()
     {
@@ -410,7 +435,6 @@ public class Manager_UI : MonoBehaviour, IManager {
             return;
         }
 
-        //Update
         UpdateTimePanel();
 
         //mouse listeners
