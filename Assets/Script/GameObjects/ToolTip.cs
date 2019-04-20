@@ -37,7 +37,7 @@ public class ToolTip {
         }
 
 
-        Managers.UI.ToolTip.SetActive(true);
+        Managers.UI.ToolTipCanvasGO.SetActive(true);
         float halfPadding = 10f;
         Vector2 backgroundSize = new Vector2((Managers.UI.ToolTipText.preferredWidth / 2f) + (halfPadding * 2f), Managers.UI.ToolTipText.preferredHeight + halfPadding);
         Managers.UI.ToolTipBackground.GetComponent<RectTransform>().sizeDelta = backgroundSize;
@@ -45,6 +45,6 @@ public class ToolTip {
     }
     private void Hide()
     {
-        Managers.UI.ToolTip.SetActive(false);
+        Managers.UI.ToolTipCanvasGO.SetActive(false);
     }
 }

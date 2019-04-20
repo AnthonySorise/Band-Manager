@@ -16,7 +16,8 @@ public class Manager_UI : MonoBehaviour, IManager {
         TheCover,
         AboveCover,
         MainMenuScreenCover,
-        MainMenu
+        MainMenu,
+        ToolTip
     }
 
     //Behavior Variables
@@ -45,11 +46,12 @@ public class Manager_UI : MonoBehaviour, IManager {
     private GameObject _screenCoverCanvasGO;
     public GameObject PopupCanvasGO_AboveCover;
     public GameObject GameUICanvasGO_AboveCover;
-        public GameObject ToolTip;
-            public GameObject ToolTipBackground;
-            public TextMeshProUGUI ToolTipText;
     private GameObject _screenCoverMainMenuCanvasGO;
     private GameObject _mainMenuCanvasGO;
+    public GameObject ToolTipCanvasGO;
+        private GameObject _toolTip;
+            public GameObject ToolTipBackground;
+            public TextMeshProUGUI ToolTipText;
 
     public void Startup(){
 		State = ManagerState.Initializing;
@@ -79,11 +81,12 @@ public class Manager_UI : MonoBehaviour, IManager {
         InitiateCanvas(ref _screenCoverCanvasGO, "Canvas_ScreenCover", CanvasLayer.TheCover, true);
         InitiateCanvas(ref PopupCanvasGO_AboveCover, "Canvas_Popups_AboveCover", CanvasLayer.AboveCover);
         InitiateCanvas(ref GameUICanvasGO_AboveCover, "Canvas_GameUI_AboveCover", CanvasLayer.AboveCover);
-            InitiateGO(ref ToolTip, "ToolTip");
-                InitiateGO(ref ToolTipBackground, "Panel_ToolTipBackground");
-                InitiateText(ref ToolTipText, "Text_ToolTip");
         InitiateCanvas(ref _screenCoverMainMenuCanvasGO, "Canvas_ScreenCoverMainMenu", CanvasLayer.MainMenuScreenCover, true);
         InitiateCanvas(ref _mainMenuCanvasGO, "Canvas_MainMenu", CanvasLayer.MainMenu, true);
+        InitiateCanvas(ref ToolTipCanvasGO, "Canvas_ToolTip", CanvasLayer.ToolTip);
+            InitiateGO(ref _toolTip, "ToolTip");
+                InitiateGO(ref ToolTipBackground, "Panel_ToolTipBackground");
+                InitiateText(ref ToolTipText, "Text_ToolTip");
 
         //Cursor
         SetCursorToDefault();
@@ -419,11 +422,26 @@ public class Manager_UI : MonoBehaviour, IManager {
         }
 
         //update Tooltip position
-        if (ToolTip.activeSelf)
+        if (_toolTip.activeSelf)
         {
-            var toolTipPosition = new Vector2(Input.mousePosition.x, Input.mousePosition.y + (ToolTipBackground.GetComponent<RectTransform>().sizeDelta.y / 2) + 10);
+            Vector2 toolTipSize = ToolTipBackground.GetComponent<RectTransform>().sizeDelta;
 
-            ToolTip.GetComponent<RectTransform>().position = toolTipPosition;
+            float x = Input.mousePosition.x + (toolTipSize.x / 2) + 10;
+            if (Screen.width < x + toolTipSize.x / 2)
+            {
+                x = Screen.width - toolTipSize.x/2;
+            }
+
+            float y = Input.mousePosition.y - (toolTipSize.y / 2) - 40;
+
+            if (y - toolTipSize.y / 2 < 0)
+            {
+                y = Input.mousePosition.y + (toolTipSize.y / 2) + 15;
+            }
+
+            var toolTipPosition = new Vector2(x, y);
+
+            _toolTip.GetComponent<RectTransform>().position = toolTipPosition;
         }
     }
 
