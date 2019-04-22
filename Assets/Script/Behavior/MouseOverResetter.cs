@@ -4,15 +4,20 @@ using UnityEngine;
 using UnityEngine.Events;
 
 public class MouseOverResetter : MonoBehaviour {
-    public UnityAction resetCallback;
+    public List<UnityAction> resetCallbacks = new List<UnityAction>();
 
     private void OnDisable()
     {
-        resetCallback();
+        foreach (UnityAction callback in resetCallbacks) {
+            callback();
+        }
     }
 
     private void OnDestroy()
     {
-        resetCallback();
+        foreach (UnityAction callback in resetCallbacks)
+        {
+            callback();
+        }
     }
 }

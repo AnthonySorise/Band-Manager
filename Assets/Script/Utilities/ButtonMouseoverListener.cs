@@ -31,7 +31,9 @@ public class ButtonMouseoverListener {
         eventTrigger.triggers.Add(onEnter);
         eventTrigger.triggers.Add(onExit);
 
-        button.gameObject.AddComponent<MouseOverResetter>();
-        button.GetComponent<MouseOverResetter>().resetCallback = pointerExit;
+        if (button.GetComponent<MouseOverResetter>() == null) {
+            button.gameObject.AddComponent<MouseOverResetter>();
+        }
+        button.GetComponent<MouseOverResetter>().resetCallbacks.Add(pointerExit);
     }
 }

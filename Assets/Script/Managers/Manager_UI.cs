@@ -217,7 +217,7 @@ public class Manager_UI : MonoBehaviour, IManager {
 
     //ToolTip
     private ToolTip _toolTipInQueue =  null;
-    private void SetToolTip(Button button, ToolTip tooltip)
+    public void SetToolTip(Button button, ToolTip tooltip)
     {
         UnityAction onEnter = () =>
         {

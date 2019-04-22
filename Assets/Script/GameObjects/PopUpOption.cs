@@ -9,11 +9,13 @@ using UnityEngine.UI;
 public class PopUpOption {
     private string _buttonText;
     private UnityAction _callBack;
+    private ToolTip _tooltip;
 
-    public PopUpOption(string buttonText, UnityAction callBack)
+    public PopUpOption(string buttonText, UnityAction callBack, ToolTip tooltip = null)
     {
         _buttonText = buttonText;
         _callBack = callBack;
+        _tooltip = tooltip;
     }
 
     public void CreateAndDisplayGO(string goName, Transform containerTransform)
@@ -24,7 +26,10 @@ public class PopUpOption {
         button.GetComponent<Transform>().SetParent(containerTransform);
 
         button.GetComponent<Button>().onClick.AddListener(_callBack);
-
+        if (_tooltip != null) {
+            Managers.UI.SetToolTip(button.GetComponent<Button>(), _tooltip);
+        }
+        
         TextMeshProUGUI tmpText = button.GetComponentInChildren<TextMeshProUGUI>();
         tmpText.text = _buttonText;
     }

@@ -9,11 +9,11 @@ public class HasTooltip : MonoBehaviour {
 
     private void Start()
     {
-        gameObject.AddComponent<MouseOverResetter>();
-        gameObject.GetComponent<MouseOverResetter>().resetCallback = () =>
+        if (gameObject.GetComponent<MouseOverResetter>() == null)
         {
-            OnMouseExit();
-        };
+            gameObject.AddComponent<MouseOverResetter>();
+        }
+        gameObject.GetComponent<MouseOverResetter>().resetCallbacks.Add(OnMouseExit);
     }
 
     private void OnMouseEnter()

@@ -114,10 +114,15 @@ public class Manager_Input : MonoBehaviour, IManager {
                             Debug.Log("Option Four Selected!");
                         };
 
-                        PopUpOption PopUpOption01 = new PopUpOption("First Option", option01);
-                        PopUpOption PopUpOption02 = new PopUpOption("Second Option", option02);
-                        PopUpOption PopUpOption03 = new PopUpOption("Third Option", option03);
-                        PopUpOption PopUpOption04 = new PopUpOption("Fourth Option", option04);
+                        ToolTip tt_option01 = new ToolTip("This is the first option.  What can I say, it's not a bad choice.");
+                        ToolTip tt_option02 = new ToolTip("This is the Second option.  Can't go wrong with option two.");
+                        ToolTip tt_option03 = new ToolTip("This is the THIRD option.  That's all.");
+                        ToolTip tt_option04 = new ToolTip("This is the last option.  You would have to be a fool to go with this option!");
+
+                        PopUpOption PopUpOption01 = new PopUpOption("First Option", option01, tt_option01);
+                        PopUpOption PopUpOption02 = new PopUpOption("Second Option", option02, tt_option02);
+                        PopUpOption PopUpOption03 = new PopUpOption("Third Option", option03, tt_option03);
+                        PopUpOption PopUpOption04 = new PopUpOption("Fourth Option", option04, tt_option04);
 
                         List<PopUpOption> popupOptionsList01 = new List<PopUpOption>();
                         popupOptionsList01.Add(PopUpOption01);
@@ -137,8 +142,11 @@ public class Manager_Input : MonoBehaviour, IManager {
                             Debug.Log("Option Two Selected!");
                         };
 
-                        PopUpOption PopUpOption01b = new PopUpOption("First Option", option01b);
-                        PopUpOption PopUpOption02b = new PopUpOption("Second Option", option02b);
+                        ToolTip tt_option01b = new ToolTip("This is the first option.  What can I say, it's not a bad choice.");
+                        ToolTip tt_option02b = new ToolTip("This is the Second option.  Can't go wrong with option two.");
+
+                        PopUpOption PopUpOption01b = new PopUpOption("First Option", option01b, tt_option01b);
+                        PopUpOption PopUpOption02b = new PopUpOption("Second Option", option02b, tt_option02b);
 
                         List<PopUpOption> popupOptionsList02 = new List<PopUpOption>();
                         popupOptionsList02.Add(PopUpOption01b);
