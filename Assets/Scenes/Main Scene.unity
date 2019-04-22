@@ -705,7 +705,7 @@ MonoBehaviour:
   PopupCanvasGO_AboveCover: {fileID: 0}
   GameUICanvasGO_AboveCover: {fileID: 0}
   ToolTipCanvasGO: {fileID: 0}
-  ToolTip: {fileID: 0}
+  ToolTipGO: {fileID: 0}
   ToolTipBackground: {fileID: 0}
   ToolTipText: {fileID: 0}
 --- !u!114 &364967767
@@ -3784,7 +3784,7 @@ MonoBehaviour:
   m_firstVisibleCharacter: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 10, y: 10, z: 10, w: 10}
+  m_margin: {x: 5, y: 5, z: 5, w: 5}
   m_textInfo:
     textComponent: {fileID: 1944942427}
     characterCount: 0

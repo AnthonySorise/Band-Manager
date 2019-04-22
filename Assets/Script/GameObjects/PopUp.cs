@@ -27,6 +27,13 @@ public class PopUp {
 
     public void CreateAndDisplayGO()
     {
+        string popupName = "Popup_" + _simEvent.ToString();
+        if (GameObject.Find(popupName))
+        {
+            Debug.Log("Error: " + popupName + " already exists");
+            return;
+        }
+
         Transform containerTransform = _haltsGame ? Managers.UI.PopupCanvasGO_AboveCover.transform : Managers.UI.PopupCanvasGO.transform;
         GameObject popup = MonoBehaviour.Instantiate(Managers.UI.prefab_Popup, containerTransform);
         popup.transform.SetParent(containerTransform, false);
@@ -37,13 +44,6 @@ public class PopUp {
         GameObject popup_buttonContainer = popup.transform.GetChild(3).gameObject;
 
         //popup panel
-        string popupName = "Popup_" + _simEvent.ToString();
-        if (GameObject.Find(popupName))
-        {
-            Debug.Log("Error: " + popupName + " already exists");
-            return;
-        }
-        Debug.Log("DID NOT RETURN");
         popup.name = popupName;
 
         //header
