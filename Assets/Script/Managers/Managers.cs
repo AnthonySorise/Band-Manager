@@ -59,8 +59,8 @@ public class Managers : MonoBehaviour {
         _postStartSequence = new List<IManager>
         {
             GO,
-            UI,
             Input,
+            UI,
             Data
         };
 

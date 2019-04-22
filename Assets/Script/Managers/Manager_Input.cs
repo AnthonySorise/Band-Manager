@@ -5,27 +5,30 @@ using UnityEngine.EventSystems;
 //https://docs.unity3d.com/ScriptReference/Input.GetKey.html
 //https://docs.unity3d.com/ScriptReference/KeyCode.html
 
+public enum InputCommand
+{
+    //Menu
+    ToggleMainMenuPanel,
+
+    //Time
+    ToggleTime,
+    IncreaseSpeed,
+    DecreaseSpeed,
+
+    //Audio
+    MasterVolumeUp,
+    MasterVolumeDown,
+
+    //POPUP TESTING
+    TESTING_Popup01,
+    TESTING_Popup02,
+    TESTING_Popup03,
+    TESTING_Popup04
+}
+
 public class Manager_Input : MonoBehaviour, IManager {
 	public ManagerState State {get; private set;}
-	private enum InputCommand{
-        //Menu
-        ToggleMainMenuPanel,
 
-        //Time
-        ToggleTime,
-        IncreaseSpeed,
-        DecreaseSpeed,
-
-        //Audio
-		MasterVolumeUp,
-		MasterVolumeDown,
-
-        //POPUP TESTING
-        TESTING_Popup01,
-        TESTING_Popup02,
-        TESTING_Popup03,
-        TESTING_Popup04
-    }
 	private Dictionary<KeyCode, InputCommand> _keyMap;
 
 	public void Startup(){
@@ -189,4 +192,34 @@ public class Manager_Input : MonoBehaviour, IManager {
 			}
         }
 	}
+
+    public InputCommand GetInputCommand(KeyCode key) {
+        return _keyMap[key];
+    }
+
+    public string GetKeysAsString(InputCommand inputCommand) {
+        List<string> keys = new List<string>();
+        foreach (KeyCode key in _keyMap.Keys)
+        {
+            if (_keyMap[key] == inputCommand)
+            {
+                keys.Add(key.ToString());
+            }
+
+        }
+
+        string str = "";
+        bool isFirst = true;
+        foreach (string key in keys)
+        {
+            if (isFirst) {
+                isFirst = false;
+            }
+            else {
+                str += ", ";
+            }
+            str += "[" + key + "]";
+        }
+        return str;
+    }
 }

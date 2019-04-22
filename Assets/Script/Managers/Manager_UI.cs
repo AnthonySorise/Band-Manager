@@ -4,21 +4,22 @@ using UnityEngine.EventSystems;
 using System.Collections;
 using TMPro;
 using System.Collections.Generic;
+using UnityEngine.Events;
+
+public enum CanvasLayer
+{
+    Hidden,
+    Background,
+    BelowCover,
+    TheCover,
+    AboveCover,
+    MainMenuScreenCover,
+    MainMenu,
+    ToolTip
+}
 
 public class Manager_UI : MonoBehaviour, IManager {
 	public ManagerState State {get; private set;}
-
-    private enum CanvasLayer
-    {
-        Hidden,
-        Background,
-        BelowCover,
-        TheCover,
-        AboveCover,
-        MainMenuScreenCover,
-        MainMenu,
-        ToolTip
-    }
 
     //Behavior Variables
     private float _timeToInitiateHoldBehavior = 0.4f;
@@ -49,7 +50,7 @@ public class Manager_UI : MonoBehaviour, IManager {
     private GameObject _screenCoverMainMenuCanvasGO;
     private GameObject _mainMenuCanvasGO;
     public GameObject ToolTipCanvasGO;
-        private GameObject _toolTip;
+        public GameObject ToolTip;
             public GameObject ToolTipBackground;
             public TextMeshProUGUI ToolTipText;
 
@@ -78,15 +79,21 @@ public class Manager_UI : MonoBehaviour, IManager {
                     InitiateText(ref _toggleStatusText, "TMPText_ToggleStatus");
                 InitiateButton(ref IncreaseSpeedButton, "Button_IncreaseSpeed");
                 InitiateButton(ref DecreaseSpeedButton, "Button_DecreaseSpeed");
-        InitiateCanvas(ref _screenCoverCanvasGO, "Canvas_ScreenCover", CanvasLayer.TheCover, true);
+        InitiateCanvas(ref _screenCoverCanvasGO, "Canvas_ScreenCover", CanvasLayer.TheCover);
         InitiateCanvas(ref PopupCanvasGO_AboveCover, "Canvas_Popups_AboveCover", CanvasLayer.AboveCover);
         InitiateCanvas(ref GameUICanvasGO_AboveCover, "Canvas_GameUI_AboveCover", CanvasLayer.AboveCover);
-        InitiateCanvas(ref _screenCoverMainMenuCanvasGO, "Canvas_ScreenCoverMainMenu", CanvasLayer.MainMenuScreenCover, true);
-        InitiateCanvas(ref _mainMenuCanvasGO, "Canvas_MainMenu", CanvasLayer.MainMenu, true);
+        InitiateCanvas(ref _screenCoverMainMenuCanvasGO, "Canvas_ScreenCoverMainMenu", CanvasLayer.MainMenuScreenCover);
+        InitiateCanvas(ref _mainMenuCanvasGO, "Canvas_MainMenu", CanvasLayer.MainMenu);
         InitiateCanvas(ref ToolTipCanvasGO, "Canvas_ToolTip", CanvasLayer.ToolTip);
-            InitiateGO(ref _toolTip, "ToolTip");
+            InitiateGO(ref ToolTip, "ToolTip");
                 InitiateGO(ref ToolTipBackground, "Panel_ToolTipBackground");
                 InitiateText(ref ToolTipText, "Text_ToolTip");
+
+
+        _screenCoverCanvasGO.SetActive(false);
+        _screenCoverMainMenuCanvasGO.SetActive(false);
+        _mainMenuCanvasGO.SetActive(false);
+        ToolTipCanvasGO.SetActive(false);
 
         //Cursor
         SetCursorToDefault();
@@ -99,8 +106,15 @@ public class Manager_UI : MonoBehaviour, IManager {
 
         //ToolTips
         //TEST
-        ToolTip tooltip = new ToolTip("THIS IS A TEST.  Aren't tests great!?  \nYEAH, \nTHEY'RE \nPRETTY \nFANTASTIC!!!");
-        tooltip.CreateAndDisplayGO();
+        ToolTip tt_togleTime = new ToolTip("Toggle Time", InputCommand.ToggleTime, "Start or pause the progression of time.", true);
+        SetToolTip(ToggleTimeButton, tt_togleTime);
+
+        ToolTip tt_increaseSpeed = new ToolTip("Increase Speed", InputCommand.IncreaseSpeed, "", true);
+        SetToolTip(IncreaseSpeedButton, tt_increaseSpeed);
+
+        ToolTip tt_decreaseSpeed = new ToolTip("Decrease Speed", InputCommand.DecreaseSpeed, "", true);
+        SetToolTip(DecreaseSpeedButton, tt_decreaseSpeed);
+
 
         //Time Panel - Listeners
         ToggleTimeButton.onClick.AddListener(Click_ToggleTimeButton);
@@ -126,12 +140,11 @@ public class Manager_UI : MonoBehaviour, IManager {
         }
     }
 
-    private void InitiateCanvas(ref GameObject CanvasGOtoSet, string goName, CanvasLayer layer, bool isDisabled = false) {
+    private void InitiateCanvas(ref GameObject CanvasGOtoSet, string goName, CanvasLayer layer) {
         InitiateGO(ref CanvasGOtoSet, goName);
         if (CanvasGOtoSet != null)
         {
             CanvasGOtoSet = GameObject.Find(goName);
-            CanvasGOtoSet.gameObject.SetActive(!isDisabled);
             Canvas canvasComponent = CanvasGOtoSet.GetComponent<Canvas>();
             if (!canvasComponent)
             {
@@ -184,29 +197,15 @@ public class Manager_UI : MonoBehaviour, IManager {
 
     public void CursorHover_Button(Button button)
     {
-        if (button.GetComponent<EventTrigger>() == null)
-        {
-            button.gameObject.AddComponent<EventTrigger>();
-        }
-        EventTrigger eventTrigger = button.GetComponent<EventTrigger>();
-
-        EventTrigger.Entry entry01 = new EventTrigger.Entry();
-        entry01.eventID = EventTriggerType.PointerEnter;
-        entry01.callback.AddListener((data) =>
+        UnityAction onEnter = () => 
         {
             SetCursor(Asset_png.Cursor_Hover);
-        });
-        EventTrigger.Entry entry02 = new EventTrigger.Entry();
-        entry02.eventID = EventTriggerType.PointerExit;
-        entry02.callback.AddListener((data) =>
+        };
+        UnityAction onExit = () =>
         {
             SetCursor(Asset_png.Cursor_Default);
-        });
-
-        eventTrigger.triggers.Add(entry01);
-        eventTrigger.triggers.Add(entry02);
-
-        button.gameObject.AddComponent<CursorResetter>();
+        };
+        ButtonMouseoverListener.OnButtonMouseOver(button, onEnter, onExit);
     }
     private void CursorHover_Button(Button[] buttons)
     {
@@ -215,6 +214,48 @@ public class Manager_UI : MonoBehaviour, IManager {
             CursorHover_Button(buttons[i]);
         }
     }
+
+    //ToolTip
+    private ToolTip _toolTipInQueue =  null;
+    private void SetToolTip(Button button, ToolTip tooltip)
+    {
+        UnityAction onEnter = () =>
+        {
+            if (!tooltip.HasDelay)
+            {
+                tooltip.CreateAndDisplayGO();
+            }
+            else {
+                _toolTipInQueue = tooltip;
+                StartCoroutine("DelayedTooltip");
+            }
+        };
+        UnityAction onExit = () =>
+        {
+            ToolTipCanvasGO.SetActive(false);
+            _toolTipInQueue = null;
+
+            //ToolTipBackground.GetComponent<RectTransform>().sizeDelta = new Vector2(0, 0);
+            //ToolTipText.text = "";
+        };
+        ButtonMouseoverListener.OnButtonMouseOver(button, onEnter, onExit);
+    }
+    IEnumerator DelayedTooltip()
+    {
+        yield return new WaitForSecondsRealtime(1.5f);
+        if (_toolTipInQueue != null) {
+            _toolTipInQueue.CreateAndDisplayGO();
+            _toolTipInQueue = null;
+        }
+    }
+    private void SetToolTip(Button[] buttons, ToolTip tooltip, bool hasDelay = false)
+    {
+        for (int i = 0; i < buttons.Length; i++)
+        {
+            SetToolTip(buttons[i], tooltip);
+        }
+    }
+
 
     //Screen Cover
     public bool IsScreenCovered()
@@ -422,7 +463,7 @@ public class Manager_UI : MonoBehaviour, IManager {
         }
 
         //update Tooltip position
-        if (_toolTip.activeSelf)
+        if (ToolTipCanvasGO.activeSelf)
         {
             Vector2 toolTipSize = ToolTipBackground.GetComponent<RectTransform>().sizeDelta;
 
@@ -441,7 +482,7 @@ public class Manager_UI : MonoBehaviour, IManager {
 
             var toolTipPosition = new Vector2(x, y);
 
-            _toolTip.GetComponent<RectTransform>().position = toolTipPosition;
+            ToolTip.GetComponent<RectTransform>().position = toolTipPosition;
         }
     }
 

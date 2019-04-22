@@ -4,13 +4,47 @@ using UnityEngine;
 
 public class HasTooltip : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    public ToolTip tooltip;
+    private bool _isWaiting;
+
+    private void Start()
+    {
+        gameObject.AddComponent<MouseOverResetter>();
+        gameObject.GetComponent<MouseOverResetter>().resetCallback = () =>
+        {
+            OnMouseExit();
+        };
+    }
+
+    private void OnMouseEnter()
+    {
+        tooltip.CreateAndDisplayGO();
+
+
+        if (!tooltip.HasDelay)
+        {
+            tooltip.CreateAndDisplayGO();
+        }
+        else
+        {
+            _isWaiting = true;
+            StartCoroutine("DelayedTooltip");
+        }
+    }
+
+    IEnumerator DelayedTooltip()
+    {
+        yield return new WaitForSecondsRealtime(1.5f);
+        if (_isWaiting)
+        {
+            tooltip.CreateAndDisplayGO();
+            _isWaiting = false;
+        }
+    }
+
+    private void OnMouseExit()
+    {
+        Managers.UI.ToolTipCanvasGO.SetActive(false);
+        _isWaiting = false;
+    }
 }
