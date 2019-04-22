@@ -236,6 +236,7 @@ public class Manager_UI : MonoBehaviour, IManager {
             _toolTipInQueue = null;
 
             ToolTipText.text = "";
+            ToolTipGO.GetComponent<RectTransform>().position = new Vector2(5000, 5000);
             ToolTipGO.SetActive(false);
         };
         ButtonMouseoverListener.OnButtonMouseOver(button, onEnter, onExit);
@@ -463,21 +464,21 @@ public class Manager_UI : MonoBehaviour, IManager {
         }
 
         //update Tooltip position
-        if (ToolTipCanvasGO.activeSelf)
+        if (ToolTipGO.activeSelf)
         {
             Vector2 toolTipSize = ToolTipBackground.GetComponent<RectTransform>().sizeDelta;
 
             float x = Input.mousePosition.x + (toolTipSize.x / 2) + 10;
             if (Screen.width < x + toolTipSize.x / 2)
             {
-                x = Screen.width - toolTipSize.x/2;
+                x = Screen.width - toolTipSize.x / 2;
             }
 
-            float y = Input.mousePosition.y - (toolTipSize.y / 2) - 40;
+            float y = Input.mousePosition.y - (toolTipSize.y / 2) - 30;
 
             if (y - toolTipSize.y / 2 < 0)
             {
-                y = Input.mousePosition.y + (toolTipSize.y / 2) + 15;
+                y = Input.mousePosition.y + (toolTipSize.y / 2);
             }
 
             var toolTipPosition = new Vector2(x, y);
