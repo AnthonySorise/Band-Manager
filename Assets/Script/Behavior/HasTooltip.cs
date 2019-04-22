@@ -18,9 +18,6 @@ public class HasTooltip : MonoBehaviour {
 
     private void OnMouseEnter()
     {
-        tooltip.CreateAndDisplayGO();
-
-
         if (!tooltip.HasDelay)
         {
             tooltip.CreateAndDisplayGO();
@@ -44,7 +41,7 @@ public class HasTooltip : MonoBehaviour {
 
     private void OnMouseExit()
     {
-        Managers.UI.ToolTipCanvasGO.SetActive(false);
+        Managers.UI.ToolTipGO.SetActive(false);
         _isWaiting = false;
     }
 }

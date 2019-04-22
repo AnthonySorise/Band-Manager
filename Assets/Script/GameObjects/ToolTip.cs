@@ -57,20 +57,18 @@ public class ToolTip {
             Managers.UI.ToolTipText.text += textLine +'\n';
         }
 
-        float maxWidth = Managers.UI.ToolTip.GetComponent<RectTransform>().sizeDelta.x;
+        float maxWidth = Managers.UI.ToolTipGO.GetComponent<RectTransform>().sizeDelta.x;
         float backgroundWidth = Managers.UI.ToolTipText.preferredWidth;
         if (backgroundWidth > maxWidth) {
             backgroundWidth = maxWidth;
         }
 
-        Managers.UI.ToolTipCanvasGO.SetActive(true);
+        Managers.UI.ToolTipGO.SetActive(true);
 
         Vector2 textSize = new Vector2(backgroundWidth, 0);
         Managers.UI.ToolTipText.GetComponent<RectTransform>().sizeDelta = textSize;
 
         Vector2 backgroundSize = new Vector2(backgroundWidth, Managers.UI.ToolTipText.preferredHeight);
         Managers.UI.ToolTipBackground.GetComponent<RectTransform>().sizeDelta = backgroundSize;
-
-        Managers.UI.ToolTipCanvasGO.GetComponent<Canvas>().sortingOrder = (int)CanvasLayer.ToolTip;
     }
 }

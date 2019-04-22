@@ -50,7 +50,7 @@ public class Manager_UI : MonoBehaviour, IManager {
     private GameObject _screenCoverMainMenuCanvasGO;
     private GameObject _mainMenuCanvasGO;
     public GameObject ToolTipCanvasGO;
-        public GameObject ToolTip;
+        public GameObject ToolTipGO;
             public GameObject ToolTipBackground;
             public TextMeshProUGUI ToolTipText;
 
@@ -85,7 +85,7 @@ public class Manager_UI : MonoBehaviour, IManager {
         InitiateCanvas(ref _screenCoverMainMenuCanvasGO, "Canvas_ScreenCoverMainMenu", CanvasLayer.MainMenuScreenCover);
         InitiateCanvas(ref _mainMenuCanvasGO, "Canvas_MainMenu", CanvasLayer.MainMenu);
         InitiateCanvas(ref ToolTipCanvasGO, "Canvas_ToolTip", CanvasLayer.ToolTip);
-            InitiateGO(ref ToolTip, "ToolTip");
+            InitiateGO(ref ToolTipGO, "ToolTip");
                 InitiateGO(ref ToolTipBackground, "Panel_ToolTipBackground");
                 InitiateText(ref ToolTipText, "Text_ToolTip");
 
@@ -93,7 +93,7 @@ public class Manager_UI : MonoBehaviour, IManager {
         _screenCoverCanvasGO.SetActive(false);
         _screenCoverMainMenuCanvasGO.SetActive(false);
         _mainMenuCanvasGO.SetActive(false);
-        ToolTipCanvasGO.SetActive(false);
+        ToolTipGO.SetActive(false);
 
         //Cursor
         SetCursorToDefault();
@@ -232,11 +232,11 @@ public class Manager_UI : MonoBehaviour, IManager {
         };
         UnityAction onExit = () =>
         {
-            ToolTipCanvasGO.SetActive(false);
+            
             _toolTipInQueue = null;
 
-            //ToolTipBackground.GetComponent<RectTransform>().sizeDelta = new Vector2(0, 0);
-            //ToolTipText.text = "";
+            ToolTipText.text = "";
+            ToolTipGO.SetActive(false);
         };
         ButtonMouseoverListener.OnButtonMouseOver(button, onEnter, onExit);
     }
@@ -482,7 +482,7 @@ public class Manager_UI : MonoBehaviour, IManager {
 
             var toolTipPosition = new Vector2(x, y);
 
-            ToolTip.GetComponent<RectTransform>().position = toolTipPosition;
+            ToolTipGO.GetComponent<RectTransform>().position = toolTipPosition;
         }
     }
 

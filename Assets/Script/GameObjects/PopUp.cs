@@ -43,6 +43,7 @@ public class PopUp {
             Debug.Log("Error: " + popupName + " already exists");
             return;
         }
+        Debug.Log("DID NOT RETURN");
         popup.name = popupName;
 
         //header
