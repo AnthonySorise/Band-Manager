@@ -4,7 +4,7 @@ using UnityEngine;
 
 //All managers must exist
 [RequireComponent(typeof(Manager_Assets))]
-[RequireComponent(typeof(Manager_Model))]
+[RequireComponent(typeof(Manager_Sim))]
 [RequireComponent(typeof(Manager_Time))]
 [RequireComponent(typeof(Manager_Audio))]
 [RequireComponent(typeof(Manager_Camera))]
@@ -16,7 +16,7 @@ using UnityEngine;
 public class Managers : MonoBehaviour {
     //managers accessed from Unity Hierarchy via these properties
     public static Manager_Assets Assets { get; private set; }
-    public static Manager_Model Model {get; private set;}
+    public static Manager_Sim Sim {get; private set;}
     public static Manager_Time Time {get; private set;}
     public static Manager_Audio Audio { get; private set; }
     public static Manager_Camera Camera {get; private set;}
@@ -36,7 +36,7 @@ public class Managers : MonoBehaviour {
         DontDestroyOnLoad(gameObject);
 
         Assets = GetComponent<Manager_Assets>();
-        Model = GetComponent<Manager_Model>();
+        Sim = GetComponent<Manager_Sim>();
         Time = GetComponent<Manager_Time>();
         Audio = GetComponent<Manager_Audio>();
         Camera = GetComponent<Manager_Camera>();
@@ -51,7 +51,7 @@ public class Managers : MonoBehaviour {
         };
         _startSequence = new List<IManager>
         {
-            Model,
+            Sim,
             Time,
             Audio,
             Camera

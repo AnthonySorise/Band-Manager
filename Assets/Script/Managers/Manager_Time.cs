@@ -28,9 +28,9 @@ public class Manager_Time : MonoBehaviour, IManager {
 
         IsPaused = true;
         _IsDelayedWhileTickProcesses = false;
-        _simMinutesPerTick = 11;
+        _simMinutesPerTick = 9;
         _simMinutesSinceLastTick = 0;
-        _baseMSPerSimMinute = 100;  //for speedLevel of 0
+        _baseMSPerSimMinute = 100;  //for speedLevel 0
         _speedLevelDenominator = 2.5;
         CurrentSpeedLevel = 0;
         _minSpeedLevel = -2;
@@ -126,7 +126,7 @@ public class Manager_Time : MonoBehaviour, IManager {
 
         if (_simMinutesSinceLastTick >= _simMinutesPerTick || _IsDelayedWhileTickProcesses)
         {
-            if (!Managers.Model.IsProcessingTick)
+            if (!Managers.Sim.IsProcessingTick)
             {
                 _IsDelayedWhileTickProcesses = false;
                 _simMinutesSinceLastTick = 0;
@@ -150,7 +150,7 @@ public class Manager_Time : MonoBehaviour, IManager {
     }
     IEnumerator PlayTick()
     {
-        Managers.Model.SimulateTick();
+        Managers.Sim.SimulateTick();
         return null;
     }
 

@@ -76,12 +76,15 @@
     <Compile Include="Assets\Script\Managers\Manager_Data\JSONFile.cs" />
     <Compile Include="Assets\Script\Managers\Manager_GO.cs" />
     <Compile Include="Assets\Script\Managers\Manager_Input.cs" />
-    <Compile Include="Assets\Script\Managers\Manager_Model.cs" />
+    <Compile Include="Assets\Script\Managers\Manager_Sim.cs" />
     <Compile Include="Assets\Script\Managers\Manager_Time.cs" />
     <Compile Include="Assets\Script\Managers\Manager_UI.cs" />
     <Compile Include="Assets\Script\Managers\Managers.cs" />
     <Compile Include="Assets\Script\Models\Map.cs" />
     <Compile Include="Assets\Script\Models\NPC.cs" />
+    <Compile Include="Assets\Script\Models\SimAction.cs" />
+    <Compile Include="Assets\Script\Models\SimEvent_MTTH.cs" />
+    <Compile Include="Assets\Script\Models\SimEvent_Scheduled.cs" />
     <Compile Include="Assets\Script\Utilities\ButtonMouseoverListener.cs" />
     <Compile Include="Assets\Script\Utilities\GOPool.cs" />
     <Compile Include="Assets\Script\Utilities\SetAnchor.cs" />

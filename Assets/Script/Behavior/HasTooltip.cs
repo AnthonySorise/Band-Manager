@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class HasTooltip : MonoBehaviour {
 
-    public ToolTip tooltip;
+    public ToolTip Tooltip;
     private bool _isWaiting;
 
     private void Start()
@@ -18,9 +18,9 @@ public class HasTooltip : MonoBehaviour {
 
     private void OnMouseEnter()
     {
-        if (!tooltip.HasDelay)
+        if (!Tooltip.HasDelay)
         {
-            tooltip.CreateAndDisplayGO();
+            Tooltip.CreateAndDisplayGO();
         }
         else
         {
@@ -34,7 +34,7 @@ public class HasTooltip : MonoBehaviour {
         yield return new WaitForSecondsRealtime(1.5f);
         if (_isWaiting)
         {
-            tooltip.CreateAndDisplayGO();
+            Tooltip.CreateAndDisplayGO();
             _isWaiting = false;
         }
     }
