@@ -6,12 +6,13 @@ public class SimEvent_MTTH
     private DateTime _startCheckingDT;
     private float _daysUntilFiftyPercentChance;
     private float _daysPerCheck;
+    private DateTime _lastCheckDT;
     private bool _mtthCheckPassed;
 
-    public SimEvent_MTTH(SimAction simAction, DateTime scheduledDT, float daysUntilFiftyPercent, float daysPerCheck)
+    public SimEvent_MTTH(SimAction simAction, DateTime startCheckingDT, float daysUntilFiftyPercent, float daysPerCheck)
     {
         simAction = _simAction;
-        scheduledDT = _startCheckingDT;
+        startCheckingDT = _startCheckingDT;
         daysPerCheck = _daysPerCheck;
         _mtthCheckPassed = false;
         Store();
@@ -26,13 +27,20 @@ public class SimEvent_MTTH
         Managers.Sim.RemoveSimEvent_MTTH(this);
     }
 
-    private bool IsTimeToCheck()
+    private bool CanStartChecking()
     {
         return (Managers.Time.CurrentDT >= _startCheckingDT);
     }
 
     private bool MTTHCheck() {
-        if (!IsTimeToCheck()) {
+        if (!CanStartChecking()) {
+            return false;
+        }
+        if (_lastCheckDT == null || _daysPerCheck >= (Managers.Time.CurrentDT - _lastCheckDT).Days)
+        {
+            _lastCheckDT = Managers.Time.CurrentDT;
+        }
+        else {
             return false;
         }
 
