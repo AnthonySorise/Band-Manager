@@ -51,29 +51,10 @@ public class Manager_Sim : MonoBehaviour, IManager {
         foreach (SimEvent_Scheduled simEvent in _simEvents_Scheduled) {
             simEvent.Check();
         }
-        //RESOLVED SCHEDULED EVENTS
-            //for each scheduled event logged
-                //check if it's still valid
-                    //resolve or throw away
-            //scheduled events used for hardcoded historic events, initatiating event chains, and keeping world balance
-
-        //RESOLVE CHANCE EVENTS
-            //for each chance event logged
-                //check if chance event fires
-                    //if it fires
-                        //check if still valid
-                            //if valid (if not, throw away)
-                                //check if valid time
-                                    //if valid time, resolve
-                                    //else turn into scheduled event and schedule a semi-random valid time that's soon
-
-
-
-
-
-
-
-
+        foreach (SimEvent_MTTH simMTTH in _simEvents_MTTH)
+        {
+            simMTTH.Check();
+        }
 
         IsProcessingTick = false;
     }

@@ -1,18 +1,19 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 
 public class SimEvent_MTTH
 {
     private SimAction _simAction;
     private DateTime _startCheckingDT;
-    private int checkFrequency;
+    private float _daysUntilFiftyPercentChance;
+    private float _daysPerCheck;
+    private bool _mtthCheckPassed;
 
-    public SimEvent_MTTH(SimAction simAction, DateTime scheduledDT, int freq)
+    public SimEvent_MTTH(SimAction simAction, DateTime scheduledDT, float daysUntilFiftyPercent, float daysPerCheck)
     {
         simAction = _simAction;
         scheduledDT = _startCheckingDT;
+        daysPerCheck = _daysPerCheck;
+        _mtthCheckPassed = false;
         Store();
     }
 
@@ -31,33 +32,40 @@ public class SimEvent_MTTH
     }
 
     private bool MTTHCheck() {
-        bool passedCheck = false;
+        if (!IsTimeToCheck()) {
+            return false;
+        }
 
-        //1 - 2 ^ (-1 * (t / m))
-        //where
-        //t = days passed
-        //m = days until chance of event firing is 50%
+        float intervalsPassed = (Managers.Time.CurrentDT - _startCheckingDT).Days / _daysPerCheck;
+        float intervalsUntilFiftyPercentChance = _daysUntilFiftyPercentChance / _daysPerCheck;
 
-        return passedCheck;
-    }
+        float exponent = (intervalsPassed / intervalsUntilFiftyPercentChance) * -1f;
+        double chanceToTrigger = 1 - Math.Pow(2, exponent);
 
-    private void ConvertToScheduled() {
-
+        if (UnityEngine.Random.Range(0f, 1f) < chanceToTrigger)
+        {
+            _mtthCheckPassed = true;
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 
     public void Check()
     {
-        if (IsTimeToCheck() && MTTHCheck())
+        if (!_simAction.IsValid())
         {
-            if (!_simAction.IsValid())
-            {
-                Remove();
-            }
-            else if (!_simAction.ShouldDelay())
-            {
-                _simAction.Trigger();
-                Remove();
-            }
+            Remove();
+        }
+        if ((_mtthCheckPassed || MTTHCheck()) && !_simAction.ShouldDelay())
+        {
+            _simAction.Trigger();
+            Remove();
         }
     }
+
+    //private void ConvertToScheduled() {
+
+    //}
 }

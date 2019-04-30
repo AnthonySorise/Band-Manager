@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 
 public class SimEvent_Scheduled
 {
@@ -26,14 +23,14 @@ public class SimEvent_Scheduled
     }
 
     public void Check() {
-        if (IsTimeToTrigger()){
-            if (!_simAction.IsValid()) {
-                Remove();
-            }
-            else if (!_simAction.ShouldDelay()) {
-                _simAction.Trigger();
-                Remove();
-            }
+        if (!_simAction.IsValid())
+        {
+            Remove();
+        }
+        if (IsTimeToTrigger() && !_simAction.ShouldDelay())
+        {
+            _simAction.Trigger();
+            Remove();
         }
     }
 }

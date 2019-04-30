@@ -87,6 +87,7 @@
     <Compile Include="Assets\Script\Models\SimEvent_Scheduled.cs" />
     <Compile Include="Assets\Script\Utilities\ButtonMouseoverListener.cs" />
     <Compile Include="Assets\Script\Utilities\GOPool.cs" />
+    <Compile Include="Assets\Script\Utilities\RNG.cs" />
     <Compile Include="Assets\Script\Utilities\SetAnchor.cs" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Surface-Mobile.shader" />
     <None Include="Assets\TextMesh Pro\Resources\LineBreaking Leading Characters.txt" />
