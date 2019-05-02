@@ -36,8 +36,9 @@ public class Managers : MonoBehaviour {
         DontDestroyOnLoad(gameObject);
 
         Assets = GetComponent<Manager_Assets>();
-        Sim = GetComponent<Manager_Sim>();
+        
         Time = GetComponent<Manager_Time>();
+        Sim = GetComponent<Manager_Sim>();
         Audio = GetComponent<Manager_Audio>();
         Camera = GetComponent<Manager_Camera>();
         GO = GetComponent<Manager_GO>();
@@ -51,8 +52,9 @@ public class Managers : MonoBehaviour {
         };
         _startSequence = new List<IManager>
         {
-            Sim,
+            
             Time,
+            Sim,
             Audio,
             Camera
         };

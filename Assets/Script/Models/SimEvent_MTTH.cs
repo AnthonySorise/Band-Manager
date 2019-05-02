@@ -1,19 +1,22 @@
 ﻿using System;
+using UnityEngine;
 
-public class SimEvent_MTTH
-{
+public class SimEvent_MTTH { 
+
     private SimAction _simAction;
     private DateTime _startCheckingDT;
     private float _daysUntilFiftyPercentChance;
     private float _daysPerCheck;
-    private DateTime _lastCheckDT;
+    private DateTime _lastCheckedDT;
     private bool _mtthCheckPassed;
 
     public SimEvent_MTTH(SimAction simAction, DateTime startCheckingDT, float daysUntilFiftyPercent, float daysPerCheck)
     {
         _simAction = simAction;
         _startCheckingDT = startCheckingDT;
+        _daysUntilFiftyPercentChance = daysUntilFiftyPercent;
         _daysPerCheck = daysPerCheck;
+        _lastCheckedDT = Managers.Time.CurrentDT;
         _mtthCheckPassed = false;
         Store();
     }
@@ -36,21 +39,21 @@ public class SimEvent_MTTH
         if (!CanStartChecking()) {
             return false;
         }
-        if (_lastCheckDT == null || _daysPerCheck >= (Managers.Time.CurrentDT - _lastCheckDT).Days)
+
+        if ((Managers.Time.CurrentDT - _lastCheckedDT).TotalDays >= _daysPerCheck)
         {
-            _lastCheckDT = Managers.Time.CurrentDT;
+            _lastCheckedDT = Managers.Time.CurrentDT;
         }
         else {
             return false;
         }
-
-        float intervalsPassed = (Managers.Time.CurrentDT - _startCheckingDT).Days / _daysPerCheck;
-        float intervalsUntilFiftyPercentChance = _daysUntilFiftyPercentChance / _daysPerCheck;
-
-        float exponent = (intervalsPassed / intervalsUntilFiftyPercentChance) * -1f;
+        
+        double intervalsPassed = (Managers.Time.CurrentDT - _startCheckingDT).TotalDays / _daysPerCheck;
+        double intervalsUntilFiftyPercentChance = _daysUntilFiftyPercentChance / _daysPerCheck;
+        double exponent = (intervalsPassed / intervalsUntilFiftyPercentChance) * -1f;
         double chanceToTrigger = 1 - Math.Pow(2, exponent);
 
-        if (UnityEngine.Random.Range(0f, 1f) < chanceToTrigger)
+        if (UnityEngine.Random.Range(0f, 1f) <= chanceToTrigger)
         {
             _mtthCheckPassed = true;
             return true;

@@ -44,7 +44,7 @@ public class Manager_Sim : MonoBehaviour, IManager {
 
         //TEST POPUP 02
         action = () => {
-            PopUp popup01 = new PopUp(SimEvent.Test_Popup01, true, "Test Scheduled Event", "This is a test event that is scheduled to fire on October 25th AND pause time untill you click OK.", Asset_png.Popup_Vinyl, Asset_wav.event_generic, null);
+            PopUp popup01 = new PopUp(SimEvent.Test_Popup02, true, "Test Scheduled Event", "This is a test event that is scheduled to fire on October 25th AND pause time untill you click OK.", Asset_png.Popup_Vinyl, Asset_wav.event_generic, null);
             popup01.CreateAndDisplayGO();
         };
         validCondition = () => { return true; };
@@ -137,6 +137,37 @@ public class Manager_Sim : MonoBehaviour, IManager {
         simAction = new SimAction(SimEvent.Test_Popup04, validCondition, delayCondition, action);
         triggerDT = new DateTime(1985, 10, 27);
         SimEvent_Scheduled SimEvent_Scheduled04 = new SimEvent_Scheduled(simAction, triggerDT);
+
+
+        //TEST POPUP 05
+        action = () => {
+            UnityAction option01 = () => {
+                Debug.Log("Option One Selected!");
+            };
+            UnityAction option02 = () => {
+                Debug.Log("Option Two Selected!");
+            };
+
+            ToolTip tt_option01 = new ToolTip("This is the first option.");
+            ToolTip tt_option02 = new ToolTip("This is the second option.");
+
+            PopUpOption PopUpOption01 = new PopUpOption("First Option", option01, tt_option01);
+            PopUpOption PopUpOption02 = new PopUpOption("Second Option", option02, tt_option02);
+
+            List<PopUpOption> popupOptionsList = new List<PopUpOption>
+            {
+                PopUpOption01,
+                PopUpOption02,
+            };
+            PopUp popup03 = new PopUp(SimEvent.Test_Popup05, true, "Test MTTH Event", "This is a test event that is triggered based on Mean Time To Happen.  After 3 days, this even has a 50% chance to trigger", Asset_png.Popup_Vinyl, Asset_wav.event_generic, popupOptionsList);
+            popup03.CreateAndDisplayGO();
+        };
+
+        validCondition = () => { return true; };
+        delayCondition = () => { return false; };
+        simAction = new SimAction(SimEvent.Test_Popup05, validCondition, delayCondition, action);
+        DateTime startCheckingDT = new DateTime(1985, 10, 23);
+        SimEvent_MTTH SimEvent_MTTH01 = new SimEvent_MTTH(simAction, startCheckingDT, 3f, 1f);
 
         State = ManagerState.Started;
         Debug.Log("Manager_Sim started");

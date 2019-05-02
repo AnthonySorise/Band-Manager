@@ -8,7 +8,8 @@ public enum SimEvent
     Test_Popup01,
     Test_Popup02,
     Test_Popup03,
-    Test_Popup04
+    Test_Popup04,
+    Test_Popup05
 }
 
 public class SimAction {
