@@ -6,8 +6,8 @@ public class SimEvent_Scheduled
     private DateTime _scheduledDT;
 
     public SimEvent_Scheduled(SimAction simAction, DateTime scheduledDT) {
-        simAction = _simAction;
-        scheduledDT = _scheduledDT;
+        _simAction = simAction;
+        _scheduledDT = scheduledDT;
         Store();
     }
 

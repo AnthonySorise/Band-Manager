@@ -86,6 +86,7 @@
     <Compile Include="Assets\Script\Models\SimEvent_MTTH.cs" />
     <Compile Include="Assets\Script\Models\SimEvent_Scheduled.cs" />
     <Compile Include="Assets\Script\Utilities\ButtonMouseoverListener.cs" />
+    <Compile Include="Assets\Script\Utilities\DateTimeUtility.cs" />
     <Compile Include="Assets\Script\Utilities\GOPool.cs" />
     <Compile Include="Assets\Script\Utilities\RNG.cs" />
     <Compile Include="Assets\Script\Utilities\SetAnchor.cs" />

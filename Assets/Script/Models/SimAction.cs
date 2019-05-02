@@ -18,11 +18,12 @@ public class SimAction {
     private Action _action;
 
 
-    public SimAction(SimEvent simEvent, Func<bool> condition, Action action)
+    public SimAction(SimEvent simEvent, Func<bool> validCondition, Func<bool> delayCondition, Action action)
     {
-        simEvent = _simEvent;
-        condition = _validCondition;
-        action = _action;
+        _simEvent = simEvent;
+        _validCondition = validCondition;
+        _delayCondition = delayCondition;
+        _action = action;
     }
 
     public bool IsValid() {

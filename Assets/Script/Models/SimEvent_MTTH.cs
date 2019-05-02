@@ -11,9 +11,9 @@ public class SimEvent_MTTH
 
     public SimEvent_MTTH(SimAction simAction, DateTime startCheckingDT, float daysUntilFiftyPercent, float daysPerCheck)
     {
-        simAction = _simAction;
-        startCheckingDT = _startCheckingDT;
-        daysPerCheck = _daysPerCheck;
+        _simAction = simAction;
+        _startCheckingDT = startCheckingDT;
+        _daysPerCheck = daysPerCheck;
         _mtthCheckPassed = false;
         Store();
     }
