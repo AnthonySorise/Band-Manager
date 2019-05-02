@@ -185,7 +185,7 @@ public class Manager_Sim : MonoBehaviour, IManager {
     {
         Action action = () =>
         {
-            Action_TestPopup03(triggerDate);
+            Action_TestPopup04(triggerDate);
         };
         Func<bool> validCondition = () => { return true; };
         Func<bool> delayCondition = () => {
