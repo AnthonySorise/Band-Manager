@@ -7,6 +7,7 @@ public class SimEvent_MTTH {
     private DateTime _startCheckingDT;
     private float _daysUntilFiftyPercentChance;
     private float _daysPerCheck;
+
     private DateTime _lastCheckedDT;
     private bool _mtthCheckPassed;
 
@@ -16,7 +17,7 @@ public class SimEvent_MTTH {
         _startCheckingDT = startCheckingDT;
         _daysUntilFiftyPercentChance = daysUntilFiftyPercent;
         _daysPerCheck = daysPerCheck;
-        _lastCheckedDT = Managers.Time.CurrentDT;
+        _lastCheckedDT = Managers.Time.CurrentDT.AddDays(_daysPerCheck * -1);
         _mtthCheckPassed = false;
         Store();
     }
@@ -75,8 +76,4 @@ public class SimEvent_MTTH {
             Remove();
         }
     }
-
-    //private void ConvertToScheduled() {
-
-    //}
 }
