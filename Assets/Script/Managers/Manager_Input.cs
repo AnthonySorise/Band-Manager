@@ -18,12 +18,6 @@ public enum InputCommand
     //Audio
     MasterVolumeUp,
     MasterVolumeDown,
-
-    //POPUP TESTING
-    TESTING_Popup01,
-    TESTING_Popup02,
-    TESTING_Popup03,
-    TESTING_Popup04
 }
 
 public class Manager_Input : MonoBehaviour, IManager {
@@ -50,12 +44,6 @@ public class Manager_Input : MonoBehaviour, IManager {
             //Audio
             { KeyCode.PageUp, InputCommand.MasterVolumeUp },
             { KeyCode.PageDown, InputCommand.MasterVolumeDown },
-
-            //POPUP TESTING
-            { KeyCode.Z, InputCommand.TESTING_Popup01 },
-            { KeyCode.X, InputCommand.TESTING_Popup02 },
-            { KeyCode.C, InputCommand.TESTING_Popup03 },
-            { KeyCode.V, InputCommand.TESTING_Popup04 }
         };
 
         State = ManagerState.Started;
@@ -89,72 +77,6 @@ public class Manager_Input : MonoBehaviour, IManager {
                         Managers.UI.KeyDown_DecreaseSpeedButton();
                         return;
 
-
-                    //POPUP TESTING
-                    case InputCommand.TESTING_Popup01:
-                        PopUp popup01 = new PopUp(SimEvent.Test_Popup01, false, "This is a test Header", "This is a test body message.", Asset_png.Popup_Vinyl, Asset_wav.event_generic, null);
-                        popup01.CreateAndDisplayGO();
-                        return;
-                    case InputCommand.TESTING_Popup02:
-                        PopUp popup02 = new PopUp(SimEvent.Test_Popup02, true, "This is a test Header", "This is a test body message.  This popup is halts the game! ", Asset_png.Popup_Vinyl, Asset_wav.event_generic, null);
-                        popup02.CreateAndDisplayGO();
-                        return;
-                    case InputCommand.TESTING_Popup03:
-
-                        UnityEngine.Events.UnityAction option01 = () => {
-                            Debug.Log("Option One Selected!");
-                        };
-                        UnityEngine.Events.UnityAction option02 = () => {
-                            Debug.Log("Option Two Selected!");
-                        };
-                        UnityEngine.Events.UnityAction option03 = () => {
-                            Debug.Log("Option Three Selected!");
-                        };
-                        UnityEngine.Events.UnityAction option04 = () => {
-                            Debug.Log("Option Four Selected!");
-                        };
-
-                        ToolTip tt_option01 = new ToolTip("This is the first option.  What can I say, it's not a bad choice.");
-                        ToolTip tt_option02 = new ToolTip("This is the Second option.  Can't go wrong with option two.");
-                        ToolTip tt_option03 = new ToolTip("This is the THIRD option.  That's all.");
-                        ToolTip tt_option04 = new ToolTip("This is the last option.  You would have to be a fool to go with this option!");
-
-                        PopUpOption PopUpOption01 = new PopUpOption("First Option", option01, tt_option01);
-                        PopUpOption PopUpOption02 = new PopUpOption("Second Option", option02, tt_option02);
-                        PopUpOption PopUpOption03 = new PopUpOption("Third Option", option03, tt_option03);
-                        PopUpOption PopUpOption04 = new PopUpOption("Fourth Option", option04, tt_option04);
-
-                        List<PopUpOption> popupOptionsList01 = new List<PopUpOption>();
-                        popupOptionsList01.Add(PopUpOption01);
-                        popupOptionsList01.Add(PopUpOption02);
-                        popupOptionsList01.Add(PopUpOption03);
-                        popupOptionsList01.Add(PopUpOption04);
-
-                        PopUp popup03 = new PopUp(SimEvent.Test_Popup03, false, "This is a test Header", "This is a test body message.  YOu have FOUR options with this popup!", Asset_png.Popup_Vinyl, Asset_wav.event_generic, popupOptionsList01);
-                        popup03.CreateAndDisplayGO();
-                        return;
-                    case InputCommand.TESTING_Popup04:
-
-                        UnityEngine.Events.UnityAction option01b = () => {
-                            Debug.Log("Option One Selected!");
-                        };
-                        UnityEngine.Events.UnityAction option02b = () => {
-                            Debug.Log("Option Two Selected!");
-                        };
-
-                        ToolTip tt_option01b = new ToolTip("This is the first option.  What can I say, it's not a bad choice.");
-                        ToolTip tt_option02b = new ToolTip("This is the Second option.  Can't go wrong with option two.");
-
-                        PopUpOption PopUpOption01b = new PopUpOption("First Option", option01b, tt_option01b);
-                        PopUpOption PopUpOption02b = new PopUpOption("Second Option", option02b, tt_option02b);
-
-                        List<PopUpOption> popupOptionsList02 = new List<PopUpOption>();
-                        popupOptionsList02.Add(PopUpOption01b);
-                        popupOptionsList02.Add(PopUpOption02b);
-
-                        PopUp popup04 = new PopUp(SimEvent.Test_Popup04, true, "This is a test Header", "This is a test body message.  This popup halts the game! You MUST choose one of these two options to continue!  Also, <color=#ff0000ff>RED</color>", Asset_png.Popup_Vinyl, Asset_wav.event_generic, popupOptionsList02);
-                        popup04.CreateAndDisplayGO();
-                        return;
                 }
             }
 
