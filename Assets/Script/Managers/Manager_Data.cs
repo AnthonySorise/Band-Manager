@@ -156,16 +156,16 @@ public class Manager_Data : MonoBehaviour, IManager {
 		JSONWriteToDisk(path, json);
 	}
 
-	public void JSONSave_NPC(List<NPC> data, string filenameTag = null){
-		string path = this.FilePathJSON(JSONType.NPC, filenameTag);
-		string json = null;
+	//public void JSONSave_NPC(List<NPC> data, string filenameTag = null){
+	//	string path = this.FilePathJSON(JSONType.NPC, filenameTag);
+	//	string json = null;
 
-		JSONFile_NPC jsonNPC = new JSONFile_NPC(data);
-		if(jsonNPC.NPCs.Count != 0){
-			json = JsonUtility.ToJson(jsonNPC);
-		}
-		JSONWriteToDisk(path, json);
-	}
+	//	JSONFile_NPC jsonNPC = new JSONFile_NPC(data);
+	//	if(jsonNPC.NPCs.Count != 0){
+	//		json = JsonUtility.ToJson(jsonNPC);
+	//	}
+	//	JSONWriteToDisk(path, json);
+	//}
 
 	public List<Map> JSONLoad_Map(string filenameTag = null){
 		string path = this.FilePathJSON(JSONType.Map, filenameTag);
@@ -192,28 +192,28 @@ public class Manager_Data : MonoBehaviour, IManager {
 		return data;
 	}
 
-	public List<NPC> JSONLoad_NPC(string filenameTag = null){
-		string path = this.FilePathJSON(JSONType.NPC, filenameTag);
-		if(File.Exists(path) == false){
-			Debug.Log("Failed to load " + path + ": File not found");
-			return null;
-		}
-		string json = File.ReadAllText(path);;
+	//public List<NPC> JSONLoad_NPC(string filenameTag = null){
+	//	string path = this.FilePathJSON(JSONType.NPC, filenameTag);
+	//	if(File.Exists(path) == false){
+	//		Debug.Log("Failed to load " + path + ": File not found");
+	//		return null;
+	//	}
+	//	string json = File.ReadAllText(path);;
 		
-		List<JSONObj_NPC> jsonFile = null;
-		try{
-			jsonFile = JsonUtility.FromJson<JSONFile_NPC>(json).NPCs;
-		}
-		catch{
-			Debug.Log("Failed to load " + path + ": Couldn't extract data");
-			return null;
-		}
+	//	List<JSONObj_NPC> jsonFile = null;
+	//	try{
+	//		jsonFile = JsonUtility.FromJson<JSONFile_NPC>(json).NPCs;
+	//	}
+	//	catch{
+	//		Debug.Log("Failed to load " + path + ": Couldn't extract data");
+	//		return null;
+	//	}
 
-		List<NPC> data = new List<NPC>();
-		foreach(JSONObj_NPC jsonObj in jsonFile){
-			NPC npc = new NPC(jsonObj.Name, jsonObj.Age);
-			data.Add(npc);
-		}
-		return data;
-	}
+	//	List<NPC> data = new List<NPC>();
+	//	foreach(JSONObj_NPC jsonObj in jsonFile){
+ //           NPC npc = new NPC(jsonObj.FirstName, jsonObj.LastName, jsonObj.BirthDay, jsonObj.Traits);
+	//		data.Add(npc);
+	//	}
+	//	return data;
+	//}
 }

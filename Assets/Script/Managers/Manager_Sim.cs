@@ -176,7 +176,7 @@ public class Manager_Sim : MonoBehaviour, IManager {
             {
                 PopUpOption01,
                 PopUpOption02,
-                PopUpOption03,
+                PopUpOption03
             };
         PopUp popup04 = new PopUp(SimEvent.Test_Popup04, true, "Test Scheduled Event", "This is a test event that is scheduled to fire on " + triggerDate.ToShortDateString() + " AFTER 4:00AM!  It has three options AND you must select one to continue.", Asset_png.Popup_Vinyl, Asset_wav.event_generic, popupOptionsList);
         popup04.CreateAndDisplayGO();
@@ -228,6 +228,6 @@ public class Manager_Sim : MonoBehaviour, IManager {
             return DelayCondition_TimeFrame(UnityEngine.Random.Range(9, 17));
         };
         SimAction simAction = new SimAction(SimEvent.Test_Popup05, validCondition, delayCondition, Action_TestPopup05);
-        SimEvent_MTTH SimEvent_MTTH01 = new SimEvent_MTTH(simAction, Managers.Time.CurrentDT, 3f, 1f);
+        SimEvent_MTTH SimEvent_MTTH01 = new SimEvent_MTTH(simAction, Managers.Time.CurrentDT, 8f);
     }
 }

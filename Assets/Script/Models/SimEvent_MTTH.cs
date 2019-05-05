@@ -1,24 +1,27 @@
 ﻿using System;
 using UnityEngine;
 
-public class SimEvent_MTTH { 
+public class SimEvent_MTTH {
 
     private SimAction _simAction;
     private DateTime _startCheckingDT;
     private float _daysUntilFiftyPercentChance;
-    private float _daysPerCheck;
 
+    private static int _numChecksTill50Percent = 3;
+    private float _daysPerCheck;
     private DateTime _lastCheckedDT;
     private bool _mtthCheckPassed;
 
-    public SimEvent_MTTH(SimAction simAction, DateTime startCheckingDT, float daysUntilFiftyPercent, float daysPerCheck)
+    public SimEvent_MTTH(SimAction simAction, DateTime startCheckingDT, float daysUntilFiftyPercent)
     {
         _simAction = simAction;
         _startCheckingDT = startCheckingDT;
         _daysUntilFiftyPercentChance = daysUntilFiftyPercent;
-        _daysPerCheck = daysPerCheck;
+
+        _daysPerCheck = _daysUntilFiftyPercentChance / _numChecksTill50Percent;
         _lastCheckedDT = Managers.Time.CurrentDT.AddDays(_daysPerCheck * -1);
         _mtthCheckPassed = false;
+
         Store();
     }
 
@@ -53,6 +56,8 @@ public class SimEvent_MTTH {
         double intervalsUntilFiftyPercentChance = _daysUntilFiftyPercentChance / _daysPerCheck;
         double exponent = (intervalsPassed / intervalsUntilFiftyPercentChance) * -1f;
         double chanceToTrigger = 1 - Math.Pow(2, exponent);
+
+        Debug.Log("CHANCE TO TRIGGER = " + chanceToTrigger);
 
         if (UnityEngine.Random.Range(0f, 1f) <= chanceToTrigger)
         {
