@@ -80,6 +80,7 @@
     <Compile Include="Assets\Script\Managers\Manager_Time.cs" />
     <Compile Include="Assets\Script\Managers\Manager_UI.cs" />
     <Compile Include="Assets\Script\Managers\Managers.cs" />
+    <Compile Include="Assets\Script\Models\City.cs" />
     <Compile Include="Assets\Script\Models\Map.cs" />
     <Compile Include="Assets\Script\Models\NPC.cs" />
     <Compile Include="Assets\Script\Models\SimAction.cs" />

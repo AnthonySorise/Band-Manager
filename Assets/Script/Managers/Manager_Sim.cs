@@ -12,8 +12,8 @@ public class Manager_Sim : MonoBehaviour, IManager {
 
     public bool IsProcessingTick { get; private set; }
 
-    List<SimEvent_Scheduled> _simEvents_Scheduled;
-    List<SimEvent_MTTH> _simEvents_MTTH;
+    private List<SimEvent_Scheduled> _simEvents_Scheduled;
+    private List<SimEvent_MTTH> _simEvents_MTTH;
 
     public void Startup()
     {
@@ -228,6 +228,6 @@ public class Manager_Sim : MonoBehaviour, IManager {
             return DelayCondition_TimeFrame(UnityEngine.Random.Range(9, 17));
         };
         SimAction simAction = new SimAction(SimEvent.Test_Popup05, validCondition, delayCondition, Action_TestPopup05);
-        SimEvent_MTTH SimEvent_MTTH01 = new SimEvent_MTTH(simAction, Managers.Time.CurrentDT, 8f);
+        SimEvent_MTTH SimEvent_MTTH01 = new SimEvent_MTTH(simAction, Managers.Time.CurrentDT, 3f);
     }
 }
