@@ -6,19 +6,19 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
-public class PopUpOption {
+public class SimActionOption {
     private string _buttonText;
     private UnityAction _callBack;
     private ToolTip _tooltip;
 
-    public PopUpOption(string buttonText, UnityAction callBack, ToolTip tooltip = null)
+    public SimActionOption(UnityAction callBack, string buttonText = null, ToolTip tooltip = null)
     {
-        _buttonText = buttonText;
         _callBack = callBack;
+        _buttonText = buttonText;
         _tooltip = tooltip;
     }
 
-    public void CreateAndDisplayGO(string goName, Transform containerTransform)
+    public void CreateAndDisplay(string goName, Transform containerTransform)
     {
         //GameObject button = UIcomponents.BuildVertAlignButton(goName, _buttonText, _callBack, containerTransform);
         GameObject button = MonoBehaviour.Instantiate(Managers.UI.prefab_Button);
@@ -31,6 +31,8 @@ public class PopUpOption {
         }
         
         TextMeshProUGUI tmpText = button.GetComponentInChildren<TextMeshProUGUI>();
-        tmpText.text = _buttonText;
+        if (!String.IsNullOrEmpty(_buttonText)) {
+            tmpText.text = _buttonText;
+        }
     }
 }

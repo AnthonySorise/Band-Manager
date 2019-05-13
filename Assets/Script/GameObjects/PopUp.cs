@@ -6,28 +6,26 @@ using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class PopUp {
-    SimEvent _simEvent;
+    SimAction _simAction;
     private bool _haltsGame;
     private string _headerText;
     private string _bodyText;
     private Asset_png _bodyImg;
     private Asset_wav _triggerSound;
-    private List<PopUpOption> _options;
 
-    public PopUp(SimEvent simEvent, bool haltsGame, string headerText, string bodyText, Asset_png bodyImg, Asset_wav triggerSound, List<PopUpOption> options)
+    public PopUp(SimAction simAction, bool haltsGame, string headerText, string bodyText, Asset_png bodyImg, Asset_wav triggerSound)
     {
-        _simEvent = simEvent;
+        _simAction = simAction;
         _haltsGame = haltsGame;
         _headerText = headerText;
         _bodyText = bodyText;
         _bodyImg = bodyImg;
         _triggerSound = triggerSound;
-        _options = options;
     }
 
-    public void CreateAndDisplayGO()
+    public void CreateAndDisplay()
     {
-        string popupName = "Popup_" + _simEvent.ToString();
+        string popupName = "Popup_" + _simAction.SimActionType.ToString();
         if (GameObject.Find(popupName))
         {
             Debug.Log("Error: " + popupName + " already exists");
@@ -47,12 +45,12 @@ public class PopUp {
         popup.name = popupName;
 
         //header
-        string headerName = "Popup_" + _simEvent.ToString() + "_header";
+        string headerName = "Popup_" + _simAction.SimActionType.ToString() + "_header";
         popup_header.name = headerName;
         popup_header.GetComponent<TextMeshProUGUI>().text = _headerText;
 
         //image
-        string imgName = "Popup_" + _simEvent.ToString() + "_image";
+        string imgName = "Popup_" + _simAction.SimActionType.ToString() + "_image";
         if (_bodyImg != Asset_png.None)
         {
             popup_image.name = imgName;
@@ -60,12 +58,12 @@ public class PopUp {
         }
 
         //body text
-        string bodyTextName = "Popup_" + _simEvent.ToString() + "_bodyText";
+        string bodyTextName = "Popup_" + _simAction.SimActionType.ToString() + "_bodyText";
         popup_bodyText.name = bodyTextName;
         popup_bodyText.GetComponent<TextMeshProUGUI>().text = _bodyText;
 
         //buttons
-        string buttonContainerName = "Popup_buttonContainer" + _simEvent.ToString();
+        string buttonContainerName = "Popup_buttonContainer" + _simAction.SimActionType.ToString();
         popup_buttonContainer.name = buttonContainerName;
 
         Transform buttonsTransform = popup_buttonContainer.GetComponent<Transform>();
@@ -82,21 +80,20 @@ public class PopUp {
             Managers.Audio.PlayAudio(Asset_wav.Click_02, AudioChannel.UI);
         };
 
-        if (_options == null || _options.Count == 0)
+        if (_simAction.Options == null || _simAction.Options.Count == 0)
         {
-            string buttonName = "Popup_" + _simEvent.ToString() + "_buttonClose";
-            //UIcomponents.BuildVertAlignButton(buttonName, "OK", closePopup, buttonsTransform);
-            PopUpOption option = new PopUpOption("OK", closePopup);
-            option.CreateAndDisplayGO(buttonName, buttonsTransform);
+            string buttonName = "Popup_" + _simAction.SimActionType.ToString() + "_buttonClose";
+            SimActionOption option = new SimActionOption(closePopup, "OK");
+            option.CreateAndDisplay(buttonName, buttonsTransform);
 
             Managers.UI.CursorHover_Button(GameObject.Find(buttonName).GetComponent<Button>());
         }
         else
         {
-            for (int i = 0; i < _options.Count; i++)
+            for (int i = 0; i < _simAction.Options.Count; i++)
             {
-                var buttonName = "Popup_" + _simEvent.ToString() + "_button_0" + (i+1).ToString();
-                _options[i].CreateAndDisplayGO(buttonName, buttonsTransform);
+                var buttonName = "Popup_" + _simAction.SimActionType.ToString() + "_button_0" + (i+1).ToString();
+                _simAction.Options[i].CreateAndDisplay(buttonName, buttonsTransform);
 
                 Button buttonComponent = GameObject.Find(buttonName).GetComponent<Button>();
                 Managers.UI.CursorHover_Button(buttonComponent);

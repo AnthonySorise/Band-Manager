@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum SimEvent
+public enum SimActionType
 {
     Test_Popup01,
     Test_Popup02,
@@ -13,18 +13,32 @@ public enum SimEvent
 }
 
 public class SimAction {
-    private SimEvent _simEvent;
+    public SimActionType SimActionType { get; private set; }
     private Func<bool> _validCondition;
     private Func<bool> _delayCondition;
-    private Action _action;
+    private Action _initialAction;
+    public List<SimActionOption> Options { get; private set; }
 
+    private bool _popupHaltsGame;
+    private string _popupHeaderText;
+    private string _popupBodyText;
+    private Asset_png _popupBodyImg;
+    private Asset_wav _popupTriggerSound;
 
-    public SimAction(SimEvent simEvent, Func<bool> validCondition, Func<bool> delayCondition, Action action)
+    public SimAction(SimActionType simActionType, Func<bool> validCondition, Func<bool> delayCondition, Action initialAction,
+        List<SimActionOption> options = null, bool popupHaltsGame = false, string popupHeaderText = null, string popupBodyText = null, Asset_png popupBodyImg = Asset_png.None, Asset_wav popupTriggerSound = Asset_wav.None)
     {
-        _simEvent = simEvent;
+        SimActionType = simActionType;
         _validCondition = validCondition;
         _delayCondition = delayCondition;
-        _action = action;
+        _initialAction = initialAction;
+
+        Options = options;
+        _popupHaltsGame = popupHaltsGame;
+        _popupHeaderText = popupHeaderText;
+        _popupBodyText = popupBodyText;
+        _popupBodyImg = popupBodyImg;
+        _popupTriggerSound = popupTriggerSound;
     }
 
     public bool IsValid() {
@@ -38,7 +52,19 @@ public class SimAction {
     public void Trigger() {
         if (IsValid())
         {
-            _action();
+            if (_initialAction != null) {
+                _initialAction();
+            }
+            
+            //if player
+            //popup
+            PopUp popup = new PopUp(this, _popupHaltsGame, _popupHeaderText, _popupBodyText, _popupBodyImg, _popupTriggerSound);
+            popup.CreateAndDisplay();
+
+
+            //if npc
+            //choose option using option's AI modifiers
+
         }
     }
 }

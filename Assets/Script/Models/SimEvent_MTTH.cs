@@ -5,23 +5,18 @@ public class SimEvent_MTTH {
 
     private SimAction _simAction;
     private DateTime _startCheckingDT;
-    private float _daysUntilFiftyPercentChance;
+    private double _daysUntilFiftyPercentChance;
 
-    //private static int _numDaysTill50Percent = 3;
-    //private float _daysPerCheck;
     private double _daysPerCheck;
     private DateTime _lastCheckedDT;
     private bool _mtthCheckPassed;
 
-    public SimEvent_MTTH(SimAction simAction, DateTime startCheckingDT, float daysUntilFiftyPercent, double daysPerCheck = 0.2)
+    public SimEvent_MTTH(SimAction simAction, DateTime startCheckingDT, DateTime fiftyPercentChanceDT, double daysPerCheck = 0.2)
     {
         _simAction = simAction;
         _startCheckingDT = startCheckingDT;
-        _daysUntilFiftyPercentChance = daysUntilFiftyPercent;
+        _daysUntilFiftyPercentChance = (fiftyPercentChanceDT - startCheckingDT).TotalDays;
         _daysPerCheck = daysPerCheck;
-
-        //_daysPerCheck = _daysUntilFiftyPercentChance / _numDaysTill50Percent;
-        //_lastCheckedDT = Managers.Time.CurrentDT.AddDays(_daysPerCheck * -1);
         _mtthCheckPassed = false;
 
         Store();
@@ -54,25 +49,16 @@ public class SimEvent_MTTH {
             return false;
         }
 
-        //double intervalsPassed = (Managers.Time.CurrentDT - _startCheckingDT).TotalDays / _daysPerCheck;
-        //double intervalsUntilFiftyPercentChance = _daysUntilFiftyPercentChance / _daysPerCheck;
-
-
         double chanceToTrigger = 1.0f - Math.Exp(Math.Log(0.5f) / _daysUntilFiftyPercentChance);
-        //chanceToTrigger = chanceToTrigger * _daysPerCheck;
         chanceToTrigger = 1 - Math.Exp(_daysPerCheck * Math.Log(1 - chanceToTrigger));
-
-        Debug.Log("CHANCE TO TRIGGER = " + chanceToTrigger);
 
         if (UnityEngine.Random.Range(0f, 1f) <= chanceToTrigger)
         {
             _mtthCheckPassed = true;
-            Debug.Log("TRIGGERED");
             return true;
         }
         else
         {
-            Debug.Log("NOPE");
             return false;
         }
     }

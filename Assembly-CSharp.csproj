@@ -65,7 +65,6 @@
     <Compile Include="Assets\Script\Behavior\HasTooltip.cs" />
     <Compile Include="Assets\Script\Behavior\MouseOverResetter.cs" />
     <Compile Include="Assets\Script\GameObjects\PopUp.cs" />
-    <Compile Include="Assets\Script\GameObjects\PopUpOption.cs" />
     <Compile Include="Assets\Script\GameObjects\ToolTip.cs" />
     <Compile Include="Assets\Script\Managers\IManager.cs" />
     <Compile Include="Assets\Script\Managers\Manager_Assets.cs" />
@@ -84,6 +83,7 @@
     <Compile Include="Assets\Script\Models\Map.cs" />
     <Compile Include="Assets\Script\Models\NPC.cs" />
     <Compile Include="Assets\Script\Models\SimAction.cs" />
+    <Compile Include="Assets\Script\Models\SimActionOptions.cs" />
     <Compile Include="Assets\Script\Models\SimEvent_MTTH.cs" />
     <Compile Include="Assets\Script\Models\SimEvent_Scheduled.cs" />
     <Compile Include="Assets\Script\Utilities\ButtonMouseoverListener.cs" />

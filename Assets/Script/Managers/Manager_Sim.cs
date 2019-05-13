@@ -73,19 +73,15 @@ public class Manager_Sim : MonoBehaviour, IManager {
     private bool DelayCondition_TimeFrame(double hoursSinceMidnight)
     {
         DateTime lastMidnigt = new DateTime(Managers.Time.CurrentDT.Year, Managers.Time.CurrentDT.Month, Managers.Time.CurrentDT.Day, 0, 0, 0);
-        return ((Managers.Time.CurrentDT - lastMidnigt).TotalHours < hoursSinceMidnight);
+        return ((Managers.Time.CurrentDT - lastMidnigt).TotalHours > hoursSinceMidnight);
     }
 
 
     //TEST POPUP 01
     private void SIM_TestPopup01(DateTime triggerDate) {
-        Action action = () => {
-            PopUp popup01 = new PopUp(SimEvent.Test_Popup01, false, "Test Scheduled Event", "This is a test event that is scheduled to fire on " + triggerDate.ToShortDateString() + " but not pause time.", Asset_png.Popup_Vinyl, Asset_wav.event_generic, null);
-            popup01.CreateAndDisplayGO();
-        };
         Func<bool> validCondition = () => { return true; };
         Func<bool> delayCondition = () => { return false; };
-        SimAction simAction = new SimAction(SimEvent.Test_Popup01, validCondition, delayCondition, action);
+        SimAction simAction = new SimAction(SimActionType.Test_Popup01, validCondition, delayCondition, null, null, false, "Test Scheduled Event", "This is a test event that is scheduled to fire on " + triggerDate.ToShortDateString() + " but not pause time.", Asset_png.Popup_Vinyl, Asset_wav.event_generic);
         SimEvent_Scheduled SimEvent_Scheduled01 = new SimEvent_Scheduled(simAction, triggerDate);
 
     }
@@ -93,20 +89,16 @@ public class Manager_Sim : MonoBehaviour, IManager {
     //TEST POPUP 02
     private void SIM_TestPopup02(DateTime triggerDate)
     {
-        Action action = () => {
-            PopUp popup01 = new PopUp(SimEvent.Test_Popup02, true, "Test Scheduled Event", "This is a test event that is scheduled to fire on " + triggerDate.ToShortDateString() + " AND prevents progress until you click OK.", Asset_png.Popup_Vinyl, Asset_wav.event_generic, null);
-            popup01.CreateAndDisplayGO();
-        };
+        Action initialAction = null;
         Func<bool> validCondition = () => { return true; };
         Func<bool> delayCondition = () => { return false; };
-        SimAction simAction = new SimAction(SimEvent.Test_Popup02, validCondition, delayCondition, action);
+        SimAction simAction = new SimAction(SimActionType.Test_Popup02, validCondition, delayCondition, initialAction, null, true, "Test Scheduled Event", "This is a test event that is scheduled to fire on " + triggerDate.ToShortDateString() + " AND prevents progress until you click OK.", Asset_png.Popup_Vinyl, Asset_wav.event_generic);
         SimEvent_Scheduled SimEvent_Scheduled02 = new SimEvent_Scheduled(simAction, triggerDate);
     }
 
 
     //Test Popup03
-    private void Action_TestPopup03(DateTime triggerDate)
-    {
+    private void SIM_TestPopup03(DateTime triggerDate) {
         UnityAction option01 = () => {
             Debug.Log("Option One Selected!");
         };
@@ -125,34 +117,29 @@ public class Manager_Sim : MonoBehaviour, IManager {
         ToolTip tt_option03 = new ToolTip("This is the third option.");
         ToolTip tt_option04 = new ToolTip("This is the last option.");
 
-        PopUpOption PopUpOption01 = new PopUpOption("First Option", option01, tt_option01);
-        PopUpOption PopUpOption02 = new PopUpOption("Second Option", option02, tt_option02);
-        PopUpOption PopUpOption03 = new PopUpOption("Third Option", option03, tt_option03);
-        PopUpOption PopUpOption04 = new PopUpOption("Fourth Option", option04, tt_option04);
+        SimActionOption PopUpOption01 = new SimActionOption(option01, "First Option", tt_option01);
+        SimActionOption PopUpOption02 = new SimActionOption(option02, "Second Option", tt_option02);
+        SimActionOption PopUpOption03 = new SimActionOption(option03, "Third Option", tt_option03);
+        SimActionOption PopUpOption04 = new SimActionOption(option04, "Fourth Option", tt_option04);
 
-        List<PopUpOption> popupOptionsList = new List<PopUpOption>
+        List<SimActionOption> optionList = new List<SimActionOption>
             {
                 PopUpOption01,
                 PopUpOption02,
                 PopUpOption03,
                 PopUpOption04
             };
-        PopUp popup03 = new PopUp(SimEvent.Test_Popup03, false, "Test Scheduled Event", "This is a test event that is scheduled to fire on " + triggerDate.ToShortDateString() + ".  It has four options but does not pause time.", Asset_png.Popup_Vinyl, Asset_wav.event_generic, popupOptionsList);
-        popup03.CreateAndDisplayGO();
-    }
-    private void SIM_TestPopup03(DateTime triggerDate) {
-        Action action = () =>
-        {
-            Action_TestPopup03(triggerDate);
-        };
+
+        Action action = null;
         Func<bool> validCondition = () => { return true; };
         Func<bool> delayCondition = () => { return false; };
-        SimAction simAction = new SimAction(SimEvent.Test_Popup03, validCondition, delayCondition, action);
+
+        SimAction simAction = new SimAction(SimActionType.Test_Popup03, validCondition, delayCondition, action, optionList, false, "Test Scheduled Event", "This is a test event that is scheduled to fire on " + triggerDate.ToShortDateString() + ".  It has four options but does not pause time.", Asset_png.Popup_Vinyl, Asset_wav.event_generic);
         SimEvent_Scheduled SimEvent_Scheduled03 = new SimEvent_Scheduled(simAction, triggerDate);
     }
 
     //Test Popup04
-    private void Action_TestPopup04(DateTime triggerDate)
+    private void SIM_TestPopup04(DateTime triggerDate)
     {
         UnityAction option01 = () => {
             Debug.Log("Option One Selected!");
@@ -168,36 +155,31 @@ public class Manager_Sim : MonoBehaviour, IManager {
         ToolTip tt_option02 = new ToolTip("This is the second option.");
         ToolTip tt_option03 = new ToolTip("This is the last option.");
 
-        PopUpOption PopUpOption01 = new PopUpOption("First Option", option01, tt_option01);
-        PopUpOption PopUpOption02 = new PopUpOption("Second Option", option02, tt_option02);
-        PopUpOption PopUpOption03 = new PopUpOption("Third Option", option03, tt_option03);
+        SimActionOption PopUpOption01 = new SimActionOption(option01, "First Option", tt_option01);
+        SimActionOption PopUpOption02 = new SimActionOption(option02, "Second Option", tt_option02);
+        SimActionOption PopUpOption03 = new SimActionOption(option03, "Third Option", tt_option03);
 
-        List<PopUpOption> popupOptionsList = new List<PopUpOption>
+        List<SimActionOption> popupOptionsList = new List<SimActionOption>
             {
                 PopUpOption01,
                 PopUpOption02,
                 PopUpOption03
             };
-        PopUp popup04 = new PopUp(SimEvent.Test_Popup04, true, "Test Scheduled Event", "This is a test event that is scheduled to fire on " + triggerDate.ToShortDateString() + " AFTER 4:00AM!  It has three options AND you must select one to continue.", Asset_png.Popup_Vinyl, Asset_wav.event_generic, popupOptionsList);
-        popup04.CreateAndDisplayGO();
-    }
-    private void SIM_TestPopup04(DateTime triggerDate)
-    {
-        Action action = () =>
-        {
-            Action_TestPopup04(triggerDate);
-        };
+
+        Action action = null;
         Func<bool> validCondition = () => { return true; };
         Func<bool> delayCondition = () => {
             return (Managers.Time.CurrentDT.Hour < 4);
         };
-        SimAction simAction = new SimAction(SimEvent.Test_Popup04, validCondition, delayCondition, action);
+
+        SimAction simAction = new SimAction(SimActionType.Test_Popup04, validCondition, delayCondition, action, popupOptionsList, true, "Test Scheduled Event", "This is a test event that is scheduled to fire on " + triggerDate.ToShortDateString() + " AFTER 4:00AM!  It has three options AND you must select one to continue.", Asset_png.Popup_Vinyl, Asset_wav.event_generic);
         SimEvent_Scheduled SimEvent_Scheduled04 = new SimEvent_Scheduled(simAction, triggerDate);
     }
 
     //Test Popup05
-    private void Action_TestPopup05()
+    private void SIM_TestPopup05()
     {
+        //TEST POPUP 05
         UnityAction option01 = () => {
             Debug.Log("Option One Selected!");
         };
@@ -208,26 +190,22 @@ public class Manager_Sim : MonoBehaviour, IManager {
         ToolTip tt_option01 = new ToolTip("This is the first option.");
         ToolTip tt_option02 = new ToolTip("This is the second option.");
 
-        PopUpOption PopUpOption01 = new PopUpOption("First Option", option01, tt_option01);
-        PopUpOption PopUpOption02 = new PopUpOption("Second Option", option02, tt_option02);
+        SimActionOption PopUpOption01 = new SimActionOption(option01, "First Option", tt_option01);
+        SimActionOption PopUpOption02 = new SimActionOption(option02, "Second Option", tt_option02);
 
-        List<PopUpOption> popupOptionsList = new List<PopUpOption>
+        List<SimActionOption> popupOptionsList = new List<SimActionOption>
             {
                 PopUpOption01,
                 PopUpOption02,
             };
-        PopUp popup03 = new PopUp(SimEvent.Test_Popup05, true, "Test MTTH Event", "This is a test event that is triggered based on Mean Time To Happen.  After 3 days, this event has a 50% chance to trigger, and it only triggers at a random time during business hours.", Asset_png.Popup_Vinyl, Asset_wav.event_generic, popupOptionsList);
-        popup03.CreateAndDisplayGO();
-    }
-    private void SIM_TestPopup05()
-    {
-        //TEST POPUP 05
+
         Func<bool> validCondition = () => { return true; };
         Func<bool> delayCondition = () =>
         {
             return DelayCondition_TimeFrame(UnityEngine.Random.Range(9, 17));
         };
-        SimAction simAction = new SimAction(SimEvent.Test_Popup05, validCondition, delayCondition, Action_TestPopup05);
-        SimEvent_MTTH SimEvent_MTTH01 = new SimEvent_MTTH(simAction, Managers.Time.CurrentDT, 3f);
+
+        SimAction simAction = new SimAction(SimActionType.Test_Popup05, validCondition, delayCondition, null, popupOptionsList, true, "Test MTTH Event", "This is a test event that is triggered based on Mean Time To Happen.  After 3 days, this event has a 50% chance to trigger, and it only triggers at a random time during business hours.", Asset_png.Popup_Vinyl, Asset_wav.event_generic);
+        SimEvent_MTTH SimEvent_MTTH01 = new SimEvent_MTTH(simAction, Managers.Time.CurrentDT, Managers.Time.CurrentDT.AddDays(3));
     }
 }
