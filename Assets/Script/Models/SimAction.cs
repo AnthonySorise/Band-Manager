@@ -9,7 +9,9 @@ public enum SimActionType
     Test_Popup02,
     Test_Popup03,
     Test_Popup04,
-    Test_Popup05
+    Test_Popup05,
+    Test_Popup05_1,
+    Test_Popup05_2
 }
 
 public class SimAction {
@@ -17,8 +19,8 @@ public class SimAction {
     private Func<bool> _validCondition;
     private Func<bool> _delayCondition;
     private Action _initialAction;
-    public List<SimActionOption> Options { get; private set; }
 
+    public List<SimActionOption> Options { get; private set; }
     private bool _popupHaltsGame;
     private string _popupHeaderText;
     private string _popupBodyText;

@@ -18,6 +18,18 @@ public class SimActionOption {
         _tooltip = tooltip;
     }
 
+    private void ButtonPress() {
+        _callBack();
+        if (Managers.UI.IsScreenCovered() == true && Managers.UI.PopupCanvasGO_AboveCover.transform.childCount == 1)
+        {
+            Managers.UI.ScreenUncover();
+        }
+        if (Managers.Time.IsPaused)
+        {
+            Managers.Time.Play();
+        }
+    }
+
     public void CreateAndDisplay(string goName, Transform containerTransform)
     {
         //GameObject button = UIcomponents.BuildVertAlignButton(goName, _buttonText, _callBack, containerTransform);
@@ -25,7 +37,7 @@ public class SimActionOption {
         button.name = goName;
         button.GetComponent<Transform>().SetParent(containerTransform);
 
-        button.GetComponent<Button>().onClick.AddListener(_callBack);
+        button.GetComponent<Button>().onClick.AddListener(ButtonPress);
         if (_tooltip != null) {
             Managers.UI.SetToolTip(button.GetComponent<Button>(), _tooltip);
         }

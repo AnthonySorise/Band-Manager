@@ -84,6 +84,7 @@
     <Compile Include="Assets\Script\Models\NPC.cs" />
     <Compile Include="Assets\Script\Models\SimAction.cs" />
     <Compile Include="Assets\Script\Models\SimActionOptions.cs" />
+    <Compile Include="Assets\Script\Models\SimEvent_Immediate.cs" />
     <Compile Include="Assets\Script\Models\SimEvent_MTTH.cs" />
     <Compile Include="Assets\Script\Models\SimEvent_Scheduled.cs" />
     <Compile Include="Assets\Script\Utilities\ButtonMouseoverListener.cs" />
