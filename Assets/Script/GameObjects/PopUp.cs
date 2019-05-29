@@ -7,20 +7,10 @@ using UnityEngine.UI;
 
 public class PopUp {
     SimAction _simAction;
-    private bool _haltsGame;
-    private string _headerText;
-    private string _bodyText;
-    private Asset_png _bodyImg;
-    private Asset_wav _triggerSound;
 
-    public PopUp(SimAction simAction, bool haltsGame, string headerText, string bodyText, Asset_png bodyImg, Asset_wav triggerSound)
+    public PopUp(SimAction simAction)
     {
         _simAction = simAction;
-        _haltsGame = haltsGame;
-        _headerText = headerText;
-        _bodyText = bodyText;
-        _bodyImg = bodyImg;
-        _triggerSound = triggerSound;
     }
 
     public void CreateAndDisplay()
@@ -32,7 +22,7 @@ public class PopUp {
             return;
         }
 
-        Transform containerTransform = _haltsGame ? Managers.UI.PopupCanvasGO_AboveCover.transform : Managers.UI.PopupCanvasGO.transform;
+        Transform containerTransform = _simAction.PopupHaltsGame ? Managers.UI.PopupCanvasGO_AboveCover.transform : Managers.UI.PopupCanvasGO.transform;
         GameObject popup = MonoBehaviour.Instantiate(Managers.UI.prefab_Popup, containerTransform);
         popup.transform.SetParent(containerTransform, false);
 
@@ -47,20 +37,20 @@ public class PopUp {
         //header
         string headerName = "Popup_" + _simAction.SimActionType.ToString() + "_header";
         popup_header.name = headerName;
-        popup_header.GetComponent<TextMeshProUGUI>().text = _headerText;
+        popup_header.GetComponent<TextMeshProUGUI>().text = _simAction.PopupHeaderText;
 
         //image
         string imgName = "Popup_" + _simAction.SimActionType.ToString() + "_image";
-        if (_bodyImg != Asset_png.None)
+        if (_simAction.PopupBodyImg != Asset_png.None)
         {
             popup_image.name = imgName;
-            popup_image.GetComponent<Image>().sprite = Managers.Assets.GetSprite(_bodyImg);
+            popup_image.GetComponent<Image>().sprite = Managers.Assets.GetSprite(_simAction.PopupBodyImg);
         }
 
         //body text
         string bodyTextName = "Popup_" + _simAction.SimActionType.ToString() + "_bodyText";
         popup_bodyText.name = bodyTextName;
-        popup_bodyText.GetComponent<TextMeshProUGUI>().text = _bodyText;
+        popup_bodyText.GetComponent<TextMeshProUGUI>().text = _simAction.PopupBodyText;
 
         //buttons
         string buttonContainerName = "Popup_buttonContainer" + _simAction.SimActionType.ToString();
@@ -68,14 +58,6 @@ public class PopUp {
 
         Transform buttonsTransform = popup_buttonContainer.GetComponent<Transform>();
         UnityAction closePopup = () => {
-            //unhalt game
-            if (_haltsGame)
-            {
-                if (Managers.UI.IsScreenCovered() == true && Managers.UI.PopupCanvasGO_AboveCover.transform.childCount == 1)
-                {
-                    Managers.UI.ScreenUncover();
-                }
-            }
             MonoBehaviour.Destroy(popup.gameObject);
             Managers.Audio.PlayAudio(Asset_wav.Click_02, AudioChannel.UI);
         };
@@ -84,7 +66,8 @@ public class PopUp {
         {
             string buttonName = "Popup_" + _simAction.SimActionType.ToString() + "_buttonClose";
             SimActionOption option = new SimActionOption(closePopup, "OK");
-            option.CreateAndDisplay(buttonName, buttonsTransform);
+            PopUpOption popUpOption = new PopUpOption(option);
+            popUpOption.CreateAndDisplay(buttonName, buttonsTransform);
 
             Managers.UI.CursorHover_Button(GameObject.Find(buttonName).GetComponent<Button>());
         }
@@ -93,7 +76,8 @@ public class PopUp {
             for (int i = 0; i < _simAction.Options.Count; i++)
             {
                 var buttonName = "Popup_" + _simAction.SimActionType.ToString() + "_button_0" + (i+1).ToString();
-                _simAction.Options[i].CreateAndDisplay(buttonName, buttonsTransform);
+                PopUpOption popUpOption = new PopUpOption(_simAction.Options[i]);
+                popUpOption.CreateAndDisplay(buttonName, buttonsTransform);
 
                 Button buttonComponent = GameObject.Find(buttonName).GetComponent<Button>();
                 Managers.UI.CursorHover_Button(buttonComponent);
@@ -102,13 +86,13 @@ public class PopUp {
         }
         
         //trigger sound
-        if (_triggerSound != Asset_wav.None)
+        if (_simAction.PopupTriggerSound != Asset_wav.None)
         {
-            Managers.Audio.PlayAudio(_triggerSound, AudioChannel.SFX);
+            Managers.Audio.PlayAudio(_simAction.PopupTriggerSound, AudioChannel.SFX);
         }
 
         //halt game
-        if (_haltsGame)
+        if (_simAction.PopupHaltsGame)
         {
             if (Managers.UI.IsScreenCovered() == false)
             {
