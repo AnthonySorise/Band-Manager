@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
@@ -7,7 +8,7 @@ using UnityEngine.UI;
 
 public class ButtonMouseoverListener {
 
-    public static void OnButtonMouseOver(Button button, UnityAction pointerEnter, UnityAction pointerExit)
+    public static void OnButtonMouseOver(Button button, Action pointerEnter, Action pointerExit)
     {
         if (button.gameObject.GetComponent<EventTrigger>() == null)
         {

@@ -83,6 +83,8 @@
     <Compile Include="Assets\Script\Models\City.cs" />
     <Compile Include="Assets\Script\Models\Map.cs" />
     <Compile Include="Assets\Script\Models\NPC.cs" />
+    <Compile Include="Assets\Script\Models\NPCTraitMajor.cs" />
+    <Compile Include="Assets\Script\Models\NPCTraitMinor.cs" />
     <Compile Include="Assets\Script\Models\SimAction.cs" />
     <Compile Include="Assets\Script\Models\SimActionOptions.cs" />
     <Compile Include="Assets\Script\Models\SimEvent_Immediate.cs" />

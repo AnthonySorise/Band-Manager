@@ -5,6 +5,7 @@ using System.Collections;
 using TMPro;
 using System.Collections.Generic;
 using UnityEngine.Events;
+using System;
 
 public enum CanvasLayer
 {
@@ -197,11 +198,11 @@ public class Manager_UI : MonoBehaviour, IManager {
 
     public void CursorHover_Button(Button button)
     {
-        UnityAction onEnter = () => 
+        Action onEnter = () => 
         {
             SetCursor(Asset_png.Cursor_Hover);
         };
-        UnityAction onExit = () =>
+        Action onExit = () =>
         {
             SetCursor(Asset_png.Cursor_Default);
         };
@@ -219,7 +220,7 @@ public class Manager_UI : MonoBehaviour, IManager {
     private ToolTip _toolTipInQueue =  null;
     public void SetToolTip(Button button, ToolTip tooltip)
     {
-        UnityAction onEnter = () =>
+        Action onEnter = () =>
         {
             if (!tooltip.HasDelay)
             {
@@ -230,7 +231,7 @@ public class Manager_UI : MonoBehaviour, IManager {
                 StartCoroutine("DelayedTooltip");
             }
         };
-        UnityAction onExit = () =>
+        Action onExit = () =>
         {
             
             _toolTipInQueue = null;

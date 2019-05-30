@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -15,7 +16,7 @@ public class PopUp {
 
     public void CreateAndDisplay()
     {
-        string popupName = "Popup_" + _simAction.SimActionType.ToString();
+        string popupName = "Popup_" + _simAction.ID.ToString();
         if (GameObject.Find(popupName))
         {
             Debug.Log("Error: " + popupName + " already exists");
@@ -35,12 +36,12 @@ public class PopUp {
         popup.name = popupName;
 
         //header
-        string headerName = "Popup_" + _simAction.SimActionType.ToString() + "_header";
+        string headerName = "Popup_" + _simAction.ID.ToString() + "_header";
         popup_header.name = headerName;
         popup_header.GetComponent<TextMeshProUGUI>().text = _simAction.PopupHeaderText;
 
         //image
-        string imgName = "Popup_" + _simAction.SimActionType.ToString() + "_image";
+        string imgName = "Popup_" + _simAction.ID.ToString() + "_image";
         if (_simAction.PopupBodyImg != Asset_png.None)
         {
             popup_image.name = imgName;
@@ -48,12 +49,12 @@ public class PopUp {
         }
 
         //body text
-        string bodyTextName = "Popup_" + _simAction.SimActionType.ToString() + "_bodyText";
+        string bodyTextName = "Popup_" + _simAction.ID.ToString() + "_bodyText";
         popup_bodyText.name = bodyTextName;
         popup_bodyText.GetComponent<TextMeshProUGUI>().text = _simAction.PopupBodyText;
 
         //buttons
-        string buttonContainerName = "Popup_buttonContainer" + _simAction.SimActionType.ToString();
+        string buttonContainerName = "Popup_buttonContainer" + _simAction.ID.ToString();
         popup_buttonContainer.name = buttonContainerName;
 
         Transform buttonsTransform = popup_buttonContainer.GetComponent<Transform>();
@@ -64,7 +65,7 @@ public class PopUp {
 
         if (_simAction.Options == null || _simAction.Options.Count == 0)
         {
-            string buttonName = "Popup_" + _simAction.SimActionType.ToString() + "_buttonClose";
+            string buttonName = "Popup_" + _simAction.ID.ToString() + "_buttonClose";
             SimActionOption option = new SimActionOption(closePopup, "OK");
             PopUpOption popUpOption = new PopUpOption(option);
             popUpOption.CreateAndDisplay(buttonName, buttonsTransform);
@@ -75,7 +76,7 @@ public class PopUp {
         {
             for (int i = 0; i < _simAction.Options.Count; i++)
             {
-                var buttonName = "Popup_" + _simAction.SimActionType.ToString() + "_button_0" + (i+1).ToString();
+                var buttonName = "Popup_" + _simAction.ID.ToString() + "_button_0" + (i+1).ToString();
                 PopUpOption popUpOption = new PopUpOption(_simAction.Options[i]);
                 popUpOption.CreateAndDisplay(buttonName, buttonsTransform);
 

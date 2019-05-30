@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum SimActionType
+public enum SimActionID
 {
     Test_Popup01,
     Test_Popup02,
@@ -15,22 +15,22 @@ public enum SimActionType
 }
 
 public class SimAction {
-    public SimActionType SimActionType { get; private set; }
+    public SimActionID ID { get; private set; }
     private Func<bool> _validCondition;
     private Func<bool> _delayCondition;
     private Action _initialAction;
 
     public List<SimActionOption> Options { get; private set; }
-    public bool PopupHaltsGame;
-    public string PopupHeaderText;
-    public string PopupBodyText;
-    public Asset_png PopupBodyImg;
-    public Asset_wav PopupTriggerSound;
+    public bool PopupHaltsGame { get; private set; }
+    public string PopupHeaderText { get; private set; }
+    public string PopupBodyText { get; private set; }
+    public Asset_png PopupBodyImg { get; private set; }
+    public Asset_wav PopupTriggerSound { get; private set; }
 
-    public SimAction(SimActionType simActionType, Func<bool> validCondition, Func<bool> delayCondition, Action initialAction,
+    public SimAction(SimActionID id, Func<bool> validCondition, Func<bool> delayCondition, Action initialAction,
         List<SimActionOption> options = null, bool popupHaltsGame = false, string popupHeaderText = null, string popupBodyText = null, Asset_png popupBodyImg = Asset_png.None, Asset_wav popupTriggerSound = Asset_wav.None)
     {
-        SimActionType = simActionType;
+        ID = id;
         _validCondition = validCondition;
         _delayCondition = delayCondition;
         _initialAction = initialAction;

@@ -75,7 +75,7 @@ public class Manager_Sim : MonoBehaviour, IManager {
     private void SIM_TestPopup01(DateTime triggerDate) {
         Func<bool> validCondition = () => { return true; };
         Func<bool> delayCondition = () => { return false;};
-        SimAction simAction = new SimAction(SimActionType.Test_Popup01, validCondition, delayCondition, null, null, false, "Test Scheduled Event", "This is a test event that is scheduled to fire on " + triggerDate.ToShortDateString() + " but not pause time.", Asset_png.Popup_Vinyl, Asset_wav.event_generic);
+        SimAction simAction = new SimAction(SimActionID.Test_Popup01, validCondition, delayCondition, null, null, false, "Test Scheduled Event", "This is a test event that is scheduled to fire on " + triggerDate.ToShortDateString() + " but not pause time.", Asset_png.Popup_Vinyl, Asset_wav.event_generic);
         SimEvent_Scheduled SimEvent_Scheduled01 = new SimEvent_Scheduled(simAction, triggerDate);
     }
 
@@ -85,7 +85,7 @@ public class Manager_Sim : MonoBehaviour, IManager {
         Action initialAction = null;
         Func<bool> validCondition = () => { return true; };
         Func<bool> delayCondition = () => { return false; };
-        SimAction simAction = new SimAction(SimActionType.Test_Popup02, validCondition, delayCondition, initialAction, null, true, "Test Scheduled Event", "This is a test event that is scheduled to fire on " + triggerDate.ToShortDateString() + " AND prevents progress until you click OK.", Asset_png.Popup_Vinyl, Asset_wav.event_generic);
+        SimAction simAction = new SimAction(SimActionID.Test_Popup02, validCondition, delayCondition, initialAction, null, true, "Test Scheduled Event", "This is a test event that is scheduled to fire on " + triggerDate.ToShortDateString() + " AND prevents progress until you click OK.", Asset_png.Popup_Vinyl, Asset_wav.event_generic);
         SimEvent_Scheduled SimEvent_Scheduled02 = new SimEvent_Scheduled(simAction, triggerDate);
     }
 
@@ -126,7 +126,7 @@ public class Manager_Sim : MonoBehaviour, IManager {
         Func<bool> validCondition = () => { return true; };
         Func<bool> delayCondition = () => { return false; };
 
-        SimAction simAction = new SimAction(SimActionType.Test_Popup03, validCondition, delayCondition, initialAction, optionList, false, "Test Scheduled Event", "This is a test event that is scheduled to fire on " + triggerDate.ToShortDateString() + ".  It has four options but does not pause time.", Asset_png.Popup_Vinyl, Asset_wav.event_generic);
+        SimAction simAction = new SimAction(SimActionID.Test_Popup03, validCondition, delayCondition, initialAction, optionList, false, "Test Scheduled Event", "This is a test event that is scheduled to fire on " + triggerDate.ToShortDateString() + ".  It has four options but does not pause time.", Asset_png.Popup_Vinyl, Asset_wav.event_generic);
         SimEvent_Scheduled SimEvent_Scheduled03 = new SimEvent_Scheduled(simAction, triggerDate);
     }
 
@@ -164,7 +164,7 @@ public class Manager_Sim : MonoBehaviour, IManager {
             return (Managers.Time.CurrentDT.Hour < 4);
         };
 
-        SimAction simAction = new SimAction(SimActionType.Test_Popup04, validCondition, delayCondition, initialAction, popupOptionsList, true, "Test Scheduled Event", "This is a test event that is scheduled to fire on " + triggerDate.ToShortDateString() + " AFTER 4:00AM!  It has three options AND you must select one to continue.", Asset_png.Popup_Vinyl, Asset_wav.event_generic);
+        SimAction simAction = new SimAction(SimActionID.Test_Popup04, validCondition, delayCondition, initialAction, popupOptionsList, true, "Test Scheduled Event", "This is a test event that is scheduled to fire on " + triggerDate.ToShortDateString() + " AFTER 4:00AM!  It has three options AND you must select one to continue.", Asset_png.Popup_Vinyl, Asset_wav.event_generic);
         SimEvent_Scheduled SimEvent_Scheduled04 = new SimEvent_Scheduled(simAction, triggerDate);
     }
 
@@ -201,21 +201,21 @@ public class Manager_Sim : MonoBehaviour, IManager {
             return (Managers.Time.CurrentDT < triggerTime);
         };
 
-        SimAction simAction = new SimAction(SimActionType.Test_Popup05, validCondition, delayCondition, initialAction, popupOptionsList, true, "Test MTTH Event", "This is a test event that is triggered based on Mean Time To Happen.  After 3 days, this event has a 50% chance to trigger, and it only triggers at a random time during business hours.", Asset_png.Popup_Vinyl, Asset_wav.event_generic);
+        SimAction simAction = new SimAction(SimActionID.Test_Popup05, validCondition, delayCondition, initialAction, popupOptionsList, true, "Test MTTH Event", "This is a test event that is triggered based on Mean Time To Happen.  After 3 days, this event has a 50% chance to trigger, and it only triggers at a random time during business hours.", Asset_png.Popup_Vinyl, Asset_wav.event_generic);
         SimEvent_MTTH SimEvent_MTTH01 = new SimEvent_MTTH(simAction, Managers.Time.CurrentDT, Managers.Time.CurrentDT.AddDays(3));
     }
 
     private void SIM_TestPopup05_option01() {
         Func<bool> validCondition = () => { return true; };
         Func<bool> delayCondition = () => { return false; };
-        SimAction simAction = new SimAction(SimActionType.Test_Popup05_1, validCondition, delayCondition, null, null, true, "Option Selected", "You chose option one.", Asset_png.Popup_Vinyl, Asset_wav.event_generic);
+        SimAction simAction = new SimAction(SimActionID.Test_Popup05_1, validCondition, delayCondition, null, null, true, "Option Selected", "You chose option one.", Asset_png.Popup_Vinyl, Asset_wav.event_generic);
         SimEvent_Immediate SimEvent_Immediate = new SimEvent_Immediate(simAction);
     }
     private void SIM_TestPopup05_option02()
     {
         Func<bool> validCondition = () => { return true; };
         Func<bool> delayCondition = () => { return false; };
-        SimAction simAction = new SimAction(SimActionType.Test_Popup05_2, validCondition, delayCondition, null, null, true, "Option Selected", "You chose option two.", Asset_png.Popup_Vinyl, Asset_wav.event_generic);
+        SimAction simAction = new SimAction(SimActionID.Test_Popup05_2, validCondition, delayCondition, null, null, true, "Option Selected", "You chose option two.", Asset_png.Popup_Vinyl, Asset_wav.event_generic);
         SimEvent_Immediate SimEvent_Immediate = new SimEvent_Immediate(simAction);
     }
 }
