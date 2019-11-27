@@ -17,6 +17,7 @@ public class ToolTip {
     }
     public ToolTip(string text, bool hasDelay = false) {
         _textList = new List<string>{text};
+        HasDelay = hasDelay;
     }
     public ToolTip(string header, string text, bool hasDelay = false)
     {

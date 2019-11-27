@@ -31,9 +31,13 @@ public class Manager_Audio : MonoBehaviour, IManager {
         
         //MIXER
         if(mixer == null){
-            State = ManagerState.Error;
-            Debug.Log("Manager_Audio doesn't have a mixer attached to its mixer property");
-            return;
+            mixer = Resources.Load("Mixer") as AudioMixer;
+            if (!mixer)
+            {
+                State = ManagerState.Error;
+                Debug.Log("Manager_Audio doesn't have a mixer attached to its mixer property");
+                return;
+            }
         }
 
         //CHANNEL GAMEOBJECTS
