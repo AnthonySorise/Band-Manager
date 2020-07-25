@@ -82,10 +82,9 @@ public class Manager_Sim : MonoBehaviour, IManager {
     //Test Popup 02
     private void SIM_TestPopup02(DateTime triggerDate)
     {
-        Action initialAction = null;
         Func<bool> validCondition = () => { return true; };
         Func<bool> delayCondition = () => { return false; };
-        SimAction simAction = new SimAction(SimActionID.Test_Popup02, validCondition, delayCondition, initialAction, null, true, "Test Scheduled Event", "This is a test event that is scheduled to fire on " + triggerDate.ToShortDateString() + " AND prevents progress until you click OK.", Asset_png.Popup_Vinyl, Asset_wav.event_generic);
+        SimAction simAction = new SimAction(SimActionID.Test_Popup02, validCondition, delayCondition, null, null, true, "Test Scheduled Event", "This is a test event that is scheduled to fire on " + triggerDate.ToShortDateString() + " AND prevents progress until you click OK.", Asset_png.Popup_Vinyl, Asset_wav.event_generic);
         SimEvent_Scheduled SimEvent_Scheduled02 = new SimEvent_Scheduled(simAction, triggerDate);
     }
 

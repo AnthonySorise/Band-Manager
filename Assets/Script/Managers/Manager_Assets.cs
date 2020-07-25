@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using UnityEditor;
 using UnityEngine;
 
 public enum Asset_png
@@ -57,9 +58,9 @@ public class Manager_Assets : MonoBehaviour, IManager {
             }
 
             Texture2D texture = null;
-            byte[] fileData;
+            byte[] fileData = null;
             string fileName = png.ToString().ToLower();
-            string filePath;
+            string filePath = null;
             foreach (var path in artPathSubFolders)
             {
                 //Asset Folder User has access to
@@ -76,14 +77,27 @@ public class Manager_Assets : MonoBehaviour, IManager {
                 //Unity Resource Folder User does NOT have access to
                 filePath = artFolder + fileName;
                 texture = Resources.Load<Texture2D>(filePath);
+            }
+            if (texture)
+            {
+                //Modify texture import settings based on texture type
+                //Alternative -> https://docs.unity3d.com/ScriptReference/AssetPostprocessor.OnPreprocessTexture.html
+                if (png.ToString().Contains("Cursor_"))
+                {
+                    filePath = AssetDatabase.GetAssetPath(texture);
+                    TextureImporter importer = (TextureImporter)AssetImporter.GetAtPath(filePath);
+                    Debug.Log(importer);
+                    importer.textureType = TextureImporterType.Cursor;
 
-                if (!texture) {
-                    Debug.Log("Error - Missing Asset: " + fileName);
-                    State = ManagerState.Error;
-                    return;
                 }
             }
-            if (_pngTextures.ContainsKey(png))
+            else if (!texture)
+            {
+                Debug.Log("Error - Missing Asset: " + fileName);
+                State = ManagerState.Error;
+                return;
+            }
+            else if (_pngTextures.ContainsKey(png))
             {
                 Debug.Log("Error - Duplicate Asset Name: " + fileName);
                 State = ManagerState.Error;
