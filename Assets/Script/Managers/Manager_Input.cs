@@ -103,7 +103,6 @@ public class Manager_Input : MonoBehaviour, IManager {
                 }
             }
 
-
             //key up
             if (Input.GetKeyUp(key)){
 				switch (_keyMap[key])
@@ -121,7 +120,54 @@ public class Manager_Input : MonoBehaviour, IManager {
 				}
 			}
         }
-	}
+
+        //mouse listeners
+        string gameObjectSelected = "";
+        if (EventSystem.current.currentSelectedGameObject && !string.IsNullOrEmpty(EventSystem.current.currentSelectedGameObject.name))
+        {
+            gameObjectSelected = EventSystem.current.currentSelectedGameObject.name;
+        }
+        if (gameObjectSelected != "")
+        {
+            //left mouse Down listener
+            if (Input.GetMouseButtonDown(0))
+            {
+            }
+
+            //left mouse hold listener
+            if (Input.GetMouseButton(0))
+            {
+                switch (gameObjectSelected)
+                {
+                    case "Button_IncreaseSpeed":
+                        Managers.UI.Hold_IncreaseSpeedButton();
+                        break;
+                    case "Button_DecreaseSpeed":
+                        Managers.UI.Hold_DecreaseSpeedButton();
+                        break;
+                    default:
+                        return;
+                }
+            }
+
+            //left mouse button up listener (for HoldEnds, click events added in Manager.UI)
+            if (Input.GetMouseButtonUp(0))
+            {
+                switch (gameObjectSelected)
+                {
+                    case "Button_IncreaseSpeed":
+                        Managers.UI.HoldEnd_IncreaseSpeedButton();
+
+                        break;
+                    case "Button_DecreaseSpeed":
+                        Managers.UI.HoldEnd_DecreaseSpeedButton();
+                        break;
+                    default:
+                        return;
+                }
+            }
+        }
+    }
 
     public InputCommand GetInputCommand(KeyCode key) {
         return _keyMap[key];

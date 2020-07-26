@@ -22,9 +22,13 @@ public enum CanvasLayer
 public class Manager_UI : MonoBehaviour, IManager {
 	public ManagerState State {get; private set;}
 
-    //Behavior Variables
+    //Hold Behavior Variables
     private float _timeToInitiateHoldBehavior = 0.4f;
     private float _timeToRepeatHoldBehavior = 0.2f;
+    private bool IsRunningDecreaseSpeedButtonBeingHeld;
+    private bool HasHoldingDecreaseSpeedButtonStarted;
+    private bool IsRunningIncreaseSpeedButtonBeingHeld;
+    private bool HasHoldingIncreaseSpeedButtonStarted;
 
     //Font
 
@@ -116,7 +120,9 @@ public class Manager_UI : MonoBehaviour, IManager {
         SetToolTip(DecreaseSpeedButton, tt_decreaseSpeed);
 
 
-        //Time Panel - Listeners
+
+
+        //Time Panel Click Listeners
         ToggleTimeButton.onClick.AddListener(Click_ToggleTimeButton);
         IncreaseSpeedButton.onClick.AddListener(Click_IncreaseSpeedButton);
         DecreaseSpeedButton.onClick.AddListener(Click_DecreaseSpeedButton);
@@ -325,13 +331,13 @@ public class Manager_UI : MonoBehaviour, IManager {
         {
             return;
         }
-        if (!HoldingIncreaseSpeedButtonStarted)
+        if (!HasHoldingIncreaseSpeedButtonStarted)
         {
             Managers.Time.IncreaseSpeed();
         }
         else
         {
-            HoldingIncreaseSpeedButtonStarted = false;
+            HasHoldingIncreaseSpeedButtonStarted = false;
         }
         EventSystem.current.SetSelectedGameObject(null);//prevent selecting the button
     }
@@ -354,18 +360,21 @@ public class Manager_UI : MonoBehaviour, IManager {
             StartCoroutine("IncreaseSpeedButtonBeingHeld");
         }
     }
-    private bool IsRunningIncreaseSpeedButtonBeingHeld;
-    private bool HoldingIncreaseSpeedButtonStarted;
+    public void HoldEnd_IncreaseSpeedButton()
+    {
+        StopCoroutine("IncreaseSpeedButtonBeingHeld");
+        IsRunningIncreaseSpeedButtonBeingHeld = false;
+    }
     IEnumerator IncreaseSpeedButtonBeingHeld()
     {
         IsRunningIncreaseSpeedButtonBeingHeld = true;
         float timeToWait = _timeToRepeatHoldBehavior;
-        if (!HoldingIncreaseSpeedButtonStarted)
+        if (!HasHoldingIncreaseSpeedButtonStarted)
         {
             timeToWait = _timeToInitiateHoldBehavior;
         }
         yield return new WaitForSecondsRealtime(timeToWait);
-        HoldingIncreaseSpeedButtonStarted = true;
+        HasHoldingIncreaseSpeedButtonStarted = true;
         Managers.Time.IncreaseSpeed();
         IsRunningIncreaseSpeedButtonBeingHeld = false;
     }
@@ -376,11 +385,10 @@ public class Manager_UI : MonoBehaviour, IManager {
         {
             return;
         }
-        StopCoroutine("IncreaseSpeedButtonBeingHeld");
-        IsRunningIncreaseSpeedButtonBeingHeld = false;
-        if (HoldingIncreaseSpeedButtonStarted)
+        HoldEnd_IncreaseSpeedButton();
+        if (HasHoldingIncreaseSpeedButtonStarted)
         {
-            HoldingIncreaseSpeedButtonStarted = false;
+            HasHoldingIncreaseSpeedButtonStarted = false;
             return;
         }
         Managers.Time.IncreaseSpeed();
@@ -393,13 +401,13 @@ public class Manager_UI : MonoBehaviour, IManager {
         {
             return;
         }
-        if (!HoldingDecreaseSpeedButtonStarted)
+        if (!HasHoldingDecreaseSpeedButtonStarted)
         {
             Managers.Time.DecreaseSpeed();
         }
         else
         {
-            HoldingDecreaseSpeedButtonStarted = false;
+            HasHoldingDecreaseSpeedButtonStarted = false;
         }
         EventSystem.current.SetSelectedGameObject(null);//prevent selecting the button
     }
@@ -422,18 +430,22 @@ public class Manager_UI : MonoBehaviour, IManager {
             StartCoroutine("DecreaseSpeedButtonBeingHeld");
         }
     }
-    private bool IsRunningDecreaseSpeedButtonBeingHeld;
-    private bool HoldingDecreaseSpeedButtonStarted;
+    public void HoldEnd_DecreaseSpeedButton()
+    {
+        StopCoroutine("DecreaseSpeedButtonBeingHeld");
+        IsRunningDecreaseSpeedButtonBeingHeld = false;
+    }
+
     IEnumerator DecreaseSpeedButtonBeingHeld()
     {
         IsRunningDecreaseSpeedButtonBeingHeld = true;
         float timeToWait = _timeToRepeatHoldBehavior;
-        if (!HoldingDecreaseSpeedButtonStarted)
+        if (!HasHoldingDecreaseSpeedButtonStarted)
         {
             timeToWait = _timeToInitiateHoldBehavior;
         }
         yield return new WaitForSecondsRealtime(timeToWait);
-        HoldingDecreaseSpeedButtonStarted = true;
+        HasHoldingDecreaseSpeedButtonStarted = true;
         Managers.Time.DecreaseSpeed();
         IsRunningDecreaseSpeedButtonBeingHeld = false;
     }
@@ -445,11 +457,10 @@ public class Manager_UI : MonoBehaviour, IManager {
             return;
         }
 
-        StopCoroutine("DecreaseSpeedButtonBeingHeld");
-        IsRunningDecreaseSpeedButtonBeingHeld = false;
-        if (HoldingDecreaseSpeedButtonStarted)
+        HoldEnd_DecreaseSpeedButton();
+        if (HasHoldingDecreaseSpeedButtonStarted)
         {
-            HoldingDecreaseSpeedButtonStarted = false;
+            HasHoldingDecreaseSpeedButtonStarted = false;
             return;
         }
         Managers.Time.DecreaseSpeed();
@@ -497,61 +508,6 @@ public class Manager_UI : MonoBehaviour, IManager {
 
         UpdateTimePanel();
 
-        //mouse listeners
-        string gameObjectSelected = "";
-        if (EventSystem.current.currentSelectedGameObject && !string.IsNullOrEmpty(EventSystem.current.currentSelectedGameObject.name))
-        {
-            gameObjectSelected = EventSystem.current.currentSelectedGameObject.name;
-        }
-        if (gameObjectSelected != "")
-        {
-            //left mouse Down listener
-            if (Input.GetMouseButtonDown(0))
-            {
-            }
-
-            //left mouse hold listener
-            if (Input.GetMouseButton(0))
-            {
-                switch (gameObjectSelected)
-                {
-                    case "Button_IncreaseSpeed":
-                        if (!IsRunningIncreaseSpeedButtonBeingHeld)
-                        {
-                            StartCoroutine("IncreaseSpeedButtonBeingHeld");
-                        }
-                        break;
-                    case "Button_DecreaseSpeed":
-                        if (!IsRunningDecreaseSpeedButtonBeingHeld)
-                        {
-                            StartCoroutine("DecreaseSpeedButtonBeingHeld");
-                        }
-                        break;
-                    default:
-                        return;
-                }
-            }
-
-            //left mouse up listener
-            if (Input.GetMouseButtonUp(0))
-            {
-                switch (gameObjectSelected)
-                {
-                    case "Button_IncreaseSpeed":
-                        StopCoroutine("IncreaseSpeedButtonBeingHeld");
-                        IsRunningIncreaseSpeedButtonBeingHeld = false;
-
-                        break;
-                    case "Button_DecreaseSpeed":
-                        StopCoroutine("DecreaseSpeedButtonBeingHeld");
-                        IsRunningDecreaseSpeedButtonBeingHeld = false;
-                        break;
-                    default:
-                        return;
-                }
-
-            }
-        }
 
     }
 
