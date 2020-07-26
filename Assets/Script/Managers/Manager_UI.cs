@@ -106,7 +106,6 @@ public class Manager_UI : MonoBehaviour, IManager {
         CursorHover_Button(timePanelButtons);
 
         //ToolTips
-        //TEST
         ToolTip tt_togleTime = new ToolTip("Toggle Time", InputCommand.ToggleTime, "Start or pause the progression of time.", true);
         SetToolTip(ToggleTimeButton, tt_togleTime);
 
@@ -145,7 +144,6 @@ public class Manager_UI : MonoBehaviour, IManager {
         InitiateGO(ref CanvasGOtoSet, goName);
         if (CanvasGOtoSet != null)
         {
-            CanvasGOtoSet = GameObject.Find(goName);
             Canvas canvasComponent = CanvasGOtoSet.GetComponent<Canvas>();
             if (!canvasComponent)
             {
@@ -161,13 +159,13 @@ public class Manager_UI : MonoBehaviour, IManager {
         InitiateGO(ref buttonGO, goName);
         if (buttonGO != null)
         {
-            ButtonToSet = GameObject.Find(goName).GetComponent<Button>();
+            ButtonToSet = buttonGO.GetComponent<Button>();
             if (!ButtonToSet)
             {
                 GameObject.Find(goName).AddComponent<Button>();
+                ButtonToSet = buttonGO.GetComponent<Button>();
             }
         }
-
     }
 
     private void InitiateText(ref TextMeshProUGUI TextToSet, string goName)
@@ -176,10 +174,11 @@ public class Manager_UI : MonoBehaviour, IManager {
         InitiateGO(ref textGO, goName);
         if (textGO != null)
         {
-            TextToSet = GameObject.Find(goName).GetComponent<TextMeshProUGUI>();
+            TextToSet = textGO.GetComponent<TextMeshProUGUI>();
             if (!TextToSet)
             {
-                GameObject.Find(goName).AddComponent<Button>();
+                GameObject.Find(goName).AddComponent<TextMeshProUGUI>();
+                TextToSet = textGO.GetComponent<TextMeshProUGUI>();
             }
         }
     }
