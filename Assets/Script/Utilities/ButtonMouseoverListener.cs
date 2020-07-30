@@ -6,7 +6,7 @@ using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class ButtonMouseoverListener {
+public class ButtonMouseOverListener {
 
     public static void OnButtonMouseOver(Button button, Action pointerEnter, Action pointerExit)
     {

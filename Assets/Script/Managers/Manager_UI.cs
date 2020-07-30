@@ -49,6 +49,8 @@ public class Manager_UI : MonoBehaviour, IManager {
                 private TextMeshProUGUI _toggleStatusText;
             public Button IncreaseSpeedButton;
             public Button DecreaseSpeedButton;
+        private GameObject _calendarPanelGO;
+            public Button ToggleCalendarButton;
     private GameObject _screenCoverCanvasGO;
     public GameObject PopupCanvasGO_AboveCover;
     public GameObject GameUICanvasGO_AboveCover;
@@ -84,6 +86,8 @@ public class Manager_UI : MonoBehaviour, IManager {
                     InitiateText(ref _toggleStatusText, "TMPText_ToggleStatus");
                 InitiateButton(ref IncreaseSpeedButton, "Button_IncreaseSpeed");
                 InitiateButton(ref DecreaseSpeedButton, "Button_DecreaseSpeed");
+            InitiateGO(ref _calendarPanelGO, "Panel_Calendar");
+                InitiateButton(ref ToggleCalendarButton, "Button_ToggleCalendar");
         InitiateCanvas(ref _screenCoverCanvasGO, "Canvas_ScreenCover", CanvasLayer.TheCover);
         InitiateCanvas(ref PopupCanvasGO_AboveCover, "Canvas_Popups_AboveCover", CanvasLayer.AboveCover);
         InitiateCanvas(ref GameUICanvasGO_AboveCover, "Canvas_GameUI_AboveCover", CanvasLayer.AboveCover);
@@ -105,9 +109,11 @@ public class Manager_UI : MonoBehaviour, IManager {
 
         Button[] mainMenuButtons = _mainMenuCanvasGO.GetComponentsInChildren<Button>(true);
         Button[] timePanelButtons = _timePanelGO.GetComponentsInChildren<Button>(true);
+        Button[] calendarPanelButtons = _calendarPanelGO.GetComponentsInChildren<Button>(true);
 
         CursorHover_Button(mainMenuButtons);
         CursorHover_Button(timePanelButtons);
+        CursorHover_Button(calendarPanelButtons);
 
         //ToolTips
         ToolTip tt_togleTime = new ToolTip("Toggle Time", InputCommand.ToggleTime, "Start or pause the progression of time.", true);
@@ -119,14 +125,16 @@ public class Manager_UI : MonoBehaviour, IManager {
         ToolTip tt_decreaseSpeed = new ToolTip("Decrease Speed", InputCommand.DecreaseSpeed, "", true);
         SetToolTip(DecreaseSpeedButton, tt_decreaseSpeed);
 
-
-
+        ToolTip tt_toggleCalendar = new ToolTip("Toggle Calendar", InputCommand.ToggleCalendar, "", true);
+        SetToolTip(ToggleCalendarButton, tt_toggleCalendar);
 
         //Time Panel Click Listeners
         ToggleTimeButton.onClick.AddListener(Click_ToggleTimeButton);
         IncreaseSpeedButton.onClick.AddListener(Click_IncreaseSpeedButton);
         DecreaseSpeedButton.onClick.AddListener(Click_DecreaseSpeedButton);
 
+        //Calendar Panel Click Listeners
+        ToggleCalendarButton.onClick.AddListener(Click_ToggleCalendarButton);
 
         State = ManagerState.Started;
         Debug.Log("Manager_UI started");
@@ -211,7 +219,7 @@ public class Manager_UI : MonoBehaviour, IManager {
         {
             SetCursor(Asset_png.Cursor_Default);
         };
-        ButtonMouseoverListener.OnButtonMouseOver(button, onEnter, onExit);
+        ButtonMouseOverListener.OnButtonMouseOver(button, onEnter, onExit);
     }
     private void CursorHover_Button(Button[] buttons)
     {
@@ -238,14 +246,13 @@ public class Manager_UI : MonoBehaviour, IManager {
         };
         Action onExit = () =>
         {
-            
             _toolTipInQueue = null;
 
             ToolTipText.text = "";
             ToolTipGO.GetComponent<RectTransform>().position = new Vector2(5000, 5000);
             ToolTipGO.SetActive(false);
         };
-        ButtonMouseoverListener.OnButtonMouseOver(button, onEnter, onExit);
+        ButtonMouseOverListener.OnButtonMouseOver(button, onEnter, onExit);
     }
     IEnumerator DelayedTooltip()
     {
@@ -263,7 +270,6 @@ public class Manager_UI : MonoBehaviour, IManager {
         }
     }
 
-
     //Screen Cover
     public bool IsScreenCovered()
     {
@@ -276,6 +282,26 @@ public class Manager_UI : MonoBehaviour, IManager {
     public void ScreenUncover()
     {
         _screenCoverCanvasGO.SetActive(false);
+    }
+
+    //Button UI Functions
+    private bool KeyDown_LinkedToButtonUI(Button button)
+    {
+        if (IsScreenCovered())
+        {
+            return false;
+        }
+        button.image.color = button.colors.pressedColor;
+        return true;
+    }
+    private bool KeyUp_LinkedToButtonUI(Button button)
+    {
+        button.image.color = button.colors.normalColor;
+        if (IsScreenCovered())
+        {
+            return false;
+        }
+        return true;
     }
 
     //Main Menu Panel - Key Functions
@@ -305,23 +331,16 @@ public class Manager_UI : MonoBehaviour, IManager {
         Managers.Time.ToggleTime();
         EventSystem.current.SetSelectedGameObject(null);//prevent selecting the button
     }
-    public void KeyDown_ToggleTimeButon()
+    public void KeyDown_ToggleTimeButton()
     {
-        if (IsScreenCovered())
-        {
-            return;
-        }
-        ToggleTimeButton.image.color = ToggleTimeButton.colors.pressedColor;
+        KeyDown_LinkedToButtonUI(ToggleTimeButton);
     }
     public void KeyUp_ToggleTimeButon()
     {
-        if (IsScreenCovered())
+        if (KeyUp_LinkedToButtonUI(ToggleTimeButton))
         {
-            ToggleTimeButton.image.color = ToggleTimeButton.colors.normalColor;
-            return;
+            Managers.Time.ToggleTime();
         }
-        ToggleTimeButton.image.color = ToggleTimeButton.colors.normalColor;
-        Managers.Time.ToggleTime();
     }
 
     //Time Panel - Increase Speed Button
@@ -343,11 +362,7 @@ public class Manager_UI : MonoBehaviour, IManager {
     }
     public void KeyDown_IncreaseSpeedButton()
     {
-        if (IsScreenCovered())
-        {
-            return;
-        }
-        IncreaseSpeedButton.image.color = IncreaseSpeedButton.colors.pressedColor;
+        KeyDown_LinkedToButtonUI(IncreaseSpeedButton);
     }
     public void Hold_IncreaseSpeedButton()
     {
@@ -380,11 +395,11 @@ public class Manager_UI : MonoBehaviour, IManager {
     }
     public void KeyUp_IncreaseSpeedButton()
     {
-        IncreaseSpeedButton.image.color = IncreaseSpeedButton.colors.normalColor;
-        if (IsScreenCovered())
+        if (KeyUp_LinkedToButtonUI(IncreaseSpeedButton) == false)
         {
             return;
         }
+
         HoldEnd_IncreaseSpeedButton();
         if (HasHoldingIncreaseSpeedButtonStarted)
         {
@@ -413,11 +428,7 @@ public class Manager_UI : MonoBehaviour, IManager {
     }
     public void KeyDown_DecreaseSpeedButton()
     {
-        if (IsScreenCovered())
-        {
-            return;
-        }
-        DecreaseSpeedButton.image.color = DecreaseSpeedButton.colors.pressedColor;
+        KeyDown_LinkedToButtonUI(DecreaseSpeedButton);
     }
     public void Hold_DecreaseSpeedButton()
     {
@@ -451,8 +462,7 @@ public class Manager_UI : MonoBehaviour, IManager {
     }
     public void KeyUp_DecreaseSpeedButton()
     {
-        DecreaseSpeedButton.image.color = DecreaseSpeedButton.colors.normalColor;
-        if (IsScreenCovered())
+        if (KeyUp_LinkedToButtonUI(DecreaseSpeedButton) == false)
         {
             return;
         }
@@ -464,6 +474,28 @@ public class Manager_UI : MonoBehaviour, IManager {
             return;
         }
         Managers.Time.DecreaseSpeed();
+    }
+
+    //Calendar Panel - Toggle Calendar
+    private void Click_ToggleCalendarButton()
+    {
+        ExpandCalendarPanel();
+        EventSystem.current.SetSelectedGameObject(null);//prevent selecting the button
+    }
+    public void KeyDown_ToggleCalendarButton()
+    {
+        KeyDown_LinkedToButtonUI(ToggleCalendarButton);
+    }
+    public void KeyUp_ToggleCalendarButton()
+    {
+        if (KeyUp_LinkedToButtonUI(ToggleCalendarButton))
+        {
+            ExpandCalendarPanel();
+        }
+    }
+    private void ExpandCalendarPanel()
+    {
+        Debug.Log("Expand Calendar");
     }
 
     //OnUpdate

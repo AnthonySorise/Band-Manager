@@ -15,6 +15,9 @@ public enum InputCommand
     IncreaseSpeed,
     DecreaseSpeed,
 
+    //Calendar
+    ToggleCalendar,
+
     //Audio
     MasterVolumeUp,
     MasterVolumeDown,
@@ -28,7 +31,7 @@ public class Manager_Input : MonoBehaviour, IManager {
 	public void Startup(){
 		State = ManagerState.Initializing;
 		Debug.Log("Manager_Input initializing...");
-
+        
         _keyMap = new Dictionary<KeyCode, InputCommand>
         {
             //Menu
@@ -40,6 +43,9 @@ public class Manager_Input : MonoBehaviour, IManager {
             { KeyCode.KeypadPlus, InputCommand.IncreaseSpeed },
             { KeyCode.Minus, InputCommand.DecreaseSpeed },
             { KeyCode.KeypadMinus, InputCommand.DecreaseSpeed },
+
+            //Calendar
+            { KeyCode.C, InputCommand.ToggleCalendar },
 
             //Audio
             { KeyCode.PageUp, InputCommand.MasterVolumeUp },
@@ -68,13 +74,17 @@ public class Manager_Input : MonoBehaviour, IManager {
                         return;
                     //Time
                     case InputCommand.ToggleTime:
-                        Managers.UI.KeyDown_ToggleTimeButon();
+                        Managers.UI.KeyDown_ToggleTimeButton();
                         return;
                     case InputCommand.IncreaseSpeed:
                         Managers.UI.KeyDown_IncreaseSpeedButton();
                         return;
                     case InputCommand.DecreaseSpeed:
                         Managers.UI.KeyDown_DecreaseSpeedButton();
+                        return;
+                    //Calendar
+                    case InputCommand.ToggleCalendar:
+                        Managers.UI.KeyDown_ToggleCalendarButton();
                         return;
 
                 }
@@ -117,6 +127,10 @@ public class Manager_Input : MonoBehaviour, IManager {
                     case InputCommand.DecreaseSpeed:
                         Managers.UI.KeyUp_DecreaseSpeedButton();
                         return;
+                    //Calendar
+                    case InputCommand.ToggleCalendar:
+                        Managers.UI.KeyUp_ToggleCalendarButton();
+                        return;
 				}
 			}
         }
@@ -130,6 +144,7 @@ public class Manager_Input : MonoBehaviour, IManager {
         if (gameObjectSelected != "")
         {
             //left mouse Down listener
+            //Unused - Click Handlers assigned in Manager_UI
             if (Input.GetMouseButtonDown(0))
             {
             }
