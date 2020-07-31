@@ -11,6 +11,7 @@ public enum CanvasLayer
 {
     Hidden,
     Background,
+    UI,
     BelowCover,
     TheCover,
     AboveCover,
@@ -49,11 +50,26 @@ public class Manager_UI : MonoBehaviour, IManager {
                 private TextMeshProUGUI _toggleStatusText;
             public Button IncreaseSpeedButton;
             public Button DecreaseSpeedButton;
-        private GameObject _calendarPanelGO;
+        private GameObject _calendarPanelContainerGO;
             public Button ToggleCalendarButton;
+            public GameObject _calendarPanelGO;
+                private GameObject _calendarWeek01Sunday;
+                private GameObject _calendarWeek01Monday;
+                private GameObject _calendarWeek01Tuesday;
+                private GameObject _calendarWeek01Wednesday;
+                private GameObject _calendarWeek01Thursday;
+                private GameObject _calendarWeek01Friday;
+                private GameObject _calendarWeek01Saturday;
+                private GameObject _calendarWeek02Sunday;
+                private GameObject _calendarWeek02Monday;
+                private GameObject _calendarWeek02Tuesday;
+                private GameObject _calendarWeek02Wednesday;
+                private GameObject _calendarWeek02Thursday;
+                private GameObject _calendarWeek02Friday;
+                private GameObject _calendarWeek02Saturday;
+                private GameObject _calendarTimeLine;
     private GameObject _screenCoverCanvasGO;
     public GameObject PopupCanvasGO_AboveCover;
-    public GameObject GameUICanvasGO_AboveCover;
     private GameObject _screenCoverMainMenuCanvasGO;
     private GameObject _mainMenuCanvasGO;
     public GameObject ToolTipCanvasGO;
@@ -76,8 +92,7 @@ public class Manager_UI : MonoBehaviour, IManager {
         //Initiate UI GOs and Elements
         InitiateCanvas(ref HiddenCanvasGO, "Canvas_Hidden", CanvasLayer.Hidden);
         InitiateCanvas(ref BackgroundCanvasGO, "Canvas_Background", CanvasLayer.Background);
-        InitiateCanvas(ref PopupCanvasGO, "Canvas_Popups", CanvasLayer.BelowCover);
-        InitiateCanvas(ref _gameUICanvasGO, "Canvas_GameUI", CanvasLayer.BelowCover);
+        InitiateCanvas(ref _gameUICanvasGO, "Canvas_GameUI", CanvasLayer.UI);
             InitiateGO(ref _timePanelGO, "Panel_Time");
                 InitiateButton(ref ToggleTimeButton, "Button_ToggleTime");
                     InitiateText(ref _dayOfWeekText, "TMPText_DayOfWeek");
@@ -86,11 +101,28 @@ public class Manager_UI : MonoBehaviour, IManager {
                     InitiateText(ref _toggleStatusText, "TMPText_ToggleStatus");
                 InitiateButton(ref IncreaseSpeedButton, "Button_IncreaseSpeed");
                 InitiateButton(ref DecreaseSpeedButton, "Button_DecreaseSpeed");
-            InitiateGO(ref _calendarPanelGO, "Panel_Calendar");
-                InitiateButton(ref ToggleCalendarButton, "Button_ToggleCalendar");
+            InitiateGO(ref _calendarPanelContainerGO, "Panel_CalendarContainer");
+                InitiateGO(ref _calendarPanelGO, "Panel_Calendar");
+                    InitiateGO(ref _calendarPanelGO, "Panel_Calendar");
+                        InitiateGO(ref _calendarWeek01Sunday, "Panel_Calendar_Week01_Sunday");
+                        InitiateGO(ref _calendarWeek01Monday, "Panel_Calendar_Week01_Monday");
+                        InitiateGO(ref _calendarWeek01Tuesday, "Panel_Calendar_Week01_Tuesday");
+                        InitiateGO(ref _calendarWeek01Wednesday, "Panel_Calendar_Week01_Wednesday");
+                        InitiateGO(ref _calendarWeek01Thursday, "Panel_Calendar_Week01_Thursday");
+                        InitiateGO(ref _calendarWeek01Friday, "Panel_Calendar_Week01_Friday");
+                        InitiateGO(ref _calendarWeek01Saturday, "Panel_Calendar_Week01_Saturday");
+                        InitiateGO(ref _calendarWeek02Sunday, "Panel_Calendar_Week02_Sunday");
+                        InitiateGO(ref _calendarWeek02Monday, "Panel_Calendar_Week02_Monday");
+                        InitiateGO(ref _calendarWeek02Tuesday, "Panel_Calendar_Week02_Tuesday");
+                        InitiateGO(ref _calendarWeek02Wednesday, "Panel_Calendar_Week02_Wednesday");
+                        InitiateGO(ref _calendarWeek02Thursday, "Panel_Calendar_Week02_Thursday");
+                        InitiateGO(ref _calendarWeek02Friday, "Panel_Calendar_Week02_Friday");
+                        InitiateGO(ref _calendarWeek02Saturday, "Panel_Calendar_Week02_Saturday");
+                        InitiateGO(ref _calendarTimeLine, "Panel_Calendar_Timeline");
+        InitiateButton(ref ToggleCalendarButton, "Button_ToggleCalendar");
+        InitiateCanvas(ref PopupCanvasGO, "Canvas_Popups", CanvasLayer.BelowCover);
         InitiateCanvas(ref _screenCoverCanvasGO, "Canvas_ScreenCover", CanvasLayer.TheCover);
         InitiateCanvas(ref PopupCanvasGO_AboveCover, "Canvas_Popups_AboveCover", CanvasLayer.AboveCover);
-        InitiateCanvas(ref GameUICanvasGO_AboveCover, "Canvas_GameUI_AboveCover", CanvasLayer.AboveCover);
         InitiateCanvas(ref _screenCoverMainMenuCanvasGO, "Canvas_ScreenCoverMainMenu", CanvasLayer.MainMenuScreenCover);
         InitiateCanvas(ref _mainMenuCanvasGO, "Canvas_MainMenu", CanvasLayer.MainMenu);
         InitiateCanvas(ref ToolTipCanvasGO, "Canvas_ToolTip", CanvasLayer.ToolTip);
@@ -109,7 +141,7 @@ public class Manager_UI : MonoBehaviour, IManager {
 
         Button[] mainMenuButtons = _mainMenuCanvasGO.GetComponentsInChildren<Button>(true);
         Button[] timePanelButtons = _timePanelGO.GetComponentsInChildren<Button>(true);
-        Button[] calendarPanelButtons = _calendarPanelGO.GetComponentsInChildren<Button>(true);
+        Button[] calendarPanelButtons = _calendarPanelContainerGO.GetComponentsInChildren<Button>(true);
 
         CursorHover_Button(mainMenuButtons);
         CursorHover_Button(timePanelButtons);
@@ -135,6 +167,9 @@ public class Manager_UI : MonoBehaviour, IManager {
 
         //Calendar Panel Click Listeners
         ToggleCalendarButton.onClick.AddListener(Click_ToggleCalendarButton);
+
+        //Retract Calendar
+        ToggleCalendarPanel();
 
         State = ManagerState.Started;
         Debug.Log("Manager_UI started");
@@ -479,7 +514,7 @@ public class Manager_UI : MonoBehaviour, IManager {
     //Calendar Panel - Toggle Calendar
     private void Click_ToggleCalendarButton()
     {
-        ExpandCalendarPanel();
+        ToggleCalendarPanel();
         EventSystem.current.SetSelectedGameObject(null);//prevent selecting the button
     }
     public void KeyDown_ToggleCalendarButton()
@@ -490,12 +525,30 @@ public class Manager_UI : MonoBehaviour, IManager {
     {
         if (KeyUp_LinkedToButtonUI(ToggleCalendarButton))
         {
-            ExpandCalendarPanel();
+            ToggleCalendarPanel();
         }
     }
-    private void ExpandCalendarPanel()
+    private bool _calendarExpanded = true;
+    private void ToggleCalendarPanel()
     {
-        Debug.Log("Expand Calendar");
+        if (!_calendarExpanded)
+        {
+            
+            var Vector2 = new Vector2();
+            Vector2.x = 430;
+            Vector2.y = 205;
+            LeanTween.size(_calendarPanelContainerGO.GetComponent<RectTransform>(), Vector2, 0.5f).setEase(LeanTweenType.easeInOutExpo);
+            LeanTween.scaleY(_calendarPanelGO, 1, 0.5f).setEase(LeanTweenType.easeInOutExpo);
+        }
+        else
+        {
+            var Vector2 = new Vector2();
+            Vector2.x = 430;
+            Vector2.y = 25;
+            LeanTween.size(_calendarPanelContainerGO.GetComponent<RectTransform>(), Vector2, 0.5f).setEase(LeanTweenType.easeInOutExpo);
+            LeanTween.scaleY(_calendarPanelGO, 0, 0.5f).setEase(LeanTweenType.easeInOutExpo);
+        }
+        _calendarExpanded = !_calendarExpanded;
     }
 
     //OnUpdate

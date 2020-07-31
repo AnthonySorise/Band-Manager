@@ -66,9 +66,9 @@ public class Draggable : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
             {
                 pos.y = halfHeight + 5;
             }
-            else if (pos.y > Screen.height - halfHeight - 35)
+            else if (pos.y > Screen.height - halfHeight - 5)
             {
-                pos.y = Screen.height - halfHeight - 35;
+                pos.y = Screen.height - halfHeight - 5;
             }
 
             this.gameObject.transform.position = pos;
