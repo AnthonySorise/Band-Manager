@@ -393,7 +393,6 @@ public class Manager_UI : MonoBehaviour, IManager {
         {
             HasHoldingIncreaseSpeedButtonStarted = false;
         }
-        EventSystem.current.SetSelectedGameObject(null);//prevent selecting the button
     }
     public void KeyDown_IncreaseSpeedButton()
     {
@@ -459,7 +458,6 @@ public class Manager_UI : MonoBehaviour, IManager {
         {
             HasHoldingDecreaseSpeedButtonStarted = false;
         }
-        EventSystem.current.SetSelectedGameObject(null);//prevent selecting the button
     }
     public void KeyDown_DecreaseSpeedButton()
     {
@@ -502,9 +500,9 @@ public class Manager_UI : MonoBehaviour, IManager {
             return;
         }
 
-        HoldEnd_DecreaseSpeedButton();
         if (HasHoldingDecreaseSpeedButtonStarted)
         {
+            HoldEnd_DecreaseSpeedButton();
             HasHoldingDecreaseSpeedButtonStarted = false;
             return;
         }

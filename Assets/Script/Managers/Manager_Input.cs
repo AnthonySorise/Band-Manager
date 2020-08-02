@@ -172,7 +172,6 @@ public class Manager_Input : MonoBehaviour, IManager {
                 {
                     case "Button_IncreaseSpeed":
                         Managers.UI.HoldEnd_IncreaseSpeedButton();
-
                         break;
                     case "Button_DecreaseSpeed":
                         Managers.UI.HoldEnd_DecreaseSpeedButton();
