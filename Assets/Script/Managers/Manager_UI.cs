@@ -118,7 +118,7 @@ public class Manager_UI : MonoBehaviour, IManager {
                         InitiateGO(ref _calendarWeek02Thursday, "Panel_Calendar_Week02_Thursday");
                         InitiateGO(ref _calendarWeek02Friday, "Panel_Calendar_Week02_Friday");
                         InitiateGO(ref _calendarWeek02Saturday, "Panel_Calendar_Week02_Saturday");
-                        InitiateGO(ref _calendarTimeLine, "Panel_Calendar_Timeline");
+                        InitiateGO(ref _calendarTimeLine, "Panel_Calendar_TimeLine");
         InitiateButton(ref ToggleCalendarButton, "Button_ToggleCalendar");
         InitiateCanvas(ref PopupCanvasGO, "Canvas_Popups", CanvasLayer.BelowCover);
         InitiateCanvas(ref _screenCoverCanvasGO, "Canvas_ScreenCover", CanvasLayer.TheCover);
