@@ -86,9 +86,7 @@ public class Manager_Assets : MonoBehaviour, IManager {
                 {
                     filePath = AssetDatabase.GetAssetPath(texture);
                     TextureImporter importer = (TextureImporter)AssetImporter.GetAtPath(filePath);
-                    Debug.Log(importer);
                     importer.textureType = TextureImporterType.Cursor;
-
                 }
             }
             else if (!texture)
