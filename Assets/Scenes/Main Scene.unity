@@ -135,7 +135,7 @@ GameObject:
   - component: {fileID: 25105895}
   - component: {fileID: 25105894}
   m_Layer: 5
-  m_Name: TMPText_Calendar_Week02_Sunday
+  m_Name: TMPText_Calendar_Week02_Sunday_DayOfMonth
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -180,7 +180,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 00
+  m_text: <color=#000000>00</color>
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -688,7 +688,7 @@ GameObject:
   - component: {fileID: 277393442}
   - component: {fileID: 277393441}
   m_Layer: 5
-  m_Name: TMPText_Calendar_Week01_Wednesday
+  m_Name: TMPText_Calendar_Week01_Wednesday_DayOfMonth
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -733,7 +733,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 00
+  m_text: <color=#000000>00</color>
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -956,7 +956,7 @@ GameObject:
   - component: {fileID: 320070672}
   - component: {fileID: 320070671}
   m_Layer: 5
-  m_Name: TMPText_Calendar_Week01_Monday
+  m_Name: TMPText_Calendar_Week01_Monday_DayOfMonth
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1001,7 +1001,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 00
+  m_text: <color=#000000>00</color>
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1090,7 +1090,7 @@ GameObject:
   - component: {fileID: 327817283}
   - component: {fileID: 327817282}
   m_Layer: 5
-  m_Name: TMPText_Calendar_Week01_Tuesday
+  m_Name: TMPText_Calendar_Week01_Tuesday_DayOfMonth
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1135,7 +1135,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 00
+  m_text: <color=#000000>00</color>
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -2615,7 +2615,7 @@ GameObject:
   - component: {fileID: 649483196}
   - component: {fileID: 649483195}
   m_Layer: 5
-  m_Name: TMPText_Calendar_Week01_Thursday
+  m_Name: TMPText_Calendar_Week01_Thursday_DayOfMonth
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2660,7 +2660,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 00
+  m_text: <color=#000000>00</color>
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -3361,7 +3361,7 @@ GameObject:
   - component: {fileID: 805090814}
   - component: {fileID: 805090813}
   m_Layer: 5
-  m_Name: TMPText_Calendar_Week01_Saturday
+  m_Name: TMPText_Calendar_Week01_Saturday_DayOfMonth
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3406,7 +3406,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 00
+  m_text: <color=#000000>00</color>
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -3495,7 +3495,7 @@ GameObject:
   - component: {fileID: 806924491}
   - component: {fileID: 806924490}
   m_Layer: 5
-  m_Name: TMPText_Calendar_Week02_Wednesday
+  m_Name: TMPText_Calendar_Week02_Wednesday_DayOfMonth
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3540,7 +3540,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 00
+  m_text: <color=#000000>00</color>
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -3728,7 +3728,7 @@ GameObject:
   - component: {fileID: 876606197}
   - component: {fileID: 876606196}
   m_Layer: 5
-  m_Name: TMPText_Calendar_Week02_Saturday
+  m_Name: TMPText_Calendar_Week02_Saturday_DayOfMonth
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3773,7 +3773,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 00
+  m_text: <color=#000000>00</color>
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -4072,7 +4072,7 @@ GameObject:
   - component: {fileID: 1112588997}
   - component: {fileID: 1112588996}
   m_Layer: 5
-  m_Name: TMPText_Calendar_Week02_Monday
+  m_Name: TMPText_Calendar_Week02_Monday_DayOfMonth
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4117,7 +4117,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 00
+  m_text: <color=#000000>00</color>
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -4326,7 +4326,7 @@ GameObject:
   - component: {fileID: 1181537297}
   - component: {fileID: 1181537296}
   m_Layer: 5
-  m_Name: TMPText_Calendar_Week02_Thursday
+  m_Name: TMPText_Calendar_Week02_Thursday_DayOfMonth
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4371,7 +4371,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 00
+  m_text: <color=#000000>00</color>
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -5915,7 +5915,7 @@ GameObject:
   - component: {fileID: 1702315805}
   - component: {fileID: 1702315804}
   m_Layer: 5
-  m_Name: TMPText_Calendar_Week02_Tuesday
+  m_Name: TMPText_Calendar_Week02_Tuesday_DayOfMonth
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5960,7 +5960,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 00
+  m_text: <color=#000000>00</color>
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -6872,7 +6872,7 @@ GameObject:
   - component: {fileID: 1982818426}
   - component: {fileID: 1982818425}
   m_Layer: 5
-  m_Name: TMPText_Calendar_Week01_Friday
+  m_Name: TMPText_Calendar_Week01_Friday_DayOfMonth
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6917,7 +6917,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 00
+  m_text: <color=#000000>00</color>
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -7006,7 +7006,7 @@ GameObject:
   - component: {fileID: 2016613746}
   - component: {fileID: 2016613745}
   m_Layer: 5
-  m_Name: TMPText_Calendar_Week02_Friday
+  m_Name: TMPText_Calendar_Week02_Friday_DayOfMonth
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7051,7 +7051,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 00
+  m_text: <color=#000000>00</color>
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -7239,7 +7239,7 @@ GameObject:
   - component: {fileID: 2059655317}
   - component: {fileID: 2059655316}
   m_Layer: 5
-  m_Name: TMPText_Calendar_Week01_Sunday
+  m_Name: TMPText_Calendar_Week01_Sunday_DayOfMonth
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7284,7 +7284,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 00
+  m_text: <color=#000000>00</color>
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
