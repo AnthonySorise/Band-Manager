@@ -54,33 +54,33 @@ public class Manager_UI : MonoBehaviour, IManager {
             public Button ToggleCalendarButton;
             public GameObject _calendarPanelGO;
                 private GameObject _calendarWeek01Sunday;
-                    private TextMeshProUGUI _calendarWeek01SundayDayOfWeekText;
+                    private TextMeshProUGUI _calendarWeek01SundayDayOfMonthText;
                 private GameObject _calendarWeek01Monday;
-                    private TextMeshProUGUI _calendarWeek01MondayDayOfWeekText;
+                    private TextMeshProUGUI _calendarWeek01MondayDayOfMonthText;
                 private GameObject _calendarWeek01Tuesday;
-                    private TextMeshProUGUI _calendarWeek01TuesdayDayOfWeekText;
+                    private TextMeshProUGUI _calendarWeek01TuesdayDayOfMonthText;
                 private GameObject _calendarWeek01Wednesday;
-                    private TextMeshProUGUI _calendarWeek01WednesdayDayOfWeekText;
+                    private TextMeshProUGUI _calendarWeek01WednesdayDayOfMonthText;
                 private GameObject _calendarWeek01Thursday;
-                    private TextMeshProUGUI _calendarWeek01ThursdayDayOfWeekText;
+                    private TextMeshProUGUI _calendarWeek01ThursdayDayOfMonthText;
                 private GameObject _calendarWeek01Friday;
-                    private TextMeshProUGUI _calendarWeek01FridayDayOfWeekText;
+                    private TextMeshProUGUI _calendarWeek01FridayDayOfMonthText;
                 private GameObject _calendarWeek01Saturday;
-                    private TextMeshProUGUI _calendarWeek01SaturdayDayOfWeekText;
+                    private TextMeshProUGUI _calendarWeek01SaturdayDayOfMonthText;
                 private GameObject _calendarWeek02Sunday;
-                    private TextMeshProUGUI _calendarWeek02SundayDayOfWeekText;
+                    private TextMeshProUGUI _calendarWeek02SundayDayOfMonthText;
                 private GameObject _calendarWeek02Monday;
-                    private TextMeshProUGUI _calendarWeek02MondayDayOfWeekText;
+                    private TextMeshProUGUI _calendarWeek02MondayDayOfMonthText;
                 private GameObject _calendarWeek02Tuesday;
-                    private TextMeshProUGUI _calendarWeek02TuesdayDayOfWeekText;
+                    private TextMeshProUGUI _calendarWeek02TuesdayDayOfMonthText;
                 private GameObject _calendarWeek02Wednesday;
-                    private TextMeshProUGUI _calendarWeek02WednesdayDayOfWeekText;
+                    private TextMeshProUGUI _calendarWeek02WednesdayDayOfMonthText;
                 private GameObject _calendarWeek02Thursday;
-                    private TextMeshProUGUI _calendarWeek02ThursdayDayOfWeekText;
+                    private TextMeshProUGUI _calendarWeek02ThursdayDayOfMonthText;
                 private GameObject _calendarWeek02Friday;
-                    private TextMeshProUGUI _calendarWeek02FridayDayOfWeekText;
+                    private TextMeshProUGUI _calendarWeek02FridayDayOfMonthText;
                 private GameObject _calendarWeek02Saturday;
-                    private TextMeshProUGUI _calendarWeek02SaturdayDayOfWeekText;
+                    private TextMeshProUGUI _calendarWeek02SaturdayDayOfMonthText;
                 private GameObject _calendarTimeLine;
     private GameObject _screenCoverCanvasGO;
     public GameObject PopupCanvasGO_AboveCover;
@@ -119,33 +119,33 @@ public class Manager_UI : MonoBehaviour, IManager {
                 InitiateGO(ref _calendarPanelGO, "Panel_Calendar");
                     InitiateGO(ref _calendarPanelGO, "Panel_Calendar");
                         InitiateGO(ref _calendarWeek01Sunday, "Panel_Calendar_Week01_Sunday");
-                            InitiateText(ref _calendarWeek01SundayDayOfWeekText, "TMPText_Calendar_Week01_Sunday_DayOfMonth");
+                            InitiateText(ref _calendarWeek01SundayDayOfMonthText, "TMPText_Calendar_Week01_Sunday_DayOfMonth");
                         InitiateGO(ref _calendarWeek01Monday, "Panel_Calendar_Week01_Monday");
-                            InitiateText(ref _calendarWeek01MondayDayOfWeekText, "TMPText_Calendar_Week01_Monday_DayOfMonth");
+                            InitiateText(ref _calendarWeek01MondayDayOfMonthText, "TMPText_Calendar_Week01_Monday_DayOfMonth");
                         InitiateGO(ref _calendarWeek01Tuesday, "Panel_Calendar_Week01_Tuesday");
-                            InitiateText(ref _calendarWeek01TuesdayDayOfWeekText, "TMPText_Calendar_Week01_Tuesday_DayOfMonth");
+                            InitiateText(ref _calendarWeek01TuesdayDayOfMonthText, "TMPText_Calendar_Week01_Tuesday_DayOfMonth");
                         InitiateGO(ref _calendarWeek01Wednesday, "Panel_Calendar_Week01_Wednesday");
-                            InitiateText(ref _calendarWeek01WednesdayDayOfWeekText, "TMPText_Calendar_Week01_Wednesday_DayOfMonth");
+                            InitiateText(ref _calendarWeek01WednesdayDayOfMonthText, "TMPText_Calendar_Week01_Wednesday_DayOfMonth");
                         InitiateGO(ref _calendarWeek01Thursday, "Panel_Calendar_Week01_Thursday");
-                            InitiateText(ref _calendarWeek01ThursdayDayOfWeekText, "TMPText_Calendar_Week01_Thursday_DayOfMonth");
+                            InitiateText(ref _calendarWeek01ThursdayDayOfMonthText, "TMPText_Calendar_Week01_Thursday_DayOfMonth");
                         InitiateGO(ref _calendarWeek01Friday, "Panel_Calendar_Week01_Friday");
-                            InitiateText(ref _calendarWeek01FridayDayOfWeekText, "TMPText_Calendar_Week01_Friday_DayOfMonth");
+                            InitiateText(ref _calendarWeek01FridayDayOfMonthText, "TMPText_Calendar_Week01_Friday_DayOfMonth");
                         InitiateGO(ref _calendarWeek01Saturday, "Panel_Calendar_Week01_Saturday");
-                            InitiateText(ref _calendarWeek01SaturdayDayOfWeekText, "TMPText_Calendar_Week01_Saturday_DayOfMonth");
+                            InitiateText(ref _calendarWeek01SaturdayDayOfMonthText, "TMPText_Calendar_Week01_Saturday_DayOfMonth");
                         InitiateGO(ref _calendarWeek02Sunday, "Panel_Calendar_Week02_Sunday");
-                            InitiateText(ref _calendarWeek02SundayDayOfWeekText, "TMPText_Calendar_Week02_Sunday_DayOfMonth");
+                            InitiateText(ref _calendarWeek02SundayDayOfMonthText, "TMPText_Calendar_Week02_Sunday_DayOfMonth");
                         InitiateGO(ref _calendarWeek02Monday, "Panel_Calendar_Week02_Monday");
-                            InitiateText(ref _calendarWeek02MondayDayOfWeekText, "TMPText_Calendar_Week02_Monday_DayOfMonth");
+                            InitiateText(ref _calendarWeek02MondayDayOfMonthText, "TMPText_Calendar_Week02_Monday_DayOfMonth");
                         InitiateGO(ref _calendarWeek02Tuesday, "Panel_Calendar_Week02_Tuesday");
-                            InitiateText(ref _calendarWeek02TuesdayDayOfWeekText, "TMPText_Calendar_Week02_Tuesday_DayOfMonth");
+                            InitiateText(ref _calendarWeek02TuesdayDayOfMonthText, "TMPText_Calendar_Week02_Tuesday_DayOfMonth");
                         InitiateGO(ref _calendarWeek02Wednesday, "Panel_Calendar_Week02_Wednesday");
-                            InitiateText(ref _calendarWeek02WednesdayDayOfWeekText, "TMPText_Calendar_Week02_Wednesday_DayOfMonth");
+                            InitiateText(ref _calendarWeek02WednesdayDayOfMonthText, "TMPText_Calendar_Week02_Wednesday_DayOfMonth");
                         InitiateGO(ref _calendarWeek02Thursday, "Panel_Calendar_Week02_Thursday");
-                            InitiateText(ref _calendarWeek02ThursdayDayOfWeekText, "TMPText_Calendar_Week02_Thursday_DayOfMonth");
+                            InitiateText(ref _calendarWeek02ThursdayDayOfMonthText, "TMPText_Calendar_Week02_Thursday_DayOfMonth");
                         InitiateGO(ref _calendarWeek02Friday, "Panel_Calendar_Week02_Friday");
-                            InitiateText(ref _calendarWeek02FridayDayOfWeekText, "TMPText_Calendar_Week02_Friday_DayOfMonth");
+                            InitiateText(ref _calendarWeek02FridayDayOfMonthText, "TMPText_Calendar_Week02_Friday_DayOfMonth");
                         InitiateGO(ref _calendarWeek02Saturday, "Panel_Calendar_Week02_Saturday");
-                            InitiateText(ref _calendarWeek02SaturdayDayOfWeekText, "TMPText_Calendar_Week02_Saturday_DayOfMonth");
+                            InitiateText(ref _calendarWeek02SaturdayDayOfMonthText, "TMPText_Calendar_Week02_Saturday_DayOfMonth");
                         InitiateGO(ref _calendarTimeLine, "Panel_Calendar_TimeLine");
         InitiateButton(ref ToggleCalendarButton, "Button_ToggleCalendar");
         InitiateCanvas(ref PopupCanvasGO, "Canvas_Popups", CanvasLayer.BelowCover);
@@ -618,7 +618,7 @@ public class Manager_UI : MonoBehaviour, IManager {
         }
 
         UpdateTimePanel();
-
+        UpdateCalendarPanel();
 
     }
 
@@ -639,7 +639,7 @@ public class Manager_UI : MonoBehaviour, IManager {
             _toggleStatusText.text = Managers.Time.CurrentSpeedLevel.ToString();
         }
 
-        var timeString = Managers.Time.CurrentDT.ToString("h:mm tt");
+        string timeString = Managers.Time.CurrentDT.ToString("h:mm tt");
         if(!(timeString.Contains("10:") || timeString.Contains("11:") || timeString.Contains("12:")))
         {
             timeString = "".PadLeft(2) + timeString;
@@ -648,5 +648,35 @@ public class Manager_UI : MonoBehaviour, IManager {
 
         _dayOfWeekText.text = Managers.Time.CurrentDT.DayOfWeek.ToString();
         _dateText.text = Managers.Time.CurrentDT.ToString("MMMM/d/yyyy");
+    }
+
+    //Calendar Panel - Update
+    private void UpdateCalendarPanel ()
+    {
+        TextMeshProUGUI[] calendarDayOfMonthTexts =
+        {
+            _calendarWeek01SundayDayOfMonthText,
+            _calendarWeek01MondayDayOfMonthText,
+            _calendarWeek01TuesdayDayOfMonthText,
+            _calendarWeek01WednesdayDayOfMonthText,
+            _calendarWeek01ThursdayDayOfMonthText,
+            _calendarWeek01FridayDayOfMonthText,
+            _calendarWeek01SaturdayDayOfMonthText,
+            _calendarWeek02SundayDayOfMonthText,
+            _calendarWeek02MondayDayOfMonthText,
+            _calendarWeek02TuesdayDayOfMonthText,
+            _calendarWeek02WednesdayDayOfMonthText,
+            _calendarWeek02ThursdayDayOfMonthText,
+            _calendarWeek02FridayDayOfMonthText,
+            _calendarWeek02SaturdayDayOfMonthText
+        };
+        int daysFromCalendarStart = (int)Managers.Time.CurrentDT.DayOfWeek * -1;
+
+
+        for (int i = 0; i < calendarDayOfMonthTexts.Length; i++)
+        {
+            DateTime thisDT = Managers.Time.CurrentDT.AddDays(daysFromCalendarStart + i);
+            calendarDayOfMonthTexts[i].text = "<color=#000000>" + thisDT.Day.ToString() + "</color>";
+        }
     }
 }

@@ -8,8 +8,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <RootNamespace>
-    </RootNamespace>
+    <RootNamespace></RootNamespace>
     <ProjectGuid>{D2CAB0DD-5AEF-F950-09EE-78706656BE92}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
@@ -54,94 +53,93 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Assets\Script\Behavior\Draggable.cs" />
-    <Compile Include="Assets\Script\Models\City.cs" />
-    <Compile Include="Assets\Script\Managers\Manager_Time.cs" />
-    <Compile Include="Assets\Script\Managers\Manager_Data\INIFile.cs" />
-    <Compile Include="Assets\Script\Managers\Manager_Assets.cs" />
-    <Compile Include="Assets\Script\Managers\Managers.cs" />
-    <Compile Include="Assets\Script\Models\NPCTraitMajor.cs" />
-    <Compile Include="Assets\Script\Models\SimEvent_MTTH.cs" />
-    <Compile Include="Assets\Script\GameObjects\PopUp.cs" />
-    <Compile Include="Assets\Script\Utilities\ButtonMouseOverListener.cs" />
-    <Compile Include="Assets\Script\Managers\Manager_Camera.cs" />
-    <Compile Include="Assets\Script\Managers\IManager.cs" />
-    <Compile Include="Assets\Script\Managers\Manager_Sim.cs" />
-    <Compile Include="Assets\Script\Behavior\HasTooltip.cs" />
-    <Compile Include="Assets\Script\Models\NPC.cs" />
-    <Compile Include="Assets\Script\Models\Map.cs" />
-    <Compile Include="Assets\Script\Models\SimEvent_Immediate.cs" />
-    <Compile Include="Assets\Script\Managers\Manager_Input.cs" />
-    <Compile Include="Assets\Script\Models\SimEvent_Scheduled.cs" />
-    <Compile Include="Assets\Script\Models\NPCTraitMinor.cs" />
-    <Compile Include="Assets\Script\Utilities\SetAnchor.cs" />
-    <Compile Include="Assets\Script\Managers\Manager_Audio.cs" />
-    <Compile Include="Assets\Script\Managers\Manager_GO.cs" />
-    <Compile Include="Assets\Script\Managers\Manager_Data\JSONFile.cs" />
-    <Compile Include="Assets\Script\Models\SimAction.cs" />
-    <Compile Include="Assets\Script\Behavior\MouseOverResetter.cs" />
-    <Compile Include="Assets\Script\Utilities\DateTimeUtility.cs" />
-    <Compile Include="Assets\Script\Managers\Manager_UI.cs" />
-    <Compile Include="Assets\Script\Models\SimActionOptions.cs" />
-    <Compile Include="Assets\Script\Utilities\RNG.cs" />
-    <Compile Include="Assets\Script\GameObjects\PopUpOption.cs" />
-    <Compile Include="Assets\Script\Managers\Manager_Data.cs" />
-    <Compile Include="Assets\Script\GameObjects\ToolTip.cs" />
-    <Compile Include="Assets\Script\Utilities\GOPool.cs" />
     <Compile Include="Assets\LeanTween\Examples\Scripts\LogoCinematic.cs" />
+    <Compile Include="Assets\Script\Models\City.cs" />
     <Compile Include="Assets\LeanTween\Examples\Scripts\GeneralBasics2d.cs" />
     <Compile Include="Assets\LeanTween\Examples\Scripts\TestingUnitTests.cs" />
     <Compile Include="Assets\LeanTween\Examples\Scripts\PathBezier2d.cs" />
     <Compile Include="Assets\LeanTween\Examples\Scripts\PathSpline2d.cs" />
+    <Compile Include="Assets\Script\Managers\Manager_Time.cs" />
+    <Compile Include="Assets\Script\Managers\Manager_Data\INIFile.cs" />
     <Compile Include="Assets\LeanTween\Examples\Scripts\GeneralCameraShake.cs" />
     <Compile Include="Assets\LeanTween\Examples\Scripts\GeneralSimpleUI.cs" />
     <Compile Include="Assets\LeanTween\Examples\Scripts\PathSpline.cs" />
+    <Compile Include="Assets\Script\Managers\Manager_Assets.cs" />
     <Compile Include="Assets\LeanTween\Examples\Scripts\GeneralEasingTypes.cs" />
+    <Compile Include="Assets\Script\Managers\Managers.cs" />
     <Compile Include="Assets\LeanTween\Examples\Scripts\Following.cs" />
+    <Compile Include="Assets\Script\Models\NPCTraitMajor.cs" />
+    <Compile Include="Assets\Script\Models\SimEvent_MTTH.cs" />
     <Compile Include="Assets\LeanTween\Examples\Scripts\PathSplineEndless.cs" />
     <Compile Include="Assets\LeanTween\Examples\Scripts\GeneralBasic.cs" />
+    <Compile Include="Assets\Script\GameObjects\PopUp.cs" />
     <Compile Include="Assets\LeanTween\Examples\Scripts\GeneralAdvancedTechniques.cs" />
     <Compile Include="Assets\LeanTween\Framework\LTSeq.cs" />
     <Compile Include="Assets\LeanTween\Examples\Scripts\GeneralSequencer.cs" />
+    <Compile Include="Assets\Script\Utilities\ButtonMouseOverListener.cs" />
+    <Compile Include="Assets\Script\Managers\Manager_Camera.cs" />
     <Compile Include="Assets\LeanTween\Framework\LeanSmooth.cs" />
     <Compile Include="Assets\LeanTween\Examples\Scripts\PathSplinePerformance.cs" />
+    <Compile Include="Assets\Script\Managers\IManager.cs" />
+    <Compile Include="Assets\Script\Managers\Manager_Sim.cs" />
     <Compile Include="Assets\LeanTween\Framework\LeanTest.cs" />
+    <Compile Include="Assets\Script\Behavior\HasTooltip.cs" />
+    <Compile Include="Assets\Script\Models\NPC.cs" />
     <Compile Include="Assets\LeanTween\Framework\LeanTween.cs" />
+    <Compile Include="Assets\Script\Models\Map.cs" />
     <Compile Include="Assets\LeanTween\Examples\Archived\TestingPunch.cs" />
     <Compile Include="Assets\LeanTween\Framework\LeanAudio.cs" />
+    <Compile Include="Assets\Script\Models\SimEvent_Immediate.cs" />
     <Compile Include="Assets\LeanTween\Examples\Scripts\PathSplineTrack.cs" />
+    <Compile Include="Assets\Script\Managers\Manager_Input.cs" />
+    <Compile Include="Assets\Script\Models\SimEvent_Scheduled.cs" />
     <Compile Include="Assets\LeanTween\Examples\Scripts\TestingZLegacy.cs" />
     <Compile Include="Assets\LeanTween\Examples\Archived\TestingRigidbodyCS.cs" />
+    <Compile Include="Assets\Script\Models\NPCTraitMinor.cs" />
     <Compile Include="Assets\LeanTween\Examples\Scripts\PathBezier.cs" />
+    <Compile Include="Assets\Script\Utilities\SetAnchor.cs" />
+    <Compile Include="Assets\Script\Managers\Manager_Audio.cs" />
+    <Compile Include="Assets\Script\Managers\Manager_GO.cs" />
     <Compile Include="Assets\LeanTween\Examples\Scripts\TestingZLegacyExt.cs" />
+    <Compile Include="Assets\Script\Managers\Manager_Data\JSONFile.cs" />
+    <Compile Include="Assets\Script\Models\SimAction.cs" />
+    <Compile Include="Assets\Script\Behavior\MouseOverResetter.cs" />
+    <Compile Include="Assets\Script\Managers\Manager_UI.cs" />
+    <Compile Include="Assets\Script\Models\SimActionOptions.cs" />
+    <Compile Include="Assets\Script\Utilities\RNG.cs" />
+    <Compile Include="Assets\Script\GameObjects\PopUpOption.cs" />
     <Compile Include="Assets\LeanTween\Framework\LeanTweenExt.cs" />
     <Compile Include="Assets\LeanTween\Framework\LTDescrOptional.cs" />
+    <Compile Include="Assets\Script\Managers\Manager_Data.cs" />
     <Compile Include="Assets\LeanTween\Examples\Scripts\PathSplines.cs" />
     <Compile Include="Assets\LeanTween\Examples\Scripts\GeneralUISpace.cs" />
+    <Compile Include="Assets\Script\GameObjects\ToolTip.cs" />
     <Compile Include="Assets\LeanTween\Examples\Scripts\GeneralEventsListeners.cs" />
+    <Compile Include="Assets\Script\Utilities\GOPool.cs" />
     <Compile Include="Assets\LeanTween\Framework\LTDescr.cs" />
     <Compile Include="Assets\LeanTween\Examples\Archived\OldGUIExamplesCS.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Assets\TextMesh Pro\Resources\Shaders\TMPro.cginc" />
-    <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Mobile Overlay.shader" />
-    <None Include="Assets\LeanTween\ReadMe.txt" />
-    <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_Bitmap.shader" />
-    <None Include="Assets\LeanTween\License.txt" />
-    <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Surface-Mobile.shader" />
-    <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Surface.shader" />
-    <None Include="Assets\TextMesh Pro\Sprites\EmojiOne Attribution.txt" />
-    <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_Bitmap-Custom-Atlas.shader" />
-    <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF.shader" />
-    <None Include="Assets\TextMesh Pro\Resources\LineBreaking Leading Characters.txt" />
-    <None Include="Assets\TextMesh Pro\Resources\Shaders\TMPro_Properties.cginc" />
-    <None Include="Assets\TextMesh Pro\Resources\Shaders\TMPro_Surface.cginc" />
-    <None Include="Assets\TextMesh Pro\Resources\LineBreaking Following Characters.txt" />
-    <None Include="Assets\LeanTween\Examples\Archived\2dUnlitWithFade.shader" />
-    <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Mobile Masking.shader" />
-    <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF Overlay.shader" />
-    <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_Bitmap-Mobile.shader" />
-    <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Mobile.shader" />
-    <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_Sprite.shader" />
+     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMPro.cginc" />
+     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Mobile Overlay.shader" />
+     <None Include="Assets\LeanTween\ReadMe.txt" />
+     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_Bitmap.shader" />
+     <None Include="Assets\LeanTween\License.txt" />
+     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Surface-Mobile.shader" />
+     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Surface.shader" />
+     <None Include="Assets\TextMesh Pro\Sprites\EmojiOne Attribution.txt" />
+     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_Bitmap-Custom-Atlas.shader" />
+     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF.shader" />
+     <None Include="Assets\TextMesh Pro\Resources\LineBreaking Leading Characters.txt" />
+     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMPro_Properties.cginc" />
+     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMPro_Surface.cginc" />
+     <None Include="Assets\TextMesh Pro\Resources\LineBreaking Following Characters.txt" />
+     <None Include="Assets\LeanTween\Examples\Archived\2dUnlitWithFade.shader" />
+     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Mobile Masking.shader" />
+     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF Overlay.shader" />
+     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_Bitmap-Mobile.shader" />
+     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Mobile.shader" />
+     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_Sprite.shader" />
     <Reference Include="UnityEngine">
       <HintPath>C:\Program Files\Unity\Hub\Editor\2020.1.0f1\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>
     </Reference>
