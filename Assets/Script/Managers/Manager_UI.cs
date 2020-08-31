@@ -24,14 +24,20 @@ public class Manager_UI : MonoBehaviour, IManager {
 	public ManagerState State {get; private set;}
 
     //Hold Behavior Variables
-    private float _timeToInitiateHoldBehavior = 0.4f;
-    private float _timeToRepeatHoldBehavior = 0.2f;
-    private bool IsRunningDecreaseSpeedButtonBeingHeld;
-    private bool HasHoldingDecreaseSpeedButtonStarted;
-    private bool IsRunningIncreaseSpeedButtonBeingHeld;
-    private bool HasHoldingIncreaseSpeedButtonStarted;
+    private readonly float _timeToInitiateHoldBehavior = 0.4f;
+    private readonly float _timeToRepeatHoldBehavior = 0.2f;
+    private bool _isRunningDecreaseSpeedButtonBeingHeld;
+    private bool _hasHoldingDecreaseSpeedButtonStarted;
+    private bool _isRunningIncreaseSpeedButtonBeingHeld;
+    private bool _hasHoldingIncreaseSpeedButtonStarted;
 
     //Font
+
+    //Calendar UI Variables
+    private readonly float _timeToAnimateCalendarPagination = 0.2f;
+    private bool _isAnimatingCalendarPagination = false;
+    private DateTime? _calendarPageEarliestDate = null;
+    
 
     //UI Prefabs
     public GameObject prefab_Button;
@@ -473,13 +479,13 @@ public class Manager_UI : MonoBehaviour, IManager {
         {
             return;
         }
-        if (!HasHoldingIncreaseSpeedButtonStarted)
+        if (!_hasHoldingIncreaseSpeedButtonStarted)
         {
             Managers.Time.IncreaseSpeed();
         }
         else
         {
-            HasHoldingIncreaseSpeedButtonStarted = false;
+            _hasHoldingIncreaseSpeedButtonStarted = false;
         }
     }
     public void KeyDown_IncreaseSpeedButton()
@@ -492,7 +498,7 @@ public class Manager_UI : MonoBehaviour, IManager {
         {
             return;
         }
-        if (!IsRunningIncreaseSpeedButtonBeingHeld)
+        if (!_isRunningIncreaseSpeedButtonBeingHeld)
         {
             StartCoroutine("IncreaseSpeedButtonBeingHeld");
         }
@@ -500,20 +506,20 @@ public class Manager_UI : MonoBehaviour, IManager {
     public void HoldEnd_IncreaseSpeedButton()
     {
         StopCoroutine("IncreaseSpeedButtonBeingHeld");
-        IsRunningIncreaseSpeedButtonBeingHeld = false;
+        _isRunningIncreaseSpeedButtonBeingHeld = false;
     }
     IEnumerator IncreaseSpeedButtonBeingHeld()
     {
-        IsRunningIncreaseSpeedButtonBeingHeld = true;
+        _isRunningIncreaseSpeedButtonBeingHeld = true;
         float timeToWait = _timeToRepeatHoldBehavior;
-        if (!HasHoldingIncreaseSpeedButtonStarted)
+        if (!_hasHoldingIncreaseSpeedButtonStarted)
         {
             timeToWait = _timeToInitiateHoldBehavior;
         }
         yield return new WaitForSecondsRealtime(timeToWait);
-        HasHoldingIncreaseSpeedButtonStarted = true;
+        _hasHoldingIncreaseSpeedButtonStarted = true;
         Managers.Time.IncreaseSpeed();
-        IsRunningIncreaseSpeedButtonBeingHeld = false;
+        _isRunningIncreaseSpeedButtonBeingHeld = false;
     }
     public void KeyUp_IncreaseSpeedButton()
     {
@@ -523,9 +529,9 @@ public class Manager_UI : MonoBehaviour, IManager {
         }
 
         HoldEnd_IncreaseSpeedButton();
-        if (HasHoldingIncreaseSpeedButtonStarted)
+        if (_hasHoldingIncreaseSpeedButtonStarted)
         {
-            HasHoldingIncreaseSpeedButtonStarted = false;
+            _hasHoldingIncreaseSpeedButtonStarted = false;
             return;
         }
         Managers.Time.IncreaseSpeed();
@@ -538,13 +544,13 @@ public class Manager_UI : MonoBehaviour, IManager {
         {
             return;
         }
-        if (!HasHoldingDecreaseSpeedButtonStarted)
+        if (!_hasHoldingDecreaseSpeedButtonStarted)
         {
             Managers.Time.DecreaseSpeed();
         }
         else
         {
-            HasHoldingDecreaseSpeedButtonStarted = false;
+            _hasHoldingDecreaseSpeedButtonStarted = false;
         }
     }
     public void KeyDown_DecreaseSpeedButton()
@@ -557,7 +563,7 @@ public class Manager_UI : MonoBehaviour, IManager {
         {
             return;
         }
-        if (!IsRunningDecreaseSpeedButtonBeingHeld)
+        if (!_isRunningDecreaseSpeedButtonBeingHeld)
         {
             StartCoroutine("DecreaseSpeedButtonBeingHeld");
         }
@@ -565,21 +571,21 @@ public class Manager_UI : MonoBehaviour, IManager {
     public void HoldEnd_DecreaseSpeedButton()
     {
         StopCoroutine("DecreaseSpeedButtonBeingHeld");
-        IsRunningDecreaseSpeedButtonBeingHeld = false;
+        _isRunningDecreaseSpeedButtonBeingHeld = false;
     }
 
     IEnumerator DecreaseSpeedButtonBeingHeld()
     {
-        IsRunningDecreaseSpeedButtonBeingHeld = true;
+        _isRunningDecreaseSpeedButtonBeingHeld = true;
         float timeToWait = _timeToRepeatHoldBehavior;
-        if (!HasHoldingDecreaseSpeedButtonStarted)
+        if (!_hasHoldingDecreaseSpeedButtonStarted)
         {
             timeToWait = _timeToInitiateHoldBehavior;
         }
         yield return new WaitForSecondsRealtime(timeToWait);
-        HasHoldingDecreaseSpeedButtonStarted = true;
+        _hasHoldingDecreaseSpeedButtonStarted = true;
         Managers.Time.DecreaseSpeed();
-        IsRunningDecreaseSpeedButtonBeingHeld = false;
+        _isRunningDecreaseSpeedButtonBeingHeld = false;
     }
     public void KeyUp_DecreaseSpeedButton()
     {
@@ -588,10 +594,10 @@ public class Manager_UI : MonoBehaviour, IManager {
             return;
         }
 
-        if (HasHoldingDecreaseSpeedButtonStarted)
+        if (_hasHoldingDecreaseSpeedButtonStarted)
         {
             HoldEnd_DecreaseSpeedButton();
-            HasHoldingDecreaseSpeedButtonStarted = false;
+            _hasHoldingDecreaseSpeedButtonStarted = false;
             return;
         }
         Managers.Time.DecreaseSpeed();
@@ -711,8 +717,26 @@ public class Manager_UI : MonoBehaviour, IManager {
     }
 
     //Calendar Panel - Update
+    private void CalendarPagination(bool isForward = true)
+    {
+        if (IsScreenCovered() || _isAnimatingCalendarPagination)
+        {
+            return;
+        }
+        StartCoroutine("CalendarPaginationAnimating");
+    }
+    IEnumerator CalendarPaginationAnimating()
+    {
+        _isAnimatingCalendarPagination = true;
+        yield return new WaitForSecondsRealtime(_timeToAnimateCalendarPagination);
+        _isAnimatingCalendarPagination = false;
+    }
+
     private void UpdateCalendarPanel ()
     {
+        if (_isAnimatingCalendarPagination) {
+            return;
+        }
         TextMeshProUGUI[] calendarMonthTexts =
         {
             _calendarWeek01SundayMonthText,
@@ -766,7 +790,7 @@ public class Manager_UI : MonoBehaviour, IManager {
         };
 
 
-        int daysFromCalendarStart = (int)Managers.Time.CurrentDT.DayOfWeek * -1;
+        int daysFromCalendarStart = (int)Managers.Time.CurrentDT.DayOfWeek;
         DateTime startOfDay = Managers.Time.CurrentDT.Date;
         DateTime endOfTheDay = Managers.Time.CurrentDT.AddDays(1).Date;
         float timePercentage = (float)(Managers.Time.CurrentDT.Ticks - startOfDay.Ticks) / (float)(endOfTheDay.Ticks - startOfDay.Ticks);
@@ -774,7 +798,7 @@ public class Manager_UI : MonoBehaviour, IManager {
         var timelineWidth = 430;
         for (int i = 0; i < calendarMonthTexts.Length; i++)
         {
-            DateTime thisDT = Managers.Time.CurrentDT.AddDays(daysFromCalendarStart + i);
+            DateTime thisDT = Managers.Time.CurrentDT.AddDays((daysFromCalendarStart * -1) + i);
 
             //Calendar DayBox Text
             calendarDayOfMonthTexts[i].text = "<color=#000000>" + thisDT.Day.ToString() + "</color>";
@@ -805,6 +829,18 @@ public class Manager_UI : MonoBehaviour, IManager {
                 timeOverlayRectTransform.sizeDelta = new Vector2((int)(calendarBoxWidth * timePercentage), timeOverlayRectTransform.sizeDelta.y);
             }
         }
+
+        //Calendar Week Transition
+        if (_calendarPageEarliestDate == null)
+        {
+            _calendarPageEarliestDate = Managers.Time.CurrentDT.AddDays((daysFromCalendarStart * -1));
+        }
+        if (daysFromCalendarStart == 0 && DateTime.Compare(_calendarPageEarliestDate.Value.Date, Managers.Time.CurrentDT.Date) != 0)
+        {
+            CalendarPagination();
+            _calendarPageEarliestDate = Managers.Time.CurrentDT;
+        }
+
         //Timeline
         RectTransform timelineTimeOverlayRectTransform = _calendarTimeline_TimeOverlay.GetComponent<RectTransform>();
         timelineTimeOverlayRectTransform.sizeDelta = new Vector2((int)(timelineWidth * timePercentage), timelineTimeOverlayRectTransform.sizeDelta.y);

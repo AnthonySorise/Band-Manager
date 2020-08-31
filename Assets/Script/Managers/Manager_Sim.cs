@@ -25,11 +25,11 @@ public class Manager_Sim : MonoBehaviour, IManager {
         _simEvents_Scheduled = new List<SimEvent_Scheduled>();
         _simEvents_MTTH = new List<SimEvent_MTTH>();
 
-        SIM_TestPopup01(new DateTime(1985, 10, 24));
-        SIM_TestPopup02(new DateTime(1985, 10, 25));
-        SIM_TestPopup03(new DateTime(1985, 10, 26));
-        SIM_TestPopup04(new DateTime(1985, 10, 27));
-        SIM_TestPopup05();
+        //SIM_TestPopup01(new DateTime(1985, 10, 24));
+        //SIM_TestPopup02(new DateTime(1985, 10, 25));
+        //SIM_TestPopup03(new DateTime(1985, 10, 26));
+        //SIM_TestPopup04(new DateTime(1985, 10, 27));
+        //SIM_TestPopup05();
 
         State = ManagerState.Started;
         Debug.Log("Manager_Sim started");
