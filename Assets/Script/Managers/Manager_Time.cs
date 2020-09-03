@@ -37,7 +37,7 @@ public class Manager_Time : MonoBehaviour, IManager {
         _maxSpeedLevel = 4;//NumMinutesToIncrementDt() should be calibrated if adjustments to speed variables are made
 
         //temporary, will need to be initated elsewhere
-        CurrentDT = new DateTime(1985, 10, 23, 0, 0, 0);
+        CurrentDT = new DateTime(1985, 10, 26, 0, 0, 0);
         //
 
         State = ManagerState.Started;

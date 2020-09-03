@@ -34,7 +34,6 @@ public class Manager_UI : MonoBehaviour, IManager {
     //Font
 
     //Calendar UI Variables
-    private readonly float _timeToAnimateCalendarPagination = 0.2f;
     private bool _isAnimatingCalendarPagination = false;
     private DateTime? _calendarPageEarliestDate = null;
     
@@ -59,62 +58,64 @@ public class Manager_UI : MonoBehaviour, IManager {
         private GameObject _calendarPanelContainerGO;
             public Button ToggleCalendarButton;
             public GameObject _calendarPanelGO;
-                private GameObject _calendarWeek01Sunday;
-                    private GameObject _calendarWeek01SundayTimeOverlay;
-                    private TextMeshProUGUI _calendarWeek01SundayMonthText;
-                    private TextMeshProUGUI _calendarWeek01SundayDayOfMonthText;
-                private GameObject _calendarWeek01Monday;
-                    private GameObject _calendarWeek01MondayTimeOverlay;
-                    private TextMeshProUGUI _calendarWeek01MondayMonthText;
-                    private TextMeshProUGUI _calendarWeek01MondayDayOfMonthText;
-                private GameObject _calendarWeek01Tuesday;
-                    private GameObject _calendarWeek01TuesdayTimeOverlay;
-                    private TextMeshProUGUI _calendarWeek01TuesdayMonthText;
-                    private TextMeshProUGUI _calendarWeek01TuesdayDayOfMonthText;
-                private GameObject _calendarWeek01Wednesday;
-                    private GameObject _calendarWeek01WenesdayTimeOverlay;
-                    private TextMeshProUGUI _calendarWeek01WednesdayMonthText;
-                    private TextMeshProUGUI _calendarWeek01WednesdayDayOfMonthText;
-                private GameObject _calendarWeek01Thursday;
-                    private GameObject _calendarWeek01ThursdayTimeOverlay;
-                    private TextMeshProUGUI _calendarWeek01ThursdayMonthText;
-                    private TextMeshProUGUI _calendarWeek01ThursdayDayOfMonthText;
-                private GameObject _calendarWeek01Friday;
-                    private GameObject _calendarWeek01FridayTimeOverlay;
-                    private TextMeshProUGUI _calendarWeek01FridayMonthText;
-                    private TextMeshProUGUI _calendarWeek01FridayDayOfMonthText;
-                private GameObject _calendarWeek01Saturday;
-                    private GameObject _calendarWeek01SaturdayTimeOverlay;
-                    private TextMeshProUGUI _calendarWeek01SaturdayMonthText;
-                    private TextMeshProUGUI _calendarWeek01SaturdayDayOfMonthText;
-                private GameObject _calendarWeek02Sunday;
-                    private GameObject _calendarWeek02SundayTimeOverlay;
-                    private TextMeshProUGUI _calendarWeek02SundayMonthText;
-                    private TextMeshProUGUI _calendarWeek02SundayDayOfMonthText;
-                private GameObject _calendarWeek02Monday;
-                    private GameObject _calendarWeek02MondayTimeOverlay;
-                    private TextMeshProUGUI _calendarWeek02MondayMonthText;
-                    private TextMeshProUGUI _calendarWeek02MondayDayOfMonthText;
-                private GameObject _calendarWeek02Tuesday;
-                    private GameObject _calendarWeek02TuesdayTimeOverlay;
-                    private TextMeshProUGUI _calendarWeek02TuesdayMonthText;
-                    private TextMeshProUGUI _calendarWeek02TuesdayDayOfMonthText;
-                private GameObject _calendarWeek02Wednesday;
-                    private GameObject _calendarWeek02WednesdayTimeOverlay;
-                    private TextMeshProUGUI _calendarWeek02WednesdayMonthText;
-                    private TextMeshProUGUI _calendarWeek02WednesdayDayOfMonthText;
-                private GameObject _calendarWeek02Thursday;
-                    private GameObject _calendarWeek02ThursdayTimeOverlay;
-                    private TextMeshProUGUI _calendarWeek02ThursdayMonthText;
-                    private TextMeshProUGUI _calendarWeek02ThursdayDayOfMonthText;
-                private GameObject _calendarWeek02Friday;
-                    private GameObject _calendarWeek02FridayTimeOverlay;
-                    private TextMeshProUGUI _calendarWeek02FridayMonthText;
-                    private TextMeshProUGUI _calendarWeek02FridayDayOfMonthText;
-                private GameObject _calendarWeek02Saturday;
-                    private GameObject _calendarWeek02SaturdayTimeOverlay;
-                    private TextMeshProUGUI _calendarWeek02SaturdayMonthText;
-                    private TextMeshProUGUI _calendarWeek02SaturdayDayOfMonthText;
+                private GameObject _calendarWeek01Container;
+                    private GameObject _calendarWeek01Sunday;
+                        private GameObject _calendarWeek01SundayTimeOverlay;
+                        private TextMeshProUGUI _calendarWeek01SundayMonthText;
+                        private TextMeshProUGUI _calendarWeek01SundayDayOfMonthText;
+                    private GameObject _calendarWeek01Monday;
+                        private GameObject _calendarWeek01MondayTimeOverlay;
+                        private TextMeshProUGUI _calendarWeek01MondayMonthText;
+                        private TextMeshProUGUI _calendarWeek01MondayDayOfMonthText;
+                    private GameObject _calendarWeek01Tuesday;
+                        private GameObject _calendarWeek01TuesdayTimeOverlay;
+                        private TextMeshProUGUI _calendarWeek01TuesdayMonthText;
+                        private TextMeshProUGUI _calendarWeek01TuesdayDayOfMonthText;
+                    private GameObject _calendarWeek01Wednesday;
+                        private GameObject _calendarWeek01WenesdayTimeOverlay;
+                        private TextMeshProUGUI _calendarWeek01WednesdayMonthText;
+                        private TextMeshProUGUI _calendarWeek01WednesdayDayOfMonthText;
+                    private GameObject _calendarWeek01Thursday;
+                        private GameObject _calendarWeek01ThursdayTimeOverlay;
+                        private TextMeshProUGUI _calendarWeek01ThursdayMonthText;
+                        private TextMeshProUGUI _calendarWeek01ThursdayDayOfMonthText;
+                    private GameObject _calendarWeek01Friday;
+                        private GameObject _calendarWeek01FridayTimeOverlay;
+                        private TextMeshProUGUI _calendarWeek01FridayMonthText;
+                        private TextMeshProUGUI _calendarWeek01FridayDayOfMonthText;
+                    private GameObject _calendarWeek01Saturday;
+                        private GameObject _calendarWeek01SaturdayTimeOverlay;
+                        private TextMeshProUGUI _calendarWeek01SaturdayMonthText;
+                        private TextMeshProUGUI _calendarWeek01SaturdayDayOfMonthText;
+                private GameObject _calendarWeek02Container;
+                    private GameObject _calendarWeek02Sunday;
+                        private GameObject _calendarWeek02SundayTimeOverlay;
+                        private TextMeshProUGUI _calendarWeek02SundayMonthText;
+                        private TextMeshProUGUI _calendarWeek02SundayDayOfMonthText;
+                    private GameObject _calendarWeek02Monday;
+                        private GameObject _calendarWeek02MondayTimeOverlay;
+                        private TextMeshProUGUI _calendarWeek02MondayMonthText;
+                        private TextMeshProUGUI _calendarWeek02MondayDayOfMonthText;
+                    private GameObject _calendarWeek02Tuesday;
+                        private GameObject _calendarWeek02TuesdayTimeOverlay;
+                        private TextMeshProUGUI _calendarWeek02TuesdayMonthText;
+                        private TextMeshProUGUI _calendarWeek02TuesdayDayOfMonthText;
+                    private GameObject _calendarWeek02Wednesday;
+                        private GameObject _calendarWeek02WednesdayTimeOverlay;
+                        private TextMeshProUGUI _calendarWeek02WednesdayMonthText;
+                        private TextMeshProUGUI _calendarWeek02WednesdayDayOfMonthText;
+                    private GameObject _calendarWeek02Thursday;
+                        private GameObject _calendarWeek02ThursdayTimeOverlay;
+                        private TextMeshProUGUI _calendarWeek02ThursdayMonthText;
+                        private TextMeshProUGUI _calendarWeek02ThursdayDayOfMonthText;
+                    private GameObject _calendarWeek02Friday;
+                        private GameObject _calendarWeek02FridayTimeOverlay;
+                        private TextMeshProUGUI _calendarWeek02FridayMonthText;
+                        private TextMeshProUGUI _calendarWeek02FridayDayOfMonthText;
+                    private GameObject _calendarWeek02Saturday;
+                        private GameObject _calendarWeek02SaturdayTimeOverlay;
+                        private TextMeshProUGUI _calendarWeek02SaturdayMonthText;
+                        private TextMeshProUGUI _calendarWeek02SaturdayDayOfMonthText;
                 private GameObject _calendarTimeline;
                     private GameObject _calendarTimeline_TimeOverlay;
     private GameObject _screenCoverCanvasGO;
@@ -153,66 +154,66 @@ public class Manager_UI : MonoBehaviour, IManager {
             InitiateGO(ref _calendarPanelContainerGO, "Panel_CalendarContainer");
                 InitiateGO(ref _calendarPanelGO, "Panel_Calendar");
                     InitiateGO(ref _calendarPanelGO, "Panel_Calendar");
-                        InitiateGO(ref _calendarWeek01Sunday, "Panel_Calendar_Week01_Sunday");
-                            InitiateGO(ref _calendarWeek01SundayTimeOverlay, "Panel_Calendar_Week01_Sunday_TimeOverlay");
-                            InitiateText(ref _calendarWeek01SundayMonthText, "TMPText_Calendar_Week01_Sunday_Month");
-                            InitiateText(ref _calendarWeek01SundayDayOfMonthText, "TMPText_Calendar_Week01_Sunday_DayOfMonth");
-                        InitiateGO(ref _calendarWeek01Monday, "Panel_Calendar_Week01_Monday");
-                            InitiateGO(ref _calendarWeek01MondayTimeOverlay, "Panel_Calendar_Week01_Monday_TimeOverlay");
-                            InitiateText(ref _calendarWeek01MondayMonthText, "TMPText_Calendar_Week01_Monday_Month");
-                            InitiateText(ref _calendarWeek01MondayDayOfMonthText, "TMPText_Calendar_Week01_Monday_DayOfMonth");
-                        InitiateGO(ref _calendarWeek01Tuesday, "Panel_Calendar_Week01_Tuesday");
-                            InitiateGO(ref _calendarWeek01TuesdayTimeOverlay, "Panel_Calendar_Week01_Tuesday_TimeOverlay");
-                            InitiateText(ref _calendarWeek01TuesdayMonthText, "TMPText_Calendar_Week01_Tuesday_Month");
-                            InitiateText(ref _calendarWeek01TuesdayDayOfMonthText, "TMPText_Calendar_Week01_Tuesday_DayOfMonth");
-                        InitiateGO(ref _calendarWeek01Wednesday, "Panel_Calendar_Week01_Wednesday");
-                            InitiateGO(ref _calendarWeek01WenesdayTimeOverlay, "Panel_Calendar_Week01_Wednesday_TimeOverlay");
-                            InitiateText(ref _calendarWeek01WednesdayMonthText, "TMPText_Calendar_Week01_Wednesday_Month");
-                            InitiateText(ref _calendarWeek01WednesdayDayOfMonthText, "TMPText_Calendar_Week01_Wednesday_DayOfMonth");
-                        InitiateGO(ref _calendarWeek01Thursday, "Panel_Calendar_Week01_Thursday");
-                            InitiateGO(ref _calendarWeek01ThursdayTimeOverlay, "Panel_Calendar_Week01_Thursday_TimeOverlay");
-                            InitiateText(ref _calendarWeek01ThursdayMonthText, "TMPText_Calendar_Week01_Thursday_Month");
-                            InitiateText(ref _calendarWeek01ThursdayDayOfMonthText, "TMPText_Calendar_Week01_Thursday_DayOfMonth");
-                        InitiateGO(ref _calendarWeek01Friday, "Panel_Calendar_Week01_Friday");
-                            InitiateGO(ref _calendarWeek01FridayTimeOverlay, "Panel_Calendar_Week01_Friday_TimeOverlay");
-                            InitiateText(ref _calendarWeek01FridayMonthText, "TMPText_Calendar_Week01_Friday_Month");
-                            InitiateText(ref _calendarWeek01FridayDayOfMonthText, "TMPText_Calendar_Week01_Friday_DayOfMonth");
-                        InitiateGO(ref _calendarWeek01Saturday, "Panel_Calendar_Week01_Saturday");
-                            InitiateGO(ref _calendarWeek01SaturdayTimeOverlay, "Panel_Calendar_Week01_Saturday_TimeOverlay");
-                            InitiateText(ref _calendarWeek01SaturdayMonthText, "TMPText_Calendar_Week01_Saturday_Month");
-                            InitiateText(ref _calendarWeek01SaturdayDayOfMonthText, "TMPText_Calendar_Week01_Saturday_DayOfMonth");
-                        InitiateGO(ref _calendarWeek02Sunday, "Panel_Calendar_Week02_Sunday");
-                            InitiateGO(ref _calendarWeek02SundayTimeOverlay, "Panel_Calendar_Week02_Sunday_TimeOverlay");
-                            InitiateText(ref _calendarWeek02SundayMonthText, "TMPText_Calendar_Week02_Sunday_Month");
-                            InitiateText(ref _calendarWeek02SundayDayOfMonthText, "TMPText_Calendar_Week02_Sunday_DayOfMonth");
-                        InitiateGO(ref _calendarWeek02Monday, "Panel_Calendar_Week02_Monday");
-                            InitiateGO(ref _calendarWeek02MondayTimeOverlay, "Panel_Calendar_Week02_Monday_TimeOverlay");
-                            InitiateText(ref _calendarWeek02MondayMonthText, "TMPText_Calendar_Week02_Monday_Month");
-                            InitiateText(ref _calendarWeek02MondayDayOfMonthText, "TMPText_Calendar_Week02_Monday_DayOfMonth");
-                        InitiateGO(ref _calendarWeek02Tuesday, "Panel_Calendar_Week02_Tuesday");
-                            InitiateGO(ref _calendarWeek02TuesdayTimeOverlay, "Panel_Calendar_Week02_Tuesday_TimeOverlay");
-                            InitiateText(ref _calendarWeek02TuesdayMonthText, "TMPText_Calendar_Week02_Tuesday_Month");
-                            InitiateText(ref _calendarWeek02TuesdayDayOfMonthText, "TMPText_Calendar_Week02_Tuesday_DayOfMonth");
-                        InitiateGO(ref _calendarWeek02Wednesday, "Panel_Calendar_Week02_Wednesday");
-                            InitiateGO(ref _calendarWeek02WednesdayTimeOverlay, "Panel_Calendar_Week02_Wednesday_TimeOverlay");
-                            InitiateText(ref _calendarWeek02WednesdayMonthText, "TMPText_Calendar_Week02_Wednesday_Month");
-                            InitiateText(ref _calendarWeek02WednesdayDayOfMonthText, "TMPText_Calendar_Week02_Wednesday_DayOfMonth");
-                        InitiateGO(ref _calendarWeek02Thursday, "Panel_Calendar_Week02_Thursday");
-                            InitiateGO(ref _calendarWeek02ThursdayTimeOverlay, "Panel_Calendar_Week02_Thursday_TimeOverlay");
-                            InitiateText(ref _calendarWeek02ThursdayMonthText, "TMPText_Calendar_Week02_Thursday_Month");
-                            InitiateText(ref _calendarWeek02ThursdayDayOfMonthText, "TMPText_Calendar_Week02_Thursday_DayOfMonth");
-                        InitiateGO(ref _calendarWeek02Friday, "Panel_Calendar_Week02_Friday");
-                            InitiateGO(ref _calendarWeek02FridayTimeOverlay, "Panel_Calendar_Week02_Friday_TimeOverlay");
-                            InitiateText(ref _calendarWeek02FridayMonthText, "TMPText_Calendar_Week02_Friday_Month");
-                            InitiateText(ref _calendarWeek02FridayDayOfMonthText, "TMPText_Calendar_Week02_Friday_DayOfMonth");
-                        InitiateGO(ref _calendarWeek02Saturday, "Panel_Calendar_Week02_Saturday");
-                            InitiateGO(ref _calendarWeek02SaturdayTimeOverlay, "Panel_Calendar_Week02_Saturday_TimeOverlay");
-                            InitiateText(ref _calendarWeek02SaturdayMonthText, "TMPText_Calendar_Week02_Saturday_Month");
-                            InitiateText(ref _calendarWeek02SaturdayDayOfMonthText, "TMPText_Calendar_Week02_Saturday_DayOfMonth");
+                        InitiateGO(ref _calendarWeek01Container, "Panel_Calendar_Week01");
+                            InitiateGO(ref _calendarWeek01Sunday, "Panel_Calendar_Week01_Sunday");
+                                InitiateGO(ref _calendarWeek01SundayTimeOverlay, "Panel_Calendar_Week01_Sunday_TimeOverlay");
+                                InitiateText(ref _calendarWeek01SundayMonthText, "TMPText_Calendar_Week01_Sunday_Month");
+                                InitiateText(ref _calendarWeek01SundayDayOfMonthText, "TMPText_Calendar_Week01_Sunday_DayOfMonth");
+                            InitiateGO(ref _calendarWeek01Monday, "Panel_Calendar_Week01_Monday");
+                                InitiateGO(ref _calendarWeek01MondayTimeOverlay, "Panel_Calendar_Week01_Monday_TimeOverlay");
+                                InitiateText(ref _calendarWeek01MondayMonthText, "TMPText_Calendar_Week01_Monday_Month");
+                                InitiateText(ref _calendarWeek01MondayDayOfMonthText, "TMPText_Calendar_Week01_Monday_DayOfMonth");
+                            InitiateGO(ref _calendarWeek01Tuesday, "Panel_Calendar_Week01_Tuesday");
+                                InitiateGO(ref _calendarWeek01TuesdayTimeOverlay, "Panel_Calendar_Week01_Tuesday_TimeOverlay");
+                                InitiateText(ref _calendarWeek01TuesdayMonthText, "TMPText_Calendar_Week01_Tuesday_Month");
+                                InitiateText(ref _calendarWeek01TuesdayDayOfMonthText, "TMPText_Calendar_Week01_Tuesday_DayOfMonth");
+                            InitiateGO(ref _calendarWeek01Wednesday, "Panel_Calendar_Week01_Wednesday");
+                                InitiateGO(ref _calendarWeek01WenesdayTimeOverlay, "Panel_Calendar_Week01_Wednesday_TimeOverlay");
+                                InitiateText(ref _calendarWeek01WednesdayMonthText, "TMPText_Calendar_Week01_Wednesday_Month");
+                                InitiateText(ref _calendarWeek01WednesdayDayOfMonthText, "TMPText_Calendar_Week01_Wednesday_DayOfMonth");
+                            InitiateGO(ref _calendarWeek01Thursday, "Panel_Calendar_Week01_Thursday");
+                                InitiateGO(ref _calendarWeek01ThursdayTimeOverlay, "Panel_Calendar_Week01_Thursday_TimeOverlay");
+                                InitiateText(ref _calendarWeek01ThursdayMonthText, "TMPText_Calendar_Week01_Thursday_Month");
+                                InitiateText(ref _calendarWeek01ThursdayDayOfMonthText, "TMPText_Calendar_Week01_Thursday_DayOfMonth");
+                            InitiateGO(ref _calendarWeek01Friday, "Panel_Calendar_Week01_Friday");
+                                InitiateGO(ref _calendarWeek01FridayTimeOverlay, "Panel_Calendar_Week01_Friday_TimeOverlay");
+                                InitiateText(ref _calendarWeek01FridayMonthText, "TMPText_Calendar_Week01_Friday_Month");
+                                InitiateText(ref _calendarWeek01FridayDayOfMonthText, "TMPText_Calendar_Week01_Friday_DayOfMonth");
+                            InitiateGO(ref _calendarWeek01Saturday, "Panel_Calendar_Week01_Saturday");
+                                InitiateGO(ref _calendarWeek01SaturdayTimeOverlay, "Panel_Calendar_Week01_Saturday_TimeOverlay");
+                                InitiateText(ref _calendarWeek01SaturdayMonthText, "TMPText_Calendar_Week01_Saturday_Month");
+                                InitiateText(ref _calendarWeek01SaturdayDayOfMonthText, "TMPText_Calendar_Week01_Saturday_DayOfMonth");
+                        InitiateGO(ref _calendarWeek02Container, "Panel_Calendar_Week02");
+                            InitiateGO(ref _calendarWeek02Sunday, "Panel_Calendar_Week02_Sunday");
+                                InitiateGO(ref _calendarWeek02SundayTimeOverlay, "Panel_Calendar_Week02_Sunday_TimeOverlay");
+                                InitiateText(ref _calendarWeek02SundayMonthText, "TMPText_Calendar_Week02_Sunday_Month");
+                                InitiateText(ref _calendarWeek02SundayDayOfMonthText, "TMPText_Calendar_Week02_Sunday_DayOfMonth");
+                            InitiateGO(ref _calendarWeek02Monday, "Panel_Calendar_Week02_Monday");
+                                InitiateGO(ref _calendarWeek02MondayTimeOverlay, "Panel_Calendar_Week02_Monday_TimeOverlay");
+                                InitiateText(ref _calendarWeek02MondayMonthText, "TMPText_Calendar_Week02_Monday_Month");
+                                InitiateText(ref _calendarWeek02MondayDayOfMonthText, "TMPText_Calendar_Week02_Monday_DayOfMonth");
+                            InitiateGO(ref _calendarWeek02Tuesday, "Panel_Calendar_Week02_Tuesday");
+                                InitiateGO(ref _calendarWeek02TuesdayTimeOverlay, "Panel_Calendar_Week02_Tuesday_TimeOverlay");
+                                InitiateText(ref _calendarWeek02TuesdayMonthText, "TMPText_Calendar_Week02_Tuesday_Month");
+                                InitiateText(ref _calendarWeek02TuesdayDayOfMonthText, "TMPText_Calendar_Week02_Tuesday_DayOfMonth");
+                            InitiateGO(ref _calendarWeek02Wednesday, "Panel_Calendar_Week02_Wednesday");
+                                InitiateGO(ref _calendarWeek02WednesdayTimeOverlay, "Panel_Calendar_Week02_Wednesday_TimeOverlay");
+                                InitiateText(ref _calendarWeek02WednesdayMonthText, "TMPText_Calendar_Week02_Wednesday_Month");
+                                InitiateText(ref _calendarWeek02WednesdayDayOfMonthText, "TMPText_Calendar_Week02_Wednesday_DayOfMonth");
+                            InitiateGO(ref _calendarWeek02Thursday, "Panel_Calendar_Week02_Thursday");
+                                InitiateGO(ref _calendarWeek02ThursdayTimeOverlay, "Panel_Calendar_Week02_Thursday_TimeOverlay");
+                                InitiateText(ref _calendarWeek02ThursdayMonthText, "TMPText_Calendar_Week02_Thursday_Month");
+                                InitiateText(ref _calendarWeek02ThursdayDayOfMonthText, "TMPText_Calendar_Week02_Thursday_DayOfMonth");
+                            InitiateGO(ref _calendarWeek02Friday, "Panel_Calendar_Week02_Friday");
+                                InitiateGO(ref _calendarWeek02FridayTimeOverlay, "Panel_Calendar_Week02_Friday_TimeOverlay");
+                                InitiateText(ref _calendarWeek02FridayMonthText, "TMPText_Calendar_Week02_Friday_Month");
+                                InitiateText(ref _calendarWeek02FridayDayOfMonthText, "TMPText_Calendar_Week02_Friday_DayOfMonth");
+                            InitiateGO(ref _calendarWeek02Saturday, "Panel_Calendar_Week02_Saturday");
+                                InitiateGO(ref _calendarWeek02SaturdayTimeOverlay, "Panel_Calendar_Week02_Saturday_TimeOverlay");
+                                InitiateText(ref _calendarWeek02SaturdayMonthText, "TMPText_Calendar_Week02_Saturday_Month");
+                                InitiateText(ref _calendarWeek02SaturdayDayOfMonthText, "TMPText_Calendar_Week02_Saturday_DayOfMonth");
                         InitiateGO(ref _calendarTimeline, "Panel_Calendar_Timeline");
                             InitiateGO(ref _calendarTimeline_TimeOverlay, "Panel_Calendar_Timeline_TimeOverlay");
-
-        
         InitiateButton(ref ToggleCalendarButton, "Button_ToggleCalendar");
         InitiateCanvas(ref PopupCanvasGO, "Canvas_Popups", CanvasLayer.BelowCover);
         InitiateCanvas(ref _screenCoverCanvasGO, "Canvas_ScreenCover", CanvasLayer.TheCover);
@@ -723,8 +724,55 @@ public class Manager_UI : MonoBehaviour, IManager {
         {
             return;
         }
+
         StartCoroutine("CalendarPaginationAnimating");
+
+        Vector3 week01Location = _calendarWeek01Container.GetComponent<RectTransform>().anchoredPosition;
+        Vector3 week02Location = _calendarWeek02Container.GetComponent<RectTransform>().anchoredPosition;
+
+        fadeCalendarWeek(_calendarWeek01Container, .25f);
+        LeanTween.move(_calendarWeek02Container.GetComponent<RectTransform>(), week01Location, .5f).setEase(LeanTweenType.easeInOutExpo).setOnComplete(animationPhaseTwo);
+
+        void animationPhaseTwo()
+        {
+            UpdateCalendarPanel(true, false);
+            fadeCalendarWeek(_calendarWeek01Container, 0f, false);
+            fadeCalendarWeek(_calendarWeek02Container, 0f);
+            LeanTween.move(_calendarWeek02Container.GetComponent<RectTransform>(), week02Location, 0f);
+            fadeCalendarWeek(_calendarWeek02Container, .25f, false);
+        }
+
+        void fadeCalendarWeek(GameObject calendarWeekContainer, float seconds, bool isFadeOut = true) {
+            float rectTransformTo = isFadeOut ? 0f : 1f;
+            foreach (RectTransform rt1 in calendarWeekContainer.GetComponentInChildren<RectTransform>())
+            {
+                LeanTween.alpha(rt1, rectTransformTo, seconds).setRecursive(false);
+                foreach (RectTransform rt2 in rt1.GetComponentInChildren<RectTransform>())
+                {
+                    LeanTween.alpha(rt2, rectTransformTo * 0.23529f, seconds).setRecursive(false);
+                    TextMeshProUGUI text = rt2.gameObject.GetComponent<TextMeshProUGUI>();
+                    if (text != null)
+                    {
+                        if (isFadeOut)
+                        {
+                            LeanTween.value(1f, 0f, seconds).setOnUpdate((float value) =>
+                            {
+                                text.color = new Color32(0, 0, 0, (byte)(255 * value));
+                            });
+                        }
+                        else
+                        {
+                            LeanTween.value(0f, 1f, seconds).setOnUpdate((float value) =>
+                            {
+                                text.color = new Color32(0, 0, 0, (byte)(255 * value));
+                            });
+                        }
+                    }
+                }
+            }
+        }
     }
+    private readonly float _timeToAnimateCalendarPagination = .5f;
     IEnumerator CalendarPaginationAnimating()
     {
         _isAnimatingCalendarPagination = true;
@@ -732,7 +780,7 @@ public class Manager_UI : MonoBehaviour, IManager {
         _isAnimatingCalendarPagination = false;
     }
 
-    private void UpdateCalendarPanel ()
+    private void UpdateCalendarPanel (bool isUpdateFirstWeek = true, bool isUpdateSecondWeek = true)
     {
         if (_isAnimatingCalendarPagination) {
             return;
@@ -780,7 +828,7 @@ public class Manager_UI : MonoBehaviour, IManager {
             _calendarWeek01ThursdayTimeOverlay,
             _calendarWeek01FridayTimeOverlay,
             _calendarWeek01SaturdayTimeOverlay,
-            _calendarWeek02SundayTimeOverlay,
+            _calendarWeek02SundayTimeOverlay,//second half is likely not necessary - save untill pagination is done
             _calendarWeek02MondayTimeOverlay,
             _calendarWeek02TuesdayTimeOverlay,
             _calendarWeek02WednesdayTimeOverlay,
@@ -794,18 +842,33 @@ public class Manager_UI : MonoBehaviour, IManager {
         DateTime startOfDay = Managers.Time.CurrentDT.Date;
         DateTime endOfTheDay = Managers.Time.CurrentDT.AddDays(1).Date;
         float timePercentage = (float)(Managers.Time.CurrentDT.Ticks - startOfDay.Ticks) / (float)(endOfTheDay.Ticks - startOfDay.Ticks);
-        var calendarBoxWidth = 58;
-        var timelineWidth = 430;
-        for (int i = 0; i < calendarMonthTexts.Length; i++)
+        int calendarBoxWidth = 58;
+        int timelineWidth = 430;
+        if (_calendarPageEarliestDate == null)
+        {
+            _calendarPageEarliestDate = Managers.Time.CurrentDT.AddDays((daysFromCalendarStart * -1));
+        }
+
+        //Calendar Week Transition
+        if (daysFromCalendarStart == 0 && DateTime.Compare(_calendarPageEarliestDate.Value.Date, Managers.Time.CurrentDT.Date) != 0)
+        {
+            CalendarPagination();
+            _calendarPageEarliestDate = Managers.Time.CurrentDT;
+            return;
+        }
+
+        int iStart = isUpdateFirstWeek ? 0: 7;
+        int iEnd = isUpdateSecondWeek ? calendarDayOfMonthTexts.Length : 7;
+        for (var i = iStart; i < iEnd; i++)
         {
             DateTime thisDT = Managers.Time.CurrentDT.AddDays((daysFromCalendarStart * -1) + i);
 
             //Calendar DayBox Text
-            calendarDayOfMonthTexts[i].text = "<color=#000000>" + thisDT.Day.ToString() + "</color>";
+            calendarDayOfMonthTexts[i].text = thisDT.Day.ToString();
 
             if (i == 0 || thisDT.Day == 1)
             {
-                calendarMonthTexts[i].text = "<color=#000000>" + thisDT.ToString("MMM") + "</color>";
+                calendarMonthTexts[i].text = thisDT.ToString("MMM");
             }
             else
             {
@@ -828,17 +891,6 @@ public class Manager_UI : MonoBehaviour, IManager {
             {
                 timeOverlayRectTransform.sizeDelta = new Vector2((int)(calendarBoxWidth * timePercentage), timeOverlayRectTransform.sizeDelta.y);
             }
-        }
-
-        //Calendar Week Transition
-        if (_calendarPageEarliestDate == null)
-        {
-            _calendarPageEarliestDate = Managers.Time.CurrentDT.AddDays((daysFromCalendarStart * -1));
-        }
-        if (daysFromCalendarStart == 0 && DateTime.Compare(_calendarPageEarliestDate.Value.Date, Managers.Time.CurrentDT.Date) != 0)
-        {
-            CalendarPagination();
-            _calendarPageEarliestDate = Managers.Time.CurrentDT;
         }
 
         //Timeline
