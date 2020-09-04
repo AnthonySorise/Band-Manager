@@ -595,9 +595,9 @@ public class Manager_UI : MonoBehaviour, IManager {
             return;
         }
 
+        HoldEnd_DecreaseSpeedButton();
         if (_hasHoldingDecreaseSpeedButtonStarted)
         {
-            HoldEnd_DecreaseSpeedButton();
             _hasHoldingDecreaseSpeedButtonStarted = false;
             return;
         }

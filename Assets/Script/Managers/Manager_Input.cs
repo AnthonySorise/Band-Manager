@@ -39,7 +39,7 @@ public class Manager_Input : MonoBehaviour, IManager {
 
             //Time
             { KeyCode.Space, InputCommand.ToggleTime },
-            { KeyCode.Plus, InputCommand.IncreaseSpeed },
+            { KeyCode.Equals, InputCommand.IncreaseSpeed },
             { KeyCode.KeypadPlus, InputCommand.IncreaseSpeed },
             { KeyCode.Minus, InputCommand.DecreaseSpeed },
             { KeyCode.KeypadMinus, InputCommand.DecreaseSpeed },
