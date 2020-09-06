@@ -34,7 +34,6 @@ public class Manager_UI : MonoBehaviour, IManager {
     //Font
 
     //Calendar UI Variables
-    private bool _isAnimatingCalendarPagination = false;
     private DateTime? _calendarPageEarliestDate = null;
     
 
@@ -89,31 +88,24 @@ public class Manager_UI : MonoBehaviour, IManager {
                         private TextMeshProUGUI _calendarWeek01SaturdayDayOfMonthText;
                 private GameObject _calendarWeek02Container;
                     private GameObject _calendarWeek02Sunday;
-                        private GameObject _calendarWeek02SundayTimeOverlay;
                         private TextMeshProUGUI _calendarWeek02SundayMonthText;
                         private TextMeshProUGUI _calendarWeek02SundayDayOfMonthText;
                     private GameObject _calendarWeek02Monday;
-                        private GameObject _calendarWeek02MondayTimeOverlay;
                         private TextMeshProUGUI _calendarWeek02MondayMonthText;
                         private TextMeshProUGUI _calendarWeek02MondayDayOfMonthText;
                     private GameObject _calendarWeek02Tuesday;
-                        private GameObject _calendarWeek02TuesdayTimeOverlay;
                         private TextMeshProUGUI _calendarWeek02TuesdayMonthText;
                         private TextMeshProUGUI _calendarWeek02TuesdayDayOfMonthText;
                     private GameObject _calendarWeek02Wednesday;
-                        private GameObject _calendarWeek02WednesdayTimeOverlay;
                         private TextMeshProUGUI _calendarWeek02WednesdayMonthText;
                         private TextMeshProUGUI _calendarWeek02WednesdayDayOfMonthText;
                     private GameObject _calendarWeek02Thursday;
-                        private GameObject _calendarWeek02ThursdayTimeOverlay;
                         private TextMeshProUGUI _calendarWeek02ThursdayMonthText;
                         private TextMeshProUGUI _calendarWeek02ThursdayDayOfMonthText;
                     private GameObject _calendarWeek02Friday;
-                        private GameObject _calendarWeek02FridayTimeOverlay;
                         private TextMeshProUGUI _calendarWeek02FridayMonthText;
                         private TextMeshProUGUI _calendarWeek02FridayDayOfMonthText;
                     private GameObject _calendarWeek02Saturday;
-                        private GameObject _calendarWeek02SaturdayTimeOverlay;
                         private TextMeshProUGUI _calendarWeek02SaturdayMonthText;
                         private TextMeshProUGUI _calendarWeek02SaturdayDayOfMonthText;
                 private GameObject _calendarTimeline;
@@ -126,6 +118,7 @@ public class Manager_UI : MonoBehaviour, IManager {
         public GameObject ToolTipGO;
             public GameObject ToolTipBackground;
             public TextMeshProUGUI ToolTipText;
+
 
     public void Startup(){
 		State = ManagerState.Initializing;
@@ -185,31 +178,24 @@ public class Manager_UI : MonoBehaviour, IManager {
                                 InitiateText(ref _calendarWeek01SaturdayDayOfMonthText, "TMPText_Calendar_Week01_Saturday_DayOfMonth");
                         InitiateGO(ref _calendarWeek02Container, "Panel_Calendar_Week02");
                             InitiateGO(ref _calendarWeek02Sunday, "Panel_Calendar_Week02_Sunday");
-                                InitiateGO(ref _calendarWeek02SundayTimeOverlay, "Panel_Calendar_Week02_Sunday_TimeOverlay");
                                 InitiateText(ref _calendarWeek02SundayMonthText, "TMPText_Calendar_Week02_Sunday_Month");
                                 InitiateText(ref _calendarWeek02SundayDayOfMonthText, "TMPText_Calendar_Week02_Sunday_DayOfMonth");
                             InitiateGO(ref _calendarWeek02Monday, "Panel_Calendar_Week02_Monday");
-                                InitiateGO(ref _calendarWeek02MondayTimeOverlay, "Panel_Calendar_Week02_Monday_TimeOverlay");
                                 InitiateText(ref _calendarWeek02MondayMonthText, "TMPText_Calendar_Week02_Monday_Month");
                                 InitiateText(ref _calendarWeek02MondayDayOfMonthText, "TMPText_Calendar_Week02_Monday_DayOfMonth");
                             InitiateGO(ref _calendarWeek02Tuesday, "Panel_Calendar_Week02_Tuesday");
-                                InitiateGO(ref _calendarWeek02TuesdayTimeOverlay, "Panel_Calendar_Week02_Tuesday_TimeOverlay");
                                 InitiateText(ref _calendarWeek02TuesdayMonthText, "TMPText_Calendar_Week02_Tuesday_Month");
                                 InitiateText(ref _calendarWeek02TuesdayDayOfMonthText, "TMPText_Calendar_Week02_Tuesday_DayOfMonth");
                             InitiateGO(ref _calendarWeek02Wednesday, "Panel_Calendar_Week02_Wednesday");
-                                InitiateGO(ref _calendarWeek02WednesdayTimeOverlay, "Panel_Calendar_Week02_Wednesday_TimeOverlay");
                                 InitiateText(ref _calendarWeek02WednesdayMonthText, "TMPText_Calendar_Week02_Wednesday_Month");
                                 InitiateText(ref _calendarWeek02WednesdayDayOfMonthText, "TMPText_Calendar_Week02_Wednesday_DayOfMonth");
                             InitiateGO(ref _calendarWeek02Thursday, "Panel_Calendar_Week02_Thursday");
-                                InitiateGO(ref _calendarWeek02ThursdayTimeOverlay, "Panel_Calendar_Week02_Thursday_TimeOverlay");
                                 InitiateText(ref _calendarWeek02ThursdayMonthText, "TMPText_Calendar_Week02_Thursday_Month");
                                 InitiateText(ref _calendarWeek02ThursdayDayOfMonthText, "TMPText_Calendar_Week02_Thursday_DayOfMonth");
                             InitiateGO(ref _calendarWeek02Friday, "Panel_Calendar_Week02_Friday");
-                                InitiateGO(ref _calendarWeek02FridayTimeOverlay, "Panel_Calendar_Week02_Friday_TimeOverlay");
                                 InitiateText(ref _calendarWeek02FridayMonthText, "TMPText_Calendar_Week02_Friday_Month");
                                 InitiateText(ref _calendarWeek02FridayDayOfMonthText, "TMPText_Calendar_Week02_Friday_DayOfMonth");
                             InitiateGO(ref _calendarWeek02Saturday, "Panel_Calendar_Week02_Saturday");
-                                InitiateGO(ref _calendarWeek02SaturdayTimeOverlay, "Panel_Calendar_Week02_Saturday_TimeOverlay");
                                 InitiateText(ref _calendarWeek02SaturdayMonthText, "TMPText_Calendar_Week02_Saturday_Month");
                                 InitiateText(ref _calendarWeek02SaturdayDayOfMonthText, "TMPText_Calendar_Week02_Saturday_DayOfMonth");
                         InitiateGO(ref _calendarTimeline, "Panel_Calendar_Timeline");
@@ -224,6 +210,10 @@ public class Manager_UI : MonoBehaviour, IManager {
             InitiateGO(ref ToolTipGO, "ToolTip");
                 InitiateGO(ref ToolTipBackground, "Panel_ToolTipBackground");
                 InitiateText(ref ToolTipText, "Text_ToolTip");
+
+
+
+
 
 
         _screenCoverCanvasGO.SetActive(false);
@@ -624,24 +614,32 @@ public class Manager_UI : MonoBehaviour, IManager {
     private bool _calendarExpanded = true;
     private void ToggleCalendarPanel()
     {
-        if (!_calendarExpanded)
+        if (_isAnimatingToggleCalendarPanel == true)
         {
-            
-            var Vector2 = new Vector2();
-            Vector2.x = 430;
-            Vector2.y = 205;
-            LeanTween.size(_calendarPanelContainerGO.GetComponent<RectTransform>(), Vector2, 0.5f).setEase(LeanTweenType.easeInOutExpo);
-            LeanTween.scaleY(_calendarPanelGO, 1, 0.5f).setEase(LeanTweenType.easeInOutExpo);
+            return;
         }
-        else
+        StartCoroutine("CalendarToggleAnimating");
+
+        int vectorY = _calendarExpanded ? 25:205;
+        int scaleY = _calendarExpanded ? 0:1;
+
+        var Vector2 = new Vector2
         {
-            var Vector2 = new Vector2();
-            Vector2.x = 430;
-            Vector2.y = 25;
-            LeanTween.size(_calendarPanelContainerGO.GetComponent<RectTransform>(), Vector2, 0.5f).setEase(LeanTweenType.easeInOutExpo);
-            LeanTween.scaleY(_calendarPanelGO, 0, 0.5f).setEase(LeanTweenType.easeInOutExpo);
-        }
+            x = 430,
+            y = vectorY
+        };
+        LeanTween.size(_calendarPanelContainerGO.GetComponent<RectTransform>(), Vector2, 0.5f).setEase(LeanTweenType.easeInOutExpo);
+        LeanTween.scaleY(_calendarPanelGO, scaleY, 0.5f).setEase(LeanTweenType.easeInOutExpo);
+
         _calendarExpanded = !_calendarExpanded;
+    }
+    private readonly float _timeToAnimateToggleCalendarPanel = .5f;
+    private bool _isAnimatingToggleCalendarPanel = false;
+    IEnumerator CalendarToggleAnimating()
+    {
+        _isAnimatingToggleCalendarPanel = true;
+        yield return new WaitForSecondsRealtime(_timeToAnimateToggleCalendarPanel);
+        _isAnimatingToggleCalendarPanel = false;
     }
 
     //OnUpdate
@@ -724,8 +722,18 @@ public class Manager_UI : MonoBehaviour, IManager {
         {
             return;
         }
-
         StartCoroutine("CalendarPaginationAnimating");
+
+        GameObject[] calendarTimeOverlays =
+        {
+            _calendarWeek01SundayTimeOverlay,
+            _calendarWeek01MondayTimeOverlay,
+            _calendarWeek01TuesdayTimeOverlay,
+            _calendarWeek01WenesdayTimeOverlay,
+            _calendarWeek01ThursdayTimeOverlay,
+            _calendarWeek01FridayTimeOverlay,
+            _calendarWeek01SaturdayTimeOverlay
+        };
 
         Vector3 week01Location = _calendarWeek01Container.GetComponent<RectTransform>().anchoredPosition;
         Vector3 week02Location = _calendarWeek02Container.GetComponent<RectTransform>().anchoredPosition;
@@ -738,41 +746,37 @@ public class Manager_UI : MonoBehaviour, IManager {
             UpdateCalendarPanel(true, false);
             fadeCalendarWeek(_calendarWeek01Container, 0f, false);
             fadeCalendarWeek(_calendarWeek02Container, 0f);
-            LeanTween.move(_calendarWeek02Container.GetComponent<RectTransform>(), week02Location, 0f);
-            fadeCalendarWeek(_calendarWeek02Container, .25f, false);
+            LeanTween.move(_calendarWeek02Container.GetComponent<RectTransform>(), week02Location, 0f).setDelay(0.05f);
+            fadeCalendarWeek(_calendarWeek02Container, .25f, false, 0.1f);
         }
 
-        void fadeCalendarWeek(GameObject calendarWeekContainer, float seconds, bool isFadeOut = true) {
+        void fadeCalendarWeek(GameObject calendarWeekContainer, float seconds, bool isFadeOut = true, float delay = 0f) {
             float rectTransformTo = isFadeOut ? 0f : 1f;
             foreach (RectTransform rt1 in calendarWeekContainer.GetComponentInChildren<RectTransform>())
             {
-                LeanTween.alpha(rt1, rectTransformTo, seconds).setRecursive(false);
+                LeanTween.alpha(rt1, rectTransformTo, seconds).setDelay(delay).setRecursive(false);
                 foreach (RectTransform rt2 in rt1.GetComponentInChildren<RectTransform>())
                 {
-                    LeanTween.alpha(rt2, rectTransformTo * 0.23529f, seconds).setRecursive(false);
                     TextMeshProUGUI text = rt2.gameObject.GetComponent<TextMeshProUGUI>();
                     if (text != null)
                     {
-                        if (isFadeOut)
+                        float start = isFadeOut ? 1f : 0f;
+                        float end = isFadeOut ? 0f : 1f;
+                        LeanTween.value(start, end, seconds).setDelay(delay).setOnUpdate((float value) =>
                         {
-                            LeanTween.value(1f, 0f, seconds).setOnUpdate((float value) =>
-                            {
-                                text.color = new Color32(0, 0, 0, (byte)(255 * value));
-                            });
-                        }
-                        else
-                        {
-                            LeanTween.value(0f, 1f, seconds).setOnUpdate((float value) =>
-                            {
-                                text.color = new Color32(0, 0, 0, (byte)(255 * value));
-                            });
-                        }
+                            text.color = new Color32(0, 0, 0, (byte)(255 * value));
+                        });
                     }
                 }
+            }
+            for (var i = 0; i < calendarTimeOverlays.Length; i++)
+            {
+                LeanTween.alpha(calendarTimeOverlays[i].GetComponent<RectTransform>(), rectTransformTo * 0.23529f, seconds).setDelay(delay).setRecursive(false);
             }
         }
     }
     private readonly float _timeToAnimateCalendarPagination = .5f;
+    private bool _isAnimatingCalendarPagination = false;
     IEnumerator CalendarPaginationAnimating()
     {
         _isAnimatingCalendarPagination = true;
@@ -782,9 +786,7 @@ public class Manager_UI : MonoBehaviour, IManager {
 
     private void UpdateCalendarPanel (bool isUpdateFirstWeek = true, bool isUpdateSecondWeek = true)
     {
-        if (_isAnimatingCalendarPagination) {
-            return;
-        }
+        //GO arrays
         TextMeshProUGUI[] calendarMonthTexts =
         {
             _calendarWeek01SundayMonthText,
@@ -827,16 +829,12 @@ public class Manager_UI : MonoBehaviour, IManager {
             _calendarWeek01WenesdayTimeOverlay,
             _calendarWeek01ThursdayTimeOverlay,
             _calendarWeek01FridayTimeOverlay,
-            _calendarWeek01SaturdayTimeOverlay,
-            _calendarWeek02SundayTimeOverlay,//second half is likely not necessary - save untill pagination is done
-            _calendarWeek02MondayTimeOverlay,
-            _calendarWeek02TuesdayTimeOverlay,
-            _calendarWeek02WednesdayTimeOverlay,
-            _calendarWeek02ThursdayTimeOverlay,
-            _calendarWeek02FridayTimeOverlay,
-            _calendarWeek02SaturdayTimeOverlay
+            _calendarWeek01SaturdayTimeOverlay
         };
 
+        if (_isAnimatingCalendarPagination) {
+            return;
+        }
 
         int daysFromCalendarStart = (int)Managers.Time.CurrentDT.DayOfWeek;
         DateTime startOfDay = Managers.Time.CurrentDT.Date;
@@ -876,20 +874,23 @@ public class Manager_UI : MonoBehaviour, IManager {
             }
 
             //Calendar DayBox Time Overlay
-            RectTransform timeOverlayRectTransform = calendarTimeOverlays[i].GetComponent<RectTransform>();
-            if (DateTime.Compare(thisDT, Managers.Time.CurrentDT) == 1)
+            if(i < 7)
             {
-                timeOverlayRectTransform.sizeDelta = new Vector2(0, timeOverlayRectTransform.sizeDelta.y);
-            }
-            else if (DateTime.Compare(thisDT, Managers.Time.CurrentDT) == -1)
-            {
-                timeOverlayRectTransform.sizeDelta = new Vector2(calendarBoxWidth, timeOverlayRectTransform.sizeDelta.y);
-            }
-            else if (thisDT.Day == Managers.Time.CurrentDT.Day  &&
-                thisDT.Month == Managers.Time.CurrentDT.Month &&
-                thisDT.Year == Managers.Time.CurrentDT.Year)
-            {
-                timeOverlayRectTransform.sizeDelta = new Vector2((int)(calendarBoxWidth * timePercentage), timeOverlayRectTransform.sizeDelta.y);
+                RectTransform timeOverlayRectTransform = calendarTimeOverlays[i].GetComponent<RectTransform>();
+                if (DateTime.Compare(thisDT, Managers.Time.CurrentDT) == 1)
+                {
+                    timeOverlayRectTransform.sizeDelta = new Vector2(0, timeOverlayRectTransform.sizeDelta.y);
+                }
+                else if (DateTime.Compare(thisDT, Managers.Time.CurrentDT) == -1)
+                {
+                    timeOverlayRectTransform.sizeDelta = new Vector2(calendarBoxWidth, timeOverlayRectTransform.sizeDelta.y);
+                }
+                else if (thisDT.Day == Managers.Time.CurrentDT.Day &&
+                    thisDT.Month == Managers.Time.CurrentDT.Month &&
+                    thisDT.Year == Managers.Time.CurrentDT.Year)
+                {
+                    timeOverlayRectTransform.sizeDelta = new Vector2((int)(calendarBoxWidth * timePercentage), timeOverlayRectTransform.sizeDelta.y);
+                }
             }
         }
 
