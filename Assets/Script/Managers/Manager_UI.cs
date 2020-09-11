@@ -735,22 +735,33 @@ public class Manager_UI : MonoBehaviour, IManager {
             _calendarWeek01SaturdayTimeOverlay
         };
 
-        Vector3 week01Location = _calendarWeek01Container.GetComponent<RectTransform>().anchoredPosition;
-        Vector3 week02Location = _calendarWeek02Container.GetComponent<RectTransform>().anchoredPosition;
+        GameObject weekLeaving = isForward ? _calendarWeek01Container : _calendarWeek02Container;
+        GameObject weekMoving = isForward ? _calendarWeek02Container : _calendarWeek01Container;
+        
+        Vector3 weekMovingLocation = weekMoving.GetComponent<RectTransform>().anchoredPosition;
+        Vector3 weekLeavingLocation = weekLeaving.GetComponent<RectTransform>().anchoredPosition;
 
-        fadeCalendarWeek(_calendarWeek01Container, .25f);
-        LeanTween.move(_calendarWeek02Container.GetComponent<RectTransform>(), week01Location, .5f).setEase(LeanTweenType.easeInOutExpo).setOnComplete(animationPhaseTwo);
+        fadeOutCalendarWeek(weekLeaving, .25f);
+        LeanTween.move(weekMoving.GetComponent<RectTransform>(), weekLeavingLocation, .5f).setEase(LeanTweenType.easeInOutExpo).setOnComplete(animationPhaseTwo);
 
         void animationPhaseTwo()
         {
             UpdateCalendarPanel(true, false);
-            fadeCalendarWeek(_calendarWeek01Container, 0f, false);
-            fadeCalendarWeek(_calendarWeek02Container, 0f);
-            LeanTween.move(_calendarWeek02Container.GetComponent<RectTransform>(), week02Location, 0f).setDelay(0.05f);
-            fadeCalendarWeek(_calendarWeek02Container, .25f, false, 0.1f);
+            fadeInCalendarWeek(weekLeaving, 0f);
+            fadeOutCalendarWeek(weekMoving, 0f);
+            LeanTween.move(weekMoving.GetComponent<RectTransform>(), weekMovingLocation, 0f).setDelay(0.05f);
+            fadeInCalendarWeek(weekMoving, .25f, 0.1f);
         }
 
-        void fadeCalendarWeek(GameObject calendarWeekContainer, float seconds, bool isFadeOut = true, float delay = 0f) {
+        void fadeOutCalendarWeek(GameObject calendarWeekContainer, float seconds, float delay = 0f)
+        {
+            fadeCalendarWeek(calendarWeekContainer, seconds, delay);
+        }
+        void fadeInCalendarWeek(GameObject calendarWeekContainer, float seconds, float delay = 0f)
+        {
+            fadeCalendarWeek(calendarWeekContainer, seconds, delay, false);
+        }
+        void fadeCalendarWeek(GameObject calendarWeekContainer, float seconds, float delay = 0f, bool isFadeOut = true) {
             float rectTransformTo = isFadeOut ? 0f : 1f;
             foreach (RectTransform rt1 in calendarWeekContainer.GetComponentInChildren<RectTransform>())
             {
