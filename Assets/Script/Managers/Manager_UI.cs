@@ -34,8 +34,8 @@ public class Manager_UI : MonoBehaviour, IManager {
     //Font
 
     //Calendar UI Variables
-    private DateTime? _calendarPageEarliestDate = null;
-    
+    private DateTime? _calendarLastUpdateDT = null;
+    private int _calendarPage = 1;
 
     //UI Prefabs
     public GameObject prefab_Button;
@@ -722,7 +722,7 @@ public class Manager_UI : MonoBehaviour, IManager {
 
     //Calendar Panel - Update
     private bool _isAnimatingCalendarPagination = false;
-    private void CalendarPagination(bool isForward = true)
+    private void CalendarPaginationAnimation(bool isForward = true)
     {
         if (IsScreenCovered() || _isAnimatingCalendarPagination)
         {
@@ -848,23 +848,33 @@ public class Manager_UI : MonoBehaviour, IManager {
         };
 
 
-        int daysFromCalendarStart = (int)Managers.Time.CurrentDT.DayOfWeek;
+        int daysFromCalendarStart = (int)Managers.Time.CurrentDT.DayOfWeek - (_calendarPage * 7);
         DateTime startOfDay = Managers.Time.CurrentDT.Date;
         DateTime endOfTheDay = Managers.Time.CurrentDT.AddDays(1).Date;
         float timePercentage = (float)(Managers.Time.CurrentDT.Ticks - startOfDay.Ticks) / (float)(endOfTheDay.Ticks - startOfDay.Ticks);
         int calendarBoxWidth = 58;
         int timelineWidth = 430;
-        if (_calendarPageEarliestDate == null)
+
+        //Pagination
+        if (_calendarLastUpdateDT == null)
         {
-            _calendarPageEarliestDate = Managers.Time.CurrentDT.AddDays((daysFromCalendarStart * -1));
+            _calendarLastUpdateDT = Managers.Time.CurrentDT;
         }
 
-        //Calendar Week Transition
-        if (daysFromCalendarStart == 0 && DateTime.Compare(_calendarPageEarliestDate.Value.Date, Managers.Time.CurrentDT.Date) != 0)
+        DayOfWeek lastDayOfWeek = _calendarLastUpdateDT.Value.DayOfWeek;
+        _calendarLastUpdateDT = Managers.Time.CurrentDT;
+
+        if (lastDayOfWeek == DayOfWeek.Saturday && Managers.Time.CurrentDT.DayOfWeek == DayOfWeek.Sunday)//new week
         {
-            CalendarPagination();
-            _calendarPageEarliestDate = Managers.Time.CurrentDT;
-            return;
+            if(_calendarPage > 0)
+            {
+                _calendarPage -= _calendarPage;
+            }
+            else
+            {
+                CalendarPaginationAnimation();
+                return;
+            }
         }
 
         int iStart = isUpdateFirstWeek ? 0: 7;
@@ -889,7 +899,7 @@ public class Manager_UI : MonoBehaviour, IManager {
             if(i < 7)
             {
                 RectTransform timeOverlayRectTransform = calendarTimeOverlays[i].GetComponent<RectTransform>();
-                if (DateTime.Compare(thisDT, Managers.Time.CurrentDT) == 1)
+                if (_calendarPage > 0 ||  DateTime.Compare(thisDT, Managers.Time.CurrentDT) == 1)
                 {
                     timeOverlayRectTransform.sizeDelta = new Vector2(0, timeOverlayRectTransform.sizeDelta.y);
                 }
