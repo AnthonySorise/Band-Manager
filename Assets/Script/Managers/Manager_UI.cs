@@ -612,13 +612,15 @@ public class Manager_UI : MonoBehaviour, IManager {
         }
     }
     private bool _calendarExpanded = true;
+    private bool _isAnimatingToggleCalendarPanel = false;
     private void ToggleCalendarPanel()
     {
         if (_isAnimatingToggleCalendarPanel == true)
         {
             return;
         }
-        StartCoroutine("CalendarToggleAnimating");
+
+        _isAnimatingToggleCalendarPanel = true;
 
         int vectorY = _calendarExpanded ? 25:205;
         int scaleY = _calendarExpanded ? 0:1;
@@ -629,17 +631,14 @@ public class Manager_UI : MonoBehaviour, IManager {
             y = vectorY
         };
         LeanTween.size(_calendarPanelContainerGO.GetComponent<RectTransform>(), Vector2, 0.5f).setEase(LeanTweenType.easeInOutExpo);
-        LeanTween.scaleY(_calendarPanelGO, scaleY, 0.5f).setEase(LeanTweenType.easeInOutExpo);
+        LeanTween.scaleY(_calendarPanelGO, scaleY, 0.5f).setEase(LeanTweenType.easeInOutExpo).setOnComplete(animationPhaseTwo);
+
+        void animationPhaseTwo()
+        {
+            _isAnimatingToggleCalendarPanel = false;
+        }
 
         _calendarExpanded = !_calendarExpanded;
-    }
-    private readonly float _timeToAnimateToggleCalendarPanel = .5f;
-    private bool _isAnimatingToggleCalendarPanel = false;
-    IEnumerator CalendarToggleAnimating()
-    {
-        _isAnimatingToggleCalendarPanel = true;
-        yield return new WaitForSecondsRealtime(_timeToAnimateToggleCalendarPanel);
-        _isAnimatingToggleCalendarPanel = false;
     }
 
     //OnUpdate
@@ -683,8 +682,14 @@ public class Manager_UI : MonoBehaviour, IManager {
         }
 
         UpdateTimePanel();
-        UpdateCalendarPanel();
-
+        if (_isAnimatingCalendarPagination)
+        {
+            UpdateCalendarPanel(false, false);
+        }
+        else
+        {
+            UpdateCalendarPanel();
+        }
     }
 
     //Time Panel - Update
@@ -716,13 +721,15 @@ public class Manager_UI : MonoBehaviour, IManager {
     }
 
     //Calendar Panel - Update
+    private bool _isAnimatingCalendarPagination = false;
     private void CalendarPagination(bool isForward = true)
     {
         if (IsScreenCovered() || _isAnimatingCalendarPagination)
         {
             return;
         }
-        StartCoroutine("CalendarPaginationAnimating");
+
+        _isAnimatingCalendarPagination = true;
 
         GameObject[] calendarTimeOverlays =
         {
@@ -746,11 +753,16 @@ public class Manager_UI : MonoBehaviour, IManager {
 
         void animationPhaseTwo()
         {
-            UpdateCalendarPanel(true, false);
+            UpdateCalendarPanel(isForward, !isForward);
             fadeInCalendarWeek(weekLeaving, 0f);
             fadeOutCalendarWeek(weekMoving, 0f);
-            LeanTween.move(weekMoving.GetComponent<RectTransform>(), weekMovingLocation, 0f).setDelay(0.05f);
-            fadeInCalendarWeek(weekMoving, .25f, 0.1f);
+            LeanTween.move(weekMoving.GetComponent<RectTransform>(), weekMovingLocation, 0f).setDelay(0f).setOnComplete(animationPhaseThree);
+            
+        }
+        void animationPhaseThree()
+        {
+            _isAnimatingCalendarPagination = false;
+            fadeInCalendarWeek(weekMoving, .25f);
         }
 
         void fadeOutCalendarWeek(GameObject calendarWeekContainer, float seconds, float delay = 0f)
@@ -785,14 +797,6 @@ public class Manager_UI : MonoBehaviour, IManager {
                 LeanTween.alpha(calendarTimeOverlays[i].GetComponent<RectTransform>(), rectTransformTo * 0.23529f, seconds).setDelay(delay).setRecursive(false);
             }
         }
-    }
-    private readonly float _timeToAnimateCalendarPagination = .5f;
-    private bool _isAnimatingCalendarPagination = false;
-    IEnumerator CalendarPaginationAnimating()
-    {
-        _isAnimatingCalendarPagination = true;
-        yield return new WaitForSecondsRealtime(_timeToAnimateCalendarPagination);
-        _isAnimatingCalendarPagination = false;
     }
 
     private void UpdateCalendarPanel (bool isUpdateFirstWeek = true, bool isUpdateSecondWeek = true)
@@ -843,9 +847,6 @@ public class Manager_UI : MonoBehaviour, IManager {
             _calendarWeek01SaturdayTimeOverlay
         };
 
-        if (_isAnimatingCalendarPagination) {
-            return;
-        }
 
         int daysFromCalendarStart = (int)Managers.Time.CurrentDT.DayOfWeek;
         DateTime startOfDay = Managers.Time.CurrentDT.Date;
