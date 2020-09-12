@@ -35,7 +35,7 @@ public class Manager_UI : MonoBehaviour, IManager {
 
     //Calendar UI Variables
     private DateTime? _calendarLastUpdateDT = null;
-    private int _calendarPage = 1;
+    private int _calendarPage = 0;
 
     //UI Prefabs
     public GameObject prefab_Button;
