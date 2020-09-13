@@ -784,12 +784,17 @@ public class Manager_UI : MonoBehaviour, IManager {
                     TextMeshProUGUI text = rt2.gameObject.GetComponent<TextMeshProUGUI>();
                     if (text != null)
                     {
-                        float start = isFadeOut ? 1f : 0f;
-                        float end = isFadeOut ? 0f : 1f;
-                        LeanTween.value(start, end, seconds).setDelay(delay).setOnUpdate((float value) =>
+                        float start = isFadeOut ? 1f : 0.001f;
+                        float end = isFadeOut ? 0.001f : 1f;
+
+                        if (isFadeOut)
                         {
-                            text.color = new Color32(0, 0, 0, (byte)(255 * value));
-                        });
+                            LeanTween.value(text.gameObject, a => text.color = a, new Color(0, 0, 0, 1), new Color(0, 0, 0, 0), seconds);
+                        }
+                        else
+                        { 
+                            LeanTween.value(text.gameObject, a => text.color = a, new Color(0, 0, 0, 0), new Color(0, 0, 0, 1), seconds);
+                        }
                     }
                 }
             }
