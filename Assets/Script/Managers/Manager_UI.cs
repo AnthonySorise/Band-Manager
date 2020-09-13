@@ -55,7 +55,7 @@ public class Manager_UI : MonoBehaviour, IManager {
             public Button IncreaseSpeedButton;
             public Button DecreaseSpeedButton;
         private GameObject _calendarPanelContainerGO;
-            public Button ToggleCalendarButton;
+            
             public GameObject _calendarPanelGO;
                 private GameObject _calendarWeek01Container;
                     private GameObject _calendarWeek01Sunday;
@@ -110,6 +110,9 @@ public class Manager_UI : MonoBehaviour, IManager {
                         private TextMeshProUGUI _calendarWeek02SaturdayDayOfMonthText;
                 private GameObject _calendarTimeline;
                     private GameObject _calendarTimeline_TimeOverlay;
+                public Button ToggleCalendarButton;
+                public Button CalendarPagePreviousButton;
+                public Button CalendarPageNextButton;
     private GameObject _screenCoverCanvasGO;
     public GameObject PopupCanvasGO_AboveCover;
     private GameObject _screenCoverMainMenuCanvasGO;
@@ -201,6 +204,8 @@ public class Manager_UI : MonoBehaviour, IManager {
                         InitiateGO(ref _calendarTimeline, "Panel_Calendar_Timeline");
                             InitiateGO(ref _calendarTimeline_TimeOverlay, "Panel_Calendar_Timeline_TimeOverlay");
         InitiateButton(ref ToggleCalendarButton, "Button_ToggleCalendar");
+        InitiateButton(ref CalendarPagePreviousButton, "Button_CalendarPagePrevious");
+        InitiateButton(ref CalendarPageNextButton, "Button_CalendarPageNext");
         InitiateCanvas(ref PopupCanvasGO, "Canvas_Popups", CanvasLayer.BelowCover);
         InitiateCanvas(ref _screenCoverCanvasGO, "Canvas_ScreenCover", CanvasLayer.TheCover);
         InitiateCanvas(ref PopupCanvasGO_AboveCover, "Canvas_Popups_AboveCover", CanvasLayer.AboveCover);
@@ -252,6 +257,8 @@ public class Manager_UI : MonoBehaviour, IManager {
 
         //Calendar Panel Click Listeners
         ToggleCalendarButton.onClick.AddListener(Click_ToggleCalendarButton);
+        CalendarPagePreviousButton.onClick.AddListener(Click_CalendarPagePrevious);
+        CalendarPageNextButton.onClick.AddListener(Click_CalendarPageNext);
 
         //Retract Calendar
         ToggleCalendarPanel();
@@ -611,7 +618,7 @@ public class Manager_UI : MonoBehaviour, IManager {
             ToggleCalendarPanel();
         }
     }
-    private bool _calendarExpanded = true;
+    private bool _isCalendarExpanded = true;
     private bool _isAnimatingToggleCalendarPanel = false;
     private void ToggleCalendarPanel()
     {
@@ -622,9 +629,20 @@ public class Manager_UI : MonoBehaviour, IManager {
 
         _isAnimatingToggleCalendarPanel = true;
 
-        int vectorY = _calendarExpanded ? 25:205;
-        int scaleY = _calendarExpanded ? 0:1;
+        //reset page
+        if (_isCalendarExpanded == false)
+        {
+            _calendarPage = 0;
+        }
 
+        //Calendar Pagination Button Animation
+        int scaleX = _isCalendarExpanded ? 0 : 1;
+        LeanTween.scaleX(CalendarPagePreviousButton.gameObject, scaleX, 0.5f).setEase(LeanTweenType.easeInOutExpo);
+        LeanTween.scaleX(CalendarPageNextButton.gameObject, scaleX, 0.5f).setEase(LeanTweenType.easeInOutExpo);
+
+        //Calendar Panel Animation
+        int vectorY = _isCalendarExpanded ? 25:205;
+        int scaleY = _isCalendarExpanded ? 0:1;
         var Vector2 = new Vector2
         {
             x = 430,
@@ -632,13 +650,148 @@ public class Manager_UI : MonoBehaviour, IManager {
         };
         LeanTween.size(_calendarPanelContainerGO.GetComponent<RectTransform>(), Vector2, 0.5f).setEase(LeanTweenType.easeInOutExpo);
         LeanTween.scaleY(_calendarPanelGO, scaleY, 0.5f).setEase(LeanTweenType.easeInOutExpo).setOnComplete(animationPhaseTwo);
-
         void animationPhaseTwo()
         {
+            //reset page
+            if (_isCalendarExpanded == true)
+            {
+                _calendarPage = 0;
+            }
             _isAnimatingToggleCalendarPanel = false;
         }
 
-        _calendarExpanded = !_calendarExpanded;
+        _isCalendarExpanded = !_isCalendarExpanded;
+    }
+
+    public void Click_CalendarPagePrevious()
+    {
+        CalendarPageChange(false);
+        EventSystem.current.SetSelectedGameObject(null);//prevent selecting the button
+    }
+    public void KeyDown_CalendarPagePrevious()
+    {
+        KeyDown_LinkedToButtonUI(CalendarPagePreviousButton);
+    }
+    public void Hold_CalendarPagePrevious()
+    {
+        CalendarPageChange(false);
+    }
+    public void KeyUp_CalendarPagePrevious()
+    {
+        if (KeyUp_LinkedToButtonUI(CalendarPagePreviousButton))
+        {
+            CalendarPageChange(false);
+        }
+    }
+
+    public void Click_CalendarPageNext()
+    {
+        CalendarPageChange();
+        EventSystem.current.SetSelectedGameObject(null);//prevent selecting the button
+    }
+    public void KeyDown_CalendarPageNext()
+    {
+        KeyDown_LinkedToButtonUI(CalendarPageNextButton);
+    }
+    public void Hold_CalendarPageNext()
+    {
+        CalendarPageChange();
+    }
+    public void KeyUp_CalendarPageNext()
+    {
+        if (KeyUp_LinkedToButtonUI(CalendarPageNextButton))
+        {
+            CalendarPageChange();
+        }
+    }
+    private void CalendarPageChange(bool isForward = true)
+    {
+        if (_isCalendarExpanded == false || _isAnimatingCalendarPagination || (isForward == false && _calendarPage == 0))
+        {
+            return;
+        }
+        var incrementAmount = isForward ? 1 : -1;
+        _calendarPage += incrementAmount;
+        CalendarPaginationAnimation(isForward);
+    }
+
+    private bool _isAnimatingCalendarPagination = false;
+    private void CalendarPaginationAnimation(bool isForward = true)
+    {
+        if (IsScreenCovered() || _isAnimatingCalendarPagination)
+        {
+            return;
+        }
+
+        _isAnimatingCalendarPagination = true;
+
+        GameObject[] calendarTimeOverlays =
+        {
+            _calendarWeek01SundayTimeOverlay,
+            _calendarWeek01MondayTimeOverlay,
+            _calendarWeek01TuesdayTimeOverlay,
+            _calendarWeek01WenesdayTimeOverlay,
+            _calendarWeek01ThursdayTimeOverlay,
+            _calendarWeek01FridayTimeOverlay,
+            _calendarWeek01SaturdayTimeOverlay
+        };
+
+        GameObject weekLeaving = isForward ? _calendarWeek01Container : _calendarWeek02Container;
+        GameObject weekMoving = isForward ? _calendarWeek02Container : _calendarWeek01Container;
+
+        Vector3 weekMovingLocation = weekMoving.GetComponent<RectTransform>().anchoredPosition;
+        Vector3 weekLeavingLocation = weekLeaving.GetComponent<RectTransform>().anchoredPosition;
+
+        fadeOutCalendarWeek(weekLeaving, .25f);
+        LeanTween.move(weekMoving.GetComponent<RectTransform>(), weekLeavingLocation, .5f).setEase(LeanTweenType.easeInOutExpo).setOnComplete(animationPhaseTwo);
+
+        void animationPhaseTwo()
+        {
+            UpdateCalendarPanel(isForward, !isForward);
+            fadeInCalendarWeek(weekLeaving, 0f);
+            fadeOutCalendarWeek(weekMoving, 0f);
+            LeanTween.move(weekMoving.GetComponent<RectTransform>(), weekMovingLocation, 0f).setDelay(0f).setOnComplete(animationPhaseThree);
+
+        }
+        void animationPhaseThree()
+        {
+            _isAnimatingCalendarPagination = false;
+            fadeInCalendarWeek(weekMoving, .25f);
+        }
+
+        void fadeOutCalendarWeek(GameObject calendarWeekContainer, float seconds, float delay = 0f)
+        {
+            fadeCalendarWeek(calendarWeekContainer, seconds, delay);
+        }
+        void fadeInCalendarWeek(GameObject calendarWeekContainer, float seconds, float delay = 0f)
+        {
+            fadeCalendarWeek(calendarWeekContainer, seconds, delay, false);
+        }
+        void fadeCalendarWeek(GameObject calendarWeekContainer, float seconds, float delay = 0f, bool isFadeOut = true)
+        {
+            float rectTransformTo = isFadeOut ? 0f : 1f;
+            foreach (RectTransform rt1 in calendarWeekContainer.GetComponentInChildren<RectTransform>())
+            {
+                LeanTween.alpha(rt1, rectTransformTo, seconds).setDelay(delay).setRecursive(false);
+                foreach (RectTransform rt2 in rt1.GetComponentInChildren<RectTransform>())
+                {
+                    TextMeshProUGUI text = rt2.gameObject.GetComponent<TextMeshProUGUI>();
+                    if (text != null)
+                    {
+                        float start = isFadeOut ? 1f : 0f;
+                        float end = isFadeOut ? 0f : 1f;
+                        LeanTween.value(start, end, seconds).setDelay(delay).setOnUpdate((float value) =>
+                        {
+                            text.color = new Color32(0, 0, 0, (byte)(255 * value));
+                        });
+                    }
+                }
+            }
+            for (var i = 0; i < calendarTimeOverlays.Length; i++)
+            {
+                LeanTween.alpha(calendarTimeOverlays[i].GetComponent<RectTransform>(), rectTransformTo * 0.23529f, seconds).setDelay(delay).setRecursive(false);
+            }
+        }
     }
 
     //OnUpdate
@@ -720,85 +873,6 @@ public class Manager_UI : MonoBehaviour, IManager {
         _dateText.text = Managers.Time.CurrentDT.ToString("MMMM/d/yyyy");
     }
 
-    //Calendar Panel - Update
-    private bool _isAnimatingCalendarPagination = false;
-    private void CalendarPaginationAnimation(bool isForward = true)
-    {
-        if (IsScreenCovered() || _isAnimatingCalendarPagination)
-        {
-            return;
-        }
-
-        _isAnimatingCalendarPagination = true;
-
-        GameObject[] calendarTimeOverlays =
-        {
-            _calendarWeek01SundayTimeOverlay,
-            _calendarWeek01MondayTimeOverlay,
-            _calendarWeek01TuesdayTimeOverlay,
-            _calendarWeek01WenesdayTimeOverlay,
-            _calendarWeek01ThursdayTimeOverlay,
-            _calendarWeek01FridayTimeOverlay,
-            _calendarWeek01SaturdayTimeOverlay
-        };
-
-        GameObject weekLeaving = isForward ? _calendarWeek01Container : _calendarWeek02Container;
-        GameObject weekMoving = isForward ? _calendarWeek02Container : _calendarWeek01Container;
-        
-        Vector3 weekMovingLocation = weekMoving.GetComponent<RectTransform>().anchoredPosition;
-        Vector3 weekLeavingLocation = weekLeaving.GetComponent<RectTransform>().anchoredPosition;
-
-        fadeOutCalendarWeek(weekLeaving, .25f);
-        LeanTween.move(weekMoving.GetComponent<RectTransform>(), weekLeavingLocation, .5f).setEase(LeanTweenType.easeInOutExpo).setOnComplete(animationPhaseTwo);
-
-        void animationPhaseTwo()
-        {
-            UpdateCalendarPanel(isForward, !isForward);
-            fadeInCalendarWeek(weekLeaving, 0f);
-            fadeOutCalendarWeek(weekMoving, 0f);
-            LeanTween.move(weekMoving.GetComponent<RectTransform>(), weekMovingLocation, 0f).setDelay(0f).setOnComplete(animationPhaseThree);
-            
-        }
-        void animationPhaseThree()
-        {
-            _isAnimatingCalendarPagination = false;
-            fadeInCalendarWeek(weekMoving, .25f);
-        }
-
-        void fadeOutCalendarWeek(GameObject calendarWeekContainer, float seconds, float delay = 0f)
-        {
-            fadeCalendarWeek(calendarWeekContainer, seconds, delay);
-        }
-        void fadeInCalendarWeek(GameObject calendarWeekContainer, float seconds, float delay = 0f)
-        {
-            fadeCalendarWeek(calendarWeekContainer, seconds, delay, false);
-        }
-        void fadeCalendarWeek(GameObject calendarWeekContainer, float seconds, float delay = 0f, bool isFadeOut = true) {
-            float rectTransformTo = isFadeOut ? 0f : 1f;
-            foreach (RectTransform rt1 in calendarWeekContainer.GetComponentInChildren<RectTransform>())
-            {
-                LeanTween.alpha(rt1, rectTransformTo, seconds).setDelay(delay).setRecursive(false);
-                foreach (RectTransform rt2 in rt1.GetComponentInChildren<RectTransform>())
-                {
-                    TextMeshProUGUI text = rt2.gameObject.GetComponent<TextMeshProUGUI>();
-                    if (text != null)
-                    {
-                        float start = isFadeOut ? 1f : 0f;
-                        float end = isFadeOut ? 0f : 1f;
-                        LeanTween.value(start, end, seconds).setDelay(delay).setOnUpdate((float value) =>
-                        {
-                            text.color = new Color32(0, 0, 0, (byte)(255 * value));
-                        });
-                    }
-                }
-            }
-            for (var i = 0; i < calendarTimeOverlays.Length; i++)
-            {
-                LeanTween.alpha(calendarTimeOverlays[i].GetComponent<RectTransform>(), rectTransformTo * 0.23529f, seconds).setDelay(delay).setRecursive(false);
-            }
-        }
-    }
-
     private void UpdateCalendarPanel (bool isUpdateFirstWeek = true, bool isUpdateSecondWeek = true)
     {
         //GO arrays
@@ -868,7 +942,7 @@ public class Manager_UI : MonoBehaviour, IManager {
         {
             if(_calendarPage > 0)
             {
-                _calendarPage -= _calendarPage;
+                _calendarPage -= 1;
             }
             else
             {
