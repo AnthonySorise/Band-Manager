@@ -727,6 +727,7 @@ public class Manager_UI : MonoBehaviour, IManager
     }
 
     private bool _isAnimatingCalendarPagination = false;
+    private bool _isFadingInCalendarTimeOverlays = false;
     private void CalendarPaginationAnimation(bool isForward = true)
     {
         if (IsScreenCovered() || _isAnimatingCalendarPagination)
@@ -802,15 +803,26 @@ public class Manager_UI : MonoBehaviour, IManager
                     }
                 }
             }
+            
+            if(!isForward && !isFadeOut && _calendarPage == 0 && calendarWeekContainer.gameObject == _calendarWeek01Container)
+            {
+                _isFadingInCalendarTimeOverlays = true;
+            }
             for (var i = 0; i < calendarTimeOverlays.Length; i++)
             {
-                LeanTween.alpha(calendarTimeOverlays[i].GetComponent<RectTransform>(), rectTransformTo * 0.23529f, seconds).setDelay(delay).setRecursive(false).setOnComplete(toggleBool);
-                void toggleBool()
+                LeanTween.alpha(calendarTimeOverlays[i].GetComponent<RectTransform>(), rectTransformTo * 0.23529f, seconds).setDelay(delay).setRecursive(false);
+                if(i == calendarTimeOverlays.Length - 1)
                 {
-                    if (finalizeAnimation == true)
-                    {
-                        _isAnimatingCalendarPagination = false;
-                    }
+                    LeanTween.alpha(calendarTimeOverlays[i].GetComponent<RectTransform>(), rectTransformTo * 0.23529f, seconds).setDelay(delay).setRecursive(false).setOnComplete(()=> {
+                        if (finalizeAnimation == true)
+                        {
+                            _isAnimatingCalendarPagination = false;
+                        }
+                        if (_isFadingInCalendarTimeOverlays)
+                        {
+                            _isFadingInCalendarTimeOverlays = false;
+                        }
+                    });
                 }
             }
         }
@@ -990,10 +1002,12 @@ public class Manager_UI : MonoBehaviour, IManager
             {
                 calendarMonthTexts[i].text = "";
             }
-
-            //Calendar DayBox Time Overlay
-            if (i < 7)
+        }
+        if (_isFadingInCalendarTimeOverlays || iStart == 0)
+        {
+            for(var i = 0; i < calendarTimeOverlays.Length; i++)
             {
+                DateTime thisDT = Managers.Time.CurrentDT.AddDays((daysFromCalendarStart * -1) + i);
                 RectTransform timeOverlayRectTransform = calendarTimeOverlays[i].GetComponent<RectTransform>();
                 if (_calendarPage > 0 || DateTime.Compare(thisDT, Managers.Time.CurrentDT) == 1)
                 {
