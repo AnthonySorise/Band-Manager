@@ -50,3 +50,11 @@ Update Mode: updateDependencies
 
 The following packages were updated:
   com.unity.ads from version 3.4.7 to 3.4.9
+
+=== Fri Oct  9 18:12:31 2020
+
+Packages were changed.
+Update Mode: updateDependencies
+
+The following packages were updated:
+  com.unity.purchasing from version 2.0.6 to 2.1.0

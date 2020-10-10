@@ -36,6 +36,7 @@ public class Manager_UI : MonoBehaviour, IManager
 
     //Calendar UI Variables
     private DateTime? _calendarLastUpdateDT = null;
+    private DateTime? _calendarSelectedDay = null;
     private int _calendarPage = 0;
 
     //UI Prefabs
@@ -217,10 +218,6 @@ public class Manager_UI : MonoBehaviour, IManager
         InitiateGO(ref ToolTipGO, "ToolTip");
         InitiateGO(ref ToolTipBackground, "Panel_ToolTipBackground");
         InitiateText(ref ToolTipText, "Text_ToolTip");
-
-
-
-
 
 
         _screenCoverCanvasGO.SetActive(false);
@@ -735,6 +732,9 @@ public class Manager_UI : MonoBehaviour, IManager
             return;
         }
 
+        float fadeTime = 0.15f;
+        float moveTime = 0.3f;
+
         _isAnimatingCalendarPagination = true;
 
         GameObject[] calendarTimeOverlays =
@@ -754,8 +754,8 @@ public class Manager_UI : MonoBehaviour, IManager
         Vector3 weekMovingLocation = weekMoving.GetComponent<RectTransform>().anchoredPosition;
         Vector3 weekLeavingLocation = weekLeaving.GetComponent<RectTransform>().anchoredPosition;
 
-        fadeOutCalendarWeek(weekLeaving, .25f);
-        LeanTween.move(weekMoving.GetComponent<RectTransform>(), weekLeavingLocation, .5f).setEase(LeanTweenType.easeInOutExpo).setOnComplete(animationPhaseTwo);
+        fadeOutCalendarWeek(weekLeaving, fadeTime);
+        LeanTween.move(weekMoving.GetComponent<RectTransform>(), weekLeavingLocation, moveTime).setEase(LeanTweenType.easeInOutExpo).setOnComplete(animationPhaseTwo);
 
         void animationPhaseTwo()
         {
@@ -767,23 +767,23 @@ public class Manager_UI : MonoBehaviour, IManager
         void animationPhaseThree()
         {
             UpdateCalendarPanel(!isForward, isForward);
-            fadeInCalendarWeek(weekMoving, .25f, 0f, true);
+            fadeInCalendarWeek(weekMoving, fadeTime, true);
         }
 
-        void fadeOutCalendarWeek(GameObject calendarWeekContainer, float seconds, float delay = 0f, bool finalizeAnimation = false)
+        void fadeOutCalendarWeek(GameObject calendarWeekContainer, float seconds, bool finalizeAnimation = false)
         {
-            fadeCalendarWeek(calendarWeekContainer, seconds, delay, true, finalizeAnimation);
+            fadeCalendarWeek(calendarWeekContainer, seconds, true, finalizeAnimation);
         }
-        void fadeInCalendarWeek(GameObject calendarWeekContainer, float seconds, float delay = 0f, bool finalizeAnimation = false)
+        void fadeInCalendarWeek(GameObject calendarWeekContainer, float seconds, bool finalizeAnimation = false)
         {
-            fadeCalendarWeek(calendarWeekContainer, seconds, delay, false, finalizeAnimation);
+            fadeCalendarWeek(calendarWeekContainer, seconds, false, finalizeAnimation);
         }
-        void fadeCalendarWeek(GameObject calendarWeekContainer, float seconds, float delay = 0f, bool isFadeOut = true, bool finalizeAnimation = false)
+        void fadeCalendarWeek(GameObject calendarWeekContainer, float seconds, bool isFadeOut = true, bool finalizeAnimation = false)
         {
             float rectTransformTo = isFadeOut ? 0f : 1f;
             foreach (RectTransform rt1 in calendarWeekContainer.GetComponentInChildren<RectTransform>())
             {
-                LeanTween.alpha(rt1, rectTransformTo, seconds).setDelay(delay).setRecursive(false);
+                LeanTween.alpha(rt1, rectTransformTo, seconds).setRecursive(false);
                 foreach (RectTransform rt2 in rt1.GetComponentInChildren<RectTransform>())
                 {
                     TextMeshProUGUI text = rt2.gameObject.GetComponent<TextMeshProUGUI>();
@@ -803,22 +803,25 @@ public class Manager_UI : MonoBehaviour, IManager
                     }
                 }
             }
-            
-            if(!isForward && !isFadeOut && _calendarPage == 0 && calendarWeekContainer.gameObject == _calendarWeek01Container)
+
+            if (!isFadeOut && _calendarPage == 0 && calendarWeekContainer.gameObject == _calendarWeek01Container)
             {
                 _isFadingInCalendarTimeOverlays = true;
             }
             for (var i = 0; i < calendarTimeOverlays.Length; i++)
             {
-                LeanTween.alpha(calendarTimeOverlays[i].GetComponent<RectTransform>(), rectTransformTo * 0.23529f, seconds).setDelay(delay).setRecursive(false);
-                if(i == calendarTimeOverlays.Length - 1)
+                if (i != calendarTimeOverlays.Length - 1)
                 {
-                    LeanTween.alpha(calendarTimeOverlays[i].GetComponent<RectTransform>(), rectTransformTo * 0.23529f, seconds).setDelay(delay).setRecursive(false).setOnComplete(()=> {
+                    LeanTween.alpha(calendarTimeOverlays[i].GetComponent<RectTransform>(), rectTransformTo * 0.23529f, seconds).setRecursive(false);
+                }
+                else
+                {
+                    LeanTween.alpha(calendarTimeOverlays[i].GetComponent<RectTransform>(), rectTransformTo * 0.23529f, seconds).setRecursive(false).setOnComplete(()=> {
                         if (finalizeAnimation == true)
                         {
                             _isAnimatingCalendarPagination = false;
                         }
-                        if (_isFadingInCalendarTimeOverlays)
+                        if (_isFadingInCalendarTimeOverlays && seconds > 0)
                         {
                             _isFadingInCalendarTimeOverlays = false;
                         }
@@ -907,7 +910,7 @@ public class Manager_UI : MonoBehaviour, IManager
         _dateText.text = Managers.Time.CurrentDT.ToString("MMMM/d/yyyy");
     }
 
-    private void UpdateCalendarPanel(bool isUpdateFirstWeek = true, bool isUpdateSecondWeek = true)
+    private void UpdateCalendarPanel(bool isUpdateWeek01 = true, bool isUpdateWeek02 = true)
     {
         //GO arrays
         TextMeshProUGUI[] calendarMonthTexts =
@@ -963,10 +966,15 @@ public class Manager_UI : MonoBehaviour, IManager
         int calendarBoxWidth = 58;
         int timelineWidth = 430;
 
-        //Pagination
+
+        //Paginate and skip update if at end of week
         if (_calendarLastUpdateDT == null)
         {
             _calendarLastUpdateDT = Managers.Time.CurrentDT;
+        }
+        if (_calendarSelectedDay == null)
+        {
+            _calendarSelectedDay = Managers.Time.CurrentDT.Date;
         }
 
         DayOfWeek lastDayOfWeek = _calendarLastUpdateDT.Value.DayOfWeek;
@@ -985,8 +993,9 @@ public class Manager_UI : MonoBehaviour, IManager
             }
         }
 
-        int iStart = isUpdateFirstWeek ? 0 : 7;
-        int iEnd = isUpdateSecondWeek ? calendarDayOfMonthTexts.Length : 7;
+        //Update weeks
+        int iStart = isUpdateWeek01 ? 0 : 7;
+        int iEnd = isUpdateWeek02 ? 14 : 7;
         for (var i = iStart; i < iEnd; i++)
         {
             DateTime thisDT = Managers.Time.CurrentDT.AddDays((daysFromCalendarStart * -1) + i);
@@ -1003,7 +1012,9 @@ public class Manager_UI : MonoBehaviour, IManager
                 calendarMonthTexts[i].text = "";
             }
         }
-        if (_isFadingInCalendarTimeOverlays || iStart == 0)
+
+        //Update overlays
+        if (isUpdateWeek01 || _isFadingInCalendarTimeOverlays)
         {
             for(var i = 0; i < calendarTimeOverlays.Length; i++)
             {
@@ -1026,7 +1037,7 @@ public class Manager_UI : MonoBehaviour, IManager
             }
         }
 
-        //Timeline
+        //Update Timeline
         RectTransform timelineTimeOverlayRectTransform = _calendarTimeline_TimeOverlay.GetComponent<RectTransform>();
         timelineTimeOverlayRectTransform.sizeDelta = new Vector2((int)(timelineWidth * timePercentage), timelineTimeOverlayRectTransform.sizeDelta.y);
     }
