@@ -125,6 +125,12 @@ public class Manager_UI : MonoBehaviour, IManager
     public TextMeshProUGUI ToolTipText;
 
 
+    GameObject[] calendarDayBoxes = new GameObject[14];
+    GameObject[] calendarTimeOverlays = new GameObject[7];
+    TextMeshProUGUI[] calendarMonthTexts = new TextMeshProUGUI[14];
+    TextMeshProUGUI[] calendarDayOfMonthTexts = new TextMeshProUGUI[14];
+    
+
     public void Startup()
     {
         State = ManagerState.Initializing;
@@ -218,6 +224,60 @@ public class Manager_UI : MonoBehaviour, IManager
         InitiateGO(ref ToolTipGO, "ToolTip");
         InitiateGO(ref ToolTipBackground, "Panel_ToolTipBackground");
         InitiateText(ref ToolTipText, "Text_ToolTip");
+
+        //there's probably a better way to collect these
+        calendarDayBoxes[0] = _calendarWeek01Sunday;
+        calendarDayBoxes[1] = _calendarWeek01Monday;
+        calendarDayBoxes[2] = _calendarWeek01Tuesday;
+        calendarDayBoxes[3] = _calendarWeek01Wednesday;
+        calendarDayBoxes[4] = _calendarWeek01Thursday;
+        calendarDayBoxes[5] = _calendarWeek01Friday;
+        calendarDayBoxes[6] = _calendarWeek01Saturday;
+        calendarDayBoxes[7] = _calendarWeek02Sunday;
+        calendarDayBoxes[8] = _calendarWeek02Monday;
+        calendarDayBoxes[9] = _calendarWeek02Tuesday;
+        calendarDayBoxes[10] = _calendarWeek02Wednesday;
+        calendarDayBoxes[11] = _calendarWeek02Thursday;
+        calendarDayBoxes[12] = _calendarWeek02Friday;
+        calendarDayBoxes[13] = _calendarWeek02Saturday;
+
+        calendarTimeOverlays[0] = _calendarWeek01SundayTimeOverlay;
+        calendarTimeOverlays[1] = _calendarWeek01MondayTimeOverlay;
+        calendarTimeOverlays[2] = _calendarWeek01TuesdayTimeOverlay;
+        calendarTimeOverlays[3] = _calendarWeek01WenesdayTimeOverlay;
+        calendarTimeOverlays[4] = _calendarWeek01ThursdayTimeOverlay;
+        calendarTimeOverlays[5] = _calendarWeek01FridayTimeOverlay;
+        calendarTimeOverlays[6] = _calendarWeek01SaturdayTimeOverlay;
+
+        calendarMonthTexts[0] = _calendarWeek01SundayMonthText;
+        calendarMonthTexts[1] = _calendarWeek01MondayMonthText;
+        calendarMonthTexts[2] = _calendarWeek01TuesdayMonthText;
+        calendarMonthTexts[3] = _calendarWeek01WednesdayMonthText;
+        calendarMonthTexts[4] = _calendarWeek01ThursdayMonthText;
+        calendarMonthTexts[5] = _calendarWeek01FridayMonthText;
+        calendarMonthTexts[6] = _calendarWeek01SaturdayMonthText;
+        calendarMonthTexts[7] = _calendarWeek02SundayMonthText;
+        calendarMonthTexts[8] = _calendarWeek02MondayMonthText;
+        calendarMonthTexts[9] = _calendarWeek02TuesdayMonthText;
+        calendarMonthTexts[10] = _calendarWeek02WednesdayMonthText;
+        calendarMonthTexts[11] = _calendarWeek02ThursdayMonthText;
+        calendarMonthTexts[12] = _calendarWeek02FridayMonthText;
+        calendarMonthTexts[13] = _calendarWeek02SaturdayMonthText;
+
+        calendarDayOfMonthTexts[0] = _calendarWeek01SundayDayOfMonthText;
+        calendarDayOfMonthTexts[1] = _calendarWeek01MondayDayOfMonthText;
+        calendarDayOfMonthTexts[2] = _calendarWeek01TuesdayDayOfMonthText;
+        calendarDayOfMonthTexts[3] = _calendarWeek01WednesdayDayOfMonthText;
+        calendarDayOfMonthTexts[4] = _calendarWeek01ThursdayDayOfMonthText;
+        calendarDayOfMonthTexts[5] = _calendarWeek01FridayDayOfMonthText;
+        calendarDayOfMonthTexts[6] = _calendarWeek01SaturdayDayOfMonthText;
+        calendarDayOfMonthTexts[7] = _calendarWeek02SundayDayOfMonthText;
+        calendarDayOfMonthTexts[8] = _calendarWeek02MondayDayOfMonthText;
+        calendarDayOfMonthTexts[9] = _calendarWeek02TuesdayDayOfMonthText;
+        calendarDayOfMonthTexts[10] = _calendarWeek02WednesdayDayOfMonthText;
+        calendarDayOfMonthTexts[11] = _calendarWeek02ThursdayDayOfMonthText;
+        calendarDayOfMonthTexts[12] = _calendarWeek02FridayDayOfMonthText;
+        calendarDayOfMonthTexts[13] = _calendarWeek02SaturdayDayOfMonthText;
 
 
         _screenCoverCanvasGO.SetActive(false);
@@ -637,10 +697,11 @@ public class Manager_UI : MonoBehaviour, IManager
 
         _isAnimatingToggleCalendarPanel = true;
 
-        //reset page
+        //resets before open
         if (_isCalendarExpanded == false)
         {
             _calendarPage = 0;
+            _calendarSelectedDay = Managers.Time.CurrentDT.Date;
         }
 
         //Calendar Pagination Button Animation
@@ -781,29 +842,38 @@ public class Manager_UI : MonoBehaviour, IManager
         void fadeCalendarWeek(GameObject calendarWeekContainer, float seconds, bool isFadeOut = true, bool finalizeAnimation = false)
         {
             float rectTransformTo = isFadeOut ? 0f : 1f;
-            foreach (RectTransform rt1 in calendarWeekContainer.GetComponentInChildren<RectTransform>())
-            {
-                LeanTween.alpha(rt1, rectTransformTo, seconds).setRecursive(false);
-                foreach (RectTransform rt2 in rt1.GetComponentInChildren<RectTransform>())
-                {
-                    TextMeshProUGUI text = rt2.gameObject.GetComponent<TextMeshProUGUI>();
-                    if (text != null)
-                    {
-                        float start = isFadeOut ? 1f : 0.001f;
-                        float end = isFadeOut ? 0.001f : 1f;
+            int iStart = (calendarWeekContainer.gameObject == _calendarWeek01Container) ? 0 : 7;
+            int iEnd = (calendarWeekContainer.gameObject == _calendarWeek01Container) ? 7 : calendarDayBoxes.Length;
 
-                        if (isFadeOut)
-                        {
-                            LeanTween.value(text.gameObject, a => text.color = a, new Color(0, 0, 0, 1), new Color(0, 0, 0, 0), seconds);
-                        }
-                        else
-                        {
-                            LeanTween.value(text.gameObject, a => text.color = a, new Color(0, 0, 0, 0), new Color(0, 0, 0, 1), seconds);
-                        }
-                    }
+            for (var i = iStart; i < iEnd; i++)
+            {
+                //daybox
+                LeanTween.alpha(calendarDayBoxes[i].GetComponent<RectTransform>(), rectTransformTo, seconds).setRecursive(false);
+
+                //texts
+                float start = isFadeOut ? 1f : 0.001f;
+                float end = isFadeOut ? 0.001f : 1f;
+                TextMeshProUGUI calendarMonthText = calendarDayOfMonthTexts[i];
+                TextMeshProUGUI dayOfMonthText = calendarDayOfMonthTexts[i];
+                if (isFadeOut)
+                {
+                    LeanTween.value(calendarMonthText.gameObject, a => calendarMonthText.color = a, new Color(0, 0, 0, 1), new Color(0, 0, 0, 0), seconds);
+                    LeanTween.value(dayOfMonthText.gameObject, a => dayOfMonthText.color = a, new Color(0, 0, 0, 1), new Color(0, 0, 0, 0), seconds);
+                }
+                else
+                {
+                    LeanTween.value(calendarMonthText.gameObject, a => calendarMonthText.color = a, new Color(0, 0, 0, 0), new Color(0, 0, 0, 1), seconds);
+                    LeanTween.value(dayOfMonthText.gameObject, a => dayOfMonthText.color = a, new Color(0, 0, 0, 0), new Color(0, 0, 0, 1), seconds);
+                }
+
+                //outline
+                Outline outline = calendarDayBoxes[i].GetComponent<Outline>();
+                if (outline.enabled)
+                {
+                    outline.enabled = false;
                 }
             }
-
+            //time overlays
             if (!isFadeOut && _calendarPage == 0 && calendarWeekContainer.gameObject == _calendarWeek01Container)
             {
                 _isFadingInCalendarTimeOverlays = true;
@@ -816,7 +886,7 @@ public class Manager_UI : MonoBehaviour, IManager
                 }
                 else
                 {
-                    LeanTween.alpha(calendarTimeOverlays[i].GetComponent<RectTransform>(), rectTransformTo * 0.23529f, seconds).setRecursive(false).setOnComplete(()=> {
+                    LeanTween.alpha(calendarTimeOverlays[i].GetComponent<RectTransform>(), rectTransformTo * 0.23529f, seconds).setRecursive(false).setOnComplete(() => {
                         if (finalizeAnimation == true)
                         {
                             _isAnimatingCalendarPagination = false;
@@ -912,51 +982,6 @@ public class Manager_UI : MonoBehaviour, IManager
 
     private void UpdateCalendarPanel(bool isUpdateWeek01 = true, bool isUpdateWeek02 = true)
     {
-        //GO arrays
-        TextMeshProUGUI[] calendarMonthTexts =
-        {
-            _calendarWeek01SundayMonthText,
-            _calendarWeek01MondayMonthText,
-            _calendarWeek01TuesdayMonthText,
-            _calendarWeek01WednesdayMonthText,
-            _calendarWeek01ThursdayMonthText,
-            _calendarWeek01FridayMonthText,
-            _calendarWeek01SaturdayMonthText,
-            _calendarWeek02SundayMonthText,
-            _calendarWeek02MondayMonthText,
-            _calendarWeek02TuesdayMonthText,
-            _calendarWeek02WednesdayMonthText,
-            _calendarWeek02ThursdayMonthText,
-            _calendarWeek02FridayMonthText,
-            _calendarWeek02SaturdayMonthText
-        };
-        TextMeshProUGUI[] calendarDayOfMonthTexts =
-        {
-            _calendarWeek01SundayDayOfMonthText,
-            _calendarWeek01MondayDayOfMonthText,
-            _calendarWeek01TuesdayDayOfMonthText,
-            _calendarWeek01WednesdayDayOfMonthText,
-            _calendarWeek01ThursdayDayOfMonthText,
-            _calendarWeek01FridayDayOfMonthText,
-            _calendarWeek01SaturdayDayOfMonthText,
-            _calendarWeek02SundayDayOfMonthText,
-            _calendarWeek02MondayDayOfMonthText,
-            _calendarWeek02TuesdayDayOfMonthText,
-            _calendarWeek02WednesdayDayOfMonthText,
-            _calendarWeek02ThursdayDayOfMonthText,
-            _calendarWeek02FridayDayOfMonthText,
-            _calendarWeek02SaturdayDayOfMonthText
-        };
-        GameObject[] calendarTimeOverlays =
-        {
-            _calendarWeek01SundayTimeOverlay,
-            _calendarWeek01MondayTimeOverlay,
-            _calendarWeek01TuesdayTimeOverlay,
-            _calendarWeek01WenesdayTimeOverlay,
-            _calendarWeek01ThursdayTimeOverlay,
-            _calendarWeek01FridayTimeOverlay,
-            _calendarWeek01SaturdayTimeOverlay
-        };
 
 
         int daysFromCalendarStart = (int)Managers.Time.CurrentDT.DayOfWeek - (_calendarPage * 7);
@@ -967,7 +992,7 @@ public class Manager_UI : MonoBehaviour, IManager
         int timelineWidth = 430;
 
 
-        //Paginate and skip update if at end of week
+        //Date tracking
         if (_calendarLastUpdateDT == null)
         {
             _calendarLastUpdateDT = Managers.Time.CurrentDT;
@@ -976,22 +1001,26 @@ public class Manager_UI : MonoBehaviour, IManager
         {
             _calendarSelectedDay = Managers.Time.CurrentDT.Date;
         }
-
         DayOfWeek lastDayOfWeek = _calendarLastUpdateDT.Value.DayOfWeek;
         _calendarLastUpdateDT = Managers.Time.CurrentDT;
 
-        if (lastDayOfWeek == DayOfWeek.Saturday && Managers.Time.CurrentDT.DayOfWeek == DayOfWeek.Sunday)//new week
+        if(lastDayOfWeek != Managers.Time.CurrentDT.DayOfWeek)//new day
         {
-            if (_calendarPage > 0)
+            _calendarSelectedDay = Managers.Time.CurrentDT.Date;
+            if (lastDayOfWeek == DayOfWeek.Saturday && Managers.Time.CurrentDT.DayOfWeek == DayOfWeek.Sunday)//new week
             {
-                _calendarPage -= 1;
-            }
-            else
-            {
-                CalendarPaginationAnimation();
-                return;
+                if (_calendarPage > 0)
+                {
+                    _calendarPage -= 1;
+                }
+                else
+                {
+                    CalendarPaginationAnimation();
+                    return;
+                }
             }
         }
+
 
         //Update weeks
         int iStart = isUpdateWeek01 ? 0 : 7;
@@ -1000,7 +1029,7 @@ public class Manager_UI : MonoBehaviour, IManager
         {
             DateTime thisDT = Managers.Time.CurrentDT.AddDays((daysFromCalendarStart * -1) + i);
 
-            //Calendar DayBox Text
+            //DayBox Text
             calendarDayOfMonthTexts[i].text = thisDT.Day.ToString();
 
             if (i == 0 || thisDT.Day == 1)
@@ -1010,6 +1039,16 @@ public class Manager_UI : MonoBehaviour, IManager
             else
             {
                 calendarMonthTexts[i].text = "";
+            }
+
+            //Selected DayBox
+            if(DateTime.Compare(thisDT.Date, _calendarSelectedDay.Value) == 0) 
+            {
+                calendarDayBoxes[i].GetComponent<Outline>().enabled = true;
+            }
+            else
+            {
+                calendarDayBoxes[i].GetComponent<Outline>().enabled = false;
             }
         }
 
