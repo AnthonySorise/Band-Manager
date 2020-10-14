@@ -292,28 +292,29 @@ public class Manager_UI : MonoBehaviour, IManager
         Button[] timePanelButtons = _timePanelGO.GetComponentsInChildren<Button>(true);
         Button[] calendarPanelButtons = _calendarPanelContainerGO.GetComponentsInChildren<Button>(true);
 
-        CursorHover_Button(mainMenuButtons);
-        CursorHover_Button(timePanelButtons);
-        CursorHover_Button(calendarPanelButtons);
+        MouseOverCursor_Panel(calendarDayBoxes);
+        MouseOverCursor_Button(mainMenuButtons);
+        MouseOverCursor_Button(timePanelButtons);
+        MouseOverCursor_Button(calendarPanelButtons);
 
         //ToolTips
         ToolTip tt_togleTime = new ToolTip("Toggle Time", InputCommand.ToggleTime, "Start or pause the progression of time.", true);
-        SetToolTip(ToggleTimeButton, tt_togleTime);
+        SetToolTip(ToggleTimeButton.gameObject, tt_togleTime);
 
         ToolTip tt_increaseSpeed = new ToolTip("Increase Speed", InputCommand.IncreaseSpeed, "", true);
-        SetToolTip(IncreaseSpeedButton, tt_increaseSpeed);
+        SetToolTip(IncreaseSpeedButton.gameObject, tt_increaseSpeed);
 
         ToolTip tt_decreaseSpeed = new ToolTip("Decrease Speed", InputCommand.DecreaseSpeed, "", true);
-        SetToolTip(DecreaseSpeedButton, tt_decreaseSpeed);
+        SetToolTip(DecreaseSpeedButton.gameObject, tt_decreaseSpeed);
 
         ToolTip tt_toggleCalendar = new ToolTip("Toggle Calendar", InputCommand.ToggleCalendar, "", true);
-        SetToolTip(ToggleCalendarButton, tt_toggleCalendar);
+        SetToolTip(ToggleCalendarButton.gameObject, tt_toggleCalendar);
 
         ToolTip tt_calendarPagePrevious = new ToolTip("Previous Week", InputCommand.CalendarPagePrevious, "", true);
-        SetToolTip(CalendarPagePreviousButton, tt_calendarPagePrevious);
+        SetToolTip(CalendarPagePreviousButton.gameObject, tt_calendarPagePrevious);
 
         ToolTip tt_calendarPageNext = new ToolTip("Next Week", InputCommand.CalendarPageNext, "", true);
-        SetToolTip(CalendarPageNextButton, tt_calendarPageNext);
+        SetToolTip(CalendarPageNextButton.gameObject, tt_calendarPageNext);
 
         //Time Panel Click Listeners
         ToggleTimeButton.onClick.AddListener(Click_ToggleTimeButton);
@@ -402,7 +403,7 @@ public class Manager_UI : MonoBehaviour, IManager
         SetCursor(Asset_png.Cursor_Default);
     }
 
-    public void CursorHover_Button(Button button)
+    public void MouseOverCursor_Button(Button button)
     {
         Action onEnter = () =>
         {
@@ -412,19 +413,39 @@ public class Manager_UI : MonoBehaviour, IManager
         {
             SetCursor(Asset_png.Cursor_Default);
         };
-        ButtonMouseOverListener.OnButtonMouseOver(button, onEnter, onExit);
+        MouseOverEvent.OnGameObjectMouseOver(button.gameObject, onEnter, onExit);
     }
-    private void CursorHover_Button(Button[] buttons)
+    private void MouseOverCursor_Button(Button[] buttons)
     {
         for (int i = 0; i < buttons.Length; i++)
         {
-            CursorHover_Button(buttons[i]);
+            MouseOverCursor_Button(buttons[i]);
+        }
+    }
+    public void MouseOverCursor_Panel(GameObject panel)
+    {
+        Action onEnter = () =>
+        {
+            SetCursor(Asset_png.Cursor_Hover);
+        };
+        Action onExit = () =>
+        {
+            SetCursor(Asset_png.Cursor_Default);
+        };
+        MouseOverEvent.OnGameObjectMouseOver(panel, onEnter, onExit);
+    }
+    private void MouseOverCursor_Panel(GameObject[] panel)
+    {
+        for (int i = 0; i < panel.Length; i++)
+        {
+            MouseOverCursor_Panel(panel[i]);
         }
     }
 
+
     //ToolTip
     private ToolTip _toolTipInQueue = null;
-    public void SetToolTip(Button button, ToolTip tooltip)
+    public void SetToolTip(GameObject go, ToolTip tooltip)
     {
         Action onEnter = () =>
         {
@@ -446,7 +467,7 @@ public class Manager_UI : MonoBehaviour, IManager
             ToolTipGO.GetComponent<RectTransform>().position = new Vector2(5000, 5000);
             ToolTipGO.SetActive(false);
         };
-        ButtonMouseOverListener.OnButtonMouseOver(button, onEnter, onExit);
+        MouseOverEvent.OnGameObjectMouseOver(go, onEnter, onExit);
     }
     IEnumerator DelayedTooltip()
     {
@@ -461,7 +482,7 @@ public class Manager_UI : MonoBehaviour, IManager
     {
         for (int i = 0; i < buttons.Length; i++)
         {
-            SetToolTip(buttons[i], tooltip);
+            SetToolTip(buttons[i].gameObject, tooltip);
         }
     }
 

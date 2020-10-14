@@ -38,7 +38,7 @@ public class PopUpOption
         button.GetComponent<Button>().onClick.AddListener(ButtonPress);
         if (_simActionOption.Tooltip != null)
         {
-            Managers.UI.SetToolTip(button.GetComponent<Button>(), _simActionOption.Tooltip);
+            Managers.UI.SetToolTip(button.gameObject, _simActionOption.Tooltip);
         }
 
         TextMeshProUGUI tmpText = button.GetComponentInChildren<TextMeshProUGUI>();

@@ -70,7 +70,7 @@ public class PopUp {
             PopUpOption popUpOption = new PopUpOption(option);
             popUpOption.CreateAndDisplay(buttonName, buttonsTransform);
 
-            Managers.UI.CursorHover_Button(GameObject.Find(buttonName).GetComponent<Button>());
+            Managers.UI.MouseOverCursor_Button(GameObject.Find(buttonName).GetComponent<Button>());
         }
         else
         {
@@ -81,7 +81,7 @@ public class PopUp {
                 popUpOption.CreateAndDisplay(buttonName, buttonsTransform);
 
                 Button buttonComponent = GameObject.Find(buttonName).GetComponent<Button>();
-                Managers.UI.CursorHover_Button(buttonComponent);
+                Managers.UI.MouseOverCursor_Button(buttonComponent);
                 buttonComponent.onClick.AddListener(closePopup);
             }
         }
