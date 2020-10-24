@@ -874,7 +874,7 @@ public class Manager_UI : MonoBehaviour, IManager
                 //texts
                 float start = isFadeOut ? 1f : 0.001f;
                 float end = isFadeOut ? 0.001f : 1f;
-                TextMeshProUGUI calendarMonthText = calendarDayOfMonthTexts[i];
+                TextMeshProUGUI calendarMonthText = calendarMonthTexts[i];
                 TextMeshProUGUI dayOfMonthText = calendarDayOfMonthTexts[i];
                 if (isFadeOut)
                 {

@@ -40,11 +40,13 @@ public class Manager_Assets : MonoBehaviour, IManager {
         State = ManagerState.Initializing;
         Debug.Log("Manager_Assets initializing...");
 
-        string artFolder = "Art/";
-        string audioFolder = "Audio/";
+        string resourcesArtFolder = "Art";
+        string[] resourcesArtSubFolders = new string[] { "UI" };
+        string resourcesAudioFolder = "Audio";
+        string[] resourcesAudioSubFolders = new string[] { "UI" };
 
-        string artPath = Application.dataPath + "/" + artFolder;
-        string audioPath = Application.dataPath + "/" + audioFolder;
+        string artPath = Application.dataPath + "/Art";
+        string audioPath = Application.dataPath + "/Audio";
 
         var artPathSubFolders = Directory.GetDirectories(artPath);
         var audioPathSubFolders = Directory.GetDirectories(audioPath);
@@ -75,8 +77,14 @@ public class Manager_Assets : MonoBehaviour, IManager {
             if(!texture)
             {
                 //Unity Resource Folder User does NOT have access to
-                filePath = artFolder + fileName;
-                texture = Resources.Load<Texture2D>(filePath);
+                for (var i = 0; i < artPathSubFolders.Length; i++)
+                {
+                    filePath = resourcesArtFolder + "/" + resourcesArtSubFolders[i] + "/" + fileName;
+                    if(File.Exists(Application.dataPath + "/Resources/" + filePath + ".png"))
+                    {
+                        texture = Resources.Load<Texture2D>(filePath);
+                    }
+                }
             }
             if (texture)
             {
@@ -120,20 +128,29 @@ public class Manager_Assets : MonoBehaviour, IManager {
                 filePath = path + "/" + fileName + ".wav";
                 if (File.Exists(filePath))
                 {
+                    //WWW is obsloete - doesn't work on Linux
+                    //Moving audio assets to Resources folder for now
+                    //TO DO -> https://docs.unity3d.com/ScriptReference/Networking.UnityWebRequestMultimedia.GetAudioClip.html
                     //Asset Folder User has access to
-                    audioClip = new WWW(filePath).GetAudioClip(false, true, AudioType.WAV);
+                    //audioClip = new WWW(filePath).GetAudioClip(false, true, AudioType.WAV);
                 }
             }
             if (!audioClip)
             {
                 //Unity Resource Folder User does NOT have access to
-                filePath = audioFolder + fileName;
-                audioClip = Resources.Load<AudioClip>(filePath);
-
-                if (!audioClip) {
-                    Debug.Log("Error - Missing Asset: " + fileName);
-                    State = ManagerState.Error;
-                    return;
+                for(var i = 0; i < resourcesAudioSubFolders.Length; i++)
+                {
+                    filePath = resourcesAudioFolder + "/" + resourcesAudioSubFolders[i] + "/" + fileName;
+                    if (File.Exists(Application.dataPath + "/Resources/" + filePath + ".wav"))
+                    {
+                        audioClip = Resources.Load<AudioClip>(filePath);
+                    }
+                    if (!audioClip)
+                    {
+                        Debug.Log("Error - Missing Asset: " + fileName);
+                        State = ManagerState.Error;
+                        return;
+                    }
                 }
             }
             if (_wavAudio.ContainsKey(wav))
