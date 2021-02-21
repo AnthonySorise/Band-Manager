@@ -28,7 +28,7 @@ public class Manager_Time : MonoBehaviour, IManager {
 
         IsPaused = true;
         _IsDelayedWhileTickProcesses = false;
-        _simMinutesPerTick = 9;
+        _simMinutesPerTick = 5;
         _simMinutesSinceLastTick = 0;
         _baseMSPerSimMinute = 100;  //for speedLevel 0
         _speedLevelDenominator = 2.5;
@@ -94,11 +94,10 @@ public class Manager_Time : MonoBehaviour, IManager {
         }
         else if(CurrentSpeedLevel < 0)
         {
-
-        }
-        for (int i = 0; i > CurrentSpeedLevel; i--)
-        {
-            ms = Convert.ToInt32(ms * _speedLevelDenominator);
+            for (int i = 0; i > CurrentSpeedLevel; i--)
+            {
+                ms = Convert.ToInt32(ms * _speedLevelDenominator);
+            }
         }
         return ms;
     }

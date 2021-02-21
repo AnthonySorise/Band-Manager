@@ -14,7 +14,7 @@ public enum InputCommand
     ToggleTime,
     IncreaseSpeed,
     DecreaseSpeed,
-
+    
     //Calendar
     ToggleCalendar,
     CalendarPagePrevious,
