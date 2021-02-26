@@ -44,6 +44,7 @@
      <Compile Include="Assets\Script\Managers\Managers.cs" />
      <Compile Include="Assets\Script\Models\NPCTraitMajor.cs" />
      <Compile Include="Assets\Script\Models\SimEvent_MTTH.cs" />
+     <Compile Include="Assets\Script\Behavior\ClickableGO.cs" />
      <Compile Include="Assets\Script\GameObjects\PopUp.cs" />
      <Compile Include="Assets\LeanTween\Framework\LTSeq.cs" />
      <Compile Include="Assets\Script\GameObjects\MouseOverEvent.cs" />
@@ -77,7 +78,6 @@
      <Compile Include="Assets\Script\GameObjects\ToolTip.cs" />
      <Compile Include="Assets\Script\Utilities\GOPool.cs" />
      <Compile Include="Assets\LeanTween\Framework\LTDescr.cs" />
-     <Compile Include="Assets\Script\Behavior\ClickableGO.cs" />
      <None Include="Assets\TextMesh Pro\Resources\Shaders\TMPro.cginc" />
      <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Mobile Overlay.shader" />
      <None Include="Assets\LeanTween\ReadMe.txt" />
