@@ -326,6 +326,14 @@ public class Manager_UI : MonoBehaviour, IManager
         CalendarPagePreviousButton.onClick.AddListener(Click_CalendarPagePrevious);
         CalendarPageNextButton.onClick.AddListener(Click_CalendarPageNext);
 
+        //Calendar DayBox Click Listener
+        for(int i = 0; i < calendarDayBoxes.Length; i ++){
+            calendarDayBoxes[i].AddComponent<ClickableGO>();
+            ClickableGO clickableGO = calendarDayBoxes[i].GetComponent<ClickableGO>();
+
+            //clickableGO.onClick.AddListener(() => clickCalendarBox(i);
+        }
+
         //Retract Calendar
         ToggleCalendarPanel();
 
@@ -920,6 +928,11 @@ public class Manager_UI : MonoBehaviour, IManager
                 }
             }
         }
+    }
+
+    private void clickCalendarBox (int i)
+    {
+        Debug.Log("!!!!!!!: " + i);
     }
 
     //OnUpdate
