@@ -292,7 +292,7 @@ public class Manager_UI : MonoBehaviour, IManager
         Button[] timePanelButtons = _timePanelGO.GetComponentsInChildren<Button>(true);
         Button[] calendarPanelButtons = _calendarPanelContainerGO.GetComponentsInChildren<Button>(true);
 
-        MouseOverCursor_Panel(calendarDayBoxes);
+        MouseOverCursor_calendarDayBoxes();
         MouseOverCursor_Button(mainMenuButtons);
         MouseOverCursor_Button(timePanelButtons);
         MouseOverCursor_Button(calendarPanelButtons);
@@ -327,11 +327,30 @@ public class Manager_UI : MonoBehaviour, IManager
         CalendarPageNextButton.onClick.AddListener(Click_CalendarPageNext);
 
         //Calendar DayBox Click Listener
-        for(int i = 0; i < calendarDayBoxes.Length; i ++){
-            calendarDayBoxes[i].AddComponent<ClickableGO>();
-            ClickableGO clickableGO = calendarDayBoxes[i].GetComponent<ClickableGO>();
+        for(int i = 0; i < calendarDayBoxes.Length; i++){
+            int thisI = i;
+            UnityAction action = () => {
 
-            //clickableGO.onClick.AddListener(() => clickCalendarBox(i);
+                DateTime thisDT = DayBoxDTFromI(thisI, true);
+
+                if(_isAnimatingCalendarPagination 
+                || _isAnimatingToggleCalendarPanel)
+                {
+                    return;
+                }
+                else if(DateTime.Compare(thisDT, Managers.Time.CurrentDT) == 1
+                || (thisDT.Day == Managers.Time.CurrentDT.Day &&
+                    thisDT.Month == Managers.Time.CurrentDT.Month &&
+                    thisDT.Year == Managers.Time.CurrentDT.Year))
+                {
+                    _calendarSelectedDay = thisDT;
+                }
+
+            };
+            if(calendarDayBoxes[i].GetComponent<ClickableGO>() == null){
+                calendarDayBoxes[i].AddComponent<ClickableGO>();
+            }
+            calendarDayBoxes[i].GetComponent<ClickableGO>().ClickAction = action;
         }
 
         //Retract Calendar
@@ -442,11 +461,29 @@ public class Manager_UI : MonoBehaviour, IManager
         };
         MouseOverEvent.OnGameObjectMouseOver(panel, onEnter, onExit);
     }
-    private void MouseOverCursor_Panel(GameObject[] panel)
+    private void MouseOverCursor_calendarDayBoxes()
     {
-        for (int i = 0; i < panel.Length; i++)
+        for (int i = 0; i < calendarDayBoxes.Length; i++)
         {
-            MouseOverCursor_Panel(panel[i]);
+            int thisI = i;
+
+            Action onEnter = () =>
+            {
+                DateTime thisDT = DayBoxDTFromI(thisI, true);
+
+                if (DateTime.Compare(thisDT, Managers.Time.CurrentDT) == 1 ||
+                    (thisDT.Day == Managers.Time.CurrentDT.Day &&
+                    thisDT.Month == Managers.Time.CurrentDT.Month &&
+                    thisDT.Year == Managers.Time.CurrentDT.Year))
+                {
+                    SetCursor(Asset_png.Cursor_Hover);
+                }
+            };
+            Action onExit = () =>
+            {
+                SetCursor(Asset_png.Cursor_Default);
+            };
+            MouseOverEvent.OnGameObjectMouseOver(calendarDayBoxes[i], onEnter, onExit);
         }
     }
 
@@ -570,11 +607,7 @@ public class Manager_UI : MonoBehaviour, IManager
     //Time Panel - Increase Speed Button
     private void Click_IncreaseSpeedButton()
     {
-        if (IsScreenCovered())
-        {
-            return;
-        }
-        if (!_hasHoldingIncreaseSpeedButtonStarted)
+        if (!_hasHoldingIncreaseSpeedButtonStarted && _isRunningIncreaseSpeedButtonBeingHeld)
         {
             Managers.Time.IncreaseSpeed();
         }
@@ -635,11 +668,7 @@ public class Manager_UI : MonoBehaviour, IManager
     //Time Panel - Decrease Speed Button
     private void Click_DecreaseSpeedButton()
     {
-        if (IsScreenCovered())
-        {
-            return;
-        }
-        if (!_hasHoldingDecreaseSpeedButtonStarted)
+        if (!_hasHoldingDecreaseSpeedButtonStarted && _isRunningDecreaseSpeedButtonBeingHeld)
         {
             Managers.Time.DecreaseSpeed();
         }
@@ -698,6 +727,19 @@ public class Manager_UI : MonoBehaviour, IManager
         Managers.Time.DecreaseSpeed();
     }
 
+    //Calendar Helper Fucntions
+    private DateTime DayBoxDTFromI(int i, bool ignoreTime = false){
+        int daysFromCalendarStart = (_calendarPage * 7) - (int)Managers.Time.CurrentDT.DayOfWeek;
+        DateTime thisDT = new DateTime();
+        if(ignoreTime){
+            thisDT = Managers.Time.CurrentDT.Date.AddDays(daysFromCalendarStart + i);
+        }
+        else{
+            thisDT = Managers.Time.CurrentDT.AddDays(daysFromCalendarStart + i);
+        }
+        return thisDT;
+    }
+
     //Calendar Panel - Toggle Calendar
     private void Click_ToggleCalendarButton()
     {
@@ -731,6 +773,10 @@ public class Manager_UI : MonoBehaviour, IManager
         {
             _calendarPage = 0;
             _calendarSelectedDay = Managers.Time.CurrentDT.Date;
+            for (var i = 0; i < calendarTimeOverlays.Length; i++)
+            {
+                LeanTween.alphaCanvas(calendarTimeOverlays[i].GetComponent<CanvasGroup>(), 0.25f, 0);
+            }
         }
 
         //Calendar Pagination Button Animation
@@ -763,15 +809,25 @@ public class Manager_UI : MonoBehaviour, IManager
 
     public void Click_CalendarPagePrevious()
     {
+        if(IsScreenCovered()){
+            return;
+        }
         CalendarPageChange(false);
         EventSystem.current.SetSelectedGameObject(null);//prevent selecting the button
     }
     public void KeyDown_CalendarPagePrevious()
     {
-        KeyDown_LinkedToButtonUI(CalendarPagePreviousButton);
+        if(!KeyDown_LinkedToButtonUI(CalendarPagePreviousButton)){
+            KeyUp_CalendarPagePrevious();
+        }
+        
     }
     public void Hold_CalendarPagePrevious()
     {
+        if(IsScreenCovered()){
+            KeyUp_CalendarPagePrevious();
+            return;
+        }
         CalendarPageChange(false);
     }
     public void KeyUp_CalendarPagePrevious()
@@ -784,15 +840,25 @@ public class Manager_UI : MonoBehaviour, IManager
 
     public void Click_CalendarPageNext()
     {
+        if(IsScreenCovered()){
+            return;
+        }
         CalendarPageChange();
         EventSystem.current.SetSelectedGameObject(null);//prevent selecting the button
     }
     public void KeyDown_CalendarPageNext()
     {
-        KeyDown_LinkedToButtonUI(CalendarPageNextButton);
+        if(!KeyDown_LinkedToButtonUI(CalendarPageNextButton)){
+            KeyUp_CalendarPageNext();
+        }
+        
     }
     public void Hold_CalendarPageNext()
     {
+        if(IsScreenCovered()){
+            KeyUp_CalendarPageNext();
+            return;
+        }
         CalendarPageChange();
     }
     public void KeyUp_CalendarPageNext()
@@ -804,7 +870,7 @@ public class Manager_UI : MonoBehaviour, IManager
     }
     private void CalendarPageChange(bool isForward = true)
     {
-        if (_isCalendarExpanded == false || _isAnimatingCalendarPagination == true || (isForward == false && _calendarPage == 0))
+        if (_isCalendarExpanded == false || _isAnimatingCalendarPagination || _isAnimatingToggleCalendarPanel || (isForward == false && _calendarPage == 0))
         {
             return;
         }
@@ -814,18 +880,15 @@ public class Manager_UI : MonoBehaviour, IManager
     }
 
     private bool _isAnimatingCalendarPagination = false;
-    private bool _isFadingInCalendarTimeOverlays = false;
     private void CalendarPaginationAnimation(bool isForward = true)
     {
-        if (IsScreenCovered() || _isAnimatingCalendarPagination)
+        if (IsScreenCovered() || _isAnimatingCalendarPagination || _isAnimatingToggleCalendarPanel)
         {
             return;
         }
 
-        float fadeTime = 0.15f;
+        float fadeTime = 0.2f;
         float moveTime = 0.3f;
-
-        _isAnimatingCalendarPagination = true;
 
         GameObject[] calendarTimeOverlays =
         {
@@ -844,6 +907,8 @@ public class Manager_UI : MonoBehaviour, IManager
         Vector3 weekMovingLocation = weekMoving.GetComponent<RectTransform>().anchoredPosition;
         Vector3 weekLeavingLocation = weekLeaving.GetComponent<RectTransform>().anchoredPosition;
 
+        _isAnimatingCalendarPagination = true;
+
         fadeOutCalendarWeek(weekLeaving, fadeTime);
         LeanTween.move(weekMoving.GetComponent<RectTransform>(), weekLeavingLocation, moveTime).setEase(LeanTweenType.easeInOutExpo).setOnComplete(animationPhaseTwo);
 
@@ -857,7 +922,8 @@ public class Manager_UI : MonoBehaviour, IManager
         void animationPhaseThree()
         {
             UpdateCalendarPanel(!isForward, isForward);
-            fadeInCalendarWeek(weekMoving, fadeTime, true);
+            fadeInCalendarWeek(weekMoving, 0, true);
+            _isAnimatingCalendarPagination = false;
         }
 
         void fadeOutCalendarWeek(GameObject calendarWeekContainer, float seconds, bool finalizeAnimation = false)
@@ -903,36 +969,20 @@ public class Manager_UI : MonoBehaviour, IManager
                 }
             }
             //time overlays
-            if (!isFadeOut && _calendarPage == 0 && calendarWeekContainer.gameObject == _calendarWeek01Container)
-            {
-                _isFadingInCalendarTimeOverlays = true;
-            }
-            for (var i = 0; i < calendarTimeOverlays.Length; i++)
-            {
-                if (i != calendarTimeOverlays.Length - 1)
+            if(calendarWeekContainer == _calendarWeek01Container){
+                float overlayAlphaDestination = 0f;
+                float overlayFadeSeconds = seconds;
+                if (!isFadeOut && _calendarPage == 0 && calendarWeekContainer.gameObject == _calendarWeek01Container)
                 {
-                    LeanTween.alpha(calendarTimeOverlays[i].GetComponent<RectTransform>(), rectTransformTo * 0.23529f, seconds).setRecursive(false);
+                    overlayFadeSeconds = 0;
+                    overlayAlphaDestination = 0.25f;
                 }
-                else
+                for (var i = 0; i < calendarTimeOverlays.Length; i++)
                 {
-                    LeanTween.alpha(calendarTimeOverlays[i].GetComponent<RectTransform>(), rectTransformTo * 0.23529f, seconds).setRecursive(false).setOnComplete(() => {
-                        if (finalizeAnimation == true)
-                        {
-                            _isAnimatingCalendarPagination = false;
-                        }
-                        if (_isFadingInCalendarTimeOverlays && seconds > 0)
-                        {
-                            _isFadingInCalendarTimeOverlays = false;
-                        }
-                    });
+                    LeanTween.alphaCanvas(calendarTimeOverlays[i].GetComponent<CanvasGroup>(), overlayAlphaDestination, overlayFadeSeconds);
                 }
             }
         }
-    }
-
-    private void clickCalendarBox (int i)
-    {
-        Debug.Log("!!!!!!!: " + i);
     }
 
     //OnUpdate
@@ -1016,9 +1066,6 @@ public class Manager_UI : MonoBehaviour, IManager
 
     private void UpdateCalendarPanel(bool isUpdateWeek01 = true, bool isUpdateWeek02 = true)
     {
-
-
-        int daysFromCalendarStart = (int)Managers.Time.CurrentDT.DayOfWeek - (_calendarPage * 7);
         DateTime startOfDay = Managers.Time.CurrentDT.Date;
         DateTime endOfTheDay = Managers.Time.CurrentDT.AddDays(1).Date;
         float timePercentage = (float)(Managers.Time.CurrentDT.Ticks - startOfDay.Ticks) / (float)(endOfTheDay.Ticks - startOfDay.Ticks);
@@ -1040,12 +1087,18 @@ public class Manager_UI : MonoBehaviour, IManager
 
         if(lastDayOfWeek != Managers.Time.CurrentDT.DayOfWeek)//new day
         {
-            _calendarSelectedDay = Managers.Time.CurrentDT.Date;
+            if(DateTime.Compare(_calendarSelectedDay.Value, Managers.Time.CurrentDT) == -1){
+                _calendarSelectedDay = Managers.Time.CurrentDT.Date;
+            }
             if (lastDayOfWeek == DayOfWeek.Saturday && Managers.Time.CurrentDT.DayOfWeek == DayOfWeek.Sunday)//new week
             {
                 if (_calendarPage > 0)
                 {
                     _calendarPage -= 1;
+                for (var i = 0; i < calendarTimeOverlays.Length; i++)
+                {
+                    LeanTween.alphaCanvas(calendarTimeOverlays[i].GetComponent<CanvasGroup>(), 0.25f, 0);
+                }
                 }
                 else
                 {
@@ -1061,7 +1114,7 @@ public class Manager_UI : MonoBehaviour, IManager
         int iEnd = isUpdateWeek02 ? 14 : 7;
         for (var i = iStart; i < iEnd; i++)
         {
-            DateTime thisDT = Managers.Time.CurrentDT.AddDays((daysFromCalendarStart * -1) + i);
+            DateTime thisDT = DayBoxDTFromI(i);
 
             //DayBox Text
             calendarDayOfMonthTexts[i].text = thisDT.Day.ToString();
@@ -1087,11 +1140,11 @@ public class Manager_UI : MonoBehaviour, IManager
         }
 
         //Update overlays
-        if (isUpdateWeek01 || _isFadingInCalendarTimeOverlays)
+        if (isUpdateWeek01)
         {
             for(var i = 0; i < calendarTimeOverlays.Length; i++)
             {
-                DateTime thisDT = Managers.Time.CurrentDT.AddDays((daysFromCalendarStart * -1) + i);
+                DateTime thisDT = DayBoxDTFromI(i);
                 RectTransform timeOverlayRectTransform = calendarTimeOverlays[i].GetComponent<RectTransform>();
                 if (_calendarPage > 0 || DateTime.Compare(thisDT, Managers.Time.CurrentDT) == 1)
                 {

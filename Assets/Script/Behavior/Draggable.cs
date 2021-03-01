@@ -1,8 +1,7 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System.Collections;
- using UnityEngine.Events;
 
 //Make sure the Game Object this is attached to has an achor set to middle/center
 //_mRect.anchorMin = new Vector2(1, 0);

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.Events;
 using UnityEngine;
 
 public enum SimActionID
@@ -18,7 +19,7 @@ public class SimAction {
     public SimActionID ID { get; private set; }
     private Func<bool> _validCondition;
     private Func<bool> _delayCondition;
-    private Action _initialAction;
+    private UnityAction _initialAction;
 
     public List<SimActionOption> Options { get; private set; }
     public bool PopupHaltsGame { get; private set; }
@@ -27,7 +28,7 @@ public class SimAction {
     public Asset_png PopupBodyImg { get; private set; }
     public Asset_wav PopupTriggerSound { get; private set; }
 
-    public SimAction(SimActionID id, Func<bool> validCondition, Func<bool> delayCondition, Action initialAction,
+    public SimAction(SimActionID id, Func<bool> validCondition, Func<bool> delayCondition, UnityAction initialAction,
         List<SimActionOption> options = null, bool popupHaltsGame = false, string popupHeaderText = null, string popupBodyText = null, Asset_png popupBodyImg = Asset_png.None, Asset_wav popupTriggerSound = Asset_wav.None)
     {
         ID = id;

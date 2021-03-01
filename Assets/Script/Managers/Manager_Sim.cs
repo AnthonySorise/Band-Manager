@@ -119,7 +119,7 @@ public class Manager_Sim : MonoBehaviour, IManager {
             SimActionOption04
         };
 
-        Action initialAction = null;
+        UnityAction initialAction = null;
         Func<bool> validCondition = () => { return true; };
         Func<bool> delayCondition = () => { return false; };
 
@@ -155,7 +155,7 @@ public class Manager_Sim : MonoBehaviour, IManager {
             SimActionOption03
         };
 
-        Action initialAction = null;
+        UnityAction initialAction = null;
         Func<bool> validCondition = () => { return true; };
         Func<bool> delayCondition = () => {
             return (Managers.Time.CurrentDT.Hour < 4);
@@ -187,7 +187,7 @@ public class Manager_Sim : MonoBehaviour, IManager {
             SimActionOption02,
         };
 
-        Action initialAction = null;
+        UnityAction initialAction = null;
         Func<bool> validCondition = () => { return true; };
 
         int randomHour = UnityEngine.Random.Range(9, 17);

@@ -1345,6 +1345,7 @@ GameObject:
   - component: {fileID: 280752462}
   - component: {fileID: 280752464}
   - component: {fileID: 280752463}
+  - component: {fileID: 280752465}
   m_Layer: 5
   m_Name: Panel_Calendar_Week01_Monday_TimeOverlay
   m_TagString: Untagged
@@ -1384,7 +1385,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0.23529412}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1409,6 +1410,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 280752461}
   m_CullTransparentMesh: 0
+--- !u!225 &280752465
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 280752461}
+  m_Enabled: 1
+  m_Alpha: 0.25
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &292606713
 GameObject:
   m_ObjectHideFlags: 0
@@ -2940,6 +2953,7 @@ GameObject:
   - component: {fileID: 451327824}
   - component: {fileID: 451327826}
   - component: {fileID: 451327825}
+  - component: {fileID: 451327827}
   m_Layer: 5
   m_Name: Panel_Calendar_Week01_Tuesday_TimeOverlay
   m_TagString: Untagged
@@ -2979,7 +2993,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0.23529412}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -3004,6 +3018,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 451327823}
   m_CullTransparentMesh: 0
+--- !u!225 &451327827
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 451327823}
+  m_Enabled: 1
+  m_Alpha: 0.25
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &465028497
 GameObject:
   m_ObjectHideFlags: 0
@@ -3463,6 +3489,7 @@ GameObject:
   - component: {fileID: 534694760}
   - component: {fileID: 534694762}
   - component: {fileID: 534694761}
+  - component: {fileID: 534694763}
   m_Layer: 5
   m_Name: Panel_Calendar_Week01_Friday_TimeOverlay
   m_TagString: Untagged
@@ -3502,7 +3529,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0.23529412}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -3527,6 +3554,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 534694759}
   m_CullTransparentMesh: 0
+--- !u!225 &534694763
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 534694759}
+  m_Enabled: 1
+  m_Alpha: 0.25
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &574267002
 GameObject:
   m_ObjectHideFlags: 0
@@ -5272,6 +5311,7 @@ GameObject:
   - component: {fileID: 871136057}
   - component: {fileID: 871136059}
   - component: {fileID: 871136058}
+  - component: {fileID: 871136060}
   m_Layer: 5
   m_Name: Panel_Calendar_Week01_Saturday_TimeOverlay
   m_TagString: Untagged
@@ -5311,7 +5351,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0.23529412}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -5336,6 +5376,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 871136056}
   m_CullTransparentMesh: 0
+--- !u!225 &871136060
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 871136056}
+  m_Enabled: 1
+  m_Alpha: 0.25
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &876606194
 GameObject:
   m_ObjectHideFlags: 0
@@ -5656,6 +5708,7 @@ GameObject:
   - component: {fileID: 980215914}
   - component: {fileID: 980215916}
   - component: {fileID: 980215915}
+  - component: {fileID: 980215917}
   m_Layer: 5
   m_Name: Panel_Calendar_Week01_Sunday_TimeOverlay
   m_TagString: Untagged
@@ -5695,7 +5748,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0.23529412}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -5720,6 +5773,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 980215913}
   m_CullTransparentMesh: 0
+--- !u!225 &980215917
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 980215913}
+  m_Enabled: 1
+  m_Alpha: 0.25
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &984814018
 GameObject:
   m_ObjectHideFlags: 0
@@ -8905,6 +8970,7 @@ GameObject:
   - component: {fileID: 1714122931}
   - component: {fileID: 1714122933}
   - component: {fileID: 1714122932}
+  - component: {fileID: 1714122934}
   m_Layer: 5
   m_Name: Panel_Calendar_Week01_Wednesday_TimeOverlay
   m_TagString: Untagged
@@ -8944,7 +9010,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0.23529412}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -8969,6 +9035,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1714122930}
   m_CullTransparentMesh: 0
+--- !u!225 &1714122934
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1714122930}
+  m_Enabled: 1
+  m_Alpha: 0.25
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &1716156774
 GameObject:
   m_ObjectHideFlags: 0
@@ -9416,6 +9494,7 @@ GameObject:
   - component: {fileID: 1826250253}
   - component: {fileID: 1826250255}
   - component: {fileID: 1826250254}
+  - component: {fileID: 1826250256}
   m_Layer: 5
   m_Name: Panel_Calendar_Timeline_TimeOverlay
   m_TagString: Untagged
@@ -9455,7 +9534,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0.23529412}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -9480,6 +9559,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1826250252}
   m_CullTransparentMesh: 0
+--- !u!225 &1826250256
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1826250252}
+  m_Enabled: 1
+  m_Alpha: 0.25
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 1
 --- !u!1 &1856913973
 GameObject:
   m_ObjectHideFlags: 0
@@ -9659,6 +9750,7 @@ GameObject:
   - component: {fileID: 1888817770}
   - component: {fileID: 1888817772}
   - component: {fileID: 1888817771}
+  - component: {fileID: 1888817773}
   m_Layer: 5
   m_Name: Panel_Calendar_Week01_Thursday_TimeOverlay
   m_TagString: Untagged
@@ -9698,7 +9790,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0.23529412}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -9723,6 +9815,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1888817769}
   m_CullTransparentMesh: 0
+--- !u!225 &1888817773
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1888817769}
+  m_Enabled: 1
+  m_Alpha: 0.25
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &1897104424
 GameObject:
   m_ObjectHideFlags: 0
