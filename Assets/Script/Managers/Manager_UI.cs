@@ -111,6 +111,7 @@ public class Manager_UI : MonoBehaviour, IManager
     private TextMeshProUGUI _calendarWeek02SaturdayMonthText;
     private TextMeshProUGUI _calendarWeek02SaturdayDayOfMonthText;
     private GameObject _calendarTimeline;
+    private TextMeshProUGUI _calendarTimelineSelectedDateText;
     private GameObject _calendarTimeline_TimeOverlay;
     public Button ToggleCalendarButton;
     public Button CalendarPagePreviousButton;
@@ -211,6 +212,7 @@ public class Manager_UI : MonoBehaviour, IManager
         InitiateText(ref _calendarWeek02SaturdayMonthText, "TMPText_Calendar_Week02_Saturday_Month");
         InitiateText(ref _calendarWeek02SaturdayDayOfMonthText, "TMPText_Calendar_Week02_Saturday_DayOfMonth");
         InitiateGO(ref _calendarTimeline, "Panel_Calendar_Timeline");
+        InitiateText(ref _calendarTimelineSelectedDateText, "TMPText_Calendar_Timeline_SelectedDate");                            
         InitiateGO(ref _calendarTimeline_TimeOverlay, "Panel_Calendar_Timeline_TimeOverlay");
         InitiateButton(ref ToggleCalendarButton, "Button_ToggleCalendar");
         InitiateButton(ref CalendarPagePreviousButton, "Button_CalendarPagePrevious");
@@ -1166,5 +1168,6 @@ public class Manager_UI : MonoBehaviour, IManager
         //Update Timeline
         RectTransform timelineTimeOverlayRectTransform = _calendarTimeline_TimeOverlay.GetComponent<RectTransform>();
         timelineTimeOverlayRectTransform.sizeDelta = new Vector2((int)(timelineWidth * timePercentage), timelineTimeOverlayRectTransform.sizeDelta.y);
+        _calendarTimelineSelectedDateText.text = _calendarSelectedDay.Value.ToString("MM/dd/yyyy");
     }
 }
