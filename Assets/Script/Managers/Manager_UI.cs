@@ -1166,8 +1166,13 @@ public class Manager_UI : MonoBehaviour, IManager
         }
 
         //Update Timeline
-        RectTransform timelineTimeOverlayRectTransform = _calendarTimeline_TimeOverlay.GetComponent<RectTransform>();
-        timelineTimeOverlayRectTransform.sizeDelta = new Vector2((int)(timelineWidth * timePercentage), timelineTimeOverlayRectTransform.sizeDelta.y);
         _calendarTimelineSelectedDateText.text = _calendarSelectedDay.Value.ToString("MM/dd/yyyy");
+        RectTransform timelineTimeOverlayRectTransform = _calendarTimeline_TimeOverlay.GetComponent<RectTransform>();
+        int timeLineFill = 0;
+        if(DateTime.Compare(_calendarSelectedDay.Value, Managers.Time.CurrentDT.Date) == 0)
+        {
+            timeLineFill = (int)(timelineWidth * timePercentage);
+        }
+        timelineTimeOverlayRectTransform.sizeDelta = new Vector2(timeLineFill, timelineTimeOverlayRectTransform.sizeDelta.y);
     }
 }
