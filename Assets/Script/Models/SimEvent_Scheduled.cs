@@ -1,5 +1,15 @@
 ﻿using System;
 
+public enum ScheduledEventTypeID
+{
+    none,
+    Manager_Travel,
+    Manager_Scout,
+    Manager_Gig,
+    Manager_Record,
+    Manager_Other
+}
+
 public class SimEvent_Scheduled
 {
     private SimAction _simAction;
@@ -7,7 +17,7 @@ public class SimEvent_Scheduled
 
     private bool _scheduledPassed;
 
-    public SimEvent_Scheduled(SimAction simAction, DateTime scheduledDT) {
+    public SimEvent_Scheduled(SimAction simAction, DateTime scheduledDT, ScheduledEventTypeID scheduledEventID = ScheduledEventTypeID.none) {
         _simAction = simAction;
         _scheduledDT = scheduledDT;
         _scheduledPassed = false;
@@ -43,5 +53,9 @@ public class SimEvent_Scheduled
             _simAction.Trigger();
             Remove();
         }
+    }
+
+    public void Cancel() {
+        _simAction.Cancel();
     }
 }

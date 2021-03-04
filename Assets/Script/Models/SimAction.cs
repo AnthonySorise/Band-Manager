@@ -48,6 +48,10 @@ public class SimAction {
         return _validCondition();
     }
 
+    public void Cancel() {
+        _validCondition = () => {return false;};
+    }
+
     public bool ShouldDelay() {
         return _delayCondition();
     }

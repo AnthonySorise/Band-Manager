@@ -75,4 +75,8 @@ public class SimEvent_MTTH {
             Remove();
         }
     }
+    
+    public void Cancel() {
+        _simAction.Cancel();
+    }
 }
