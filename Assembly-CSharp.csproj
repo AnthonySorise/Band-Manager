@@ -70,7 +70,7 @@
      <Compile Include="Assets\Script\Models\NPC.cs" />
      <Compile Include="Assets\Script\Models\NPCTraitMajor.cs" />
      <Compile Include="Assets\Script\Models\NPCTraitMinor.cs" />
-     <Compile Include="Assets\Script\Models\NPC_Manager.cs" />
+     <Compile Include="Assets\Script\Models\NPC_BandManager.cs" />
      <Compile Include="Assets\Script\Models\SimAction.cs" />
      <Compile Include="Assets\Script\Models\SimActionOption.cs" />
      <Compile Include="Assets\Script\Models\SimEvent_Immediate.cs" />
