@@ -13,7 +13,7 @@ public class Manager_Sim : MonoBehaviour, IManager {
     public bool IsProcessingTick { get; private set; }
 
     private List<NPC> _npcs;
-    private List<NPC> _NPCgraveyard; //Eternal rest grant unto them, O Lord, and let perpetual light shine upon them. May their souls and the souls of all the faithful departed, through the mercy of God, rest in peace. Amen.
+    private List<NPC> _npcGraveyard; //Eternal rest grant unto them, O Lord, and let perpetual light shine upon them. May their souls and the souls of all the faithful departed, through the mercy of God, rest in peace. Amen.
 
     private List<SimEvent_Scheduled> _simEvents_Scheduled;
     private List<SimEvent_MTTH> _simEvents_MTTH;    
@@ -44,7 +44,7 @@ public class Manager_Sim : MonoBehaviour, IManager {
     public void KillNPC(NPC npc)
     {
         _npcs.Remove(npc);
-        _NPCgraveyard.Insert(0, npc);
+        _npcGraveyard.Insert(0, npc);
     }
 
     public void StoreSimEvent_Scheduled(SimEvent_Scheduled simEvent) {
