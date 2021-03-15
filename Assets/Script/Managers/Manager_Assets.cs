@@ -77,7 +77,7 @@ public class Manager_Assets : MonoBehaviour, IManager {
             if(!texture)
             {
                 //Unity Resource Folder User does NOT have access to
-                for (var i = 0; i < artPathSubFolders.Length; i++)
+                for (var i = 0; i < artPathSubFolders.Length - 1; i++)
                 {
                     filePath = resourcesArtFolder + "/" + resourcesArtSubFolders[i] + "/" + fileName;
                     if(File.Exists(Application.dataPath + "/Resources/" + filePath + ".png"))

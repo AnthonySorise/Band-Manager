@@ -25,6 +25,9 @@ public class Manager_Sim : MonoBehaviour, IManager {
 
         IsProcessingTick = false;
 
+        _npcs = new List<NPC>();
+        _npcGraveyard = new List<NPC>();
+
         _simEvents_Scheduled = new List<SimEvent_Scheduled>();
         _simEvents_MTTH = new List<SimEvent_MTTH>();
 
@@ -33,6 +36,10 @@ public class Manager_Sim : MonoBehaviour, IManager {
         SIM_TestPopup03(new DateTime(1985, 10, 26));
         SIM_TestPopup04(new DateTime(1985, 10, 27));
         SIM_TestPopup05();
+
+        BandManager player = new BandManager(NPCGender.Male, 35);
+        Debug.Log("Player Created");
+        Debug.Log(player.ID + " " + player.Gender.ToString() + " " + player.FirstName + " " + player.LastName + " " + player.BirthDay.ToString() + " ");
 
         State = ManagerState.Started;
         Debug.Log("Manager_Sim started");
