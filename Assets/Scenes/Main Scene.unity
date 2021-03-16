@@ -20629,7 +20629,7 @@ GameObject:
   - component: {fileID: 1937686970}
   - component: {fileID: 1937686969}
   m_Layer: 5
-  m_Name: Panel_Calendar_Week01_MondayEventIcon03
+  m_Name: Panel_Calendar_Week01_Monday_EventIcon03
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
