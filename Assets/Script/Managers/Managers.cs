@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//☧ IN HOC SIGNO VINCES
 //All managers must exist
 [RequireComponent(typeof(Manager_Assets))]
 [RequireComponent(typeof(Manager_Sim))]
