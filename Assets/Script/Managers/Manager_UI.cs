@@ -61,7 +61,6 @@ public class Manager_UI : MonoBehaviour, IManager
     public GameObject _calendarPanelGO;
     private GameObject _calendarWeek01Container;
     private GameObject _calendarWeek01Sunday;
-    private GameObject _calendarWeek01SundayTimeOverlay;
     private TextMeshProUGUI _calendarWeek01SundayMonthText;
     private TextMeshProUGUI _calendarWeek01SundayDayOfMonthText;
     private GameObject _calendarWeek01SundayIcon01;
@@ -70,8 +69,8 @@ public class Manager_UI : MonoBehaviour, IManager
     private GameObject _calendarWeek01SundayIcon04;
     private GameObject _calendarWeek01SundayIcon05;
     private GameObject _calendarWeek01SundayIcon06;
+    private GameObject _calendarWeek01SundayTimeOverlay;
     private GameObject _calendarWeek01Monday;
-    private GameObject _calendarWeek01MondayTimeOverlay;
     private TextMeshProUGUI _calendarWeek01MondayMonthText;
     private TextMeshProUGUI _calendarWeek01MondayDayOfMonthText;
     private GameObject _calendarWeek01MondayIcon01;
@@ -80,8 +79,8 @@ public class Manager_UI : MonoBehaviour, IManager
     private GameObject _calendarWeek01MondayIcon04;
     private GameObject _calendarWeek01MondayIcon05;
     private GameObject _calendarWeek01MondayIcon06;
+    private GameObject _calendarWeek01MondayTimeOverlay;
     private GameObject _calendarWeek01Tuesday;
-    private GameObject _calendarWeek01TuesdayTimeOverlay;
     private TextMeshProUGUI _calendarWeek01TuesdayMonthText;
     private TextMeshProUGUI _calendarWeek01TuesdayDayOfMonthText;
     private GameObject _calendarWeek01TuesdayIcon01;
@@ -90,8 +89,8 @@ public class Manager_UI : MonoBehaviour, IManager
     private GameObject _calendarWeek01TuesdayIcon04;
     private GameObject _calendarWeek01TuesdayIcon05;
     private GameObject _calendarWeek01TuesdayIcon06;
+    private GameObject _calendarWeek01TuesdayTimeOverlay;
     private GameObject _calendarWeek01Wednesday;
-    private GameObject _calendarWeek01WenesdayTimeOverlay;
     private TextMeshProUGUI _calendarWeek01WednesdayMonthText;
     private TextMeshProUGUI _calendarWeek01WednesdayDayOfMonthText;
     private GameObject _calendarWeek01WednesdayIcon01;
@@ -100,8 +99,8 @@ public class Manager_UI : MonoBehaviour, IManager
     private GameObject _calendarWeek01WednesdayIcon04;
     private GameObject _calendarWeek01WednesdayIcon05;
     private GameObject _calendarWeek01WednesdayIcon06;
+    private GameObject _calendarWeek01WenesdayTimeOverlay;
     private GameObject _calendarWeek01Thursday;
-    private GameObject _calendarWeek01ThursdayTimeOverlay;
     private TextMeshProUGUI _calendarWeek01ThursdayMonthText;
     private TextMeshProUGUI _calendarWeek01ThursdayDayOfMonthText;
     private GameObject _calendarWeek01ThursdayIcon01;
@@ -110,8 +109,8 @@ public class Manager_UI : MonoBehaviour, IManager
     private GameObject _calendarWeek01ThursdayIcon04;
     private GameObject _calendarWeek01ThursdayIcon05;
     private GameObject _calendarWeek01ThursdayIcon06;
+    private GameObject _calendarWeek01ThursdayTimeOverlay;
     private GameObject _calendarWeek01Friday;
-    private GameObject _calendarWeek01FridayTimeOverlay;
     private TextMeshProUGUI _calendarWeek01FridayMonthText;
     private TextMeshProUGUI _calendarWeek01FridayDayOfMonthText;
     private GameObject _calendarWeek01FridayIcon01;
@@ -120,8 +119,8 @@ public class Manager_UI : MonoBehaviour, IManager
     private GameObject _calendarWeek01FridayIcon04;
     private GameObject _calendarWeek01FridayIcon05;
     private GameObject _calendarWeek01FridayIcon06;
+    private GameObject _calendarWeek01FridayTimeOverlay;
     private GameObject _calendarWeek01Saturday;
-    private GameObject _calendarWeek01SaturdayTimeOverlay;
     private TextMeshProUGUI _calendarWeek01SaturdayMonthText;
     private TextMeshProUGUI _calendarWeek01SaturdayDayOfMonthText;
     private GameObject _calendarWeek01SaturdayIcon01;
@@ -130,6 +129,7 @@ public class Manager_UI : MonoBehaviour, IManager
     private GameObject _calendarWeek01SaturdayIcon04;
     private GameObject _calendarWeek01SaturdayIcon05;
     private GameObject _calendarWeek01SaturdayIcon06;
+    private GameObject _calendarWeek01SaturdayTimeOverlay;
     private TextMeshProUGUI _calendarWeek02SundayMonthText;
     private TextMeshProUGUI _calendarWeek02SundayDayOfMonthText;
     private GameObject _calendarWeek02Container;
@@ -214,7 +214,8 @@ public class Manager_UI : MonoBehaviour, IManager
     GameObject[] calendarTimeOverlays = new GameObject[7];
     TextMeshProUGUI[] calendarMonthTexts = new TextMeshProUGUI[14];
     TextMeshProUGUI[] calendarDayOfMonthTexts = new TextMeshProUGUI[14];
-    
+    GameObject[][] calendarDayBoxIcons = new GameObject[14][];
+
 
     public void Startup()
     {
@@ -246,7 +247,6 @@ public class Manager_UI : MonoBehaviour, IManager
         InitiateGO(ref _calendarPanelGO, "Panel_Calendar");
         InitiateGO(ref _calendarWeek01Container, "Panel_Calendar_Week01");
         InitiateGO(ref _calendarWeek01Sunday, "Panel_Calendar_Week01_Sunday");
-        InitiateGO(ref _calendarWeek01SundayTimeOverlay, "Panel_Calendar_Week01_Sunday_TimeOverlay");
         InitiateText(ref _calendarWeek01SundayMonthText, "TMPText_Calendar_Week01_Sunday_Month");
         InitiateText(ref _calendarWeek01SundayDayOfMonthText, "TMPText_Calendar_Week01_Sunday_DayOfMonth");
         InitiateGO(ref _calendarWeek01SundayIcon01, "Panel_Calendar_Week01_Sunday_EventIcon01");
@@ -255,8 +255,8 @@ public class Manager_UI : MonoBehaviour, IManager
         InitiateGO(ref _calendarWeek01SundayIcon04, "Panel_Calendar_Week01_Sunday_EventIcon04");
         InitiateGO(ref _calendarWeek01SundayIcon05, "Panel_Calendar_Week01_Sunday_EventIcon05");
         InitiateGO(ref _calendarWeek01SundayIcon06, "Panel_Calendar_Week01_Sunday_EventIcon06");
+        InitiateGO(ref _calendarWeek01SundayTimeOverlay, "Panel_Calendar_Week01_Sunday_TimeOverlay");
         InitiateGO(ref _calendarWeek01Monday, "Panel_Calendar_Week01_Monday");
-        InitiateGO(ref _calendarWeek01MondayTimeOverlay, "Panel_Calendar_Week01_Monday_TimeOverlay");
         InitiateText(ref _calendarWeek01MondayMonthText, "TMPText_Calendar_Week01_Monday_Month");
         InitiateText(ref _calendarWeek01MondayDayOfMonthText, "TMPText_Calendar_Week01_Monday_DayOfMonth");
         InitiateGO(ref _calendarWeek01MondayIcon01, "Panel_Calendar_Week01_Monday_EventIcon01");
@@ -265,8 +265,8 @@ public class Manager_UI : MonoBehaviour, IManager
         InitiateGO(ref _calendarWeek01MondayIcon04, "Panel_Calendar_Week01_Monday_EventIcon04");
         InitiateGO(ref _calendarWeek01MondayIcon05, "Panel_Calendar_Week01_Monday_EventIcon05");
         InitiateGO(ref _calendarWeek01MondayIcon06, "Panel_Calendar_Week01_Monday_EventIcon06");
+        InitiateGO(ref _calendarWeek01MondayTimeOverlay, "Panel_Calendar_Week01_Monday_TimeOverlay");
         InitiateGO(ref _calendarWeek01Tuesday, "Panel_Calendar_Week01_Tuesday");
-        InitiateGO(ref _calendarWeek01TuesdayTimeOverlay, "Panel_Calendar_Week01_Tuesday_TimeOverlay");
         InitiateText(ref _calendarWeek01TuesdayMonthText, "TMPText_Calendar_Week01_Tuesday_Month");
         InitiateText(ref _calendarWeek01TuesdayDayOfMonthText, "TMPText_Calendar_Week01_Tuesday_DayOfMonth");
         InitiateGO(ref _calendarWeek01TuesdayIcon01, "Panel_Calendar_Week01_Tuesday_EventIcon01");
@@ -275,8 +275,8 @@ public class Manager_UI : MonoBehaviour, IManager
         InitiateGO(ref _calendarWeek01TuesdayIcon04, "Panel_Calendar_Week01_Tuesday_EventIcon04");
         InitiateGO(ref _calendarWeek01TuesdayIcon05, "Panel_Calendar_Week01_Tuesday_EventIcon05");
         InitiateGO(ref _calendarWeek01TuesdayIcon06, "Panel_Calendar_Week01_Tuesday_EventIcon06");
+        InitiateGO(ref _calendarWeek01TuesdayTimeOverlay, "Panel_Calendar_Week01_Tuesday_TimeOverlay");
         InitiateGO(ref _calendarWeek01Wednesday, "Panel_Calendar_Week01_Wednesday");
-        InitiateGO(ref _calendarWeek01WenesdayTimeOverlay, "Panel_Calendar_Week01_Wednesday_TimeOverlay");
         InitiateText(ref _calendarWeek01WednesdayMonthText, "TMPText_Calendar_Week01_Wednesday_Month");
         InitiateText(ref _calendarWeek01WednesdayDayOfMonthText, "TMPText_Calendar_Week01_Wednesday_DayOfMonth");
         InitiateGO(ref _calendarWeek01WednesdayIcon01, "Panel_Calendar_Week01_Wednesday_EventIcon01");
@@ -285,8 +285,8 @@ public class Manager_UI : MonoBehaviour, IManager
         InitiateGO(ref _calendarWeek01WednesdayIcon04, "Panel_Calendar_Week01_Wednesday_EventIcon04");
         InitiateGO(ref _calendarWeek01WednesdayIcon05, "Panel_Calendar_Week01_Wednesday_EventIcon05");
         InitiateGO(ref _calendarWeek01WednesdayIcon06, "Panel_Calendar_Week01_Wednesday_EventIcon06");
+        InitiateGO(ref _calendarWeek01WenesdayTimeOverlay, "Panel_Calendar_Week01_Wednesday_TimeOverlay");
         InitiateGO(ref _calendarWeek01Thursday, "Panel_Calendar_Week01_Thursday");
-        InitiateGO(ref _calendarWeek01ThursdayTimeOverlay, "Panel_Calendar_Week01_Thursday_TimeOverlay");
         InitiateText(ref _calendarWeek01ThursdayMonthText, "TMPText_Calendar_Week01_Thursday_Month");
         InitiateText(ref _calendarWeek01ThursdayDayOfMonthText, "TMPText_Calendar_Week01_Thursday_DayOfMonth");
         InitiateGO(ref _calendarWeek01ThursdayIcon01, "Panel_Calendar_Week01_Thursday_EventIcon01");
@@ -295,8 +295,8 @@ public class Manager_UI : MonoBehaviour, IManager
         InitiateGO(ref _calendarWeek01ThursdayIcon04, "Panel_Calendar_Week01_Thursday_EventIcon04");
         InitiateGO(ref _calendarWeek01ThursdayIcon05, "Panel_Calendar_Week01_Thursday_EventIcon05");
         InitiateGO(ref _calendarWeek01ThursdayIcon06, "Panel_Calendar_Week01_Thursday_EventIcon06");
+        InitiateGO(ref _calendarWeek01ThursdayTimeOverlay, "Panel_Calendar_Week01_Thursday_TimeOverlay");
         InitiateGO(ref _calendarWeek01Friday, "Panel_Calendar_Week01_Friday");
-        InitiateGO(ref _calendarWeek01FridayTimeOverlay, "Panel_Calendar_Week01_Friday_TimeOverlay");
         InitiateText(ref _calendarWeek01FridayMonthText, "TMPText_Calendar_Week01_Friday_Month");
         InitiateText(ref _calendarWeek01FridayDayOfMonthText, "TMPText_Calendar_Week01_Friday_DayOfMonth");
         InitiateGO(ref _calendarWeek01FridayIcon01, "Panel_Calendar_Week01_Friday_EventIcon01");
@@ -305,8 +305,8 @@ public class Manager_UI : MonoBehaviour, IManager
         InitiateGO(ref _calendarWeek01FridayIcon04, "Panel_Calendar_Week01_Friday_EventIcon04");
         InitiateGO(ref _calendarWeek01FridayIcon05, "Panel_Calendar_Week01_Friday_EventIcon05");
         InitiateGO(ref _calendarWeek01FridayIcon06, "Panel_Calendar_Week01_Friday_EventIcon06");
+        InitiateGO(ref _calendarWeek01FridayTimeOverlay, "Panel_Calendar_Week01_Friday_TimeOverlay");
         InitiateGO(ref _calendarWeek01Saturday, "Panel_Calendar_Week01_Saturday");
-        InitiateGO(ref _calendarWeek01SaturdayTimeOverlay, "Panel_Calendar_Week01_Saturday_TimeOverlay");
         InitiateText(ref _calendarWeek01SaturdayMonthText, "TMPText_Calendar_Week01_Saturday_Month");
         InitiateText(ref _calendarWeek01SaturdayDayOfMonthText, "TMPText_Calendar_Week01_Saturday_DayOfMonth");
         InitiateGO(ref _calendarWeek01SaturdayIcon01, "Panel_Calendar_Week01_Saturday_EventIcon01");
@@ -315,6 +315,7 @@ public class Manager_UI : MonoBehaviour, IManager
         InitiateGO(ref _calendarWeek01SaturdayIcon04, "Panel_Calendar_Week01_Saturday_EventIcon04");
         InitiateGO(ref _calendarWeek01SaturdayIcon05, "Panel_Calendar_Week01_Saturday_EventIcon05");
         InitiateGO(ref _calendarWeek01SaturdayIcon06, "Panel_Calendar_Week01_Saturday_EventIcon06");
+        InitiateGO(ref _calendarWeek01SaturdayTimeOverlay, "Panel_Calendar_Week01_Saturday_TimeOverlay");
         InitiateGO(ref _calendarWeek02Container, "Panel_Calendar_Week02");
         InitiateGO(ref _calendarWeek02Sunday, "Panel_Calendar_Week02_Sunday");
         InitiateText(ref _calendarWeek02SundayMonthText, "TMPText_Calendar_Week02_Sunday_Month");
@@ -449,6 +450,132 @@ public class Manager_UI : MonoBehaviour, IManager
         calendarDayOfMonthTexts[12] = _calendarWeek02FridayDayOfMonthText;
         calendarDayOfMonthTexts[13] = _calendarWeek02SaturdayDayOfMonthText;
 
+        calendarDayBoxIcons[0] = new GameObject[6]
+        {
+            _calendarWeek01SundayIcon01,
+            _calendarWeek01SundayIcon02,
+            _calendarWeek01SundayIcon03,
+            _calendarWeek01SundayIcon04,
+            _calendarWeek01SundayIcon05,
+            _calendarWeek01SundayIcon06
+        };
+        calendarDayBoxIcons[1] = new GameObject[6]
+        {
+            _calendarWeek01MondayIcon01,
+            _calendarWeek01MondayIcon02,
+            _calendarWeek01MondayIcon03,
+            _calendarWeek01MondayIcon04,
+            _calendarWeek01MondayIcon05,
+            _calendarWeek01MondayIcon06
+        };
+        calendarDayBoxIcons[2] = new GameObject[6]
+        {
+            _calendarWeek01TuesdayIcon01,
+            _calendarWeek01TuesdayIcon02,
+            _calendarWeek01TuesdayIcon03,
+            _calendarWeek01TuesdayIcon04,
+            _calendarWeek01TuesdayIcon05,
+            _calendarWeek01TuesdayIcon06
+        };
+        calendarDayBoxIcons[3] = new GameObject[6]
+        {
+            _calendarWeek01WednesdayIcon01,
+            _calendarWeek01WednesdayIcon02,
+            _calendarWeek01WednesdayIcon03,
+            _calendarWeek01WednesdayIcon04,
+            _calendarWeek01WednesdayIcon05,
+            _calendarWeek01WednesdayIcon06
+        };
+        calendarDayBoxIcons[4] = new GameObject[6]
+        {
+            _calendarWeek01ThursdayIcon01,
+            _calendarWeek01ThursdayIcon02,
+            _calendarWeek01ThursdayIcon03,
+            _calendarWeek01ThursdayIcon04,
+            _calendarWeek01ThursdayIcon05,
+            _calendarWeek01ThursdayIcon06
+        };
+        calendarDayBoxIcons[5] = new GameObject[6]
+        {
+            _calendarWeek01FridayIcon01,
+            _calendarWeek01FridayIcon02,
+            _calendarWeek01FridayIcon03,
+            _calendarWeek01FridayIcon04,
+            _calendarWeek01FridayIcon05,
+            _calendarWeek01FridayIcon06
+        };
+        calendarDayBoxIcons[6] = new GameObject[6]
+        {
+            _calendarWeek01SaturdayIcon01,
+            _calendarWeek01SaturdayIcon02,
+            _calendarWeek01SaturdayIcon03,
+            _calendarWeek01SaturdayIcon04,
+            _calendarWeek01SaturdayIcon05,
+            _calendarWeek01SaturdayIcon06
+        };
+        calendarDayBoxIcons[7] = new GameObject[6]
+        {
+            _calendarWeek02SundayIcon01,
+            _calendarWeek02SundayIcon02,
+            _calendarWeek02SundayIcon03,
+            _calendarWeek02SundayIcon04,
+            _calendarWeek02SundayIcon05,
+            _calendarWeek02SundayIcon06
+        };
+        calendarDayBoxIcons[8] = new GameObject[6]
+        {
+            _calendarWeek02MondayIcon01,
+            _calendarWeek02MondayIcon02,
+            _calendarWeek02MondayIcon03,
+            _calendarWeek02MondayIcon04,
+            _calendarWeek02MondayIcon05,
+            _calendarWeek02MondayIcon06
+        };
+        calendarDayBoxIcons[9] = new GameObject[6]
+        {
+            _calendarWeek02TuesdayIcon01,
+            _calendarWeek02TuesdayIcon02,
+            _calendarWeek02TuesdayIcon03,
+            _calendarWeek02TuesdayIcon04,
+            _calendarWeek02TuesdayIcon05,
+            _calendarWeek02TuesdayIcon06
+        };
+        calendarDayBoxIcons[10] = new GameObject[6]
+        {
+            _calendarWeek02WednesdayIcon01,
+            _calendarWeek02WednesdayIcon02,
+            _calendarWeek02WednesdayIcon03,
+            _calendarWeek02WednesdayIcon04,
+            _calendarWeek02WednesdayIcon05,
+            _calendarWeek02WednesdayIcon06
+        };
+        calendarDayBoxIcons[11] = new GameObject[6]
+        {
+            _calendarWeek02ThursdayIcon01,
+            _calendarWeek02ThursdayIcon02,
+            _calendarWeek02ThursdayIcon03,
+            _calendarWeek02ThursdayIcon04,
+            _calendarWeek02ThursdayIcon05,
+            _calendarWeek02ThursdayIcon06
+        };
+        calendarDayBoxIcons[12] = new GameObject[6]
+        {
+            _calendarWeek02FridayIcon01,
+            _calendarWeek02FridayIcon02,
+            _calendarWeek02FridayIcon03,
+            _calendarWeek02FridayIcon04,
+            _calendarWeek02FridayIcon05,
+            _calendarWeek02FridayIcon06
+        };
+        calendarDayBoxIcons[13] = new GameObject[6]
+        {
+            _calendarWeek02SaturdayIcon01,
+            _calendarWeek02SaturdayIcon02,
+            _calendarWeek02SaturdayIcon03,
+            _calendarWeek02SaturdayIcon04,
+            _calendarWeek02SaturdayIcon05,
+            _calendarWeek02SaturdayIcon06
+        };
 
         _screenCoverCanvasGO.SetActive(false);
         _screenCoverMainMenuCanvasGO.SetActive(false);
@@ -1118,12 +1245,20 @@ public class Manager_UI : MonoBehaviour, IManager
                 if (isFadeOut)
                 {
                     LeanTween.value(calendarDayBox.gameObject, a => calendarDayBox.GetComponent<Image>().color = a, new Color(255, 255, 255, 1), new Color(255, 255, 255, 0), seconds);
+                    foreach(GameObject iconGO in calendarDayBoxIcons[i])
+                    {
+                        LeanTween.value(iconGO.gameObject, a => iconGO.GetComponent<Image>().color = a, new Color(255, 255, 255, 1), new Color(255, 255, 255, 0), seconds);
+                    }
                     LeanTween.value(calendarMonthText.gameObject, a => calendarMonthText.color = a, new Color(0, 0, 0, 1), new Color(0, 0, 0, 0), seconds);
                     LeanTween.value(dayOfMonthText.gameObject, a => dayOfMonthText.color = a, new Color(0, 0, 0, 1), new Color(0, 0, 0, 0), seconds);
                 }
                 else
                 {
                     LeanTween.value(calendarDayBox.gameObject, a => calendarDayBox.GetComponent<Image>().color = a, new Color(255, 255, 255, 0), new Color(255, 255, 255, 1), seconds);
+                    foreach (GameObject iconGO in calendarDayBoxIcons[i])
+                    {
+                        LeanTween.value(iconGO.gameObject, a => iconGO.GetComponent<Image>().color = a, new Color(255, 255, 255, 0), new Color(255, 255, 255, 1), seconds);
+                    }
                     LeanTween.value(calendarMonthText.gameObject, a => calendarMonthText.color = a, new Color(0, 0, 0, 0), new Color(0, 0, 0, 1), seconds);
                     LeanTween.value(dayOfMonthText.gameObject, a => dayOfMonthText.color = a, new Color(0, 0, 0, 0), new Color(0, 0, 0, 1), seconds);
                 }
