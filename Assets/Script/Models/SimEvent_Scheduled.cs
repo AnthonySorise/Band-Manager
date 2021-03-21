@@ -1,27 +1,25 @@
 ﻿using System;
 
-public enum ScheduledEventTypeID
-{
-    none,
-    Manager_Travel,
-    Manager_Scout,
-    Manager_Gig,
-    Manager_Record,
-    Manager_Other
-}
-
 public class SimEvent_Scheduled
 {
     private SimAction _simAction;
     private DateTime _scheduledDT;
-
+    private TimeSpan _duration;
     private bool _scheduledPassed;
 
-    public SimEvent_Scheduled(SimAction simAction, DateTime scheduledDT, ScheduledEventTypeID scheduledEventID = ScheduledEventTypeID.none) {
+    public SimEvent_Scheduled(SimAction simAction, DateTime scheduledDT, TimeSpan? duration = null) {
         _simAction = simAction;
         _scheduledDT = scheduledDT;
-        _scheduledPassed = false;
+        if(duration == null)
+        {
+            _duration = new TimeSpan(1, 0, 0);
+        }
+        else
+        {
+            _duration = duration.Value;
+        }
 
+        _scheduledPassed = false;
         Store();
     }
 

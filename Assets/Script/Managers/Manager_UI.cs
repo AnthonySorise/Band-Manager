@@ -1430,6 +1430,10 @@ public class Manager_UI : MonoBehaviour, IManager
                 calendarMonthTexts[i].text = "";
             }
 
+            //Event Icons
+
+
+
             //Selected DayBox
             if(DateTime.Compare(thisDT.Date, _calendarSelectedDay.Value) == 0) 
             {

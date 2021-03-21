@@ -12,7 +12,8 @@ public enum SimActionID
     Test_Popup04,
     Test_Popup05,
     Test_Popup05_1,
-    Test_Popup05_2
+    Test_Popup05_2,
+    NPC_Travel
 }
 
 public class SimAction {
@@ -21,6 +22,7 @@ public class SimAction {
     private Func<bool> _delayCondition;
     private UnityAction _initialAction;
 
+    public List<NPC> NPCs { get; private set; }
     public List<SimActionOption> Options { get; private set; }
     public bool PopupHaltsGame { get; private set; }
     public string PopupHeaderText { get; private set; }
@@ -28,10 +30,11 @@ public class SimAction {
     public Asset_png PopupBodyImg { get; private set; }
     public Asset_wav PopupTriggerSound { get; private set; }
 
-    public SimAction(SimActionID id, Func<bool> validCondition, Func<bool> delayCondition, UnityAction initialAction,
+    public SimAction(SimActionID id, List<NPC> npcs, Func<bool> validCondition, Func<bool> delayCondition, UnityAction initialAction,
         List<SimActionOption> options = null, bool popupHaltsGame = false, string popupHeaderText = null, string popupBodyText = null, Asset_png popupBodyImg = Asset_png.None, Asset_wav popupTriggerSound = Asset_wav.None)
     {
         ID = id;
+        NPCs = npcs;
         _validCondition = validCondition;
         _delayCondition = delayCondition;
         _initialAction = initialAction;

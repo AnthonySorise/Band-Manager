@@ -6,16 +6,24 @@ public class SimEvent_MTTH {
     private SimAction _simAction;
     private DateTime _startCheckingDT;
     private double _daysUntilFiftyPercentChance;
-
+    private TimeSpan? _duration;
     private double _daysPerCheck;
     private DateTime _lastCheckedDT;
     private bool _mtthCheckPassed;
 
-    public SimEvent_MTTH(SimAction simAction, DateTime startCheckingDT, DateTime fiftyPercentChanceDT, double daysPerCheck = 0.2)
+    public SimEvent_MTTH(SimAction simAction, DateTime startCheckingDT, DateTime fiftyPercentChanceDT, TimeSpan? duration = null, double daysPerCheck = 0.2)
     {
         _simAction = simAction;
         _startCheckingDT = startCheckingDT;
         _daysUntilFiftyPercentChance = (fiftyPercentChanceDT - startCheckingDT).TotalDays;
+        if (duration == null)
+        {
+            _duration = new TimeSpan(1, 0, 0);
+        }
+        else
+        {
+            _duration = duration.Value;
+        }
         _daysPerCheck = daysPerCheck;
         _mtthCheckPassed = false;
 
