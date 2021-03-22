@@ -12,7 +12,14 @@ public enum Asset_png
     Cursor_Default,
     Cursor_Hover,
     //popup images
-    Popup_Vinyl
+    Popup_Vinyl,
+    icon_daybox_null,
+    icon_daybox_gig,
+    icon_daybox_media,
+    icon_daybox_produce,
+    icon_daybox_scout,
+    icon_daybox_special,
+    icon_daybox_travel
 }
 
 public enum Asset_wav

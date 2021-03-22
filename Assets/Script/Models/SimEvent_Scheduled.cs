@@ -2,21 +2,21 @@
 
 public class SimEvent_Scheduled
 {
-    private SimAction _simAction;
-    private DateTime _scheduledDT;
-    private TimeSpan _duration;
+    public SimAction SimAction { get; private set; }
+    public DateTime ScheduledDT { get; private set; }
+    public TimeSpan Duration;
     private bool _scheduledPassed;
 
     public SimEvent_Scheduled(SimAction simAction, DateTime scheduledDT, TimeSpan? duration = null) {
-        _simAction = simAction;
-        _scheduledDT = scheduledDT;
+        SimAction = simAction;
+        ScheduledDT = scheduledDT;
         if(duration == null)
         {
-            _duration = new TimeSpan(1, 0, 0);
+            Duration = new TimeSpan(1, 0, 0);
         }
         else
         {
-            _duration = duration.Value;
+            Duration = duration.Value;
         }
 
         _scheduledPassed = false;
@@ -31,7 +31,7 @@ public class SimEvent_Scheduled
     }
 
     private bool IsTimeToTrigger() {
-        if (Managers.Time.CurrentDT >= _scheduledDT)
+        if (Managers.Time.CurrentDT >= ScheduledDT)
         {
             _scheduledPassed = true;
             return true;
@@ -42,18 +42,18 @@ public class SimEvent_Scheduled
     }
 
     public void Check() {
-        if (!_simAction.IsValid())
+        if (!SimAction.IsValid())
         {
             Remove();
         }
-        if ((_scheduledPassed || IsTimeToTrigger()) && !_simAction.ShouldDelay())
+        if ((_scheduledPassed || IsTimeToTrigger()) && !SimAction.ShouldDelay())
         {
-            _simAction.Trigger();
+            SimAction.Trigger();
             Remove();
         }
     }
 
     public void Cancel() {
-        _simAction.Cancel();
+        SimAction.Cancel();
     }
 }

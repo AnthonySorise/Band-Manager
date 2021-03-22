@@ -13,6 +13,11 @@ public enum SimActionID
     Test_Popup05,
     Test_Popup05_1,
     Test_Popup05_2,
+    NPC_Gig,
+    NPC_Media,
+    NPC_Produce,
+    NPC_Scout,
+    NPC_Special,
     NPC_Travel
 }
 
@@ -22,7 +27,7 @@ public class SimAction {
     private Func<bool> _delayCondition;
     private UnityAction _initialAction;
 
-    public List<NPC> NPCs { get; private set; }
+    public List<int> NPCs { get; private set; }
     public List<SimActionOption> Options { get; private set; }
     public bool PopupHaltsGame { get; private set; }
     public string PopupHeaderText { get; private set; }
@@ -30,7 +35,7 @@ public class SimAction {
     public Asset_png PopupBodyImg { get; private set; }
     public Asset_wav PopupTriggerSound { get; private set; }
 
-    public SimAction(SimActionID id, List<NPC> npcs, Func<bool> validCondition, Func<bool> delayCondition, UnityAction initialAction,
+    public SimAction(SimActionID id, List<int> npcs, Func<bool> validCondition, Func<bool> delayCondition, UnityAction initialAction,
         List<SimActionOption> options = null, bool popupHaltsGame = false, string popupHeaderText = null, string popupBodyText = null, Asset_png popupBodyImg = Asset_png.None, Asset_wav popupTriggerSound = Asset_wav.None)
     {
         ID = id;
@@ -61,20 +66,16 @@ public class SimAction {
 
     public void Trigger() {
         if (IsValid())
-        {
-            if (_initialAction != null) {
-                _initialAction();
+        {            
+            if(NPCs.Contains(1))
+            {
+                PopUp popup = new PopUp(this);
+                popup.CreateAndDisplay();
             }
-            
-            //if player
-            //popup
-            PopUp popup = new PopUp(this);
-            popup.CreateAndDisplay();
-
-
-            //if npc
-            //choose option using option's AI modifiers
-
+            else
+            {
+                //choose option using option's AI modifiers
+            }
         }
     }
 }

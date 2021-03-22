@@ -6,6 +6,7 @@ using TMPro;
 using System.Collections.Generic;
 using UnityEngine.Events;
 using System;
+using System.Linq;
 
 public enum CanvasLayer
 {
@@ -1431,7 +1432,77 @@ public class Manager_UI : MonoBehaviour, IManager
             }
 
             //Event Icons
+            foreach(GameObject dayBoxIcon in calendarDayBoxIcons[i])
+            {
+                //This is slowing things down considerably 
+                //solution 1: cache image components and reference them directly (this is probably it, if so - utilize optimization elsewhere too)
+                //solution 2: limit calendar updates
 
+                //dayBoxIcon.GetComponent<Image>().sprite = Managers.Assets.GetSprite(Asset_png.icon_daybox_null);
+            }
+            List<SimEvent_Scheduled> playerScheduledEvents = Managers.Sim.MatchingSimEventScheduled(1, thisDT).OrderBy(o => o.ScheduledDT).ToList();
+            var indexIcon = 0;
+            bool hasGig = false;
+            bool hasMedia = false;
+            bool hasProduce = false;
+            bool hasScout = false;
+            bool hasSpecial = false;
+            bool hasTravel = false;
+
+            foreach (SimEvent_Scheduled simEvent in playerScheduledEvents)
+            {
+                switch (simEvent.SimAction.ID)
+                {
+                    case (SimActionID.NPC_Gig):
+                        if (!hasGig)
+                        {
+                            calendarDayBoxIcons[i][indexIcon].GetComponent<Image>().sprite = Managers.Assets.GetSprite(Asset_png.icon_daybox_gig);
+                            indexIcon += 1;
+                            hasGig = true;
+                        }
+                        break;
+                    case SimActionID.NPC_Media:
+                        if (!hasMedia)
+                        {
+                            calendarDayBoxIcons[i][indexIcon].GetComponent<Image>().sprite = Managers.Assets.GetSprite(Asset_png.icon_daybox_media);
+                            indexIcon += 1;
+                            hasMedia = true;
+                        }
+                        break;
+                    case SimActionID.NPC_Produce:
+                        if (!hasProduce)
+                        {
+                            calendarDayBoxIcons[i][indexIcon].GetComponent<Image>().sprite = Managers.Assets.GetSprite(Asset_png.icon_daybox_produce);
+                            indexIcon += 1;
+                            hasProduce = true;
+                        }
+                        break;
+                    case SimActionID.NPC_Scout:
+                        if (!hasScout)
+                        {
+                            calendarDayBoxIcons[i][indexIcon].GetComponent<Image>().sprite = Managers.Assets.GetSprite(Asset_png.icon_daybox_scout);
+                            indexIcon += 1;
+                            hasScout = true;
+                        }
+                        break;
+                    case SimActionID.NPC_Special:
+                        if (!hasSpecial)
+                        {
+                            calendarDayBoxIcons[i][indexIcon].GetComponent<Image>().sprite = Managers.Assets.GetSprite(Asset_png.icon_daybox_special);
+                            indexIcon += 1;
+                            hasSpecial = true;
+                        }
+                        break;
+                    case SimActionID.NPC_Travel:
+                        if (!hasTravel)
+                        {
+                            calendarDayBoxIcons[i][indexIcon].GetComponent<Image>().sprite = Managers.Assets.GetSprite(Asset_png.icon_daybox_travel);
+                            indexIcon += 1;
+                            hasTravel = true;
+                        }
+                        break;
+                }
+            }
 
 
             //Selected DayBox
