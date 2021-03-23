@@ -4,12 +4,13 @@ public class SimEvent_Scheduled
 {
     public SimAction SimAction { get; private set; }
     public DateTime ScheduledDT { get; private set; }
-    public TimeSpan Duration;
-    private bool _scheduledPassed;
+    private DateTime? _triggeredDT;
+    public TimeSpan Duration { get; private set; }
 
     public SimEvent_Scheduled(SimAction simAction, DateTime scheduledDT, TimeSpan? duration = null) {
         SimAction = simAction;
         ScheduledDT = scheduledDT;
+        _triggeredDT = null;
         if(duration == null)
         {
             Duration = new TimeSpan(1, 0, 0);
@@ -19,7 +20,6 @@ public class SimEvent_Scheduled
             Duration = duration.Value;
         }
 
-        _scheduledPassed = false;
         Store();
     }
 
@@ -33,7 +33,6 @@ public class SimEvent_Scheduled
     private bool IsTimeToTrigger() {
         if (Managers.Time.CurrentDT >= ScheduledDT)
         {
-            _scheduledPassed = true;
             return true;
         }
         else {
@@ -46,10 +45,17 @@ public class SimEvent_Scheduled
         {
             Remove();
         }
-        if ((_scheduledPassed || IsTimeToTrigger()) && !SimAction.ShouldDelay())
+        else if(_triggeredDT != null)
+        {
+            if (Managers.Time.CurrentDT.CompareTo(_triggeredDT + Duration) == 1)
+            {
+                Remove();
+            }
+        }
+        else if ((IsTimeToTrigger()) && !SimAction.ShouldDelay())
         {
             SimAction.Trigger();
-            Remove();
+            _triggeredDT = Managers.Time.CurrentDT;
         }
     }
 

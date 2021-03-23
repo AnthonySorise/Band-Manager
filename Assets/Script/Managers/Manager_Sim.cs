@@ -31,12 +31,12 @@ public class Manager_Sim : MonoBehaviour, IManager {
         _simEvents_Scheduled = new List<SimEvent_Scheduled>();
         _simEvents_MTTH = new List<SimEvent_MTTH>();
 
-        //SIM_TestPopup01(new DateTime(1985, 10, 24));
-        //SIM_TestPopup02(new DateTime(1985, 10, 25));
-        //SIM_TestPopup03(new DateTime(1985, 10, 26));
-        //SIM_TestPopup04(new DateTime(1985, 10, 27));
-        //SIM_TestPopup05();
-        SIM_ScheduleTravel(SimActionID.NPC_Travel, new List<int>() {1}, new DateTime(1985, 10, 24), CityName.Chicago);
+        SIM_TestPopup01(new DateTime(1985, 10, 24));
+        SIM_TestPopup02(new DateTime(1985, 10, 25));
+        SIM_TestPopup03(new DateTime(1985, 10, 26));
+        SIM_TestPopup04(new DateTime(1985, 10, 27));
+        SIM_TestPopup05();
+        SIM_ScheduleTravel(SimActionID.NPC_Travel, new List<int>() {1}, new DateTime(1985, 10, 24, 8, 30, 0), CityName.Chicago);
 
         BandManager player = new BandManager(NPCGender.Male, 35);
         Debug.Log("Player Created");
@@ -103,7 +103,7 @@ public class Manager_Sim : MonoBehaviour, IManager {
 
     //Test Popup 01
     private void SIM_TestPopup01(DateTime triggerDate) {
-        List<int> npcs = new List<int>();
+        List<int> npcs = new List<int>() { 1 };
         Func<bool> validCondition = () => { return true; };
         Func<bool> delayCondition = () => { return false;};
         SimAction simAction = new SimAction(SimActionID.Test_Popup01, npcs, validCondition, delayCondition, null, null, false, "Test Scheduled Event", "This is a test event that is scheduled to fire on " + triggerDate.ToShortDateString() + " but not pause time.", Asset_png.Popup_Vinyl, Asset_wav.event_generic);
@@ -113,7 +113,7 @@ public class Manager_Sim : MonoBehaviour, IManager {
     //Test Popup 02
     private void SIM_TestPopup02(DateTime triggerDate)
     {
-        List<int> npcs = new List<int>();
+        List<int> npcs = new List<int>() { 1 };
         Func<bool> validCondition = () => { return true; };
         Func<bool> delayCondition = () => { return false; };
         SimAction simAction = new SimAction(SimActionID.Test_Popup02, npcs, validCondition, delayCondition, null, null, true, "Test Scheduled Event", "This is a test event that is scheduled to fire on " + triggerDate.ToShortDateString() + " AND prevents progress until you click OK.", Asset_png.Popup_Vinyl, Asset_wav.event_generic);
@@ -122,7 +122,7 @@ public class Manager_Sim : MonoBehaviour, IManager {
 
     //Test Popup03
     private void SIM_TestPopup03(DateTime triggerDate) {
-        List<int> npcs = new List<int>();
+        List<int> npcs = new List<int>() { 1 };
 
         UnityAction option01 = () => {
             Debug.Log("Option One Selected!");
@@ -166,7 +166,7 @@ public class Manager_Sim : MonoBehaviour, IManager {
     //Test Popup04
     private void SIM_TestPopup04(DateTime triggerDate)
     {
-        List<int> npcs = new List<int>();
+        List<int> npcs = new List<int>() { 1 };
 
         UnityAction option01 = () => {
             Debug.Log("Option One Selected!");
@@ -206,7 +206,7 @@ public class Manager_Sim : MonoBehaviour, IManager {
     //Test Popup05
     private void SIM_TestPopup05()
     {
-        List<int> npcs = new List<int>();
+        List<int> npcs = new List<int>() { 1 };
 
         UnityAction option01 = () => {
             SIM_TestPopup05_option01();

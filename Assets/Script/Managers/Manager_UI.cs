@@ -216,6 +216,7 @@ public class Manager_UI : MonoBehaviour, IManager
     TextMeshProUGUI[] calendarMonthTexts = new TextMeshProUGUI[14];
     TextMeshProUGUI[] calendarDayOfMonthTexts = new TextMeshProUGUI[14];
     GameObject[][] calendarDayBoxIcons = new GameObject[14][];
+    Image[][] calendarDayBoxIcons_ImageComponent = new Image[14][];
 
 
     public void Startup()
@@ -577,6 +578,15 @@ public class Manager_UI : MonoBehaviour, IManager
             _calendarWeek02SaturdayIcon05,
             _calendarWeek02SaturdayIcon06
         };
+
+        for(int i = 0; i < 14; i++)
+        {
+            calendarDayBoxIcons_ImageComponent[i] = new Image[6];
+            for (int j = 0; j < 6; j++)
+            {
+                calendarDayBoxIcons_ImageComponent[i][j] = calendarDayBoxIcons[i][j].GetComponent<Image>();
+            }
+        }
 
         _screenCoverCanvasGO.SetActive(false);
         _screenCoverMainMenuCanvasGO.SetActive(false);
@@ -1432,13 +1442,9 @@ public class Manager_UI : MonoBehaviour, IManager
             }
 
             //Event Icons
-            foreach(GameObject dayBoxIcon in calendarDayBoxIcons[i])
+            foreach(Image dayBoxIconImageComponent in calendarDayBoxIcons_ImageComponent[i])
             {
-                //This is slowing things down considerably 
-                //solution 1: cache image components and reference them directly (this is probably it, if so - utilize optimization elsewhere too)
-                //solution 2: limit calendar updates
-
-                //dayBoxIcon.GetComponent<Image>().sprite = Managers.Assets.GetSprite(Asset_png.icon_daybox_null);
+                dayBoxIconImageComponent.enabled = false;
             }
             List<SimEvent_Scheduled> playerScheduledEvents = Managers.Sim.MatchingSimEventScheduled(1, thisDT).OrderBy(o => o.ScheduledDT).ToList();
             var indexIcon = 0;
@@ -1456,7 +1462,11 @@ public class Manager_UI : MonoBehaviour, IManager
                     case (SimActionID.NPC_Gig):
                         if (!hasGig)
                         {
-                            calendarDayBoxIcons[i][indexIcon].GetComponent<Image>().sprite = Managers.Assets.GetSprite(Asset_png.icon_daybox_gig);
+                            calendarDayBoxIcons_ImageComponent[i][indexIcon].enabled = true;
+                            if (calendarDayBoxIcons_ImageComponent[i][indexIcon].sprite.texture != Managers.Assets.GetSprite(Asset_png.icon_daybox_gig).texture)
+                            {
+                                calendarDayBoxIcons_ImageComponent[i][indexIcon].sprite = Managers.Assets.GetSprite(Asset_png.icon_daybox_gig);
+                            }
                             indexIcon += 1;
                             hasGig = true;
                         }
@@ -1464,7 +1474,11 @@ public class Manager_UI : MonoBehaviour, IManager
                     case SimActionID.NPC_Media:
                         if (!hasMedia)
                         {
-                            calendarDayBoxIcons[i][indexIcon].GetComponent<Image>().sprite = Managers.Assets.GetSprite(Asset_png.icon_daybox_media);
+                            calendarDayBoxIcons_ImageComponent[i][indexIcon].enabled = true;
+                            if (calendarDayBoxIcons_ImageComponent[i][indexIcon].sprite.texture != Managers.Assets.GetSprite(Asset_png.icon_daybox_media).texture)
+                            {
+                                calendarDayBoxIcons_ImageComponent[i][indexIcon].sprite = Managers.Assets.GetSprite(Asset_png.icon_daybox_media);
+                            }
                             indexIcon += 1;
                             hasMedia = true;
                         }
@@ -1472,7 +1486,11 @@ public class Manager_UI : MonoBehaviour, IManager
                     case SimActionID.NPC_Produce:
                         if (!hasProduce)
                         {
-                            calendarDayBoxIcons[i][indexIcon].GetComponent<Image>().sprite = Managers.Assets.GetSprite(Asset_png.icon_daybox_produce);
+                            calendarDayBoxIcons_ImageComponent[i][indexIcon].enabled = true;
+                            if (calendarDayBoxIcons_ImageComponent[i][indexIcon].sprite.texture != Managers.Assets.GetSprite(Asset_png.icon_daybox_produce).texture)
+                            {
+                                calendarDayBoxIcons_ImageComponent[i][indexIcon].sprite = Managers.Assets.GetSprite(Asset_png.icon_daybox_produce);
+                            }
                             indexIcon += 1;
                             hasProduce = true;
                         }
@@ -1480,7 +1498,11 @@ public class Manager_UI : MonoBehaviour, IManager
                     case SimActionID.NPC_Scout:
                         if (!hasScout)
                         {
-                            calendarDayBoxIcons[i][indexIcon].GetComponent<Image>().sprite = Managers.Assets.GetSprite(Asset_png.icon_daybox_scout);
+                            calendarDayBoxIcons_ImageComponent[i][indexIcon].enabled = true;
+                            if (calendarDayBoxIcons_ImageComponent[i][indexIcon].sprite.texture != Managers.Assets.GetSprite(Asset_png.icon_daybox_scout).texture)
+                            {
+                                calendarDayBoxIcons_ImageComponent[i][indexIcon].sprite = Managers.Assets.GetSprite(Asset_png.icon_daybox_scout);
+                            }
                             indexIcon += 1;
                             hasScout = true;
                         }
@@ -1488,7 +1510,11 @@ public class Manager_UI : MonoBehaviour, IManager
                     case SimActionID.NPC_Special:
                         if (!hasSpecial)
                         {
-                            calendarDayBoxIcons[i][indexIcon].GetComponent<Image>().sprite = Managers.Assets.GetSprite(Asset_png.icon_daybox_special);
+                            calendarDayBoxIcons_ImageComponent[i][indexIcon].enabled = true;
+                            if (calendarDayBoxIcons_ImageComponent[i][indexIcon].sprite.texture != Managers.Assets.GetSprite(Asset_png.icon_daybox_special).texture)
+                            {
+                                calendarDayBoxIcons_ImageComponent[i][indexIcon].sprite = Managers.Assets.GetSprite(Asset_png.icon_daybox_special);
+                            }
                             indexIcon += 1;
                             hasSpecial = true;
                         }
@@ -1496,7 +1522,11 @@ public class Manager_UI : MonoBehaviour, IManager
                     case SimActionID.NPC_Travel:
                         if (!hasTravel)
                         {
-                            calendarDayBoxIcons[i][indexIcon].GetComponent<Image>().sprite = Managers.Assets.GetSprite(Asset_png.icon_daybox_travel);
+                            calendarDayBoxIcons_ImageComponent[i][indexIcon].enabled = true;
+                            if(calendarDayBoxIcons_ImageComponent[i][indexIcon].sprite.texture != Managers.Assets.GetSprite(Asset_png.icon_daybox_travel).texture)
+                            {
+                                calendarDayBoxIcons_ImageComponent[i][indexIcon].sprite = Managers.Assets.GetSprite(Asset_png.icon_daybox_travel);
+                            }
                             indexIcon += 1;
                             hasTravel = true;
                         }
