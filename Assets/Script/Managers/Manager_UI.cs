@@ -43,6 +43,7 @@ public class Manager_UI : MonoBehaviour, IManager
     //UI Prefabs
     public GameObject prefab_Button;
     public GameObject prefab_Popup;
+    public GameObject prefab_CalendarTimelineEvent;
 
     //UI Gos and Elements
     public GameObject HiddenCanvasGO;
@@ -231,6 +232,7 @@ public class Manager_UI : MonoBehaviour, IManager
         //UI Prefabs
         prefab_Button = Resources.Load<GameObject>("Prefabs/UI/Button");
         prefab_Popup = Resources.Load<GameObject>("Prefabs/UI/Popup");
+        prefab_CalendarTimelineEvent = Resources.Load<GameObject>("Prefabs/UI/CalendarTimelineEvent");
 
         //Initiate UI GOs and Elements
         InitiateCanvas(ref HiddenCanvasGO, "Canvas_Hidden", CanvasLayer.Hidden);
@@ -1384,6 +1386,7 @@ public class Manager_UI : MonoBehaviour, IManager
         float timePercentage = (float)(Managers.Time.CurrentDT.Ticks - startOfDay.Ticks) / (float)(endOfTheDay.Ticks - startOfDay.Ticks);
         int calendarBoxWidth = 58;
         int timelineWidth = 430;
+        List<SimEvent_Scheduled> playerScheduledEvents = new List<SimEvent_Scheduled>();
 
 
         //Date tracking
@@ -1446,7 +1449,7 @@ public class Manager_UI : MonoBehaviour, IManager
             {
                 dayBoxIconImageComponent.enabled = false;
             }
-            List<SimEvent_Scheduled> playerScheduledEvents = Managers.Sim.MatchingSimEventScheduled(1, thisDT).OrderBy(o => o.ScheduledDT).ToList();
+            playerScheduledEvents = Managers.Sim.MatchingSimEventScheduled(1, thisDT).OrderBy(o => o.ScheduledDT).ToList();
             var indexIcon = 0;
             bool hasGig = false;
             bool hasMedia = false;
@@ -1571,7 +1574,9 @@ public class Manager_UI : MonoBehaviour, IManager
         }
 
         //Update Timeline
+            //Update Timeline - Date
         _calendarTimelineSelectedDateText.text = _calendarSelectedDay.Value.ToString("MM/dd/yyyy");
+            //Update Timeline - Overlay
         RectTransform timelineTimeOverlayRectTransform = _calendarTimeline_TimeOverlay.GetComponent<RectTransform>();
         int timeLineFill = 0;
         if(DateTime.Compare(_calendarSelectedDay.Value, Managers.Time.CurrentDT.Date) == 0)
@@ -1579,5 +1584,25 @@ public class Manager_UI : MonoBehaviour, IManager
             timeLineFill = (int)(timelineWidth * timePercentage);
         }
         timelineTimeOverlayRectTransform.sizeDelta = new Vector2(timeLineFill, timelineTimeOverlayRectTransform.sizeDelta.y);
+            //Update Timeline - Scheduled Items
+        playerScheduledEvents = Managers.Sim.MatchingSimEventScheduled(1, _calendarSelectedDay.Value).OrderBy(o => o.ScheduledDT).ToList();
+        Transform calendarTimelineTransform = _calendarTimeline.GetComponent<RectTransform>();
+        foreach (SimEvent_Scheduled scheduledEvent in playerScheduledEvents)
+        {
+            bool isExist = false;
+            foreach (RectTransform child in calendarTimelineTransform)
+            {
+                if(child.gameObject.name == "CalendarTimelineEvent_" + scheduledEvent.ScheduledDT.ToString())
+                {
+                    isExist = true;
+                }
+            }
+            if (!isExist)
+            {
+                GameObject CalendarTimelineEvent = MonoBehaviour.Instantiate(prefab_CalendarTimelineEvent);
+                CalendarTimelineEvent.name = "CalendarTimelineEvent_" + scheduledEvent.ScheduledDT.ToString();
+                CalendarTimelineEvent.GetComponent<RectTransform>().SetParent(calendarTimelineTransform, false);
+            }
+        }
     }
 }

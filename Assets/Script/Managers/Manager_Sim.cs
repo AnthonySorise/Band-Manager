@@ -31,12 +31,14 @@ public class Manager_Sim : MonoBehaviour, IManager {
         _simEvents_Scheduled = new List<SimEvent_Scheduled>();
         _simEvents_MTTH = new List<SimEvent_MTTH>();
 
-        SIM_TestPopup01(new DateTime(1985, 10, 24));
-        SIM_TestPopup02(new DateTime(1985, 10, 25));
-        SIM_TestPopup03(new DateTime(1985, 10, 26));
-        SIM_TestPopup04(new DateTime(1985, 10, 27));
-        SIM_TestPopup05();
+        //SIM_TestPopup01(new DateTime(1985, 10, 24));
+        //SIM_TestPopup02(new DateTime(1985, 10, 25));
+        //SIM_TestPopup03(new DateTime(1985, 10, 26));
+        //SIM_TestPopup04(new DateTime(1985, 10, 27));
+        //SIM_TestPopup05();
         SIM_ScheduleTravel(SimActionID.NPC_Travel, new List<int>() {1}, new DateTime(1985, 10, 24, 8, 30, 0), CityName.Chicago);
+        SIM_ScheduleProduction(SimActionID.NPC_Produce, new List<int>() { 1 }, new DateTime(1985, 10, 24, 18, 0, 0));
+        SIM_ScheduleGig(SimActionID.NPC_Gig, new List<int>() { 1 }, new DateTime(1985, 10, 25, 11, 15, 0));
 
         BandManager player = new BandManager(NPCGender.Male, 35);
         Debug.Log("Player Created");
@@ -264,7 +266,23 @@ public class Manager_Sim : MonoBehaviour, IManager {
     {
         Func<bool> validCondition = () => { return true; };
         Func<bool> delayCondition = () => { return false; };
-        SimAction simAction = new SimAction(simActionID, npcs, validCondition, delayCondition, null, null, false, "Test Travel Event", "This is a test travel event that is scheduled to fire on " + triggerDate.ToShortDateString() + " but not pause time.", Asset_png.Popup_Vinyl, Asset_wav.event_generic);
+        SimAction simAction = new SimAction(simActionID, npcs, validCondition, delayCondition, null, null, false, "Test Travel Event", "This is a test travel event that is scheduled to fire on " + triggerDate.ToShortDateString() + " at 8:30AM - but not pause time.  The even will last for one hour.", Asset_png.Popup_Vinyl, Asset_wav.event_generic);
         SimEvent_Scheduled SimEvent_Scheduled01 = new SimEvent_Scheduled(simAction, triggerDate);
+    }
+    private void SIM_ScheduleProduction(SimActionID simActionID, List<int> npcs, DateTime triggerDate)
+    {
+        Func<bool> validCondition = () => { return true; };
+        Func<bool> delayCondition = () => { return false; };
+        TimeSpan duration = new TimeSpan(3, 0, 0);
+        SimAction simAction = new SimAction(simActionID, npcs, validCondition, delayCondition, null, null, false, "Test Production Event", "This is a test production  event that is scheduled to fire on " + triggerDate.ToShortDateString() + " at 6:00PM - but not pause time.  The even will last for three hours.", Asset_png.Popup_Vinyl, Asset_wav.event_generic);
+        SimEvent_Scheduled SimEvent_Scheduled01 = new SimEvent_Scheduled(simAction, triggerDate, duration);
+    }
+    private void SIM_ScheduleGig(SimActionID simActionID, List<int> npcs, DateTime triggerDate)
+    {
+        Func<bool> validCondition = () => { return true; };
+        Func<bool> delayCondition = () => { return false; };
+        TimeSpan duration = new TimeSpan(2, 0, 0);
+        SimAction simAction = new SimAction(simActionID, npcs, validCondition, delayCondition, null, null, false, "Test Gig Event", "This is a test gig event that is scheduled to fire on " + triggerDate.ToShortDateString() + " at 11:15AM - but not pause time.  The even will last for two hours.", Asset_png.Popup_Vinyl, Asset_wav.event_generic);
+        SimEvent_Scheduled SimEvent_Scheduled01 = new SimEvent_Scheduled(simAction, triggerDate, duration);
     }
 }
