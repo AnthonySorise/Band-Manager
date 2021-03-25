@@ -38,6 +38,7 @@ public class Manager_UI : MonoBehaviour, IManager
     //Calendar UI Variables
     private DateTime? _calendarLastUpdateDT = null;
     private DateTime? _calendarSelectedDay = null;
+    private DateTime? _calendarSelectedDay_previous = null;
     private int _calendarPage = 0;
 
     //UI Prefabs
@@ -1384,10 +1385,16 @@ public class Manager_UI : MonoBehaviour, IManager
         DateTime startOfDay = Managers.Time.CurrentDT.Date;
         DateTime endOfTheDay = Managers.Time.CurrentDT.AddDays(1).Date;
         float timePercentage = (float)(Managers.Time.CurrentDT.Ticks - startOfDay.Ticks) / (float)(endOfTheDay.Ticks - startOfDay.Ticks);
-        int calendarBoxWidth = 58;
-        int timelineWidth = 430;
+        int calendarBoxWidth = (int)(_calendarWeek01Sunday.GetComponent<RectTransform>().sizeDelta.x);
+        int timelineWidth = (int)(_calendarTimeline.GetComponent<RectTransform>().sizeDelta.x);
         List<SimEvent_Scheduled> playerScheduledEvents = new List<SimEvent_Scheduled>();
 
+        bool isNewCalendarSelectedDay = false;
+        if (_calendarSelectedDay_previous != _calendarSelectedDay)
+        {
+            isNewCalendarSelectedDay = true;
+            _calendarSelectedDay_previous = _calendarSelectedDay;
+        }
 
         //Date tracking
         if (_calendarLastUpdateDT == null)
@@ -1574,9 +1581,9 @@ public class Manager_UI : MonoBehaviour, IManager
         }
 
         //Update Timeline
-            //Update Timeline - Date
+        //Update Timeline - Date
         _calendarTimelineSelectedDateText.text = _calendarSelectedDay.Value.ToString("MM/dd/yyyy");
-            //Update Timeline - Overlay
+        //Update Timeline - Overlay
         RectTransform timelineTimeOverlayRectTransform = _calendarTimeline_TimeOverlay.GetComponent<RectTransform>();
         int timeLineFill = 0;
         if(DateTime.Compare(_calendarSelectedDay.Value, Managers.Time.CurrentDT.Date) == 0)
@@ -1584,9 +1591,28 @@ public class Manager_UI : MonoBehaviour, IManager
             timeLineFill = (int)(timelineWidth * timePercentage);
         }
         timelineTimeOverlayRectTransform.sizeDelta = new Vector2(timeLineFill, timelineTimeOverlayRectTransform.sizeDelta.y);
-            //Update Timeline - Scheduled Items
-        playerScheduledEvents = Managers.Sim.MatchingSimEventScheduled(1, _calendarSelectedDay.Value).OrderBy(o => o.ScheduledDT).ToList();
+        //Update Timeline - Scheduled Items
         Transform calendarTimelineTransform = _calendarTimeline.GetComponent<RectTransform>();
+        if (isNewCalendarSelectedDay)
+        {
+            foreach (Transform child in calendarTimelineTransform)
+            {
+                if (child.gameObject.name.Contains("CalendarTimelineEvent_"))
+                {
+                    Destroy(child.gameObject);
+                }
+            }
+        }
+        foreach (RectTransform child in calendarTimelineTransform)
+        {
+            if (child.gameObject.name.Contains("CalendarTimelineEvent_")
+                && timeLineFill > child.anchoredPosition.x + child.sizeDelta.x)
+            {
+                Destroy(child.gameObject);
+            }
+        }
+
+        playerScheduledEvents = Managers.Sim.MatchingSimEventScheduled(1, _calendarSelectedDay.Value).OrderBy(o => o.ScheduledDT).ToList();
         foreach (SimEvent_Scheduled scheduledEvent in playerScheduledEvents)
         {
             bool isExist = false;
@@ -1599,9 +1625,19 @@ public class Manager_UI : MonoBehaviour, IManager
             }
             if (!isExist)
             {
+                //create and place scheduled item
                 GameObject CalendarTimelineEvent = MonoBehaviour.Instantiate(prefab_CalendarTimelineEvent);
                 CalendarTimelineEvent.name = "CalendarTimelineEvent_" + scheduledEvent.ScheduledDT.ToString();
-                CalendarTimelineEvent.GetComponent<RectTransform>().SetParent(calendarTimelineTransform, false);
+                RectTransform CalendarTimelineEvent_RectTransform = CalendarTimelineEvent.GetComponent<RectTransform>();
+                CalendarTimelineEvent_RectTransform.SetParent(calendarTimelineTransform, false);
+                //set width
+                TimeSpan fullDay = new TimeSpan(24, 0, 0);
+                int width = (int)(timelineWidth * (scheduledEvent.Duration.TotalSeconds / fullDay.TotalSeconds));
+                CalendarTimelineEvent_RectTransform.sizeDelta = new Vector2(width, CalendarTimelineEvent_RectTransform.sizeDelta.y);
+                //set position
+                TimeSpan timeSinceMidnight = scheduledEvent.ScheduledDT - scheduledEvent.ScheduledDT.Date;
+                int startPosition = (int)(timelineWidth * (timeSinceMidnight.TotalSeconds / fullDay.TotalSeconds));
+                CalendarTimelineEvent_RectTransform.anchoredPosition = new Vector2(startPosition, 0);
             }
         }
     }
