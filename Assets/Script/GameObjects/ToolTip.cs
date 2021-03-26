@@ -26,7 +26,8 @@ public class ToolTip {
         HasDelay = hasDelay;
     }
 
-    public ToolTip(string ButtonName, InputCommand inputCommand, string description, bool hasDelay = false) {
+    public ToolTip(string ButtonName, InputCommand inputCommand, string description, bool hasDelay = false)
+    {
         _header = ButtonName;
         _textList = new List<string>();
         _textList.Add("<color=#ADD8E6>" + Managers.Input.GetKeysAsString(inputCommand) + "</color>");
@@ -35,6 +36,33 @@ public class ToolTip {
         }
         HasDelay = hasDelay;
     }
+
+    public ToolTip(SimEvent_Scheduled scheduledEvent)
+    {
+        switch (scheduledEvent.SimAction.ID)
+        {
+            case SimActionID.NPC_Gig:
+                _header = "Gig";
+                break;
+            case SimActionID.NPC_Media:
+                _header = "Media";
+                break;
+            case SimActionID.NPC_Produce:
+                _header = "Produce";
+                break;
+            case SimActionID.NPC_Scout:
+                _header = "Scout";
+                break;
+            case SimActionID.NPC_Special:
+                _header = "Special";
+                break;
+            case SimActionID.NPC_Travel:
+                _header = "Travel";
+                break;
+        }
+        _textList = new List<string>();
+    }
+
     public ToolTip(Dictionary<bool, string>conditionalLog, bool hasDelay = false)
     {
 

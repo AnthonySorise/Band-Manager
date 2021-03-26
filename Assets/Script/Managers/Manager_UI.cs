@@ -35,6 +35,9 @@ public class Manager_UI : MonoBehaviour, IManager
 
     //Font
 
+    //Colors
+    private Dictionary<SimActionID, Color32> _colors_events;
+
     //Calendar UI Variables
     private DateTime? _calendarLastUpdateDT = null;
     private DateTime? _calendarSelectedDay = null;
@@ -229,6 +232,17 @@ public class Manager_UI : MonoBehaviour, IManager
 
         //Font
         //mainFont = Resources.Load<Font>("Fonts/ConcertOne-Regular");
+
+        //colors
+        _colors_events = new Dictionary<SimActionID, Color32>
+        {
+            [SimActionID.NPC_Gig] = new Color32(215, 103, 54, 255),
+            [SimActionID.NPC_Media] = new Color32(142, 181, 71, 255),
+            [SimActionID.NPC_Produce] = new Color32(1, 36, 84, 255),
+            [SimActionID.NPC_Scout] = new Color32(73, 74, 77, 255),
+            [SimActionID.NPC_Special] = new Color32(251, 210, 102, 255),
+            [SimActionID.NPC_Travel] = new Color32(131, 183, 153, 255)
+        };
 
         //UI Prefabs
         prefab_Button = Resources.Load<GameObject>("Prefabs/UI/Button");
@@ -760,7 +774,7 @@ public class Manager_UI : MonoBehaviour, IManager
             MouseOverCursor_Button(buttons[i]);
         }
     }
-    public void MouseOverCursor_Panel(GameObject panel)
+    public void MouseOverCursor_GO(GameObject go)
     {
         Action onEnter = () =>
         {
@@ -770,7 +784,7 @@ public class Manager_UI : MonoBehaviour, IManager
         {
             SetCursor(Asset_png.Cursor_Default);
         };
-        MouseOverEvent.OnGameObjectMouseOver(panel, onEnter, onExit);
+        MouseOverEvent.OnGameObjectMouseOver(go, onEnter, onExit);
     }
     private void MouseOverCursor_calendarDayBoxes()
     {
@@ -1626,9 +1640,9 @@ public class Manager_UI : MonoBehaviour, IManager
             if (!isExist)
             {
                 //create and place scheduled item
-                GameObject CalendarTimelineEvent = MonoBehaviour.Instantiate(prefab_CalendarTimelineEvent);
-                CalendarTimelineEvent.name = "CalendarTimelineEvent_" + scheduledEvent.ScheduledDT.ToString();
-                RectTransform CalendarTimelineEvent_RectTransform = CalendarTimelineEvent.GetComponent<RectTransform>();
+                GameObject calendarTimelineEvent = MonoBehaviour.Instantiate(prefab_CalendarTimelineEvent);
+                calendarTimelineEvent.name = "CalendarTimelineEvent_" + scheduledEvent.ScheduledDT.ToString();
+                RectTransform CalendarTimelineEvent_RectTransform = calendarTimelineEvent.GetComponent<RectTransform>();
                 CalendarTimelineEvent_RectTransform.SetParent(calendarTimelineTransform, false);
                 //set width
                 TimeSpan fullDay = new TimeSpan(24, 0, 0);
@@ -1638,6 +1652,13 @@ public class Manager_UI : MonoBehaviour, IManager
                 TimeSpan timeSinceMidnight = scheduledEvent.ScheduledDT - scheduledEvent.ScheduledDT.Date;
                 int startPosition = (int)(timelineWidth * (timeSinceMidnight.TotalSeconds / fullDay.TotalSeconds));
                 CalendarTimelineEvent_RectTransform.anchoredPosition = new Vector2(startPosition, 0);
+                //set color
+                calendarTimelineEvent.GetComponent<Image>().color = _colors_events[scheduledEvent.SimAction.ID];
+                //set tooltip
+                ToolTip tt = new ToolTip(scheduledEvent);
+                SetToolTip(calendarTimelineEvent, tt);
+                //set cursor
+                MouseOverCursor_GO(calendarTimelineEvent);
             }
         }
     }
