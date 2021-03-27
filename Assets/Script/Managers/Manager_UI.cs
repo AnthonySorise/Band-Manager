@@ -50,21 +50,21 @@ public class Manager_UI : MonoBehaviour, IManager
     public GameObject prefab_CalendarTimelineEvent;
 
     //UI Gos and Elements
-    public GameObject HiddenCanvasGO;
-    public GameObject BackgroundCanvasGO;
+    private GameObject _hiddenCanvasGO;
+    private GameObject _backgroundCanvasGO;
     public GameObject PopupCanvasGO;
     private GameObject _gameUICanvasGO;
     private GameObject _timePanelGO;
-    public Button ToggleTimeButton;
+    private Button _toggleTimeButton;
     private TextMeshProUGUI _timeText;
     private TextMeshProUGUI _dayOfWeekText;
     private TextMeshProUGUI _dateText;
     private TextMeshProUGUI _toggleStatusText;
-    public Button IncreaseSpeedButton;
-    public Button DecreaseSpeedButton;
+    private Button _increaseSpeedButton;
+    private Button _decreaseSpeedButton;
     private GameObject _calendarPanelContainerGO;
 
-    public GameObject _calendarPanelGO;
+    private GameObject _calendarPanelGO;
     private GameObject _calendarWeek01Container;
     private GameObject _calendarWeek01Sunday;
     private TextMeshProUGUI _calendarWeek01SundayMonthText;
@@ -202,10 +202,18 @@ public class Manager_UI : MonoBehaviour, IManager
     private GameObject _calendarWeek02SaturdayIcon06;
     private GameObject _calendarTimeline;
     private TextMeshProUGUI _calendarTimelineSelectedDateText;
-    private GameObject _calendarTimeline_TimeOverlay;
-    public Button ToggleCalendarButton;
-    public Button CalendarPagePreviousButton;
-    public Button CalendarPageNextButton;
+    private GameObject _calendarTimelineOverlay;
+    private Button _toggleCalendarButton;
+    private Button _calendarPagePreviousButton;
+    private Button _calendarPageNextButton;
+
+    private Button _actionMenuSocialButton;
+    private Button _actionMenuScoutButton;
+    private Button _actionMenuBusinessButton;
+    private Button _actionMenuManagementButton;
+    private Button _actionMenuGigButton;
+    private Button _actionMenuProduceButton;
+
     private GameObject _screenCoverCanvasGO;
     public GameObject PopupCanvasGO_AboveCover;
     private GameObject _screenCoverMainMenuCanvasGO;
@@ -215,13 +223,12 @@ public class Manager_UI : MonoBehaviour, IManager
     public GameObject ToolTipBackground;
     public TextMeshProUGUI ToolTipText;
 
-
-    GameObject[] calendarDayBoxes = new GameObject[14];
-    GameObject[] calendarTimeOverlays = new GameObject[7];
-    TextMeshProUGUI[] calendarMonthTexts = new TextMeshProUGUI[14];
-    TextMeshProUGUI[] calendarDayOfMonthTexts = new TextMeshProUGUI[14];
-    GameObject[][] calendarDayBoxIcons = new GameObject[14][];
-    Image[][] calendarDayBoxIcons_ImageComponent = new Image[14][];
+    private GameObject[] _calendarDayBoxes = new GameObject[14];
+    private GameObject[] _calendarTimeOverlays = new GameObject[7];
+    private TextMeshProUGUI[] _calendarMonthTexts = new TextMeshProUGUI[14];
+    private TextMeshProUGUI[] _calendarDayOfMonthTexts = new TextMeshProUGUI[14];
+    private GameObject[][] _calendarDayBoxIcons = new GameObject[14][];
+    private Image[][] _calendarDayBoxIcons_ImageComponent = new Image[14][];
 
 
     public void Startup()
@@ -250,17 +257,17 @@ public class Manager_UI : MonoBehaviour, IManager
         prefab_CalendarTimelineEvent = Resources.Load<GameObject>("Prefabs/UI/CalendarTimelineEvent");
 
         //Initiate UI GOs and Elements
-        InitiateCanvas(ref HiddenCanvasGO, "Canvas_Hidden", CanvasLayer.Hidden);
-        InitiateCanvas(ref BackgroundCanvasGO, "Canvas_Background", CanvasLayer.Background);
+        InitiateCanvas(ref _hiddenCanvasGO, "Canvas_Hidden", CanvasLayer.Hidden);
+        InitiateCanvas(ref _backgroundCanvasGO, "Canvas_Background", CanvasLayer.Background);
         InitiateCanvas(ref _gameUICanvasGO, "Canvas_GameUI", CanvasLayer.UI);
         InitiateGO(ref _timePanelGO, "Panel_Time");
-        InitiateButton(ref ToggleTimeButton, "Button_ToggleTime");
+        InitiateButton(ref _toggleTimeButton, "Button_ToggleTime");
         InitiateText(ref _dayOfWeekText, "TMPText_DayOfWeek");
         InitiateText(ref _timeText, "TMPText_Time");
         InitiateText(ref _dateText, "TMPText_Date");
         InitiateText(ref _toggleStatusText, "TMPText_ToggleStatus");
-        InitiateButton(ref IncreaseSpeedButton, "Button_IncreaseSpeed");
-        InitiateButton(ref DecreaseSpeedButton, "Button_DecreaseSpeed");
+        InitiateButton(ref _increaseSpeedButton, "Button_IncreaseSpeed");
+        InitiateButton(ref _decreaseSpeedButton, "Button_DecreaseSpeed");
         InitiateGO(ref _calendarPanelContainerGO, "Panel_CalendarContainer");
         InitiateGO(ref _calendarPanelGO, "Panel_Calendar");
         InitiateGO(ref _calendarPanelGO, "Panel_Calendar");
@@ -401,10 +408,18 @@ public class Manager_UI : MonoBehaviour, IManager
         InitiateGO(ref _calendarWeek02SaturdayIcon06, "Panel_Calendar_Week02_Saturday_EventIcon06");
         InitiateGO(ref _calendarTimeline, "Panel_Calendar_Timeline");
         InitiateText(ref _calendarTimelineSelectedDateText, "TMPText_Calendar_Timeline_SelectedDate");                            
-        InitiateGO(ref _calendarTimeline_TimeOverlay, "Panel_Calendar_Timeline_TimeOverlay");
-        InitiateButton(ref ToggleCalendarButton, "Button_ToggleCalendar");
-        InitiateButton(ref CalendarPagePreviousButton, "Button_CalendarPagePrevious");
-        InitiateButton(ref CalendarPageNextButton, "Button_CalendarPageNext");
+        InitiateGO(ref _calendarTimelineOverlay, "Panel_Calendar_Timeline_TimeOverlay");
+        InitiateButton(ref _toggleCalendarButton, "Button_ToggleCalendar");
+        InitiateButton(ref _calendarPagePreviousButton, "Button_CalendarPagePrevious");
+        InitiateButton(ref _calendarPageNextButton, "Button_CalendarPageNext");
+
+        InitiateButton(ref _actionMenuSocialButton, "Button_ActionMenu_Social");
+        InitiateButton(ref _actionMenuScoutButton, "Button_ActionMenu_Scout");
+        InitiateButton(ref _actionMenuBusinessButton, "Button_ActionMenu_Business");
+        InitiateButton(ref _actionMenuManagementButton, "Button_ActionMenu_Management");
+        InitiateButton(ref _actionMenuGigButton, "Button_ActionMenu_Gig");
+        InitiateButton(ref _actionMenuProduceButton, "Button_ActionMenu_Produce");
+
         InitiateCanvas(ref PopupCanvasGO, "Canvas_Popups", CanvasLayer.BelowCover);
         InitiateCanvas(ref _screenCoverCanvasGO, "Canvas_ScreenCover", CanvasLayer.TheCover);
         InitiateCanvas(ref PopupCanvasGO_AboveCover, "Canvas_Popups_AboveCover", CanvasLayer.AboveCover);
@@ -416,60 +431,60 @@ public class Manager_UI : MonoBehaviour, IManager
         InitiateText(ref ToolTipText, "Text_ToolTip");
 
         //there's probably a better way to collect these
-        calendarDayBoxes[0] = _calendarWeek01Sunday;
-        calendarDayBoxes[1] = _calendarWeek01Monday;
-        calendarDayBoxes[2] = _calendarWeek01Tuesday;
-        calendarDayBoxes[3] = _calendarWeek01Wednesday;
-        calendarDayBoxes[4] = _calendarWeek01Thursday;
-        calendarDayBoxes[5] = _calendarWeek01Friday;
-        calendarDayBoxes[6] = _calendarWeek01Saturday;
-        calendarDayBoxes[7] = _calendarWeek02Sunday;
-        calendarDayBoxes[8] = _calendarWeek02Monday;
-        calendarDayBoxes[9] = _calendarWeek02Tuesday;
-        calendarDayBoxes[10] = _calendarWeek02Wednesday;
-        calendarDayBoxes[11] = _calendarWeek02Thursday;
-        calendarDayBoxes[12] = _calendarWeek02Friday;
-        calendarDayBoxes[13] = _calendarWeek02Saturday;
+        _calendarDayBoxes[0] = _calendarWeek01Sunday;
+        _calendarDayBoxes[1] = _calendarWeek01Monday;
+        _calendarDayBoxes[2] = _calendarWeek01Tuesday;
+        _calendarDayBoxes[3] = _calendarWeek01Wednesday;
+        _calendarDayBoxes[4] = _calendarWeek01Thursday;
+        _calendarDayBoxes[5] = _calendarWeek01Friday;
+        _calendarDayBoxes[6] = _calendarWeek01Saturday;
+        _calendarDayBoxes[7] = _calendarWeek02Sunday;
+        _calendarDayBoxes[8] = _calendarWeek02Monday;
+        _calendarDayBoxes[9] = _calendarWeek02Tuesday;
+        _calendarDayBoxes[10] = _calendarWeek02Wednesday;
+        _calendarDayBoxes[11] = _calendarWeek02Thursday;
+        _calendarDayBoxes[12] = _calendarWeek02Friday;
+        _calendarDayBoxes[13] = _calendarWeek02Saturday;
 
-        calendarTimeOverlays[0] = _calendarWeek01SundayTimeOverlay;
-        calendarTimeOverlays[1] = _calendarWeek01MondayTimeOverlay;
-        calendarTimeOverlays[2] = _calendarWeek01TuesdayTimeOverlay;
-        calendarTimeOverlays[3] = _calendarWeek01WenesdayTimeOverlay;
-        calendarTimeOverlays[4] = _calendarWeek01ThursdayTimeOverlay;
-        calendarTimeOverlays[5] = _calendarWeek01FridayTimeOverlay;
-        calendarTimeOverlays[6] = _calendarWeek01SaturdayTimeOverlay;
+        _calendarTimeOverlays[0] = _calendarWeek01SundayTimeOverlay;
+        _calendarTimeOverlays[1] = _calendarWeek01MondayTimeOverlay;
+        _calendarTimeOverlays[2] = _calendarWeek01TuesdayTimeOverlay;
+        _calendarTimeOverlays[3] = _calendarWeek01WenesdayTimeOverlay;
+        _calendarTimeOverlays[4] = _calendarWeek01ThursdayTimeOverlay;
+        _calendarTimeOverlays[5] = _calendarWeek01FridayTimeOverlay;
+        _calendarTimeOverlays[6] = _calendarWeek01SaturdayTimeOverlay;
 
-        calendarMonthTexts[0] = _calendarWeek01SundayMonthText;
-        calendarMonthTexts[1] = _calendarWeek01MondayMonthText;
-        calendarMonthTexts[2] = _calendarWeek01TuesdayMonthText;
-        calendarMonthTexts[3] = _calendarWeek01WednesdayMonthText;
-        calendarMonthTexts[4] = _calendarWeek01ThursdayMonthText;
-        calendarMonthTexts[5] = _calendarWeek01FridayMonthText;
-        calendarMonthTexts[6] = _calendarWeek01SaturdayMonthText;
-        calendarMonthTexts[7] = _calendarWeek02SundayMonthText;
-        calendarMonthTexts[8] = _calendarWeek02MondayMonthText;
-        calendarMonthTexts[9] = _calendarWeek02TuesdayMonthText;
-        calendarMonthTexts[10] = _calendarWeek02WednesdayMonthText;
-        calendarMonthTexts[11] = _calendarWeek02ThursdayMonthText;
-        calendarMonthTexts[12] = _calendarWeek02FridayMonthText;
-        calendarMonthTexts[13] = _calendarWeek02SaturdayMonthText;
+        _calendarMonthTexts[0] = _calendarWeek01SundayMonthText;
+        _calendarMonthTexts[1] = _calendarWeek01MondayMonthText;
+        _calendarMonthTexts[2] = _calendarWeek01TuesdayMonthText;
+        _calendarMonthTexts[3] = _calendarWeek01WednesdayMonthText;
+        _calendarMonthTexts[4] = _calendarWeek01ThursdayMonthText;
+        _calendarMonthTexts[5] = _calendarWeek01FridayMonthText;
+        _calendarMonthTexts[6] = _calendarWeek01SaturdayMonthText;
+        _calendarMonthTexts[7] = _calendarWeek02SundayMonthText;
+        _calendarMonthTexts[8] = _calendarWeek02MondayMonthText;
+        _calendarMonthTexts[9] = _calendarWeek02TuesdayMonthText;
+        _calendarMonthTexts[10] = _calendarWeek02WednesdayMonthText;
+        _calendarMonthTexts[11] = _calendarWeek02ThursdayMonthText;
+        _calendarMonthTexts[12] = _calendarWeek02FridayMonthText;
+        _calendarMonthTexts[13] = _calendarWeek02SaturdayMonthText;
 
-        calendarDayOfMonthTexts[0] = _calendarWeek01SundayDayOfMonthText;
-        calendarDayOfMonthTexts[1] = _calendarWeek01MondayDayOfMonthText;
-        calendarDayOfMonthTexts[2] = _calendarWeek01TuesdayDayOfMonthText;
-        calendarDayOfMonthTexts[3] = _calendarWeek01WednesdayDayOfMonthText;
-        calendarDayOfMonthTexts[4] = _calendarWeek01ThursdayDayOfMonthText;
-        calendarDayOfMonthTexts[5] = _calendarWeek01FridayDayOfMonthText;
-        calendarDayOfMonthTexts[6] = _calendarWeek01SaturdayDayOfMonthText;
-        calendarDayOfMonthTexts[7] = _calendarWeek02SundayDayOfMonthText;
-        calendarDayOfMonthTexts[8] = _calendarWeek02MondayDayOfMonthText;
-        calendarDayOfMonthTexts[9] = _calendarWeek02TuesdayDayOfMonthText;
-        calendarDayOfMonthTexts[10] = _calendarWeek02WednesdayDayOfMonthText;
-        calendarDayOfMonthTexts[11] = _calendarWeek02ThursdayDayOfMonthText;
-        calendarDayOfMonthTexts[12] = _calendarWeek02FridayDayOfMonthText;
-        calendarDayOfMonthTexts[13] = _calendarWeek02SaturdayDayOfMonthText;
+        _calendarDayOfMonthTexts[0] = _calendarWeek01SundayDayOfMonthText;
+        _calendarDayOfMonthTexts[1] = _calendarWeek01MondayDayOfMonthText;
+        _calendarDayOfMonthTexts[2] = _calendarWeek01TuesdayDayOfMonthText;
+        _calendarDayOfMonthTexts[3] = _calendarWeek01WednesdayDayOfMonthText;
+        _calendarDayOfMonthTexts[4] = _calendarWeek01ThursdayDayOfMonthText;
+        _calendarDayOfMonthTexts[5] = _calendarWeek01FridayDayOfMonthText;
+        _calendarDayOfMonthTexts[6] = _calendarWeek01SaturdayDayOfMonthText;
+        _calendarDayOfMonthTexts[7] = _calendarWeek02SundayDayOfMonthText;
+        _calendarDayOfMonthTexts[8] = _calendarWeek02MondayDayOfMonthText;
+        _calendarDayOfMonthTexts[9] = _calendarWeek02TuesdayDayOfMonthText;
+        _calendarDayOfMonthTexts[10] = _calendarWeek02WednesdayDayOfMonthText;
+        _calendarDayOfMonthTexts[11] = _calendarWeek02ThursdayDayOfMonthText;
+        _calendarDayOfMonthTexts[12] = _calendarWeek02FridayDayOfMonthText;
+        _calendarDayOfMonthTexts[13] = _calendarWeek02SaturdayDayOfMonthText;
 
-        calendarDayBoxIcons[0] = new GameObject[6]
+        _calendarDayBoxIcons[0] = new GameObject[6]
         {
             _calendarWeek01SundayIcon01,
             _calendarWeek01SundayIcon02,
@@ -478,7 +493,7 @@ public class Manager_UI : MonoBehaviour, IManager
             _calendarWeek01SundayIcon05,
             _calendarWeek01SundayIcon06
         };
-        calendarDayBoxIcons[1] = new GameObject[6]
+        _calendarDayBoxIcons[1] = new GameObject[6]
         {
             _calendarWeek01MondayIcon01,
             _calendarWeek01MondayIcon02,
@@ -487,7 +502,7 @@ public class Manager_UI : MonoBehaviour, IManager
             _calendarWeek01MondayIcon05,
             _calendarWeek01MondayIcon06
         };
-        calendarDayBoxIcons[2] = new GameObject[6]
+        _calendarDayBoxIcons[2] = new GameObject[6]
         {
             _calendarWeek01TuesdayIcon01,
             _calendarWeek01TuesdayIcon02,
@@ -496,7 +511,7 @@ public class Manager_UI : MonoBehaviour, IManager
             _calendarWeek01TuesdayIcon05,
             _calendarWeek01TuesdayIcon06
         };
-        calendarDayBoxIcons[3] = new GameObject[6]
+        _calendarDayBoxIcons[3] = new GameObject[6]
         {
             _calendarWeek01WednesdayIcon01,
             _calendarWeek01WednesdayIcon02,
@@ -505,7 +520,7 @@ public class Manager_UI : MonoBehaviour, IManager
             _calendarWeek01WednesdayIcon05,
             _calendarWeek01WednesdayIcon06
         };
-        calendarDayBoxIcons[4] = new GameObject[6]
+        _calendarDayBoxIcons[4] = new GameObject[6]
         {
             _calendarWeek01ThursdayIcon01,
             _calendarWeek01ThursdayIcon02,
@@ -514,7 +529,7 @@ public class Manager_UI : MonoBehaviour, IManager
             _calendarWeek01ThursdayIcon05,
             _calendarWeek01ThursdayIcon06
         };
-        calendarDayBoxIcons[5] = new GameObject[6]
+        _calendarDayBoxIcons[5] = new GameObject[6]
         {
             _calendarWeek01FridayIcon01,
             _calendarWeek01FridayIcon02,
@@ -523,7 +538,7 @@ public class Manager_UI : MonoBehaviour, IManager
             _calendarWeek01FridayIcon05,
             _calendarWeek01FridayIcon06
         };
-        calendarDayBoxIcons[6] = new GameObject[6]
+        _calendarDayBoxIcons[6] = new GameObject[6]
         {
             _calendarWeek01SaturdayIcon01,
             _calendarWeek01SaturdayIcon02,
@@ -532,7 +547,7 @@ public class Manager_UI : MonoBehaviour, IManager
             _calendarWeek01SaturdayIcon05,
             _calendarWeek01SaturdayIcon06
         };
-        calendarDayBoxIcons[7] = new GameObject[6]
+        _calendarDayBoxIcons[7] = new GameObject[6]
         {
             _calendarWeek02SundayIcon01,
             _calendarWeek02SundayIcon02,
@@ -541,7 +556,7 @@ public class Manager_UI : MonoBehaviour, IManager
             _calendarWeek02SundayIcon05,
             _calendarWeek02SundayIcon06
         };
-        calendarDayBoxIcons[8] = new GameObject[6]
+        _calendarDayBoxIcons[8] = new GameObject[6]
         {
             _calendarWeek02MondayIcon01,
             _calendarWeek02MondayIcon02,
@@ -550,7 +565,7 @@ public class Manager_UI : MonoBehaviour, IManager
             _calendarWeek02MondayIcon05,
             _calendarWeek02MondayIcon06
         };
-        calendarDayBoxIcons[9] = new GameObject[6]
+        _calendarDayBoxIcons[9] = new GameObject[6]
         {
             _calendarWeek02TuesdayIcon01,
             _calendarWeek02TuesdayIcon02,
@@ -559,7 +574,7 @@ public class Manager_UI : MonoBehaviour, IManager
             _calendarWeek02TuesdayIcon05,
             _calendarWeek02TuesdayIcon06
         };
-        calendarDayBoxIcons[10] = new GameObject[6]
+        _calendarDayBoxIcons[10] = new GameObject[6]
         {
             _calendarWeek02WednesdayIcon01,
             _calendarWeek02WednesdayIcon02,
@@ -568,7 +583,7 @@ public class Manager_UI : MonoBehaviour, IManager
             _calendarWeek02WednesdayIcon05,
             _calendarWeek02WednesdayIcon06
         };
-        calendarDayBoxIcons[11] = new GameObject[6]
+        _calendarDayBoxIcons[11] = new GameObject[6]
         {
             _calendarWeek02ThursdayIcon01,
             _calendarWeek02ThursdayIcon02,
@@ -577,7 +592,7 @@ public class Manager_UI : MonoBehaviour, IManager
             _calendarWeek02ThursdayIcon05,
             _calendarWeek02ThursdayIcon06
         };
-        calendarDayBoxIcons[12] = new GameObject[6]
+        _calendarDayBoxIcons[12] = new GameObject[6]
         {
             _calendarWeek02FridayIcon01,
             _calendarWeek02FridayIcon02,
@@ -586,7 +601,7 @@ public class Manager_UI : MonoBehaviour, IManager
             _calendarWeek02FridayIcon05,
             _calendarWeek02FridayIcon06
         };
-        calendarDayBoxIcons[13] = new GameObject[6]
+        _calendarDayBoxIcons[13] = new GameObject[6]
         {
             _calendarWeek02SaturdayIcon01,
             _calendarWeek02SaturdayIcon02,
@@ -598,10 +613,10 @@ public class Manager_UI : MonoBehaviour, IManager
 
         for(int i = 0; i < 14; i++)
         {
-            calendarDayBoxIcons_ImageComponent[i] = new Image[6];
+            _calendarDayBoxIcons_ImageComponent[i] = new Image[6];
             for (int j = 0; j < 6; j++)
             {
-                calendarDayBoxIcons_ImageComponent[i][j] = calendarDayBoxIcons[i][j].GetComponent<Image>();
+                _calendarDayBoxIcons_ImageComponent[i][j] = _calendarDayBoxIcons[i][j].GetComponent<Image>();
             }
         }
 
@@ -621,38 +636,44 @@ public class Manager_UI : MonoBehaviour, IManager
         MouseOverCursor_Button(mainMenuButtons);
         MouseOverCursor_Button(timePanelButtons);
         MouseOverCursor_Button(calendarPanelButtons);
+        MouseOverCursor_Button(_actionMenuSocialButton);
+        MouseOverCursor_Button(_actionMenuScoutButton);
+        MouseOverCursor_Button(_actionMenuBusinessButton);
+        MouseOverCursor_Button(_actionMenuManagementButton);
+        MouseOverCursor_Button(_actionMenuGigButton);
+        MouseOverCursor_Button(_actionMenuProduceButton);
 
         //ToolTips
         ToolTip tt_togleTime = new ToolTip("Toggle Time", InputCommand.ToggleTime, "Start or pause the progression of time.", true);
-        SetToolTip(ToggleTimeButton.gameObject, tt_togleTime);
+        SetToolTip(_toggleTimeButton.gameObject, tt_togleTime);
 
         ToolTip tt_increaseSpeed = new ToolTip("Increase Speed", InputCommand.IncreaseSpeed, "", true);
-        SetToolTip(IncreaseSpeedButton.gameObject, tt_increaseSpeed);
+        SetToolTip(_increaseSpeedButton.gameObject, tt_increaseSpeed);
 
         ToolTip tt_decreaseSpeed = new ToolTip("Decrease Speed", InputCommand.DecreaseSpeed, "", true);
-        SetToolTip(DecreaseSpeedButton.gameObject, tt_decreaseSpeed);
+        SetToolTip(_decreaseSpeedButton.gameObject, tt_decreaseSpeed);
 
         ToolTip tt_toggleCalendar = new ToolTip("Toggle Calendar", InputCommand.ToggleCalendar, "", true);
-        SetToolTip(ToggleCalendarButton.gameObject, tt_toggleCalendar);
+        SetToolTip(_toggleCalendarButton.gameObject, tt_toggleCalendar);
 
         ToolTip tt_calendarPagePrevious = new ToolTip("Previous Week", InputCommand.CalendarPagePrevious, "", true);
-        SetToolTip(CalendarPagePreviousButton.gameObject, tt_calendarPagePrevious);
+        SetToolTip(_calendarPagePreviousButton.gameObject, tt_calendarPagePrevious);
 
         ToolTip tt_calendarPageNext = new ToolTip("Next Week", InputCommand.CalendarPageNext, "", true);
-        SetToolTip(CalendarPageNextButton.gameObject, tt_calendarPageNext);
+        SetToolTip(_calendarPageNextButton.gameObject, tt_calendarPageNext);
 
         //Time Panel Click Listeners
-        ToggleTimeButton.onClick.AddListener(Click_ToggleTimeButton);
-        IncreaseSpeedButton.onClick.AddListener(Click_IncreaseSpeedButton);
-        DecreaseSpeedButton.onClick.AddListener(Click_DecreaseSpeedButton);
+        _toggleTimeButton.onClick.AddListener(Click_ToggleTimeButton);
+        _increaseSpeedButton.onClick.AddListener(Click_IncreaseSpeedButton);
+        _decreaseSpeedButton.onClick.AddListener(Click_DecreaseSpeedButton);
 
         //Calendar Panel Click Listeners
-        ToggleCalendarButton.onClick.AddListener(Click_ToggleCalendarButton);
-        CalendarPagePreviousButton.onClick.AddListener(Click_CalendarPagePrevious);
-        CalendarPageNextButton.onClick.AddListener(Click_CalendarPageNext);
+        _toggleCalendarButton.onClick.AddListener(Click_ToggleCalendarButton);
+        _calendarPagePreviousButton.onClick.AddListener(Click_CalendarPagePrevious);
+        _calendarPageNextButton.onClick.AddListener(Click_CalendarPageNext);
 
         //Calendar DayBox Click Listener
-        for(int i = 0; i < calendarDayBoxes.Length; i++){
+        for(int i = 0; i < _calendarDayBoxes.Length; i++){
             int thisI = i;
             UnityAction action = () => {
 
@@ -672,10 +693,10 @@ public class Manager_UI : MonoBehaviour, IManager
                 }
 
             };
-            if(calendarDayBoxes[i].GetComponent<ClickableGO>() == null){
-                calendarDayBoxes[i].AddComponent<ClickableGO>();
+            if(_calendarDayBoxes[i].GetComponent<ClickableGO>() == null){
+                _calendarDayBoxes[i].AddComponent<ClickableGO>();
             }
-            calendarDayBoxes[i].GetComponent<ClickableGO>().ClickAction = action;
+            _calendarDayBoxes[i].GetComponent<ClickableGO>().ClickAction = action;
         }
 
         //Retract Calendar
@@ -788,7 +809,7 @@ public class Manager_UI : MonoBehaviour, IManager
     }
     private void MouseOverCursor_calendarDayBoxes()
     {
-        for (int i = 0; i < calendarDayBoxes.Length; i++)
+        for (int i = 0; i < _calendarDayBoxes.Length; i++)
         {
             int thisI = i;
 
@@ -808,7 +829,7 @@ public class Manager_UI : MonoBehaviour, IManager
             {
                 SetCursor(Asset_png.Cursor_Default);
             };
-            MouseOverEvent.OnGameObjectMouseOver(calendarDayBoxes[i], onEnter, onExit);
+            MouseOverEvent.OnGameObjectMouseOver(_calendarDayBoxes[i], onEnter, onExit);
         }
     }
 
@@ -919,11 +940,11 @@ public class Manager_UI : MonoBehaviour, IManager
     }
     public void KeyDown_ToggleTimeButton()
     {
-        KeyDown_LinkedToButtonUI(ToggleTimeButton);
+        KeyDown_LinkedToButtonUI(_toggleTimeButton);
     }
     public void KeyUp_ToggleTimeButon()
     {
-        if (KeyUp_LinkedToButtonUI(ToggleTimeButton))
+        if (KeyUp_LinkedToButtonUI(_toggleTimeButton))
         {
             Managers.Time.ToggleTime();
         }
@@ -943,7 +964,7 @@ public class Manager_UI : MonoBehaviour, IManager
     }
     public void KeyDown_IncreaseSpeedButton()
     {
-        KeyDown_LinkedToButtonUI(IncreaseSpeedButton);
+        KeyDown_LinkedToButtonUI(_increaseSpeedButton);
     }
     public void Hold_IncreaseSpeedButton()
     {
@@ -976,7 +997,7 @@ public class Manager_UI : MonoBehaviour, IManager
     }
     public void KeyUp_IncreaseSpeedButton()
     {
-        if (KeyUp_LinkedToButtonUI(IncreaseSpeedButton) == false)
+        if (KeyUp_LinkedToButtonUI(_increaseSpeedButton) == false)
         {
             return;
         }
@@ -1004,7 +1025,7 @@ public class Manager_UI : MonoBehaviour, IManager
     }
     public void KeyDown_DecreaseSpeedButton()
     {
-        KeyDown_LinkedToButtonUI(DecreaseSpeedButton);
+        KeyDown_LinkedToButtonUI(_decreaseSpeedButton);
     }
     public void Hold_DecreaseSpeedButton()
     {
@@ -1038,7 +1059,7 @@ public class Manager_UI : MonoBehaviour, IManager
     }
     public void KeyUp_DecreaseSpeedButton()
     {
-        if (KeyUp_LinkedToButtonUI(DecreaseSpeedButton) == false)
+        if (KeyUp_LinkedToButtonUI(_decreaseSpeedButton) == false)
         {
             return;
         }
@@ -1073,11 +1094,11 @@ public class Manager_UI : MonoBehaviour, IManager
     }
     public void KeyDown_ToggleCalendarButton()
     {
-        KeyDown_LinkedToButtonUI(ToggleCalendarButton);
+        KeyDown_LinkedToButtonUI(_toggleCalendarButton);
     }
     public void KeyUp_ToggleCalendarButton()
     {
-        if (KeyUp_LinkedToButtonUI(ToggleCalendarButton))
+        if (KeyUp_LinkedToButtonUI(_toggleCalendarButton))
         {
             ToggleCalendarPanel();
         }
@@ -1098,16 +1119,16 @@ public class Manager_UI : MonoBehaviour, IManager
         {
             _calendarPage = 0;
             _calendarSelectedDay = Managers.Time.CurrentDT.Date;
-            for (var i = 0; i < calendarTimeOverlays.Length; i++)
+            for (var i = 0; i < _calendarTimeOverlays.Length; i++)
             {
-                LeanTween.alphaCanvas(calendarTimeOverlays[i].GetComponent<CanvasGroup>(), 0.25f, 0);
+                LeanTween.alphaCanvas(_calendarTimeOverlays[i].GetComponent<CanvasGroup>(), 0.25f, 0);
             }
         }
 
         //Calendar Pagination Button Animation
         int scaleX = _isCalendarExpanded ? 0 : 1;
-        LeanTween.scaleX(CalendarPagePreviousButton.gameObject, scaleX, 0.5f).setEase(LeanTweenType.easeInOutExpo);
-        LeanTween.scaleX(CalendarPageNextButton.gameObject, scaleX, 0.5f).setEase(LeanTweenType.easeInOutExpo);
+        LeanTween.scaleX(_calendarPagePreviousButton.gameObject, scaleX, 0.5f).setEase(LeanTweenType.easeInOutExpo);
+        LeanTween.scaleX(_calendarPageNextButton.gameObject, scaleX, 0.5f).setEase(LeanTweenType.easeInOutExpo);
 
         //Calendar Panel Animation
         int vectorY = _isCalendarExpanded ? 25 : 205;
@@ -1142,7 +1163,7 @@ public class Manager_UI : MonoBehaviour, IManager
     }
     public void KeyDown_CalendarPagePrevious()
     {
-        if(!KeyDown_LinkedToButtonUI(CalendarPagePreviousButton)){
+        if(!KeyDown_LinkedToButtonUI(_calendarPagePreviousButton)){
             KeyUp_CalendarPagePrevious();
         }
         
@@ -1157,7 +1178,7 @@ public class Manager_UI : MonoBehaviour, IManager
     }
     public void KeyUp_CalendarPagePrevious()
     {
-        if (KeyUp_LinkedToButtonUI(CalendarPagePreviousButton))
+        if (KeyUp_LinkedToButtonUI(_calendarPagePreviousButton))
         {
             CalendarPageChange(false);
         }
@@ -1173,7 +1194,7 @@ public class Manager_UI : MonoBehaviour, IManager
     }
     public void KeyDown_CalendarPageNext()
     {
-        if(!KeyDown_LinkedToButtonUI(CalendarPageNextButton)){
+        if(!KeyDown_LinkedToButtonUI(_calendarPageNextButton)){
             KeyUp_CalendarPageNext();
         }
         
@@ -1188,7 +1209,7 @@ public class Manager_UI : MonoBehaviour, IManager
     }
     public void KeyUp_CalendarPageNext()
     {
-        if (KeyUp_LinkedToButtonUI(CalendarPageNextButton))
+        if (KeyUp_LinkedToButtonUI(_calendarPageNextButton))
         {
             CalendarPageChange();
         }
@@ -1263,17 +1284,17 @@ public class Manager_UI : MonoBehaviour, IManager
         {
             float rectTransformTo = isFadeOut ? 0f : 1f;
             int iStart = (calendarWeekContainer.gameObject == _calendarWeek01Container) ? 0 : 7;
-            int iEnd = (calendarWeekContainer.gameObject == _calendarWeek01Container) ? 7 : calendarDayBoxes.Length;
+            int iEnd = (calendarWeekContainer.gameObject == _calendarWeek01Container) ? 7 : _calendarDayBoxes.Length;
 
             for (var i = iStart; i < iEnd; i++)
             {
-                GameObject calendarDayBox = calendarDayBoxes[i];
-                TextMeshProUGUI calendarMonthText = calendarMonthTexts[i];
-                TextMeshProUGUI dayOfMonthText = calendarDayOfMonthTexts[i];
+                GameObject calendarDayBox = _calendarDayBoxes[i];
+                TextMeshProUGUI calendarMonthText = _calendarMonthTexts[i];
+                TextMeshProUGUI dayOfMonthText = _calendarDayOfMonthTexts[i];
                 if (isFadeOut)
                 {
                     LeanTween.value(calendarDayBox.gameObject, a => calendarDayBox.GetComponent<Image>().color = a, new Color(255, 255, 255, 1), new Color(255, 255, 255, 0), seconds);
-                    foreach(GameObject iconGO in calendarDayBoxIcons[i])
+                    foreach(GameObject iconGO in _calendarDayBoxIcons[i])
                     {
                         LeanTween.value(iconGO.gameObject, a => iconGO.GetComponent<Image>().color = a, new Color(255, 255, 255, 1), new Color(255, 255, 255, 0), seconds);
                     }
@@ -1283,7 +1304,7 @@ public class Manager_UI : MonoBehaviour, IManager
                 else
                 {
                     LeanTween.value(calendarDayBox.gameObject, a => calendarDayBox.GetComponent<Image>().color = a, new Color(255, 255, 255, 0), new Color(255, 255, 255, 1), seconds);
-                    foreach (GameObject iconGO in calendarDayBoxIcons[i])
+                    foreach (GameObject iconGO in _calendarDayBoxIcons[i])
                     {
                         LeanTween.value(iconGO.gameObject, a => iconGO.GetComponent<Image>().color = a, new Color(255, 255, 255, 0), new Color(255, 255, 255, 1), seconds);
                     }
@@ -1292,7 +1313,7 @@ public class Manager_UI : MonoBehaviour, IManager
                 }
 
                 //outline
-                Outline outline = calendarDayBoxes[i].GetComponent<Outline>();
+                Outline outline = _calendarDayBoxes[i].GetComponent<Outline>();
                 if (outline.enabled)
                 {
                     outline.enabled = false;
@@ -1432,9 +1453,9 @@ public class Manager_UI : MonoBehaviour, IManager
                 if (_calendarPage > 0)
                 {
                     _calendarPage -= 1;
-                    for (var i = 0; i < calendarTimeOverlays.Length; i++)
+                    for (var i = 0; i < _calendarTimeOverlays.Length; i++)
                     {
-                        LeanTween.alphaCanvas(calendarTimeOverlays[i].GetComponent<CanvasGroup>(), 0.25f, 0);
+                        LeanTween.alphaCanvas(_calendarTimeOverlays[i].GetComponent<CanvasGroup>(), 0.25f, 0);
                     }
                 }
                 else
@@ -1454,19 +1475,19 @@ public class Manager_UI : MonoBehaviour, IManager
             DateTime thisDT = DayBoxDTFromI(i);
 
             //DayBox Text
-            calendarDayOfMonthTexts[i].text = thisDT.Day.ToString();
+            _calendarDayOfMonthTexts[i].text = thisDT.Day.ToString();
 
             if (i == 0 || thisDT.Day == 1)
             {
-                calendarMonthTexts[i].text = thisDT.ToString("MMM");
+                _calendarMonthTexts[i].text = thisDT.ToString("MMM");
             }
             else
             {
-                calendarMonthTexts[i].text = "";
+                _calendarMonthTexts[i].text = "";
             }
 
             //Event Icons
-            foreach(Image dayBoxIconImageComponent in calendarDayBoxIcons_ImageComponent[i])
+            foreach(Image dayBoxIconImageComponent in _calendarDayBoxIcons_ImageComponent[i])
             {
                 dayBoxIconImageComponent.enabled = false;
             }
@@ -1486,10 +1507,10 @@ public class Manager_UI : MonoBehaviour, IManager
                     case (SimActionID.NPC_Gig):
                         if (!hasGig)
                         {
-                            calendarDayBoxIcons_ImageComponent[i][indexIcon].enabled = true;
-                            if (calendarDayBoxIcons_ImageComponent[i][indexIcon].sprite.texture != Managers.Assets.GetSprite(Asset_png.icon_daybox_gig).texture)
+                            _calendarDayBoxIcons_ImageComponent[i][indexIcon].enabled = true;
+                            if (_calendarDayBoxIcons_ImageComponent[i][indexIcon].sprite.texture != Managers.Assets.GetSprite(Asset_png.icon_daybox_gig).texture)
                             {
-                                calendarDayBoxIcons_ImageComponent[i][indexIcon].sprite = Managers.Assets.GetSprite(Asset_png.icon_daybox_gig);
+                                _calendarDayBoxIcons_ImageComponent[i][indexIcon].sprite = Managers.Assets.GetSprite(Asset_png.icon_daybox_gig);
                             }
                             indexIcon += 1;
                             hasGig = true;
@@ -1498,10 +1519,10 @@ public class Manager_UI : MonoBehaviour, IManager
                     case SimActionID.NPC_Media:
                         if (!hasMedia)
                         {
-                            calendarDayBoxIcons_ImageComponent[i][indexIcon].enabled = true;
-                            if (calendarDayBoxIcons_ImageComponent[i][indexIcon].sprite.texture != Managers.Assets.GetSprite(Asset_png.icon_daybox_media).texture)
+                            _calendarDayBoxIcons_ImageComponent[i][indexIcon].enabled = true;
+                            if (_calendarDayBoxIcons_ImageComponent[i][indexIcon].sprite.texture != Managers.Assets.GetSprite(Asset_png.icon_daybox_media).texture)
                             {
-                                calendarDayBoxIcons_ImageComponent[i][indexIcon].sprite = Managers.Assets.GetSprite(Asset_png.icon_daybox_media);
+                                _calendarDayBoxIcons_ImageComponent[i][indexIcon].sprite = Managers.Assets.GetSprite(Asset_png.icon_daybox_media);
                             }
                             indexIcon += 1;
                             hasMedia = true;
@@ -1510,10 +1531,10 @@ public class Manager_UI : MonoBehaviour, IManager
                     case SimActionID.NPC_Produce:
                         if (!hasProduce)
                         {
-                            calendarDayBoxIcons_ImageComponent[i][indexIcon].enabled = true;
-                            if (calendarDayBoxIcons_ImageComponent[i][indexIcon].sprite.texture != Managers.Assets.GetSprite(Asset_png.icon_daybox_produce).texture)
+                            _calendarDayBoxIcons_ImageComponent[i][indexIcon].enabled = true;
+                            if (_calendarDayBoxIcons_ImageComponent[i][indexIcon].sprite.texture != Managers.Assets.GetSprite(Asset_png.icon_daybox_produce).texture)
                             {
-                                calendarDayBoxIcons_ImageComponent[i][indexIcon].sprite = Managers.Assets.GetSprite(Asset_png.icon_daybox_produce);
+                                _calendarDayBoxIcons_ImageComponent[i][indexIcon].sprite = Managers.Assets.GetSprite(Asset_png.icon_daybox_produce);
                             }
                             indexIcon += 1;
                             hasProduce = true;
@@ -1522,10 +1543,10 @@ public class Manager_UI : MonoBehaviour, IManager
                     case SimActionID.NPC_Scout:
                         if (!hasScout)
                         {
-                            calendarDayBoxIcons_ImageComponent[i][indexIcon].enabled = true;
-                            if (calendarDayBoxIcons_ImageComponent[i][indexIcon].sprite.texture != Managers.Assets.GetSprite(Asset_png.icon_daybox_scout).texture)
+                            _calendarDayBoxIcons_ImageComponent[i][indexIcon].enabled = true;
+                            if (_calendarDayBoxIcons_ImageComponent[i][indexIcon].sprite.texture != Managers.Assets.GetSprite(Asset_png.icon_daybox_scout).texture)
                             {
-                                calendarDayBoxIcons_ImageComponent[i][indexIcon].sprite = Managers.Assets.GetSprite(Asset_png.icon_daybox_scout);
+                                _calendarDayBoxIcons_ImageComponent[i][indexIcon].sprite = Managers.Assets.GetSprite(Asset_png.icon_daybox_scout);
                             }
                             indexIcon += 1;
                             hasScout = true;
@@ -1534,10 +1555,10 @@ public class Manager_UI : MonoBehaviour, IManager
                     case SimActionID.NPC_Special:
                         if (!hasSpecial)
                         {
-                            calendarDayBoxIcons_ImageComponent[i][indexIcon].enabled = true;
-                            if (calendarDayBoxIcons_ImageComponent[i][indexIcon].sprite.texture != Managers.Assets.GetSprite(Asset_png.icon_daybox_special).texture)
+                            _calendarDayBoxIcons_ImageComponent[i][indexIcon].enabled = true;
+                            if (_calendarDayBoxIcons_ImageComponent[i][indexIcon].sprite.texture != Managers.Assets.GetSprite(Asset_png.icon_daybox_special).texture)
                             {
-                                calendarDayBoxIcons_ImageComponent[i][indexIcon].sprite = Managers.Assets.GetSprite(Asset_png.icon_daybox_special);
+                                _calendarDayBoxIcons_ImageComponent[i][indexIcon].sprite = Managers.Assets.GetSprite(Asset_png.icon_daybox_special);
                             }
                             indexIcon += 1;
                             hasSpecial = true;
@@ -1546,10 +1567,10 @@ public class Manager_UI : MonoBehaviour, IManager
                     case SimActionID.NPC_Travel:
                         if (!hasTravel)
                         {
-                            calendarDayBoxIcons_ImageComponent[i][indexIcon].enabled = true;
-                            if(calendarDayBoxIcons_ImageComponent[i][indexIcon].sprite.texture != Managers.Assets.GetSprite(Asset_png.icon_daybox_travel).texture)
+                            _calendarDayBoxIcons_ImageComponent[i][indexIcon].enabled = true;
+                            if(_calendarDayBoxIcons_ImageComponent[i][indexIcon].sprite.texture != Managers.Assets.GetSprite(Asset_png.icon_daybox_travel).texture)
                             {
-                                calendarDayBoxIcons_ImageComponent[i][indexIcon].sprite = Managers.Assets.GetSprite(Asset_png.icon_daybox_travel);
+                                _calendarDayBoxIcons_ImageComponent[i][indexIcon].sprite = Managers.Assets.GetSprite(Asset_png.icon_daybox_travel);
                             }
                             indexIcon += 1;
                             hasTravel = true;
@@ -1562,21 +1583,21 @@ public class Manager_UI : MonoBehaviour, IManager
             //Selected DayBox
             if(DateTime.Compare(thisDT.Date, _calendarSelectedDay.Value) == 0) 
             {
-                calendarDayBoxes[i].GetComponent<Outline>().enabled = true;
+                _calendarDayBoxes[i].GetComponent<Outline>().enabled = true;
             }
             else
             {
-                calendarDayBoxes[i].GetComponent<Outline>().enabled = false;
+                _calendarDayBoxes[i].GetComponent<Outline>().enabled = false;
             }
         }
 
         //Update overlays
         if (isUpdateWeek01)
         {
-            for(var i = 0; i < calendarTimeOverlays.Length; i++)
+            for(var i = 0; i < _calendarTimeOverlays.Length; i++)
             {
                 DateTime thisDT = DayBoxDTFromI(i);
-                RectTransform timeOverlayRectTransform = calendarTimeOverlays[i].GetComponent<RectTransform>();
+                RectTransform timeOverlayRectTransform = _calendarTimeOverlays[i].GetComponent<RectTransform>();
                 if (_calendarPage > 0 || DateTime.Compare(thisDT, Managers.Time.CurrentDT) == 1)
                 {
                     timeOverlayRectTransform.sizeDelta = new Vector2(0, timeOverlayRectTransform.sizeDelta.y);
@@ -1598,7 +1619,7 @@ public class Manager_UI : MonoBehaviour, IManager
         //Update Timeline - Date
         _calendarTimelineSelectedDateText.text = _calendarSelectedDay.Value.ToString("MM/dd/yyyy");
         //Update Timeline - Overlay
-        RectTransform timelineTimeOverlayRectTransform = _calendarTimeline_TimeOverlay.GetComponent<RectTransform>();
+        RectTransform timelineTimeOverlayRectTransform = _calendarTimelineOverlay.GetComponent<RectTransform>();
         int timeLineFill = 0;
         if(DateTime.Compare(_calendarSelectedDay.Value, Managers.Time.CurrentDT.Date) == 0)
         {
