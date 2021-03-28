@@ -207,12 +207,38 @@ public class Manager_UI : MonoBehaviour, IManager
     private Button _calendarPagePreviousButton;
     private Button _calendarPageNextButton;
 
+    private GameObject _actionMenuPanelGO;
+    private GameObject _actionMenuSocialContainer;
     private Button _actionMenuSocialButton;
+    private GameObject _actionMenuSocialSubMenu;
+    private Button _actionMenuSocialRolodexButton;
+    private Button _actionMenuSocialNetworkingButton;
+    private GameObject _actionMenuScoutContainer;
     private Button _actionMenuScoutButton;
+    private GameObject _actionMenuScoutSubMenu;
+    private Button _actionMenuScoutTravelButton;
+    private Button _actionMenuScoutAttendShowButton;
+    private GameObject _actionMenuBusinessContainer;
     private Button _actionMenuBusinessButton;
+    private GameObject _actionMenuBusinessSubMenu;
+    private Button _actionMenuBusinessFinanceButton;
+    private Button _actionMenuBusinessContractsButton;
+    private Button _actionMenuBusinessPromotionButton;
+    private GameObject _actionMenuManagementContainer;
     private Button _actionMenuManagementButton;
+    private GameObject _actionMenuManagementSubMenu;
+    private Button _actionMenuManagementFormBandButton;
+    private Button _actionMenuManagementManageBandButton;
+    private GameObject _actionMenuGigContainer;
     private Button _actionMenuGigButton;
+    private GameObject _actionMenuGigSubMenu;
+    private Button _actionMenuGigScheduleShowButton;
+    private Button _actionMenuGigScheduleTourButton;
+    private GameObject _actionMenuProduceContainer;
     private Button _actionMenuProduceButton;
+    private GameObject _actionMenuProduceSubMenu;
+    private Button _actionMenuProduceRecordMusicButton;
+    private Button _actionMenuProduceMusicVideoButton;
 
     private GameObject _screenCoverCanvasGO;
     public GameObject PopupCanvasGO_AboveCover;
@@ -269,7 +295,6 @@ public class Manager_UI : MonoBehaviour, IManager
         InitiateButton(ref _increaseSpeedButton, "Button_IncreaseSpeed");
         InitiateButton(ref _decreaseSpeedButton, "Button_DecreaseSpeed");
         InitiateGO(ref _calendarPanelContainerGO, "Panel_CalendarContainer");
-        InitiateGO(ref _calendarPanelGO, "Panel_Calendar");
         InitiateGO(ref _calendarPanelGO, "Panel_Calendar");
         InitiateGO(ref _calendarWeek01Container, "Panel_Calendar_Week01");
         InitiateGO(ref _calendarWeek01Sunday, "Panel_Calendar_Week01_Sunday");
@@ -413,12 +438,38 @@ public class Manager_UI : MonoBehaviour, IManager
         InitiateButton(ref _calendarPagePreviousButton, "Button_CalendarPagePrevious");
         InitiateButton(ref _calendarPageNextButton, "Button_CalendarPageNext");
 
+        InitiateGO(ref _actionMenuPanelGO, "Panel_ActionMenu");
+        InitiateGO(ref _actionMenuSocialContainer, "Panel_ActionMenu_Social_Container");
         InitiateButton(ref _actionMenuSocialButton, "Button_ActionMenu_Social");
+        InitiateGO(ref _actionMenuSocialSubMenu, "Panel_ActionMenu_Social_SubMenu");
+        InitiateButton(ref _actionMenuSocialRolodexButton, "Button_ActionMenu_Social_Rolodex");
+        InitiateButton(ref _actionMenuSocialNetworkingButton, "Button_ActionMenu_Social_Networking");
+        InitiateGO(ref _actionMenuScoutContainer, "Panel_ActionMenu_Scout_Container");
         InitiateButton(ref _actionMenuScoutButton, "Button_ActionMenu_Scout");
+        InitiateGO(ref _actionMenuScoutSubMenu, "Panel_ActionMenu_Scout_SubMenu");
+        InitiateButton(ref _actionMenuScoutTravelButton, "Button_ActionMenu_Scout_Travel");
+        InitiateButton(ref _actionMenuScoutAttendShowButton, "Button_ActionMenu_Scout_AttendShow");
+        InitiateGO(ref _actionMenuBusinessContainer, "Panel_ActionMenu_Business_Container");
         InitiateButton(ref _actionMenuBusinessButton, "Button_ActionMenu_Business");
+        InitiateGO(ref _actionMenuBusinessSubMenu, "Panel_ActionMenu_Business_SubMenu");
+        InitiateButton(ref _actionMenuBusinessFinanceButton, "Button_ActionMenu_Business_Finance");
+        InitiateButton(ref _actionMenuBusinessContractsButton, "Button_ActionMenu_Business_Contracts");
+        InitiateButton(ref _actionMenuBusinessPromotionButton, "Button_ActionMenu_Business_Promotion");
+        InitiateGO(ref _actionMenuManagementContainer, "Panel_ActionMenu_Management_Container");
         InitiateButton(ref _actionMenuManagementButton, "Button_ActionMenu_Management");
+        InitiateGO(ref _actionMenuManagementSubMenu, "Panel_ActionMenu_Management_SubMenu");
+        InitiateButton(ref _actionMenuManagementFormBandButton, "Button_ActionMenu_Management_FormBand");
+        InitiateButton(ref _actionMenuManagementManageBandButton, "Button_ActionMenu_Management_ManageBand");
+        InitiateGO(ref _actionMenuGigContainer, "Panel_ActionMenu_Gig_Container");
         InitiateButton(ref _actionMenuGigButton, "Button_ActionMenu_Gig");
+        InitiateGO(ref _actionMenuGigSubMenu, "Panel_ActionMenu_Gig_SubMenu");
+        InitiateButton(ref _actionMenuGigScheduleShowButton, "Button_ActionMenu_Gig_ScheduleShow");
+        InitiateButton(ref _actionMenuGigScheduleTourButton, "Button_ActionMenu_Gig_ScheduleTour");
+        InitiateGO(ref _actionMenuProduceContainer, "Panel_ActionMenu_Produce_Container");
         InitiateButton(ref _actionMenuProduceButton, "Button_ActionMenu_Produce");
+        InitiateGO(ref _actionMenuProduceSubMenu, "Panel_ActionMenu_Produce_SubMenu");
+        InitiateButton(ref _actionMenuProduceRecordMusicButton, "Button_ActionMenu_Produce_RecordMusic");
+        InitiateButton(ref _actionMenuProduceMusicVideoButton, "Button_ActionMenu_Produce_MusicVideo");
 
         InitiateCanvas(ref PopupCanvasGO, "Canvas_Popups", CanvasLayer.BelowCover);
         InitiateCanvas(ref _screenCoverCanvasGO, "Canvas_ScreenCover", CanvasLayer.TheCover);
@@ -631,17 +682,13 @@ public class Manager_UI : MonoBehaviour, IManager
         Button[] mainMenuButtons = _mainMenuCanvasGO.GetComponentsInChildren<Button>(true);
         Button[] timePanelButtons = _timePanelGO.GetComponentsInChildren<Button>(true);
         Button[] calendarPanelButtons = _calendarPanelContainerGO.GetComponentsInChildren<Button>(true);
+        Button[] actionMenuButtons = _actionMenuPanelGO.GetComponentsInChildren<Button>(true);
 
         MouseOverCursor_calendarDayBoxes();
         MouseOverCursor_Button(mainMenuButtons);
         MouseOverCursor_Button(timePanelButtons);
         MouseOverCursor_Button(calendarPanelButtons);
-        MouseOverCursor_Button(_actionMenuSocialButton);
-        MouseOverCursor_Button(_actionMenuScoutButton);
-        MouseOverCursor_Button(_actionMenuBusinessButton);
-        MouseOverCursor_Button(_actionMenuManagementButton);
-        MouseOverCursor_Button(_actionMenuGigButton);
-        MouseOverCursor_Button(_actionMenuProduceButton);
+        MouseOverCursor_Button(actionMenuButtons);
 
         //ToolTips
         ToolTip tt_togleTime = new ToolTip("Toggle Time", InputCommand.ToggleTime, "Start or pause the progression of time.", true);
@@ -672,8 +719,16 @@ public class Manager_UI : MonoBehaviour, IManager
         _calendarPagePreviousButton.onClick.AddListener(Click_CalendarPagePrevious);
         _calendarPageNextButton.onClick.AddListener(Click_CalendarPageNext);
 
+        //Action Menu Click Listeners
+        _actionMenuSocialButton.onClick.AddListener(Click_ToggleActionMenu_Social);
+        _actionMenuScoutButton.onClick.AddListener(Click_ToggleActionMenu_Scout);
+        _actionMenuBusinessButton.onClick.AddListener(Click_ToggleActionMenu_Business);
+        _actionMenuManagementButton.onClick.AddListener(Click_ToggleActionMenu_Management);
+        _actionMenuGigButton.onClick.AddListener(Click_ToggleActionMenu_Gig);
+        _actionMenuProduceButton.onClick.AddListener(Click_ToggleActionMenu_Produce);
+
         //Calendar DayBox Click Listener
-        for(int i = 0; i < _calendarDayBoxes.Length; i++){
+        for (int i = 0; i < _calendarDayBoxes.Length; i++){
             int thisI = i;
             UnityAction action = () => {
 
@@ -701,6 +756,13 @@ public class Manager_UI : MonoBehaviour, IManager
 
         //Retract Calendar
         ToggleCalendarPanel();
+        //Retract Action Menus
+        ToggleActionMenu_Social();
+        ToggleActionMenu_Scout();
+        ToggleActionMenu_Business();
+        ToggleActionMenu_Management();
+        ToggleActionMenu_Gig();
+        ToggleActionMenu_Produce();
 
         State = ManagerState.Started;
         Debug.Log("Manager_UI started");
@@ -1334,6 +1396,84 @@ public class Manager_UI : MonoBehaviour, IManager
                 }
             }
         }
+    }
+
+    //Action Menu
+    private bool _isActionMenuSocialExpanded = true;
+    private bool _isActionMenuScoutExpanded = true;
+    private bool _isActionMenuBusinessExpanded = true;
+    private bool _isActionMenuManagementExpanded = true;
+    private bool _isActionMenuGigExpanded = true;
+    private bool _isActionMenuProduceExpanded = true;
+
+    private void ToggleActionMenu(GameObject menuContainer, GameObject subMenuContainer, ref bool isExpanded, int targetHeight)
+    {
+        int vectorY = isExpanded ? 45 : (targetHeight-45);
+        int scaleY = isExpanded ? 0 : 1;
+        var Vector2 = new Vector2
+        {
+            x = targetHeight,
+            y = vectorY
+        };
+        LeanTween.size(menuContainer.GetComponent<RectTransform>(), Vector2, 0.5f).setEase(LeanTweenType.easeInOutExpo);
+        LeanTween.scaleY(subMenuContainer, scaleY, 0.5f).setEase(LeanTweenType.easeInOutExpo);
+        isExpanded = !isExpanded;
+    }
+
+    private void ToggleActionMenu_Social()
+    {
+        ToggleActionMenu(_actionMenuSocialContainer, _actionMenuSocialSubMenu, ref _isActionMenuSocialExpanded, 135);
+    }
+    private void ToggleActionMenu_Scout()
+    {
+        ToggleActionMenu(_actionMenuScoutContainer, _actionMenuScoutSubMenu, ref _isActionMenuScoutExpanded, 135);
+    }
+    private void ToggleActionMenu_Business()
+    {
+        ToggleActionMenu(_actionMenuBusinessContainer, _actionMenuBusinessSubMenu, ref _isActionMenuBusinessExpanded, 180);
+    }
+    private void ToggleActionMenu_Management()
+    {
+        ToggleActionMenu(_actionMenuManagementContainer, _actionMenuManagementSubMenu, ref _isActionMenuManagementExpanded, 135);
+    }
+    private void ToggleActionMenu_Gig()
+    {
+        ToggleActionMenu(_actionMenuGigContainer, _actionMenuGigSubMenu, ref _isActionMenuGigExpanded, 135);
+    }
+    private void ToggleActionMenu_Produce()
+    {
+        ToggleActionMenu(_actionMenuProduceContainer, _actionMenuProduceSubMenu, ref _isActionMenuProduceExpanded, 135);
+    }
+
+    private void Click_ToggleActionMenu_Social()
+    {
+        ToggleActionMenu_Social();
+        //EventSystem.current.SetSelectedGameObject(null);//prevent selecting the button
+    }
+    private void Click_ToggleActionMenu_Scout()
+    {
+        ToggleActionMenu_Scout();
+        EventSystem.current.SetSelectedGameObject(null);//prevent selecting the button
+    }
+    private void Click_ToggleActionMenu_Business()
+    {
+        ToggleActionMenu_Business();
+        EventSystem.current.SetSelectedGameObject(null);//prevent selecting the button
+    }
+    private void Click_ToggleActionMenu_Management()
+    {
+        ToggleActionMenu_Management();
+        EventSystem.current.SetSelectedGameObject(null);//prevent selecting the button
+    }
+    private void Click_ToggleActionMenu_Gig()
+    {
+        ToggleActionMenu_Gig();
+        EventSystem.current.SetSelectedGameObject(null);//prevent selecting the button
+    }
+    private void Click_ToggleActionMenu_Produce()
+    {
+        ToggleActionMenu_Produce();
+        EventSystem.current.SetSelectedGameObject(null);//prevent selecting the button
     }
 
     //OnUpdate
