@@ -1448,7 +1448,7 @@ public class Manager_UI : MonoBehaviour, IManager
     private void Click_ToggleActionMenu_Social()
     {
         ToggleActionMenu_Social();
-        //EventSystem.current.SetSelectedGameObject(null);//prevent selecting the button
+        EventSystem.current.SetSelectedGameObject(null);//prevent selecting the button
     }
     private void Click_ToggleActionMenu_Scout()
     {
