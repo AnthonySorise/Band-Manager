@@ -4,18 +4,18 @@ using System.Collections.Generic;
 using UnityEngine;
 
 //**MAP**
-[System.Serializable]
-public class JSONFile_Map{
-	public List<JSONObj_Map> Maps;
+//[System.Serializable]
+//public class JSONFile_Map{
+//	public List<JSONObj_Map> Maps;
 
-	public JSONFile_Map(List<Map> data){
-		Maps = new List<JSONObj_Map>();
-		foreach(Map map in data){
-			JSONObj_Map jsonObj = new JSONObj_Map(map.X, map.Y);
-			Maps.Add(jsonObj);
-		}
-	}
-};
+//	public JSONFile_Map(List<Map> data){
+//		Maps = new List<JSONObj_Map>();
+//		foreach(Map map in data){
+//			JSONObj_Map jsonObj = new JSONObj_Map(map.X, map.Y);
+//			Maps.Add(jsonObj);
+//		}
+//	}
+//};
 [System.Serializable]
 public class JSONObj_Map{
 	public int X;
