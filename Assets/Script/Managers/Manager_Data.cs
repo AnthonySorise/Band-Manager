@@ -29,6 +29,8 @@ public class Manager_Data : MonoBehaviour, IManager {
 		_dirDAT = Application.dataPath + "/Data/";
 		_dirJSON = Application.dataPath + "/Data/";
 
+        Debug.Log(_dirJSON);
+
 		//initialize ini files
 		foreach (INIFilename ini in INIFilename.GetValues(typeof(INIFilename))){
 			INIInit(ini);
@@ -37,6 +39,12 @@ public class Manager_Data : MonoBehaviour, IManager {
 		Dictionary<string, string> preferencesData = new Dictionary<string, string>();
 		preferencesData.Add("key", "value");
 		this.INISave(preferencesData, INIFilename.preferences, "section");
+
+
+        //JSON
+
+
+
 
 		State = ManagerState.Started;
         Debug.Log("Manager_Data started...");
@@ -145,17 +153,6 @@ public class Manager_Data : MonoBehaviour, IManager {
 		}
 	}
 
-	public void JSONSave_Map(List<Map> data, string filenameTag = null){		
-		string path = this.FilePathJSON(JSONType.Map, filenameTag);
-		string json = null;
-
-		JSONFile_Map jsonMap = new JSONFile_Map(data);
-		if(jsonMap.Maps.Count != 0){
-			json = JsonUtility.ToJson(jsonMap);
-		}
-		JSONWriteToDisk(path, json);
-	}
-
 	//public void JSONSave_NPC(List<NPC> data, string filenameTag = null){
 	//	string path = this.FilePathJSON(JSONType.NPC, filenameTag);
 	//	string json = null;
@@ -166,31 +163,6 @@ public class Manager_Data : MonoBehaviour, IManager {
 	//	}
 	//	JSONWriteToDisk(path, json);
 	//}
-
-	public List<Map> JSONLoad_Map(string filenameTag = null){
-		string path = this.FilePathJSON(JSONType.Map, filenameTag);
-		if(File.Exists(path) == false){
-			Debug.Log("Failed to load " + path + ": File not found");
-			return null;
-		}
-		string json = File.ReadAllText(path);
-
-		List<JSONObj_Map> jsonFile = null;
-		try{
-			jsonFile = JsonUtility.FromJson<JSONFile_Map>(json).Maps;
-		}
-		catch{
-			Debug.Log("Failed to load " + path + ": Couldn't extract data");
-			return null;
-		}
-
-		List<Map> data = new List<Map>();
-		foreach(JSONObj_Map jsonObj in jsonFile){
-			Map map = new Map(jsonObj.X, jsonObj.Y);
-			data.Add(map);
-		}
-		return data;
-	}
 
 	//public List<NPC> JSONLoad_NPC(string filenameTag = null){
 	//	string path = this.FilePathJSON(JSONType.NPC, filenameTag);

@@ -1,0 +1,869 @@
+{
+    "destination_addresses": [
+        "Birmingham_AL",
+        "Mobile_AL",
+        "Phoenix_AZ",
+        "LosAngeles_CA",
+        "SanFrancisco_CA",
+        "SanDiego_CA",
+        "Sacramento_CA",
+        "Fresno_CA",
+        "Denver_CO",
+        "NewHaven_CT",
+        "Miami_FL",
+        "Jacksonville_FL",
+        "Tampa_FL",
+        "Orlando_FL",
+        "Tallahassee_FL",
+        "Atlanta_GA",
+        "Boise_ID",
+        "Chicago_IL",
+        "Indianapolis_IN",
+        "DesMoines_IA",
+        "Wichita_KS",
+        "Louisville_KY",
+        "NewOrleans_LA",
+        "Baltimore_MD",
+        "Boston_MA",
+        "Detroit_MI",
+        "GrandRapids_MI",
+        "Minneapolis_MN",
+        "Jackson_MS",
+        "KansasCity_MO",
+        "StLouis_MO",
+        "Springfield_MO",
+        "Billings_MT",
+        "Omaha_NE",
+        "LasVegas_NV",
+        "Reno_NV",
+        "Albuquerque_MN",
+        "NewYorkCity_NY",
+        "Buffalo_NY",
+        "Syracuse_NY",
+        "Raleigh_NC",
+        "Charlotte_NC",
+        "Wilmington_NC",
+        "Fargo_ND",
+        "Columbus_OH",
+        "Cleveland_OH",
+        "Cincinnati_OH",
+        "OklahomaCity_OK",
+        "Portland_OR",
+        "Philadelphia_PA",
+        "Pittsburgh_PA",
+        "Charleston_SC",
+        "Columbia_SC",
+        "SiouxFalls_SD",
+        "Nashville_TN",
+        "Memphis_TN",
+        "Knoxville_TN",
+        "Dallas_TX",
+        "Houston_TX",
+        "SanAntonio_TX",
+        "Austin_TX",
+        "Lubbock_TX",
+        "ElPaso_TX",
+        "SaltLakeCity_UT",
+        "VirginiaBeach_VA",
+        "Richmond_VA",
+        "Seattle_WA",
+        "Spokane_WA",
+        "Milwaukee_WI",
+        "Madison_WI",
+        "GreenBay_WI"
+    ],
+    "origin_addresses": [
+        "Raleigh_NC"
+    ],
+    "cityData": [
+        {
+            "cityID": "Raleigh_NC",
+            "latitude": 35.7796,
+            "longitude": -78.6382,
+            "population": 1510029,
+            "travelTo": [
+                {
+                    "cityID": "",
+                    "distance": {
+                        "text": "553 miles",
+                        "value": 890678
+                    },
+                    "duration": {
+                        "text": "8 hr 16 min",
+                        "value": 29752
+                    }
+                },
+                {
+                    "cityID": "",
+                    "distance": {
+                        "text": "734 miles",
+                        "value": 1181853
+                    },
+                    "duration": {
+                        "text": "10 hr 42 min",
+                        "value": 38496
+                    }
+                },
+                {
+                    "cityID": "",
+                    "distance": {
+                        "text": "2,173 miles",
+                        "value": 3497326
+                    },
+                    "duration": {
+                        "text": "32 hr",
+                        "value": 116058
+                    }
+                },
+                {
+                    "cityID": "",
+                    "distance": {
+                        "text": "2,542 miles",
+                        "value": 4090480
+                    },
+                    "duration": {
+                        "text": "37 hr",
+                        "value": 134275
+                    }
+                },
+                {
+                    "cityID": "",
+                    "distance": {
+                        "text": "2,842 miles",
+                        "value": 4573093
+                    },
+                    "duration": {
+                        "text": "42 hr",
+                        "value": 151177
+                    }
+                },
+                {
+                    "cityID": "",
+                    "distance": {
+                        "text": "2,545 miles",
+                        "value": 4096533
+                    },
+                    "duration": {
+                        "text": "37 hr",
+                        "value": 132240
+                    }
+                },
+                {
+                    "cityID": "",
+                    "distance": {
+                        "text": "2,785 miles",
+                        "value": 4481473
+                    },
+                    "duration": {
+                        "text": "41 hr",
+                        "value": 148568
+                    }
+                },
+                {
+                    "cityID": "",
+                    "distance": {
+                        "text": "2,670 miles",
+                        "value": 4296593
+                    },
+                    "duration": {
+                        "text": "39 hr",
+                        "value": 141349
+                    }
+                },
+                {
+                    "cityID": "",
+                    "distance": {
+                        "text": "1,651 miles",
+                        "value": 2657785
+                    },
+                    "duration": {
+                        "text": "25 hr",
+                        "value": 88582
+                    }
+                },
+                {
+                    "cityID": "",
+                    "distance": {
+                        "text": "567 miles",
+                        "value": 912861
+                    },
+                    "duration": {
+                        "text": "8 hr 58 min",
+                        "value": 32259
+                    }
+                },
+                {
+                    "cityID": "",
+                    "distance": {
+                        "text": "799 miles",
+                        "value": 1285739
+                    },
+                    "duration": {
+                        "text": "11 hr 21 min",
+                        "value": 40866
+                    }
+                },
+                {
+                    "cityID": "",
+                    "distance": {
+                        "text": "453 miles",
+                        "value": 729424
+                    },
+                    "duration": {
+                        "text": "6 hr 25 min",
+                        "value": 23118
+                    }
+                },
+                {
+                    "cityID": "",
+                    "distance": {
+                        "text": "650 miles",
+                        "value": 1045641
+                    },
+                    "duration": {
+                        "text": "9 hr 29 min",
+                        "value": 34114
+                    }
+                },
+                {
+                    "cityID": "",
+                    "distance": {
+                        "text": "602 miles",
+                        "value": 968995
+                    },
+                    "duration": {
+                        "text": "8 hr 39 min",
+                        "value": 31112
+                    }
+                },
+                {
+                    "cityID": "",
+                    "distance": {
+                        "text": "614 miles",
+                        "value": 988378
+                    },
+                    "duration": {
+                        "text": "8 hr 49 min",
+                        "value": 31718
+                    }
+                },
+                {
+                    "cityID": "",
+                    "distance": {
+                        "text": "407 miles",
+                        "value": 654343
+                    },
+                    "duration": {
+                        "text": "6 hr 6 min",
+                        "value": 21947
+                    }
+                },
+                {
+                    "cityID": "",
+                    "distance": {
+                        "text": "2,437 miles",
+                        "value": 3921762
+                    },
+                    "duration": {
+                        "text": "36 hr",
+                        "value": 129873
+                    }
+                },
+                {
+                    "cityID": "",
+                    "distance": {
+                        "text": "810 miles",
+                        "value": 1303619
+                    },
+                    "duration": {
+                        "text": "12 hr 43 min",
+                        "value": 45784
+                    }
+                },
+                {
+                    "cityID": "",
+                    "distance": {
+                        "text": "629 miles",
+                        "value": 1012873
+                    },
+                    "duration": {
+                        "text": "9 hr 54 min",
+                        "value": 35669
+                    }
+                },
+                {
+                    "cityID": "",
+                    "distance": {
+                        "text": "1,102 miles",
+                        "value": 1773781
+                    },
+                    "duration": {
+                        "text": "16 hr 58 min",
+                        "value": 61063
+                    }
+                },
+                {
+                    "cityID": "",
+                    "distance": {
+                        "text": "1,208 miles",
+                        "value": 1943323
+                    },
+                    "duration": {
+                        "text": "18 hr 43 min",
+                        "value": 67355
+                    }
+                },
+                {
+                    "cityID": "",
+                    "distance": {
+                        "text": "564 miles",
+                        "value": 908290
+                    },
+                    "duration": {
+                        "text": "8 hr 43 min",
+                        "value": 31366
+                    }
+                },
+                {
+                    "cityID": "",
+                    "distance": {
+                        "text": "864 miles",
+                        "value": 1390869
+                    },
+                    "duration": {
+                        "text": "12 hr 30 min",
+                        "value": 44986
+                    }
+                },
+                {
+                    "cityID": "",
+                    "distance": {
+                        "text": "300 miles",
+                        "value": 483593
+                    },
+                    "duration": {
+                        "text": "4 hr 55 min",
+                        "value": 17695
+                    }
+                },
+                {
+                    "cityID": "",
+                    "distance": {
+                        "text": "700 miles",
+                        "value": 1126128
+                    },
+                    "duration": {
+                        "text": "10 hr 56 min",
+                        "value": 39368
+                    }
+                },
+                {
+                    "cityID": "",
+                    "distance": {
+                        "text": "683 miles",
+                        "value": 1098733
+                    },
+                    "duration": {
+                        "text": "10 hr 49 min",
+                        "value": 38949
+                    }
+                },
+                {
+                    "cityID": "",
+                    "distance": {
+                        "text": "803 miles",
+                        "value": 1291860
+                    },
+                    "duration": {
+                        "text": "12 hr 30 min",
+                        "value": 44977
+                    }
+                },
+                {
+                    "cityID": "",
+                    "distance": {
+                        "text": "1,217 miles",
+                        "value": 1958492
+                    },
+                    "duration": {
+                        "text": "18 hr 41 min",
+                        "value": 67279
+                    }
+                },
+                {
+                    "cityID": "",
+                    "distance": {
+                        "text": "788 miles",
+                        "value": 1267852
+                    },
+                    "duration": {
+                        "text": "11 hr 37 min",
+                        "value": 41798
+                    }
+                },
+                {
+                    "cityID": "",
+                    "distance": {
+                        "text": "1,069 miles",
+                        "value": 1720595
+                    },
+                    "duration": {
+                        "text": "16 hr 6 min",
+                        "value": 57944
+                    }
+                },
+                {
+                    "cityID": "",
+                    "distance": {
+                        "text": "823 miles",
+                        "value": 1325070
+                    },
+                    "duration": {
+                        "text": "12 hr 29 min",
+                        "value": 44946
+                    }
+                },
+                {
+                    "cityID": "",
+                    "distance": {
+                        "text": "966 miles",
+                        "value": 1554545
+                    },
+                    "duration": {
+                        "text": "14 hr 53 min",
+                        "value": 53604
+                    }
+                },
+                {
+                    "cityID": "",
+                    "distance": {
+                        "text": "2,055 miles",
+                        "value": 3307437
+                    },
+                    "duration": {
+                        "text": "31 hr",
+                        "value": 110179
+                    }
+                },
+                {
+                    "cityID": "",
+                    "distance": {
+                        "text": "1,253 miles",
+                        "value": 2017309
+                    },
+                    "duration": {
+                        "text": "18 hr 48 min",
+                        "value": 67706
+                    }
+                },
+                {
+                    "cityID": "",
+                    "distance": {
+                        "text": "2,331 miles",
+                        "value": 3750702
+                    },
+                    "duration": {
+                        "text": "34 hr",
+                        "value": 122865
+                    }
+                },
+                {
+                    "cityID": "",
+                    "distance": {
+                        "text": "2,654 miles",
+                        "value": 4271231
+                    },
+                    "duration": {
+                        "text": "39 hr",
+                        "value": 140972
+                    }
+                },
+                {
+                    "cityID": "",
+                    "distance": {
+                        "text": "1,758 miles",
+                        "value": 2828494
+                    },
+                    "duration": {
+                        "text": "26 hr",
+                        "value": 93112
+                    }
+                },
+                {
+                    "cityID": "",
+                    "distance": {
+                        "text": "487 miles",
+                        "value": 783595
+                    },
+                    "duration": {
+                        "text": "7 hr 43 min",
+                        "value": 27760
+                    }
+                },
+                {
+                    "cityID": "",
+                    "distance": {
+                        "text": "635 miles",
+                        "value": 1022100
+                    },
+                    "duration": {
+                        "text": "10 hr 45 min",
+                        "value": 38698
+                    }
+                },
+                {
+                    "cityID": "",
+                    "distance": {
+                        "text": "627 miles",
+                        "value": 1009266
+                    },
+                    "duration": {
+                        "text": "9 hr 50 min",
+                        "value": 35412
+                    }
+                },
+                {
+                    "cityID": "",
+                    "distance": {
+                        "text": "1 ft",
+                        "value": 0
+                    },
+                    "duration": {
+                        "text": "1 min",
+                        "value": 0
+                    }
+                },
+                {
+                    "cityID": "",
+                    "distance": {
+                        "text": "168 miles",
+                        "value": 269994
+                    },
+                    "duration": {
+                        "text": "2 hr 34 min",
+                        "value": 9210
+                    }
+                },
+                {
+                    "cityID": "",
+                    "distance": {
+                        "text": "128 miles",
+                        "value": 206307
+                    },
+                    "duration": {
+                        "text": "1 hr 55 min",
+                        "value": 6902
+                    }
+                },
+                {
+                    "cityID": "",
+                    "distance": {
+                        "text": "1,450 miles",
+                        "value": 2334346
+                    },
+                    "duration": {
+                        "text": "22 hr 5 min",
+                        "value": 79519
+                    }
+                },
+                {
+                    "cityID": "",
+                    "distance": {
+                        "text": "479 miles",
+                        "value": 771633
+                    },
+                    "duration": {
+                        "text": "7 hr 39 min",
+                        "value": 27531
+                    }
+                },
+                {
+                    "cityID": "",
+                    "distance": {
+                        "text": "569 miles",
+                        "value": 916174
+                    },
+                    "duration": {
+                        "text": "8 hr 50 min",
+                        "value": 31771
+                    }
+                },
+                {
+                    "cityID": "",
+                    "distance": {
+                        "text": "514 miles",
+                        "value": 827134
+                    },
+                    "duration": {
+                        "text": "8 hr 23 min",
+                        "value": 30177
+                    }
+                },
+                {
+                    "cityID": "",
+                    "distance": {
+                        "text": "1,215 miles",
+                        "value": 1955216
+                    },
+                    "duration": {
+                        "text": "18 hr",
+                        "value": 64825
+                    }
+                },
+                {
+                    "cityID": "",
+                    "distance": {
+                        "text": "2,867 miles",
+                        "value": 4613513
+                    },
+                    "duration": {
+                        "text": "43 hr",
+                        "value": 153190
+                    }
+                },
+                {
+                    "cityID": "",
+                    "distance": {
+                        "text": "401 miles",
+                        "value": 645370
+                    },
+                    "duration": {
+                        "text": "6 hr 23 min",
+                        "value": 22995
+                    }
+                },
+                {
+                    "cityID": "",
+                    "distance": {
+                        "text": "498 miles",
+                        "value": 801035
+                    },
+                    "duration": {
+                        "text": "7 hr 50 min",
+                        "value": 28215
+                    }
+                },
+                {
+                    "cityID": "",
+                    "distance": {
+                        "text": "279 miles",
+                        "value": 449327
+                    },
+                    "duration": {
+                        "text": "4 hr 7 min",
+                        "value": 14792
+                    }
+                },
+                {
+                    "cityID": "",
+                    "distance": {
+                        "text": "1,510 miles",
+                        "value": 2430160
+                    },
+                    "duration": {
+                        "text": "23 hr 27 min",
+                        "value": 84427
+                    }
+                },
+                {
+                    "cityID": "",
+                    "distance": {
+                        "text": "1,367 miles",
+                        "value": 2199751
+                    },
+                    "duration": {
+                        "text": "20 hr 56 min",
+                        "value": 75336
+                    }
+                },
+                {
+                    "cityID": "",
+                    "distance": {
+                        "text": "539 miles",
+                        "value": 866672
+                    },
+                    "duration": {
+                        "text": "8 hr 11 min",
+                        "value": 29482
+                    }
+                },
+                {
+                    "cityID": "",
+                    "distance": {
+                        "text": "749 miles",
+                        "value": 1206118
+                    },
+                    "duration": {
+                        "text": "11 hr 15 min",
+                        "value": 40493
+                    }
+                },
+                {
+                    "cityID": "",
+                    "distance": {
+                        "text": "360 miles",
+                        "value": 579857
+                    },
+                    "duration": {
+                        "text": "5 hr 33 min",
+                        "value": 19985
+                    }
+                },
+                {
+                    "cityID": "",
+                    "distance": {
+                        "text": "1,188 miles",
+                        "value": 1911385
+                    },
+                    "duration": {
+                        "text": "17 hr 24 min",
+                        "value": 62610
+                    }
+                },
+                {
+                    "cityID": "",
+                    "distance": {
+                        "text": "1,199 miles",
+                        "value": 1929871
+                    },
+                    "duration": {
+                        "text": "17 hr 25 min",
+                        "value": 62697
+                    }
+                },
+                {
+                    "cityID": "",
+                    "distance": {
+                        "text": "1,394 miles",
+                        "value": 2244023
+                    },
+                    "duration": {
+                        "text": "20 hr 19 min",
+                        "value": 73132
+                    }
+                },
+                {
+                    "cityID": "",
+                    "distance": {
+                        "text": "1,363 miles",
+                        "value": 2192920
+                    },
+                    "duration": {
+                        "text": "19 hr 54 min",
+                        "value": 71620
+                    }
+                },
+                {
+                    "cityID": "",
+                    "distance": {
+                        "text": "1,533 miles",
+                        "value": 2467509
+                    },
+                    "duration": {
+                        "text": "22 hr 21 min",
+                        "value": 80454
+                    }
+                },
+                {
+                    "cityID": "",
+                    "distance": {
+                        "text": "1,823 miles",
+                        "value": 2933329
+                    },
+                    "duration": {
+                        "text": "26 hr",
+                        "value": 95064
+                    }
+                },
+                {
+                    "cityID": "",
+                    "distance": {
+                        "text": "2,141 miles",
+                        "value": 3445724
+                    },
+                    "duration": {
+                        "text": "32 hr",
+                        "value": 114906
+                    }
+                },
+                {
+                    "cityID": "",
+                    "distance": {
+                        "text": "200 miles",
+                        "value": 321551
+                    },
+                    "duration": {
+                        "text": "3 hr 10 min",
+                        "value": 11400
+                    }
+                },
+                {
+                    "cityID": "",
+                    "distance": {
+                        "text": "154 miles",
+                        "value": 248624
+                    },
+                    "duration": {
+                        "text": "2 hr 34 min",
+                        "value": 9264
+                    }
+                },
+                {
+                    "cityID": "",
+                    "distance": {
+                        "text": "2,840 miles",
+                        "value": 4570913
+                    },
+                    "duration": {
+                        "text": "43 hr",
+                        "value": 154218
+                    }
+                },
+                {
+                    "cityID": "",
+                    "distance": {
+                        "text": "2,594 miles",
+                        "value": 4174160
+                    },
+                    "duration": {
+                        "text": "39 hr",
+                        "value": 139094
+                    }
+                },
+                {
+                    "cityID": "",
+                    "distance": {
+                        "text": "907 miles",
+                        "value": 1459234
+                    },
+                    "duration": {
+                        "text": "14 hr 4 min",
+                        "value": 50660
+                    }
+                },
+                {
+                    "cityID": "",
+                    "distance": {
+                        "text": "955 miles",
+                        "value": 1537319
+                    },
+                    "duration": {
+                        "text": "14 hr 55 min",
+                        "value": 53674
+                    }
+                },
+                {
+                    "cityID": "",
+                    "distance": {
+                        "text": "1,021 miles",
+                        "value": 1642929
+                    },
+                    "duration": {
+                        "text": "15 hr 45 min",
+                        "value": 56727
+                    }
+                }
+            ]
+        }
+    ]
+}
