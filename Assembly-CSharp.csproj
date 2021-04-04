@@ -108,8 +108,8 @@
     <Compile Include="Assets\Script\Managers\Manager_Audio.cs" />
     <Compile Include="Assets\Script\Managers\Manager_Camera.cs" />
     <Compile Include="Assets\Script\Managers\Manager_Data.cs" />
+    <Compile Include="Assets\Script\Managers\Manager_Data\Data_City.cs" />
     <Compile Include="Assets\Script\Managers\Manager_Data\INIFile.cs" />
-    <Compile Include="Assets\Script\Managers\Manager_Data\JSONFile.cs" />
     <Compile Include="Assets\Script\Managers\Manager_GO.cs" />
     <Compile Include="Assets\Script\Managers\Manager_Input.cs" />
     <Compile Include="Assets\Script\Managers\Manager_Sim.cs" />
