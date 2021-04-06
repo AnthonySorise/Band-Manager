@@ -46,6 +46,8 @@ public class Manager_Data : MonoBehaviour, IManager {
         CityData = new Dictionary<Data_CityID, Data_City>();
         JSON_LoadData_City();
 
+
+
         State = ManagerState.Started;
         Debug.Log("Manager_Data started...");
     }
@@ -153,7 +155,7 @@ public class Manager_Data : MonoBehaviour, IManager {
     {
         foreach (Data_CityID cityID in Enum.GetValues(typeof(Data_CityID)))
         {
-            string path = this.FilePathJSON("Cities/" + cityID.ToString());
+            string path = FilePathJSON("Cities/" + cityID.ToString());
             if (File.Exists(path) == false)
             {
                 Debug.Log("Failed to load " + path + ": File not found");
@@ -169,4 +171,30 @@ public class Manager_Data : MonoBehaviour, IManager {
             }
         }
     }
- }
+
+    //Helpers
+    public int? getCityDistance(Data_CityID fromCity, Data_CityID toCity)
+    {
+        int? distance = null;
+        foreach(TravelTo travelToData in CityData[fromCity].travelTo)
+        {
+            if (travelToData.cityID == toCity.ToString())
+            {
+                distance = travelToData.distance.value;
+            }
+        }
+        return distance;
+    }
+    public int? getCityAutomobileTravelTime(Data_CityID fromCity, Data_CityID toCity)
+    {
+        int? duration = null;
+        foreach (TravelTo travelToData in CityData[fromCity].travelTo)
+        {
+            if (travelToData.cityID == toCity.ToString())
+            {
+                duration = travelToData.duration.value;
+            }
+        }
+        return duration;
+    }
+}

@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
+﻿using System.Collections.Generic;
 
 public enum Data_CityID
 {
@@ -78,48 +75,31 @@ public enum Data_CityID
     GreenBay_WI     
 }
 
-
-//model like this
-//[System.Serializable]
-//public struct MyObject
-//{
-//    [System.Serializable]
-//    public struct ArrayEntry
-//    {
-//        public string name;
-//        public string place;
-//        public string description;
-//    }
-
-//    public ArrayEntry[] object;
-//}
-
-
 [System.Serializable]
 public class Distance
 {
-    public string text { get; set; }
-    public int value { get; set; }
+    public string text;
+    public int value;
 }
 [System.Serializable]
 public class Duration
 {
-    public string text { get; set; }
-    public int value { get; set; }
+    public string text;
+    public int value;
 }
 [System.Serializable]
 public class TravelTo
 {
-    public string cityID { get; set; }
-    public Distance distance { get; set; }
-    public Duration duration { get; set; }
+    public string cityID;
+    public Distance distance;
+    public Duration duration;
 }
 [System.Serializable]
 public class Data_City
 {
-    public string cityID { get; set; }
-    public double latitude { get; set; }
-    public double longitude { get; set; }
-    public int population { get; set; }
-    public List<TravelTo> travelTo { get; set; }
+    public string cityID;
+    public double latitude;
+    public double longitude;
+    public int population;
+    public List<TravelTo> travelTo;
 }
