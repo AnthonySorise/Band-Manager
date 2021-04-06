@@ -2,24 +2,27 @@
 using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
 using UnityEngine;
+using System;
 
 //Enums
 public enum INIFilename{
 	preferences
 }
-public enum JSONType{
-	Map,
-	NPC
-}
+
+
+
 //Manager_Data
 public class Manager_Data : MonoBehaviour, IManager {
 	public ManagerState State {get; private set;}
 
 	private string _dirDAT;
 	private string _dirJSON;
-	//private string _dirINI;
+    //private string _dirINI;
 
-	private GameObject[] _iniFileCreators = new GameObject[INIFilename.GetNames(typeof(INIFilename)).Length];
+    //Stored Data
+    public Dictionary<Data_CityID, Data_City> CityData { get; private set; }
+
+    private GameObject[] _iniFileCreators = new GameObject[INIFilename.GetNames(typeof(INIFilename)).Length];
 
 	public void Startup(){
 		State = ManagerState.Initializing;
@@ -28,8 +31,6 @@ public class Manager_Data : MonoBehaviour, IManager {
 		//paths
 		_dirDAT = Application.dataPath + "/Data/";
 		_dirJSON = Application.dataPath + "/Data/";
-
-        Debug.Log(_dirJSON);
 
 		//initialize ini files
 		foreach (INIFilename ini in INIFilename.GetValues(typeof(INIFilename))){
@@ -42,11 +43,10 @@ public class Manager_Data : MonoBehaviour, IManager {
 
 
         //JSON
+        CityData = new Dictionary<Data_CityID, Data_City>();
+        JSON_LoadData_City();
 
-
-
-
-		State = ManagerState.Started;
+        State = ManagerState.Started;
         Debug.Log("Manager_Data started...");
     }
 
@@ -54,11 +54,7 @@ public class Manager_Data : MonoBehaviour, IManager {
 	private string FilePathDAT(string filename = null){
 		return Path.Combine(_dirDAT, (filename ?? "auto") + ".dat");
 	}
-	private string FilePathJSON(JSONType jsonType, string filenameTag = null){
-		string filename = jsonType.ToString();
-		if(filenameTag != null){
-			filename = filename + "_" + filenameTag;
-		}
+	private string FilePathJSON(string filename){
 		return Path.Combine(_dirJSON, filename + ".json");
 	}
 
@@ -153,39 +149,24 @@ public class Manager_Data : MonoBehaviour, IManager {
 		}
 	}
 
-	//public void JSONSave_NPC(List<NPC> data, string filenameTag = null){
-	//	string path = this.FilePathJSON(JSONType.NPC, filenameTag);
-	//	string json = null;
-
-	//	JSONFile_NPC jsonNPC = new JSONFile_NPC(data);
-	//	if(jsonNPC.NPCs.Count != 0){
-	//		json = JsonUtility.ToJson(jsonNPC);
-	//	}
-	//	JSONWriteToDisk(path, json);
-	//}
-
-	//public List<NPC> JSONLoad_NPC(string filenameTag = null){
-	//	string path = this.FilePathJSON(JSONType.NPC, filenameTag);
-	//	if(File.Exists(path) == false){
-	//		Debug.Log("Failed to load " + path + ": File not found");
-	//		return null;
-	//	}
-	//	string json = File.ReadAllText(path);;
-		
-	//	List<JSONObj_NPC> jsonFile = null;
-	//	try{
-	//		jsonFile = JsonUtility.FromJson<JSONFile_NPC>(json).NPCs;
-	//	}
-	//	catch{
-	//		Debug.Log("Failed to load " + path + ": Couldn't extract data");
-	//		return null;
-	//	}
-
-	//	List<NPC> data = new List<NPC>();
-	//	foreach(JSONObj_NPC jsonObj in jsonFile){
- //           NPC npc = new NPC(jsonObj.FirstName, jsonObj.LastName, jsonObj.BirthDay, jsonObj.Traits);
-	//		data.Add(npc);
-	//	}
-	//	return data;
-	//}
-}
+    public void JSON_LoadData_City()
+    {
+        foreach (Data_CityID cityID in Enum.GetValues(typeof(Data_CityID)))
+        {
+            string path = this.FilePathJSON("Cities/" + cityID.ToString());
+            if (File.Exists(path) == false)
+            {
+                Debug.Log("Failed to load " + path + ": File not found");
+            }
+            string json = File.ReadAllText(path);
+            try
+            {
+                CityData.Add(cityID, JsonUtility.FromJson<Data_City>(json));
+            }
+            catch
+            {
+                Debug.Log("Failed to load " + path + ": Couldn't extract data");
+            }
+        }
+    }
+ }
