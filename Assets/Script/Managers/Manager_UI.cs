@@ -48,6 +48,7 @@ public class Manager_UI : MonoBehaviour, IManager
     public GameObject prefab_Button;
     public GameObject prefab_Popup;
     public GameObject prefab_CalendarTimelineEvent;
+    public GameObject prefab_Menu_Travel;
 
     //UI Gos and Elements
     private GameObject _hiddenCanvasGO;
@@ -281,6 +282,7 @@ public class Manager_UI : MonoBehaviour, IManager
         prefab_Button = Resources.Load<GameObject>("Prefabs/UI/Button");
         prefab_Popup = Resources.Load<GameObject>("Prefabs/UI/Popup");
         prefab_CalendarTimelineEvent = Resources.Load<GameObject>("Prefabs/UI/CalendarTimelineEvent");
+        prefab_Menu_Travel = Resources.Load<GameObject>("Prefabs/UI/TravelMenu");
 
         //Initiate UI GOs and Elements
         InitiateCanvas(ref _hiddenCanvasGO, "Canvas_Hidden", CanvasLayer.Hidden);
@@ -726,6 +728,9 @@ public class Manager_UI : MonoBehaviour, IManager
         _actionMenuManagementButton.onClick.AddListener(Click_ToggleActionMenu_Management);
         _actionMenuGigButton.onClick.AddListener(Click_ToggleActionMenu_Gig);
         _actionMenuProduceButton.onClick.AddListener(Click_ToggleActionMenu_Produce);
+
+        //Action SubMenus Click Listeners
+        _actionMenuScoutTravelButton.onClick.AddListener(Click_ToggleActionSubMenu_Scout_Travel);
 
         //Calendar DayBox Click Listener
         for (int i = 0; i < _calendarDayBoxes.Length; i++){
@@ -1517,6 +1522,17 @@ public class Manager_UI : MonoBehaviour, IManager
         ToggleActionMenu_Produce();
         EventSystem.current.SetSelectedGameObject(null);//prevent selecting the button
     }
+
+
+    private void Click_ToggleActionSubMenu_Scout_Travel()
+    {
+        ToggleActionMenu_Social(true);
+        TravelMenu travelMenu = new TravelMenu();
+        travelMenu.CreateAndDisplay();
+    }
+
+
+
 
     //OnUpdate
     void Update()
