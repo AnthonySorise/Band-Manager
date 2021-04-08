@@ -50,6 +50,12 @@ public class Manager_UI : MonoBehaviour, IManager
     public GameObject prefab_CalendarTimelineEvent;
     public GameObject prefab_Menu_Travel;
 
+    //UI Prefab  Constructors
+    public PrefabConstructor_PopUp prefabConstructor_popup;
+    public PrefabConstructor_PopUpOption prefabConstructor_popupOption;
+    public PrefabConstructor_TravelMenu prefabConstructor_travelMenu;
+
+
     //UI Gos and Elements
     private GameObject _hiddenCanvasGO;
     private GameObject _backgroundCanvasGO;
@@ -283,6 +289,13 @@ public class Manager_UI : MonoBehaviour, IManager
         prefab_Popup = Resources.Load<GameObject>("Prefabs/UI/Popup");
         prefab_CalendarTimelineEvent = Resources.Load<GameObject>("Prefabs/UI/CalendarTimelineEvent");
         prefab_Menu_Travel = Resources.Load<GameObject>("Prefabs/UI/TravelMenu");
+
+        this.gameObject.AddComponent<PrefabConstructor_PopUp>();
+        prefabConstructor_popup = this.GetComponent<PrefabConstructor_PopUp>();
+        this.gameObject.AddComponent<PrefabConstructor_PopUpOption>();
+        prefabConstructor_popupOption = this.GetComponent<PrefabConstructor_PopUpOption>();
+        this.gameObject.AddComponent<PrefabConstructor_TravelMenu>();
+        prefabConstructor_travelMenu = this.GetComponent<PrefabConstructor_TravelMenu>();
 
         //Initiate UI GOs and Elements
         InitiateCanvas(ref _hiddenCanvasGO, "Canvas_Hidden", CanvasLayer.Hidden);
@@ -1527,8 +1540,7 @@ public class Manager_UI : MonoBehaviour, IManager
     private void Click_ToggleActionSubMenu_Scout_Travel()
     {
         ToggleActionMenu_Social(true);
-        TravelMenu travelMenu = new TravelMenu();
-        travelMenu.CreateAndDisplay();
+        prefabConstructor_travelMenu.CreateAndDisplay();
     }
 
 

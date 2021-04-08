@@ -35,7 +35,7 @@ public class Manager_Sim : MonoBehaviour, IManager {
         //SIM_TestPopup02(new DateTime(1985, 10, 25));
         //SIM_TestPopup03(new DateTime(1985, 10, 26));
         //SIM_TestPopup04(new DateTime(1985, 10, 27));
-        //SIM_TestPopup05();
+        SIM_TestPopup05();
         SIM_ScheduleTravel(SimActionID.NPC_Travel, new List<int>() {1}, new DateTime(1985, 10, 24, 8, 30, 0), CityName.Chicago);
         SIM_ScheduleProduction(SimActionID.NPC_Produce, new List<int>() { 1 }, new DateTime(1985, 10, 24, 18, 0, 0));
         SIM_ScheduleGig(SimActionID.NPC_Gig, new List<int>() { 1 }, new DateTime(1985, 10, 25, 11, 15, 0));
@@ -246,7 +246,7 @@ public class Manager_Sim : MonoBehaviour, IManager {
 
     private void SIM_TestPopup05_option01()
     {
-        List<int> npcs = new List<int>();
+        List<int> npcs = new List<int>() { 1 };
         Func<bool> validCondition = () => { return true; };
         Func<bool> delayCondition = () => { return false; };
         SimAction simAction = new SimAction(SimActionID.Test_Popup05_1, npcs, validCondition, delayCondition, null, null, true, "Option Selected", "You chose option one.", Asset_png.Popup_Vinyl, Asset_wav.event_generic);
@@ -254,7 +254,7 @@ public class Manager_Sim : MonoBehaviour, IManager {
     }
     private void SIM_TestPopup05_option02()
     {
-        List<int> npcs = new List<int>();
+        List<int> npcs = new List<int>() { 1 };
         Func<bool> validCondition = () => { return true; };
         Func<bool> delayCondition = () => { return false; };
         SimAction simAction = new SimAction(SimActionID.Test_Popup05_2, npcs, validCondition, delayCondition, null, null, true, "Option Selected", "You chose option two.", Asset_png.Popup_Vinyl, Asset_wav.event_generic);

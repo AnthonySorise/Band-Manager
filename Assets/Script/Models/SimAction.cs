@@ -69,8 +69,8 @@ public class SimAction {
         {            
             if(NPCs.Contains(1))
             {
-                PopUp popup = new PopUp(this);
-                popup.CreateAndDisplay();
+                
+                Managers.UI.prefabConstructor_popup.CreateAndDisplay(this);
             }
             else
             {
