@@ -691,20 +691,6 @@ public class Manager_UI : MonoBehaviour, IManager
         _mainMenuCanvasGO.SetActive(false);
         ToolTipGO.SetActive(false);
 
-        //Cursor
-        SetCursorToDefault();
-
-        Button[] mainMenuButtons = _mainMenuCanvasGO.GetComponentsInChildren<Button>(true);
-        Button[] timePanelButtons = _timePanelGO.GetComponentsInChildren<Button>(true);
-        Button[] calendarPanelButtons = _calendarPanelContainerGO.GetComponentsInChildren<Button>(true);
-        Button[] actionMenuButtons = _actionMenuPanelGO.GetComponentsInChildren<Button>(true);
-
-        MouseOverCursor_calendarDayBoxes();
-        MouseOverCursor_Button(mainMenuButtons);
-        MouseOverCursor_Button(timePanelButtons);
-        MouseOverCursor_Button(calendarPanelButtons);
-        MouseOverCursor_Button(actionMenuButtons);
-
         //ToolTips
         ToolTip tt_togleTime = new ToolTip("Toggle Time", InputCommand.ToggleTime, "Start or pause the progression of time.", true);
         SetToolTip(_toggleTimeButton.gameObject, tt_togleTime);
@@ -844,74 +830,6 @@ public class Manager_UI : MonoBehaviour, IManager
         }
     }
 
-    //Cursor
-    private void SetCursor(Asset_png png)
-    {
-        Texture2D texture = Managers.Assets.GetTexture(png);
-        Vector2 vector = new Vector2(texture.width / 2, 0);
-        Cursor.SetCursor(texture, vector, CursorMode.Auto);
-    }
-    public void SetCursorToDefault()
-    {
-        SetCursor(Asset_png.Cursor_Default);
-    }
-
-    public void MouseOverCursor_Button(Button button)
-    {
-        Action onEnter = () =>
-        {
-            SetCursor(Asset_png.Cursor_Hover);
-        };
-        Action onExit = () =>
-        {
-            SetCursor(Asset_png.Cursor_Default);
-        };
-        MouseOverEvent.OnGameObjectMouseOver(button.gameObject, onEnter, onExit);
-    }
-    private void MouseOverCursor_Button(Button[] buttons)
-    {
-        for (int i = 0; i < buttons.Length; i++)
-        {
-            MouseOverCursor_Button(buttons[i]);
-        }
-    }
-    public void MouseOverCursor_GO(GameObject go)
-    {
-        Action onEnter = () =>
-        {
-            SetCursor(Asset_png.Cursor_Hover);
-        };
-        Action onExit = () =>
-        {
-            SetCursor(Asset_png.Cursor_Default);
-        };
-        MouseOverEvent.OnGameObjectMouseOver(go, onEnter, onExit);
-    }
-    private void MouseOverCursor_calendarDayBoxes()
-    {
-        for (int i = 0; i < _calendarDayBoxes.Length; i++)
-        {
-            int thisI = i;
-
-            Action onEnter = () =>
-            {
-                DateTime thisDT = DayBoxDTFromI(thisI, true);
-
-                if (DateTime.Compare(thisDT, Managers.Time.CurrentDT) == 1 ||
-                    (thisDT.Day == Managers.Time.CurrentDT.Day &&
-                    thisDT.Month == Managers.Time.CurrentDT.Month &&
-                    thisDT.Year == Managers.Time.CurrentDT.Year))
-                {
-                    SetCursor(Asset_png.Cursor_Hover);
-                }
-            };
-            Action onExit = () =>
-            {
-                SetCursor(Asset_png.Cursor_Default);
-            };
-            MouseOverEvent.OnGameObjectMouseOver(_calendarDayBoxes[i], onEnter, onExit);
-        }
-    }
 
 
     //ToolTip
@@ -1811,16 +1729,19 @@ public class Manager_UI : MonoBehaviour, IManager
                 if (_calendarPage > 0 || DateTime.Compare(thisDT, Managers.Time.CurrentDT) == 1)
                 {
                     timeOverlayRectTransform.sizeDelta = new Vector2(0, timeOverlayRectTransform.sizeDelta.y);
+                    _calendarDayBoxes[i].GetComponent<CursorBehavior>().ForceDefault = false;
                 }
                 else if (DateTime.Compare(thisDT, Managers.Time.CurrentDT) == -1)
                 {
                     timeOverlayRectTransform.sizeDelta = new Vector2(calendarBoxWidth, timeOverlayRectTransform.sizeDelta.y);
+                    _calendarDayBoxes[i].GetComponent<CursorBehavior>().ForceDefault = true;
                 }
                 else if (thisDT.Day == Managers.Time.CurrentDT.Day &&
                     thisDT.Month == Managers.Time.CurrentDT.Month &&
                     thisDT.Year == Managers.Time.CurrentDT.Year)
                 {
                     timeOverlayRectTransform.sizeDelta = new Vector2((int)(calendarBoxWidth * timePercentage), timeOverlayRectTransform.sizeDelta.y);
+                    _calendarDayBoxes[i].GetComponent<CursorBehavior>().ForceDefault = false;
                 }
             }
         }
@@ -1888,8 +1809,6 @@ public class Manager_UI : MonoBehaviour, IManager
                 //set tooltip
                 ToolTip tt = new ToolTip(scheduledEvent);
                 SetToolTip(calendarTimelineEvent, tt);
-                //set cursor
-                MouseOverCursor_GO(calendarTimelineEvent);
             }
         }
     }

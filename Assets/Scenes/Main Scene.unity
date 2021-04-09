@@ -954,6 +954,7 @@ GameObject:
   - component: {fileID: 53841288}
   - component: {fileID: 53841287}
   - component: {fileID: 53841286}
+  - component: {fileID: 53841289}
   m_Layer: 5
   m_Name: Button_ActionMenu_Social_Rolodex
   m_TagString: Untagged
@@ -1063,6 +1064,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 53841284}
   m_CullTransparentMesh: 0
+--- !u!114 &53841289
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 53841284}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f9fe25ffa0f2c54ca768c3ab2140873, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ForceDefault: 0
 --- !u!1 &70170907
 GameObject:
   m_ObjectHideFlags: 0
@@ -1482,6 +1496,7 @@ GameObject:
   - component: {fileID: 81484842}
   - component: {fileID: 81484841}
   - component: {fileID: 81484840}
+  - component: {fileID: 81484843}
   m_Layer: 5
   m_Name: Button_ActionMenu_Scout
   m_TagString: Untagged
@@ -1591,6 +1606,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 81484838}
   m_CullTransparentMesh: 0
+--- !u!114 &81484843
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 81484838}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f9fe25ffa0f2c54ca768c3ab2140873, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ForceDefault: 0
 --- !u!1 &95909510
 GameObject:
   m_ObjectHideFlags: 0
@@ -2015,6 +2043,7 @@ GameObject:
   - component: {fileID: 146821138}
   - component: {fileID: 146821137}
   - component: {fileID: 146821136}
+  - component: {fileID: 146821139}
   m_Layer: 5
   m_Name: Button_ActionMenu_Scout_Travel
   m_TagString: Untagged
@@ -2124,6 +2153,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 146821134}
   m_CullTransparentMesh: 0
+--- !u!114 &146821139
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 146821134}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f9fe25ffa0f2c54ca768c3ab2140873, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ForceDefault: 0
 --- !u!1 &157885835
 GameObject:
   m_ObjectHideFlags: 0
@@ -2214,6 +2256,7 @@ GameObject:
   - component: {fileID: 160879151}
   - component: {fileID: 160879150}
   - component: {fileID: 160879149}
+  - component: {fileID: 160879152}
   m_Layer: 5
   m_Name: Button_ActionMenu_Gig
   m_TagString: Untagged
@@ -2323,6 +2366,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 160879147}
   m_CullTransparentMesh: 0
+--- !u!114 &160879152
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 160879147}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f9fe25ffa0f2c54ca768c3ab2140873, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ForceDefault: 0
 --- !u!1 &161909904
 GameObject:
   m_ObjectHideFlags: 0
@@ -3383,6 +3439,7 @@ GameObject:
   - component: {fileID: 255059411}
   - component: {fileID: 255059410}
   - component: {fileID: 255059409}
+  - component: {fileID: 255059412}
   m_Layer: 5
   m_Name: Button_ActionMenu_Social
   m_TagString: Untagged
@@ -3492,6 +3549,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 255059407}
   m_CullTransparentMesh: 0
+--- !u!114 &255059412
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 255059407}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f9fe25ffa0f2c54ca768c3ab2140873, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ForceDefault: 0
 --- !u!1 &257911703
 GameObject:
   m_ObjectHideFlags: 0
@@ -5960,6 +6030,7 @@ GameObject:
   - component: {fileID: 377765077}
   - component: {fileID: 377765076}
   - component: {fileID: 377765075}
+  - component: {fileID: 377765078}
   m_Layer: 5
   m_Name: Button_LoadGame
   m_TagString: Untagged
@@ -6069,6 +6140,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 377765073}
   m_CullTransparentMesh: 0
+--- !u!114 &377765078
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 377765073}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f9fe25ffa0f2c54ca768c3ab2140873, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ForceDefault: 0
 --- !u!1 &389675303
 GameObject:
   m_ObjectHideFlags: 0
@@ -6083,6 +6167,7 @@ GameObject:
   - component: {fileID: 389675305}
   - component: {fileID: 389675308}
   - component: {fileID: 389675310}
+  - component: {fileID: 389675309}
   m_Layer: 5
   m_Name: Button_IncreaseSpeed
   m_TagString: Untagged
@@ -6205,6 +6290,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Delegates: []
+--- !u!114 &389675309
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 389675303}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f9fe25ffa0f2c54ca768c3ab2140873, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ForceDefault: 0
 --- !u!114 &389675310
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6230,6 +6328,7 @@ GameObject:
   - component: {fileID: 394550540}
   - component: {fileID: 394550539}
   - component: {fileID: 394550541}
+  - component: {fileID: 394550542}
   m_Layer: 5
   m_Name: Panel_Calendar_Week01_Saturday
   m_TagString: Untagged
@@ -6318,6 +6417,19 @@ MonoBehaviour:
   m_EffectColor: {r: 0, g: 1, b: 0.054187775, a: 0.15686275}
   m_EffectDistance: {x: 2, y: 2}
   m_UseGraphicAlpha: 0
+--- !u!114 &394550542
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 394550537}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f9fe25ffa0f2c54ca768c3ab2140873, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ForceDefault: 0
 --- !u!1 &396980130
 GameObject:
   m_ObjectHideFlags: 0
@@ -6330,6 +6442,7 @@ GameObject:
   - component: {fileID: 396980134}
   - component: {fileID: 396980133}
   - component: {fileID: 396980132}
+  - component: {fileID: 396980135}
   m_Layer: 5
   m_Name: Button_ToggleTime
   m_TagString: Untagged
@@ -6442,6 +6555,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 396980130}
   m_CullTransparentMesh: 1
+--- !u!114 &396980135
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 396980130}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f9fe25ffa0f2c54ca768c3ab2140873, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ForceDefault: 0
 --- !u!1 &417619343
 GameObject:
   m_ObjectHideFlags: 0
@@ -6727,6 +6853,7 @@ GameObject:
   - component: {fileID: 437975861}
   - component: {fileID: 437975860}
   - component: {fileID: 437975862}
+  - component: {fileID: 437975863}
   m_Layer: 5
   m_Name: Panel_Calendar_Week02_Thursday
   m_TagString: Untagged
@@ -6814,6 +6941,19 @@ MonoBehaviour:
   m_EffectColor: {r: 0, g: 1, b: 0.054187775, a: 0.15686275}
   m_EffectDistance: {x: 2, y: 2}
   m_UseGraphicAlpha: 0
+--- !u!114 &437975863
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 437975858}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f9fe25ffa0f2c54ca768c3ab2140873, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ForceDefault: 0
 --- !u!1 &441967252
 GameObject:
   m_ObjectHideFlags: 0
@@ -6826,6 +6966,7 @@ GameObject:
   - component: {fileID: 441967255}
   - component: {fileID: 441967254}
   - component: {fileID: 441967256}
+  - component: {fileID: 441967257}
   m_Layer: 5
   m_Name: Panel_Calendar_Week01_Thursday
   m_TagString: Untagged
@@ -6914,6 +7055,19 @@ MonoBehaviour:
   m_EffectColor: {r: 0, g: 1, b: 0.054187775, a: 0.15686275}
   m_EffectDistance: {x: 2, y: 2}
   m_UseGraphicAlpha: 0
+--- !u!114 &441967257
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 441967252}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f9fe25ffa0f2c54ca768c3ab2140873, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ForceDefault: 0
 --- !u!1 &443006637
 GameObject:
   m_ObjectHideFlags: 0
@@ -7696,6 +7850,7 @@ GameObject:
   - component: {fileID: 473920769}
   - component: {fileID: 473920768}
   - component: {fileID: 473920767}
+  - component: {fileID: 473920770}
   m_Layer: 5
   m_Name: Button_ActionMenu_Produce
   m_TagString: Untagged
@@ -7805,6 +7960,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 473920765}
   m_CullTransparentMesh: 0
+--- !u!114 &473920770
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 473920765}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f9fe25ffa0f2c54ca768c3ab2140873, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ForceDefault: 0
 --- !u!1 &479731117
 GameObject:
   m_ObjectHideFlags: 0
@@ -7955,6 +8123,7 @@ GameObject:
   - component: {fileID: 484966498}
   - component: {fileID: 484966497}
   - component: {fileID: 484966499}
+  - component: {fileID: 484966500}
   m_Layer: 5
   m_Name: Panel_Calendar_Week02_Sunday
   m_TagString: Untagged
@@ -8042,6 +8211,19 @@ MonoBehaviour:
   m_EffectColor: {r: 0, g: 1, b: 0.054187775, a: 0.15686275}
   m_EffectDistance: {x: 2, y: 2}
   m_UseGraphicAlpha: 0
+--- !u!114 &484966500
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 484966495}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f9fe25ffa0f2c54ca768c3ab2140873, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ForceDefault: 0
 --- !u!1 &492926231
 GameObject:
   m_ObjectHideFlags: 0
@@ -8554,6 +8736,7 @@ GameObject:
   - component: {fileID: 521301763}
   - component: {fileID: 521301762}
   - component: {fileID: 521301761}
+  - component: {fileID: 521301764}
   m_Layer: 5
   m_Name: Button_ActionMenu_Management
   m_TagString: Untagged
@@ -8663,6 +8846,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 521301759}
   m_CullTransparentMesh: 0
+--- !u!114 &521301764
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 521301759}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f9fe25ffa0f2c54ca768c3ab2140873, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ForceDefault: 0
 --- !u!1 &534694759
 GameObject:
   m_ObjectHideFlags: 0
@@ -9393,6 +9589,7 @@ GameObject:
   - component: {fileID: 595566693}
   - component: {fileID: 595566692}
   - component: {fileID: 595566691}
+  - component: {fileID: 595566696}
   m_Layer: 5
   m_Name: Button_DecreaseSpeed
   m_TagString: Untagged
@@ -9528,6 +9725,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 595566689}
   m_CullTransparentMesh: 0
+--- !u!114 &595566696
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 595566689}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f9fe25ffa0f2c54ca768c3ab2140873, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ForceDefault: 0
 --- !u!1 &606881022
 GameObject:
   m_ObjectHideFlags: 0
@@ -9818,6 +10028,7 @@ GameObject:
   - component: {fileID: 607545172}
   - component: {fileID: 607545171}
   - component: {fileID: 607545173}
+  - component: {fileID: 607545174}
   m_Layer: 5
   m_Name: Panel_Calendar_Week02_Monday
   m_TagString: Untagged
@@ -9905,6 +10116,19 @@ MonoBehaviour:
   m_EffectColor: {r: 0, g: 1, b: 0.054187775, a: 0.15686275}
   m_EffectDistance: {x: 2, y: 2}
   m_UseGraphicAlpha: 0
+--- !u!114 &607545174
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 607545169}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f9fe25ffa0f2c54ca768c3ab2140873, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ForceDefault: 0
 --- !u!1 &622683146
 GameObject:
   m_ObjectHideFlags: 0
@@ -10334,6 +10558,7 @@ GameObject:
   - component: {fileID: 633954117}
   - component: {fileID: 633954116}
   - component: {fileID: 633954115}
+  - component: {fileID: 633954118}
   m_Layer: 5
   m_Name: Button_ActionMenu_Management_ManageBand
   m_TagString: Untagged
@@ -10443,6 +10668,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 633954113}
   m_CullTransparentMesh: 0
+--- !u!114 &633954118
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 633954113}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f9fe25ffa0f2c54ca768c3ab2140873, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ForceDefault: 0
 --- !u!1 &644374615
 GameObject:
   m_ObjectHideFlags: 0
@@ -10666,6 +10904,7 @@ GameObject:
   - component: {fileID: 655555833}
   - component: {fileID: 655555832}
   - component: {fileID: 655555834}
+  - component: {fileID: 655555835}
   m_Layer: 5
   m_Name: Panel_Calendar_Week01_Friday
   m_TagString: Untagged
@@ -10754,6 +10993,19 @@ MonoBehaviour:
   m_EffectColor: {r: 0, g: 1, b: 0.054187775, a: 0.15686275}
   m_EffectDistance: {x: 2, y: 2}
   m_UseGraphicAlpha: 0
+--- !u!114 &655555835
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 655555830}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f9fe25ffa0f2c54ca768c3ab2140873, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ForceDefault: 0
 --- !u!1 &667027073
 GameObject:
   m_ObjectHideFlags: 0
@@ -10766,6 +11018,7 @@ GameObject:
   - component: {fileID: 667027077}
   - component: {fileID: 667027076}
   - component: {fileID: 667027075}
+  - component: {fileID: 667027078}
   m_Layer: 5
   m_Name: Button_SaveGame
   m_TagString: Untagged
@@ -10875,6 +11128,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 667027073}
   m_CullTransparentMesh: 0
+--- !u!114 &667027078
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 667027073}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f9fe25ffa0f2c54ca768c3ab2140873, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ForceDefault: 0
 --- !u!1 &676178233
 GameObject:
   m_ObjectHideFlags: 0
@@ -12399,6 +12665,7 @@ GameObject:
   - component: {fileID: 723272674}
   - component: {fileID: 723272673}
   - component: {fileID: 723272675}
+  - component: {fileID: 723272676}
   m_Layer: 5
   m_Name: Panel_Calendar_Week01_Wednesday
   m_TagString: Untagged
@@ -12487,6 +12754,19 @@ MonoBehaviour:
   m_EffectColor: {r: 0, g: 1, b: 0.054187775, a: 0.15686275}
   m_EffectDistance: {x: 2, y: 2}
   m_UseGraphicAlpha: 0
+--- !u!114 &723272676
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 723272671}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f9fe25ffa0f2c54ca768c3ab2140873, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ForceDefault: 0
 --- !u!1 &725466159
 GameObject:
   m_ObjectHideFlags: 0
@@ -12499,6 +12779,7 @@ GameObject:
   - component: {fileID: 725466163}
   - component: {fileID: 725466162}
   - component: {fileID: 725466161}
+  - component: {fileID: 725466164}
   m_Layer: 5
   m_Name: Button_ActionMenu_Social_Networking
   m_TagString: Untagged
@@ -12608,6 +12889,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 725466159}
   m_CullTransparentMesh: 0
+--- !u!114 &725466164
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 725466159}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f9fe25ffa0f2c54ca768c3ab2140873, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ForceDefault: 0
 --- !u!1 &729350949
 GameObject:
   m_ObjectHideFlags: 0
@@ -14723,6 +15017,7 @@ GameObject:
   - component: {fileID: 894245767}
   - component: {fileID: 894245766}
   - component: {fileID: 894245765}
+  - component: {fileID: 894245768}
   m_Layer: 5
   m_Name: Button_ActionMenu_Business_Promotion
   m_TagString: Untagged
@@ -14832,6 +15127,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 894245763}
   m_CullTransparentMesh: 0
+--- !u!114 &894245768
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 894245763}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f9fe25ffa0f2c54ca768c3ab2140873, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ForceDefault: 0
 --- !u!1 &898895318
 GameObject:
   m_ObjectHideFlags: 0
@@ -15832,6 +16140,7 @@ GameObject:
   - component: {fileID: 968044625}
   - component: {fileID: 968044624}
   - component: {fileID: 968044626}
+  - component: {fileID: 968044627}
   m_Layer: 5
   m_Name: Panel_Calendar_Week02_Saturday
   m_TagString: Untagged
@@ -15919,6 +16228,19 @@ MonoBehaviour:
   m_EffectColor: {r: 0, g: 1, b: 0.054187775, a: 0.15686275}
   m_EffectDistance: {x: 2, y: 2}
   m_UseGraphicAlpha: 0
+--- !u!114 &968044627
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 968044622}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f9fe25ffa0f2c54ca768c3ab2140873, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ForceDefault: 0
 --- !u!1 &980215913
 GameObject:
   m_ObjectHideFlags: 0
@@ -16426,6 +16748,7 @@ GameObject:
   - component: {fileID: 1123737851}
   - component: {fileID: 1123737850}
   - component: {fileID: 1123737849}
+  - component: {fileID: 1123737852}
   m_Layer: 5
   m_Name: Button_ActionMenu_Produce_MusicVideo
   m_TagString: Untagged
@@ -16535,6 +16858,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1123737847}
   m_CullTransparentMesh: 0
+--- !u!114 &1123737852
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1123737847}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f9fe25ffa0f2c54ca768c3ab2140873, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ForceDefault: 0
 --- !u!1 &1130584592
 GameObject:
   m_ObjectHideFlags: 0
@@ -16686,6 +17022,7 @@ GameObject:
   - component: {fileID: 1151644432}
   - component: {fileID: 1151644431}
   - component: {fileID: 1151644430}
+  - component: {fileID: 1151644433}
   m_Layer: 5
   m_Name: Button_CalendarPagePrevious
   m_TagString: Untagged
@@ -16795,6 +17132,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1151644428}
   m_CullTransparentMesh: 0
+--- !u!114 &1151644433
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1151644428}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f9fe25ffa0f2c54ca768c3ab2140873, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ForceDefault: 0
 --- !u!1 &1159265788
 GameObject:
   m_ObjectHideFlags: 0
@@ -16807,6 +17157,7 @@ GameObject:
   - component: {fileID: 1159265792}
   - component: {fileID: 1159265791}
   - component: {fileID: 1159265790}
+  - component: {fileID: 1159265793}
   m_Layer: 5
   m_Name: Button_New Game
   m_TagString: Untagged
@@ -16916,6 +17267,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1159265788}
   m_CullTransparentMesh: 0
+--- !u!114 &1159265793
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1159265788}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f9fe25ffa0f2c54ca768c3ab2140873, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ForceDefault: 0
 --- !u!1 &1181537294
 GameObject:
   m_ObjectHideFlags: 0
@@ -17842,6 +18206,7 @@ GameObject:
   - component: {fileID: 1221745084}
   - component: {fileID: 1221745083}
   - component: {fileID: 1221745085}
+  - component: {fileID: 1221745086}
   m_Layer: 5
   m_Name: Panel_Calendar_Week01_Monday
   m_TagString: Untagged
@@ -17930,6 +18295,19 @@ MonoBehaviour:
   m_EffectColor: {r: 0, g: 1, b: 0.054187775, a: 0.15686275}
   m_EffectDistance: {x: 2, y: 2}
   m_UseGraphicAlpha: 0
+--- !u!114 &1221745086
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1221745081}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f9fe25ffa0f2c54ca768c3ab2140873, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ForceDefault: 0
 --- !u!1 &1222513696
 GameObject:
   m_ObjectHideFlags: 0
@@ -18280,6 +18658,7 @@ GameObject:
   - component: {fileID: 1255472134}
   - component: {fileID: 1255472133}
   - component: {fileID: 1255472132}
+  - component: {fileID: 1255472135}
   m_Layer: 5
   m_Name: Button_ActionMenu_Gig_ScheduleTour
   m_TagString: Untagged
@@ -18389,6 +18768,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1255472130}
   m_CullTransparentMesh: 0
+--- !u!114 &1255472135
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1255472130}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f9fe25ffa0f2c54ca768c3ab2140873, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ForceDefault: 0
 --- !u!1 &1273977319
 GameObject:
   m_ObjectHideFlags: 0
@@ -18669,6 +19061,7 @@ GameObject:
   - component: {fileID: 1291836076}
   - component: {fileID: 1291836075}
   - component: {fileID: 1291836077}
+  - component: {fileID: 1291836078}
   m_Layer: 5
   m_Name: Panel_Calendar_Week02_Wednesday
   m_TagString: Untagged
@@ -18756,6 +19149,19 @@ MonoBehaviour:
   m_EffectColor: {r: 0, g: 1, b: 0.054187775, a: 0.15686275}
   m_EffectDistance: {x: 2, y: 2}
   m_UseGraphicAlpha: 0
+--- !u!114 &1291836078
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1291836073}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f9fe25ffa0f2c54ca768c3ab2140873, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ForceDefault: 0
 --- !u!1 &1299120281
 GameObject:
   m_ObjectHideFlags: 0
@@ -19083,6 +19489,7 @@ GameObject:
   - component: {fileID: 1310707613}
   - component: {fileID: 1310707612}
   - component: {fileID: 1310707614}
+  - component: {fileID: 1310707615}
   m_Layer: 5
   m_Name: Panel_Calendar_Week01_Sunday
   m_TagString: Untagged
@@ -19171,6 +19578,19 @@ MonoBehaviour:
   m_EffectColor: {r: 0, g: 1, b: 0.054187775, a: 0.15686275}
   m_EffectDistance: {x: 2, y: 2}
   m_UseGraphicAlpha: 0
+--- !u!114 &1310707615
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1310707610}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f9fe25ffa0f2c54ca768c3ab2140873, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ForceDefault: 0
 --- !u!1 &1323599591
 GameObject:
   m_ObjectHideFlags: 0
@@ -19538,6 +19958,7 @@ GameObject:
   - component: {fileID: 1339627488}
   - component: {fileID: 1339627487}
   - component: {fileID: 1339627486}
+  - component: {fileID: 1339627489}
   m_Layer: 5
   m_Name: Button_ActionMenu_Business_Finance
   m_TagString: Untagged
@@ -19647,6 +20068,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1339627484}
   m_CullTransparentMesh: 0
+--- !u!114 &1339627489
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1339627484}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f9fe25ffa0f2c54ca768c3ab2140873, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ForceDefault: 0
 --- !u!1 &1375655347
 GameObject:
   m_ObjectHideFlags: 0
@@ -19876,6 +20310,7 @@ GameObject:
   - component: {fileID: 1387031284}
   - component: {fileID: 1387031283}
   - component: {fileID: 1387031282}
+  - component: {fileID: 1387031285}
   m_Layer: 5
   m_Name: Button_ToggleCalendar
   m_TagString: Untagged
@@ -19985,6 +20420,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1387031280}
   m_CullTransparentMesh: 0
+--- !u!114 &1387031285
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1387031280}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f9fe25ffa0f2c54ca768c3ab2140873, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ForceDefault: 0
 --- !u!1 &1409357549
 GameObject:
   m_ObjectHideFlags: 0
@@ -20131,6 +20579,7 @@ GameObject:
   - component: {fileID: 1424778607}
   - component: {fileID: 1424778606}
   - component: {fileID: 1424778605}
+  - component: {fileID: 1424778608}
   m_Layer: 5
   m_Name: Button_CalendarPageNext
   m_TagString: Untagged
@@ -20240,6 +20689,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1424778603}
   m_CullTransparentMesh: 0
+--- !u!114 &1424778608
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1424778603}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f9fe25ffa0f2c54ca768c3ab2140873, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ForceDefault: 0
 --- !u!1 &1427421260
 GameObject:
   m_ObjectHideFlags: 0
@@ -20252,6 +20714,7 @@ GameObject:
   - component: {fileID: 1427421264}
   - component: {fileID: 1427421263}
   - component: {fileID: 1427421262}
+  - component: {fileID: 1427421265}
   m_Layer: 5
   m_Name: Button_ActionMenu_Business_Contracts
   m_TagString: Untagged
@@ -20361,6 +20824,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1427421260}
   m_CullTransparentMesh: 0
+--- !u!114 &1427421265
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1427421260}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f9fe25ffa0f2c54ca768c3ab2140873, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ForceDefault: 0
 --- !u!1 &1440539346
 GameObject:
   m_ObjectHideFlags: 0
@@ -20373,6 +20849,7 @@ GameObject:
   - component: {fileID: 1440539349}
   - component: {fileID: 1440539348}
   - component: {fileID: 1440539350}
+  - component: {fileID: 1440539351}
   m_Layer: 5
   m_Name: Panel_Calendar_Week01_Tuesday
   m_TagString: Untagged
@@ -20461,6 +20938,19 @@ MonoBehaviour:
   m_EffectColor: {r: 0, g: 1, b: 0.054187775, a: 0.15686275}
   m_EffectDistance: {x: 2, y: 2}
   m_UseGraphicAlpha: 0
+--- !u!114 &1440539351
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1440539346}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f9fe25ffa0f2c54ca768c3ab2140873, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ForceDefault: 0
 --- !u!1 &1440749284
 GameObject:
   m_ObjectHideFlags: 0
@@ -22090,6 +22580,7 @@ GameObject:
   - component: {fileID: 1611818357}
   - component: {fileID: 1611818356}
   - component: {fileID: 1611818355}
+  - component: {fileID: 1611818358}
   m_Layer: 5
   m_Name: Button_ActionMenu_Business
   m_TagString: Untagged
@@ -22199,6 +22690,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1611818353}
   m_CullTransparentMesh: 0
+--- !u!114 &1611818358
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1611818353}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f9fe25ffa0f2c54ca768c3ab2140873, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ForceDefault: 0
 --- !u!1 &1635514218
 GameObject:
   m_ObjectHideFlags: 0
@@ -22978,6 +23482,7 @@ GameObject:
   - component: {fileID: 1698377181}
   - component: {fileID: 1698377180}
   - component: {fileID: 1698377179}
+  - component: {fileID: 1698377182}
   m_Layer: 5
   m_Name: Button_ActionMenu_Gig_ScheduleShow
   m_TagString: Untagged
@@ -23087,6 +23592,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1698377177}
   m_CullTransparentMesh: 0
+--- !u!114 &1698377182
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1698377177}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f9fe25ffa0f2c54ca768c3ab2140873, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ForceDefault: 0
 --- !u!1 &1702315802
 GameObject:
   m_ObjectHideFlags: 0
@@ -23808,6 +24326,7 @@ GameObject:
   - component: {fileID: 1735916475}
   - component: {fileID: 1735916474}
   - component: {fileID: 1735916476}
+  - component: {fileID: 1735916477}
   m_Layer: 5
   m_Name: Panel_Calendar_Week02_Tuesday
   m_TagString: Untagged
@@ -23895,6 +24414,19 @@ MonoBehaviour:
   m_EffectColor: {r: 0, g: 1, b: 0.054187775, a: 0.15686275}
   m_EffectDistance: {x: 2, y: 2}
   m_UseGraphicAlpha: 0
+--- !u!114 &1735916477
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1735916472}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f9fe25ffa0f2c54ca768c3ab2140873, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ForceDefault: 0
 --- !u!1 &1805656441
 GameObject:
   m_ObjectHideFlags: 0
@@ -24966,6 +25498,7 @@ GameObject:
   - component: {fileID: 1868312249}
   - component: {fileID: 1868312248}
   - component: {fileID: 1868312247}
+  - component: {fileID: 1868312250}
   m_Layer: 5
   m_Name: Button_ActionMenu_Scout_AttendShow
   m_TagString: Untagged
@@ -25075,6 +25608,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1868312245}
   m_CullTransparentMesh: 0
+--- !u!114 &1868312250
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1868312245}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f9fe25ffa0f2c54ca768c3ab2140873, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ForceDefault: 0
 --- !u!1 &1873906383
 GameObject:
   m_ObjectHideFlags: 0
@@ -25087,6 +25633,7 @@ GameObject:
   - component: {fileID: 1873906386}
   - component: {fileID: 1873906385}
   - component: {fileID: 1873906387}
+  - component: {fileID: 1873906388}
   m_Layer: 5
   m_Name: Panel_Calendar_Week02_Friday
   m_TagString: Untagged
@@ -25174,6 +25721,19 @@ MonoBehaviour:
   m_EffectColor: {r: 0, g: 1, b: 0.054187775, a: 0.15686275}
   m_EffectDistance: {x: 2, y: 2}
   m_UseGraphicAlpha: 0
+--- !u!114 &1873906388
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1873906383}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f9fe25ffa0f2c54ca768c3ab2140873, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ForceDefault: 0
 --- !u!1 &1883016157
 GameObject:
   m_ObjectHideFlags: 0
@@ -26493,6 +27053,7 @@ GameObject:
   - component: {fileID: 1966886734}
   - component: {fileID: 1966886733}
   - component: {fileID: 1966886732}
+  - component: {fileID: 1966886735}
   m_Layer: 5
   m_Name: Button_ActionMenu_Management_FormBand
   m_TagString: Untagged
@@ -26602,6 +27163,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1966886730}
   m_CullTransparentMesh: 0
+--- !u!114 &1966886735
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1966886730}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f9fe25ffa0f2c54ca768c3ab2140873, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ForceDefault: 0
 --- !u!1 &1980818509
 GameObject:
   m_ObjectHideFlags: 0
@@ -27675,6 +28249,7 @@ GameObject:
   - component: {fileID: 2052001478}
   - component: {fileID: 2052001477}
   - component: {fileID: 2052001476}
+  - component: {fileID: 2052001479}
   m_Layer: 5
   m_Name: Button_ActionMenu_Produce_RecordMusic
   m_TagString: Untagged
@@ -27784,6 +28359,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2052001474}
   m_CullTransparentMesh: 0
+--- !u!114 &2052001479
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2052001474}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f9fe25ffa0f2c54ca768c3ab2140873, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ForceDefault: 0
 --- !u!1 &2059134205
 GameObject:
   m_ObjectHideFlags: 0

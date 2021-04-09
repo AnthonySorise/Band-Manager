@@ -63,8 +63,6 @@ public class PrefabConstructor_PopUp : MonoBehaviour {
             SimActionOption option = new SimActionOption(closePopup, "OK");
 
             Managers.UI.prefabConstructor_popupOption.CreateAndDisplay(option, buttonName, buttonsTransform);
-
-            Managers.UI.MouseOverCursor_Button(GameObject.Find(buttonName).GetComponent<Button>());
         }
         else
         {
@@ -75,7 +73,6 @@ public class PrefabConstructor_PopUp : MonoBehaviour {
                 Managers.UI.prefabConstructor_popupOption.CreateAndDisplay(simAction.Options[i], buttonName, buttonsTransform);
 
                 Button buttonComponent = GameObject.Find(buttonName).GetComponent<Button>();
-                Managers.UI.MouseOverCursor_Button(buttonComponent);
                 buttonComponent.onClick.AddListener(closePopup);
             }
         }
