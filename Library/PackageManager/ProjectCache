@@ -5,7 +5,7 @@ m_ProjectFiles:
     m_ContentTrackingEnabled: 1
     m_ModificationDate:
       serializedVersion: 2
-      ticks: 637533655339575222
+      ticks: 637535381215338329
     m_Hash: 2140295142
   m_LockFileStatus:
     m_FilePath: C:/_GameDev/Band-Manager/Packages/packages-lock.json
@@ -13,7 +13,7 @@ m_ProjectFiles:
     m_ContentTrackingEnabled: 1
     m_ModificationDate:
       serializedVersion: 2
-      ticks: 637533655485358299
+      ticks: 637535381215338329
     m_Hash: 2350405437
 m_EmbeddedPackageManifests:
   m_ManifestsStatus: {}
