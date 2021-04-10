@@ -88,13 +88,13 @@ public class Manager_Input : MonoBehaviour, IManager {
                         return;
                     //Calendar
                     case InputCommand.ToggleCalendar:
-                        Managers.UI.KeyDown_ToggleCalendarButton();
+                        Managers.UI.CalendarManager.KeyDown_ToggleCalendarButton();
                         return;
                     case InputCommand.CalendarPagePrevious:
-                        Managers.UI.KeyDown_CalendarPagePrevious();
+                        Managers.UI.CalendarManager.KeyDown_CalendarPagePrevious();
                         return;
                     case InputCommand.CalendarPageNext:
-                        Managers.UI.KeyDown_CalendarPageNext();
+                        Managers.UI.CalendarManager.KeyDown_CalendarPageNext();
                         return;
 
                 }
@@ -115,10 +115,10 @@ public class Manager_Input : MonoBehaviour, IManager {
 
                     //Calendar
                     case InputCommand.CalendarPagePrevious:
-                        Managers.UI.Hold_CalendarPagePrevious();
+                        Managers.UI.CalendarManager.Hold_CalendarPagePrevious();
                         return;
                     case InputCommand.CalendarPageNext:
-                        Managers.UI.Hold_CalendarPageNext();
+                        Managers.UI.CalendarManager.Hold_CalendarPageNext();
                         return;
 
                     //Audio
@@ -147,13 +147,13 @@ public class Manager_Input : MonoBehaviour, IManager {
                         return;
                     //Calendar
                     case InputCommand.ToggleCalendar:
-                        Managers.UI.KeyUp_ToggleCalendarButton();
+                        Managers.UI.CalendarManager.KeyUp_ToggleCalendarButton();
                         return;
                     case InputCommand.CalendarPagePrevious:
-                        Managers.UI.KeyUp_CalendarPagePrevious();
+                        Managers.UI.CalendarManager.KeyUp_CalendarPagePrevious();
                         return;
                     case InputCommand.CalendarPageNext:
-                        Managers.UI.KeyUp_CalendarPageNext();
+                        Managers.UI.CalendarManager.KeyUp_CalendarPageNext();
                         return;
                 }
 			}
@@ -185,10 +185,10 @@ public class Manager_Input : MonoBehaviour, IManager {
                         Managers.UI.Hold_DecreaseSpeedButton();
                         break;
                     case "Button_CalendarPagePrevious":
-                        Managers.UI.Hold_CalendarPagePrevious();
+                        Managers.UI.CalendarManager.Hold_CalendarPagePrevious();
                         break;
                     case "Button_CalendarPageNext":
-                        Managers.UI.Hold_CalendarPageNext();
+                        Managers.UI.CalendarManager.Hold_CalendarPageNext();
                         break;
                     default:
                         return;

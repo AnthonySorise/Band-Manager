@@ -5831,18 +5831,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   prefab_Button: {fileID: 0}
-  prefab_Popup: {fileID: 0}
-  prefab_CalendarTimelineEvent: {fileID: 0}
-  prefab_Menu_Travel: {fileID: 0}
   prefabConstructor_popup: {fileID: 0}
   prefabConstructor_popupOption: {fileID: 0}
   prefabConstructor_travelMenu: {fileID: 0}
+  TooltipManager: {fileID: 0}
+  CalendarManager: {fileID: 0}
   PopupCanvasGO: {fileID: 0}
   PopupCanvasGO_AboveCover: {fileID: 0}
-  ToolTipCanvasGO: {fileID: 0}
-  ToolTipGO: {fileID: 0}
-  ToolTipBackground: {fileID: 0}
-  ToolTipText: {fileID: 0}
+  TooltipCanvasGO: {fileID: 0}
 --- !u!114 &364967767
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19311,7 +19307,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1300845377}
   m_Layer: 5
-  m_Name: ToolTip
+  m_Name: Tooltip
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -21197,7 +21193,7 @@ GameObject:
   - component: {fileID: 1481936755}
   - component: {fileID: 1481936754}
   m_Layer: 5
-  m_Name: Canvas_ToolTip
+  m_Name: Canvas_Tooltip
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -24112,7 +24108,7 @@ GameObject:
   - component: {fileID: 1716156777}
   - component: {fileID: 1716156776}
   m_Layer: 5
-  m_Name: Panel_ToolTipBackground
+  m_Name: Panel_TooltipBackground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -26820,7 +26816,7 @@ GameObject:
   - component: {fileID: 1944942428}
   - component: {fileID: 1944942427}
   m_Layer: 5
-  m_Name: Text_ToolTip
+  m_Name: Text_Tooltip
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

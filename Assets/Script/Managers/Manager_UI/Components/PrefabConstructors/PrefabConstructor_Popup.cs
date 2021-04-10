@@ -8,6 +8,12 @@ using UnityEngine.UI;
 
 public class PrefabConstructor_Popup : MonoBehaviour {
 
+    private GameObject _prefab_Popup;
+    private void Start()
+    {
+        _prefab_Popup = Resources.Load<GameObject>("Prefabs/UI/Popup");
+    }
+
     public void CreateAndDisplay(SimAction simAction)
     {
         string popupName = "Popup_" + simAction.ID.ToString();
@@ -18,7 +24,7 @@ public class PrefabConstructor_Popup : MonoBehaviour {
         }
 
         Transform containerTransform = simAction.PopupHaltsGame ? Managers.UI.PopupCanvasGO_AboveCover.transform : Managers.UI.PopupCanvasGO.transform;
-        GameObject popup = MonoBehaviour.Instantiate(Managers.UI.prefab_Popup, containerTransform);
+        GameObject popup = MonoBehaviour.Instantiate(_prefab_Popup, containerTransform);
         popup.transform.SetParent(containerTransform, false);
 
         GameObject popup_header = popup.transform.GetChild(0).gameObject;

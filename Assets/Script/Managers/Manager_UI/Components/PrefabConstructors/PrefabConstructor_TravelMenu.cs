@@ -4,6 +4,12 @@ using UnityEngine;
 
 public class PrefabConstructor_TravelMenu : MonoBehaviour{
 
+    private GameObject prefab_Menu_Travel;
+    private void Start()
+    {
+        prefab_Menu_Travel = Resources.Load<GameObject>("Prefabs/UI/TravelMenu");
+    }
+
     public void CreateAndDisplay()
     {
         if (Managers.UI.IsScreenCovered() == true)
@@ -20,7 +26,7 @@ public class PrefabConstructor_TravelMenu : MonoBehaviour{
 
         Transform containerTransform = Managers.UI.PopupCanvasGO.transform;
 
-        GameObject menu = MonoBehaviour.Instantiate(Managers.UI.prefab_Menu_Travel, containerTransform);
+        GameObject menu = MonoBehaviour.Instantiate(prefab_Menu_Travel, containerTransform);
         menu.transform.SetParent(containerTransform, false);
 
         //GameObject menu_header = menu.transform.GetChild(0).gameObject;
