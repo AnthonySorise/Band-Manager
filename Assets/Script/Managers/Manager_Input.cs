@@ -78,13 +78,13 @@ public class Manager_Input : MonoBehaviour, IManager {
                         return;
                     //Time
                     case InputCommand.ToggleTime:
-                        Managers.UI.KeyDown_ToggleTimeButton();
+                        Managers.UI.TimeControlManager.KeyDown_ToggleTimeButton();
                         return;
                     case InputCommand.IncreaseSpeed:
-                        Managers.UI.KeyDown_IncreaseSpeedButton();
+                        Managers.UI.TimeControlManager.KeyDown_IncreaseSpeedButton();
                         return;
                     case InputCommand.DecreaseSpeed:
-                        Managers.UI.KeyDown_DecreaseSpeedButton();
+                        Managers.UI.TimeControlManager.KeyDown_DecreaseSpeedButton();
                         return;
                     //Calendar
                     case InputCommand.ToggleCalendar:
@@ -96,7 +96,6 @@ public class Manager_Input : MonoBehaviour, IManager {
                     case InputCommand.CalendarPageNext:
                         Managers.UI.CalendarManager.KeyDown_CalendarPageNext();
                         return;
-
                 }
             }
 
@@ -107,10 +106,10 @@ public class Manager_Input : MonoBehaviour, IManager {
                 {
                     //Time
                     case InputCommand.IncreaseSpeed:
-                        Managers.UI.Hold_IncreaseSpeedButton();
+                        Managers.UI.TimeControlManager.Hold_IncreaseSpeedButton();
                         return;
                     case InputCommand.DecreaseSpeed:
-                        Managers.UI.Hold_DecreaseSpeedButton();
+                        Managers.UI.TimeControlManager.Hold_DecreaseSpeedButton();
                         return;
 
                     //Calendar
@@ -137,13 +136,13 @@ public class Manager_Input : MonoBehaviour, IManager {
 				{
                     //Time
                     case InputCommand.ToggleTime:
-                        Managers.UI.KeyUp_ToggleTimeButon();
+                        Managers.UI.TimeControlManager.KeyUp_ToggleTimeButon();
                         return;
                     case InputCommand.IncreaseSpeed:
-                        Managers.UI.KeyUp_IncreaseSpeedButton();
+                        Managers.UI.TimeControlManager.KeyUp_IncreaseSpeedButton();
                         return;
                     case InputCommand.DecreaseSpeed:
-                        Managers.UI.KeyUp_DecreaseSpeedButton();
+                        Managers.UI.TimeControlManager.KeyUp_DecreaseSpeedButton();
                         return;
                     //Calendar
                     case InputCommand.ToggleCalendar:
@@ -179,10 +178,10 @@ public class Manager_Input : MonoBehaviour, IManager {
                 switch (gameObjectSelected)
                 {
                     case "Button_IncreaseSpeed":
-                        Managers.UI.Hold_IncreaseSpeedButton();
+                        Managers.UI.TimeControlManager.Hold_IncreaseSpeedButton();
                         break;
                     case "Button_DecreaseSpeed":
-                        Managers.UI.Hold_DecreaseSpeedButton();
+                        Managers.UI.TimeControlManager.Hold_DecreaseSpeedButton();
                         break;
                     case "Button_CalendarPagePrevious":
                         Managers.UI.CalendarManager.Hold_CalendarPagePrevious();
@@ -201,10 +200,10 @@ public class Manager_Input : MonoBehaviour, IManager {
                 switch (gameObjectSelected)
                 {
                     case "Button_IncreaseSpeed":
-                        Managers.UI.HoldEnd_IncreaseSpeedButton();
+                        Managers.UI.TimeControlManager.HoldEnd_IncreaseSpeedButton();
                         break;
                     case "Button_DecreaseSpeed":
-                        Managers.UI.HoldEnd_DecreaseSpeedButton();
+                        Managers.UI.TimeControlManager.HoldEnd_DecreaseSpeedButton();
                         break;
                     default:
                         return;
