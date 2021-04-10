@@ -74,7 +74,7 @@ public class Manager_Input : MonoBehaviour, IManager {
                 {
                     //Menu
                     case InputCommand.ToggleMainMenuPanel:
-                        Managers.UI.KeyDown_ToggleMainMenu();
+                        Managers.UI.MainMenuManager.KeyDown_ToggleMainMenu();
                         return;
                     //Time
                     case InputCommand.ToggleTime:

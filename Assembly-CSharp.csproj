@@ -54,7 +54,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Assets\Script\Managers\Manager_Data\INIFile.cs" />
-    <Compile Include="Assets\Script\Managers\Manager_UI\Components\PrefabConstructors\PrefabConstructor_PopUpOption.cs" />
+    <Compile Include="Assets\Script\Managers\Manager_UI\PrefabConstructors\PrefabConstructor_PopUpOption.cs" />
     <Compile Include="Assets\Script\Managers\Manager_Input.cs" />
     <Compile Include="Assets\LeanTween\Framework\LeanTween.cs" />
     <Compile Include="Assets\LeanTween\Examples\Scripts\LogoCinematic.cs" />
@@ -77,7 +77,7 @@
     <Compile Include="Assets\Script\Managers\Manager_Assets.cs" />
     <Compile Include="Assets\Script\Managers\Manager_Audio.cs" />
     <Compile Include="Assets\Script\Managers\Manager_GO.cs" />
-    <Compile Include="Assets\Script\Managers\Manager_UI\Components\PrefabConstructors\PrefabConstructor_TravelMenu.cs" />
+    <Compile Include="Assets\Script\Managers\Manager_UI\PrefabConstructors\PrefabConstructor_TravelMenu.cs" />
     <Compile Include="Assets\Script\Models\SimEvent_Scheduled.cs" />
     <Compile Include="Assets\Script\Utilities\SetAnchor.cs" />
     <Compile Include="Assets\Script\Managers\Manager_UI.cs" />
@@ -103,14 +103,14 @@
     <Compile Include="Assets\LeanTween\Examples\Scripts\PathSplineTrack.cs" />
     <Compile Include="Assets\LeanTween\Framework\LeanTest.cs" />
     <Compile Include="Assets\LeanTween\Examples\Scripts\TestingZLegacy.cs" />
-    <Compile Include="Assets\Script\Managers\Manager_UI\Components\PrefabConstructors\PrefabConstructor_Popup.cs" />
+    <Compile Include="Assets\Script\Managers\Manager_UI\PrefabConstructors\PrefabConstructor_Popup.cs" />
     <Compile Include="Assets\LeanTween\Examples\Scripts\PathSpline2d.cs" />
     <Compile Include="Assets\Script\GameObjectComponents\ClickableGO.cs" />
     <Compile Include="Assets\Script\Models\SimEvent_MTTH.cs" />
     <Compile Include="Assets\Script\Managers\Managers.cs" />
     <Compile Include="Assets\LeanTween\Examples\Scripts\TestingZLegacyExt.cs" />
     <Compile Include="Assets\LeanTween\Examples\Scripts\PathSplinePerformance.cs" />
-    <Compile Include="Assets\Script\Managers\Manager_UI\Components\SubManagers\ToolTipManager.cs" />
+    <Compile Include="Assets\Script\Managers\Manager_UI\SubManagers\ToolTipManager.cs" />
     <Compile Include="Assets\LeanTween\Examples\Scripts\PathBezier2d.cs" />
     <Compile Include="Assets\Script\Managers\Manager_Camera.cs" />
     <Compile Include="Assets\LeanTween\Framework\LTDescrOptional.cs" />
@@ -121,8 +121,10 @@
     <Compile Include="Assets\LeanTween\Examples\Scripts\GeneralBasic.cs" />
     <Compile Include="Assets\LeanTween\Examples\Archived\TestingRigidbodyCS.cs" />
     <Compile Include="Assets\LeanTween\Examples\Scripts\Following.cs" />
-    <Compile Include="Assets\Script\Managers\Manager_UI\Components\SubManagers\CalendarManager.cs" />
-    <Compile Include="Assets\Script\Managers\Manager_UI\Components\SubManagers\TimeControlManager.cs" />
+    <Compile Include="Assets\Script\Managers\Manager_UI\SubManagers\CalendarManager.cs" />
+    <Compile Include="Assets\Script\Managers\Manager_UI\SubManagers\TimeControlManager.cs" />
+    <Compile Include="Assets\Script\Managers\Manager_UI\SubManagers\ActionMenuManager.cs" />
+    <Compile Include="Assets\Script\Managers\Manager_UI\SubManagers\MainMenuManager.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\TextMesh Pro\Resources\Shaders\TMPro.cginc" />
