@@ -9,12 +9,12 @@ using UnityEngine.UI;
 public class SimActionOption {
     public string ButtonText;
     public UnityAction CallBack;
-    public ToolTip Tooltip;
+    public Action<GameObject> SetToolTips;
 
-    public SimActionOption(UnityAction callBack, string buttonText = null, ToolTip tooltip = null)
+    public SimActionOption(UnityAction callBack, string buttonText = null, Action<GameObject> setTooltips = null)
     {
         CallBack = callBack;
         ButtonText = buttonText;
-        Tooltip = tooltip;
+        SetToolTips = setTooltips;
     }
 }

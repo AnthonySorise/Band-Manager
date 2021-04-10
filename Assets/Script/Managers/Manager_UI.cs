@@ -54,6 +54,7 @@ public class Manager_UI : MonoBehaviour, IManager
     public PrefabConstructor_PopUp prefabConstructor_popup;
     public PrefabConstructor_PopUpOption prefabConstructor_popupOption;
     public PrefabConstructor_TravelMenu prefabConstructor_travelMenu;
+    public ToolTipManager tooltipManager;
 
 
     //UI Gos and Elements
@@ -252,9 +253,7 @@ public class Manager_UI : MonoBehaviour, IManager
     private GameObject _screenCoverMainMenuCanvasGO;
     private GameObject _mainMenuCanvasGO;
     public GameObject ToolTipCanvasGO;
-    public GameObject ToolTipGO;
-    public GameObject ToolTipBackground;
-    public TextMeshProUGUI ToolTipText;
+
 
     private GameObject[] _calendarDayBoxes = new GameObject[14];
     private GameObject[] _calendarTimeOverlays = new GameObject[7];
@@ -296,6 +295,8 @@ public class Manager_UI : MonoBehaviour, IManager
         prefabConstructor_popupOption = this.GetComponent<PrefabConstructor_PopUpOption>();
         this.gameObject.AddComponent<PrefabConstructor_TravelMenu>();
         prefabConstructor_travelMenu = this.GetComponent<PrefabConstructor_TravelMenu>();
+        this.gameObject.AddComponent<ToolTipManager>();
+        tooltipManager = this.GetComponent<ToolTipManager>();
 
         //Initiate UI GOs and Elements
         InitiateCanvas(ref _hiddenCanvasGO, "Canvas_Hidden", CanvasLayer.Hidden);
@@ -492,9 +493,7 @@ public class Manager_UI : MonoBehaviour, IManager
         InitiateCanvas(ref _screenCoverMainMenuCanvasGO, "Canvas_ScreenCoverMainMenu", CanvasLayer.MainMenuScreenCover);
         InitiateCanvas(ref _mainMenuCanvasGO, "Canvas_MainMenu", CanvasLayer.MainMenu);
         InitiateCanvas(ref ToolTipCanvasGO, "Canvas_ToolTip", CanvasLayer.ToolTip);
-        InitiateGO(ref ToolTipGO, "ToolTip");
-        InitiateGO(ref ToolTipBackground, "Panel_ToolTipBackground");
-        InitiateText(ref ToolTipText, "Text_ToolTip");
+
 
         //there's probably a better way to collect these
         _calendarDayBoxes[0] = _calendarWeek01Sunday;
@@ -689,26 +688,17 @@ public class Manager_UI : MonoBehaviour, IManager
         _screenCoverCanvasGO.SetActive(false);
         _screenCoverMainMenuCanvasGO.SetActive(false);
         _mainMenuCanvasGO.SetActive(false);
-        ToolTipGO.SetActive(false);
 
         //ToolTips
-        ToolTip tt_togleTime = new ToolTip("Toggle Time", InputCommand.ToggleTime, "Start or pause the progression of time.", true);
-        SetToolTip(_toggleTimeButton.gameObject, tt_togleTime);
 
-        ToolTip tt_increaseSpeed = new ToolTip("Increase Speed", InputCommand.IncreaseSpeed, "", true);
-        SetToolTip(_increaseSpeedButton.gameObject, tt_increaseSpeed);
 
-        ToolTip tt_decreaseSpeed = new ToolTip("Decrease Speed", InputCommand.DecreaseSpeed, "", true);
-        SetToolTip(_decreaseSpeedButton.gameObject, tt_decreaseSpeed);
-
-        ToolTip tt_toggleCalendar = new ToolTip("Toggle Calendar", InputCommand.ToggleCalendar, "", true);
-        SetToolTip(_toggleCalendarButton.gameObject, tt_toggleCalendar);
-
-        ToolTip tt_calendarPagePrevious = new ToolTip("Previous Week", InputCommand.CalendarPagePrevious, "", true);
-        SetToolTip(_calendarPagePreviousButton.gameObject, tt_calendarPagePrevious);
-
-        ToolTip tt_calendarPageNext = new ToolTip("Next Week", InputCommand.CalendarPageNext, "", true);
-        SetToolTip(_calendarPageNextButton.gameObject, tt_calendarPageNext);
+        
+        tooltipManager.UpdateTooltip(_toggleTimeButton.gameObject, "Toggle Time", InputCommand.ToggleTime, "Start or pause the progression of time.", true);
+        tooltipManager.UpdateTooltip(_increaseSpeedButton.gameObject, "Increase Speed", InputCommand.IncreaseSpeed, "", true);
+        tooltipManager.UpdateTooltip(_decreaseSpeedButton.gameObject, "Decrease Speed", InputCommand.DecreaseSpeed, "", true);
+        tooltipManager.UpdateTooltip(_toggleCalendarButton.gameObject, "Toggle Calendar", InputCommand.ToggleCalendar, "", true);
+        tooltipManager.UpdateTooltip(_calendarPagePreviousButton.gameObject, "Previous Week", InputCommand.CalendarPagePrevious, "", true);
+        tooltipManager.UpdateTooltip(_calendarPageNextButton.gameObject, "Next Week", InputCommand.CalendarPageNext, "", true);
 
         //Time Panel Click Listeners
         _toggleTimeButton.onClick.AddListener(Click_ToggleTimeButton);
@@ -772,7 +762,7 @@ public class Manager_UI : MonoBehaviour, IManager
         Debug.Log("Manager_UI started");
     }
 
-    private void InitiateGO(ref GameObject goToSet, string goName)
+    public void InitiateGO(ref GameObject goToSet, string goName)
     {
         if (GameObject.Find(goName) != null)
         {
@@ -815,7 +805,7 @@ public class Manager_UI : MonoBehaviour, IManager
         }
     }
 
-    private void InitiateText(ref TextMeshProUGUI TextToSet, string goName)
+    public void InitiateText(ref TextMeshProUGUI TextToSet, string goName)
     {
         GameObject textGO = null;
         InitiateGO(ref textGO, goName);
@@ -832,48 +822,7 @@ public class Manager_UI : MonoBehaviour, IManager
 
 
 
-    //ToolTip
-    private ToolTip _toolTipInQueue = null;
-    public void SetToolTip(GameObject go, ToolTip tooltip)
-    {
-        Action onEnter = () =>
-        {
-            if (!tooltip.HasDelay)
-            {
-                tooltip.CreateAndDisplayGO();
-            }
-            else
-            {
-                _toolTipInQueue = tooltip;
-                StartCoroutine("DelayedTooltip");
-            }
-        };
-        Action onExit = () =>
-        {
-            _toolTipInQueue = null;
 
-            ToolTipText.text = "";
-            ToolTipGO.GetComponent<RectTransform>().position = new Vector2(5000, 5000);
-            ToolTipGO.SetActive(false);
-        };
-        MouseOverEvent.OnGameObjectMouseOver(go, onEnter, onExit);
-    }
-    IEnumerator DelayedTooltip()
-    {
-        yield return new WaitForSecondsRealtime(1.5f);
-        if (_toolTipInQueue != null)
-        {
-            _toolTipInQueue.CreateAndDisplayGO();
-            _toolTipInQueue = null;
-        }
-    }
-    private void SetToolTip(Button[] buttons, ToolTip tooltip, bool hasDelay = false)
-    {
-        for (int i = 0; i < buttons.Length; i++)
-        {
-            SetToolTip(buttons[i].gameObject, tooltip);
-        }
-    }
 
     //Screen Cover
     public bool IsScreenCovered()
@@ -1465,36 +1414,15 @@ public class Manager_UI : MonoBehaviour, IManager
 
 
     //OnUpdate
-    void Update()
-    {
-        if (State != ManagerState.Started)
-        {
-            return;
-        }
+    //void Update()
+    //{
+    //    if (State != ManagerState.Started)
+    //    {
+    //        return;
+    //    }
 
-        //update Tooltip position
-        if (ToolTipGO.activeSelf)
-        {
-            Vector2 toolTipSize = ToolTipBackground.GetComponent<RectTransform>().sizeDelta;
 
-            float x = Input.mousePosition.x + (toolTipSize.x / 2) + 10;
-            if (Screen.width < x + toolTipSize.x / 2)
-            {
-                x = Screen.width - toolTipSize.x / 2;
-            }
-
-            float y = Input.mousePosition.y - (toolTipSize.y / 2) - 30;
-
-            if (y - toolTipSize.y / 2 < 0)
-            {
-                y = Input.mousePosition.y + (toolTipSize.y / 2);
-            }
-
-            var toolTipPosition = new Vector2(x, y);
-
-            ToolTipGO.GetComponent<RectTransform>().position = toolTipPosition;
-        }
-    }
+    //}
 
     //OnGUI
     void OnGUI()
@@ -1807,8 +1735,7 @@ public class Manager_UI : MonoBehaviour, IManager
                 //set color
                 calendarTimelineEvent.GetComponent<Image>().color = _colors_events[scheduledEvent.SimAction.ID];
                 //set tooltip
-                ToolTip tt = new ToolTip(scheduledEvent);
-                SetToolTip(calendarTimelineEvent, tt);
+                tooltipManager.UpdateTooltip(calendarTimelineEvent, scheduledEvent);
             }
         }
     }

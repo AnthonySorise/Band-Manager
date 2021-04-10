@@ -139,10 +139,11 @@ public class Manager_Sim : MonoBehaviour, IManager {
             Debug.Log("Option Four Selected!");
         };
 
-        ToolTip tt_option01 = new ToolTip("This is the first option.");
-        ToolTip tt_option02 = new ToolTip("This is the second option.");
-        ToolTip tt_option03 = new ToolTip("This is the third option.");
-        ToolTip tt_option04 = new ToolTip("This is the last option.");
+        Action<GameObject> tt_option01 = (GameObject go) => { Managers.UI.tooltipManager.UpdateTooltip(go, "This is the first option."); };
+        Action<GameObject> tt_option02 = (GameObject go) => { Managers.UI.tooltipManager.UpdateTooltip(go, "This is the second option."); };
+        Action<GameObject> tt_option03 = (GameObject go) => { Managers.UI.tooltipManager.UpdateTooltip(go, "This is the third option."); };
+        Action<GameObject> tt_option04 = (GameObject go) => { Managers.UI.tooltipManager.UpdateTooltip(go, "This is the fourth option."); };
+
 
         SimActionOption SimActionOption01 = new SimActionOption(option01, "First Option", tt_option01);
         SimActionOption SimActionOption02 = new SimActionOption(option02, "Second Option", tt_option02);
@@ -180,9 +181,9 @@ public class Manager_Sim : MonoBehaviour, IManager {
             Debug.Log("Option Three Selected!");
         };
 
-        ToolTip tt_option01 = new ToolTip("This is the first option.");
-        ToolTip tt_option02 = new ToolTip("This is the second option.");
-        ToolTip tt_option03 = new ToolTip("This is the last option.");
+        Action<GameObject> tt_option01 = (GameObject go) => { Managers.UI.tooltipManager.UpdateTooltip(go, "This is the first option."); };
+        Action<GameObject> tt_option02 = (GameObject go) => { Managers.UI.tooltipManager.UpdateTooltip(go, "This is the second option."); };
+        Action<GameObject> tt_option03 = (GameObject go) => { Managers.UI.tooltipManager.UpdateTooltip(go, "This is the third option."); };
 
         SimActionOption SimActionOption01 = new SimActionOption(option01, "First Option", tt_option01);
         SimActionOption SimActionOption02 = new SimActionOption(option02, "Second Option", tt_option02);
@@ -217,8 +218,8 @@ public class Manager_Sim : MonoBehaviour, IManager {
             SIM_TestPopup05_option02();
         };
 
-        ToolTip tt_option01 = new ToolTip("This is the first option.");
-        ToolTip tt_option02 = new ToolTip("This is the second option.");
+        Action<GameObject> tt_option01 = (GameObject go) => { Managers.UI.tooltipManager.UpdateTooltip(go, "This is the first option."); };
+        Action<GameObject> tt_option02 = (GameObject go) => { Managers.UI.tooltipManager.UpdateTooltip(go, "This is the second option."); };
 
         SimActionOption SimActionOption01 = new SimActionOption(option01, "First Option", tt_option01);
         SimActionOption SimActionOption02 = new SimActionOption(option02, "Second Option", tt_option02);
