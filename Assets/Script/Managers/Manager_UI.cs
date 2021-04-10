@@ -18,7 +18,7 @@ public enum CanvasLayer
     AboveCover,
     MainMenuScreenCover,
     MainMenu,
-    ToolTip
+    Tooltip
 }
 
 public class Manager_UI : MonoBehaviour, IManager
@@ -51,10 +51,10 @@ public class Manager_UI : MonoBehaviour, IManager
     public GameObject prefab_Menu_Travel;
 
     //UI Prefab  Constructors
-    public PrefabConstructor_PopUp prefabConstructor_popup;
+    public PrefabConstructor_Popup prefabConstructor_popup;
     public PrefabConstructor_PopUpOption prefabConstructor_popupOption;
     public PrefabConstructor_TravelMenu prefabConstructor_travelMenu;
-    public ToolTipManager tooltipManager;
+    public TooltipManager tooltipManager;
 
 
     //UI Gos and Elements
@@ -252,7 +252,7 @@ public class Manager_UI : MonoBehaviour, IManager
     public GameObject PopupCanvasGO_AboveCover;
     private GameObject _screenCoverMainMenuCanvasGO;
     private GameObject _mainMenuCanvasGO;
-    public GameObject ToolTipCanvasGO;
+    public GameObject TooltipCanvasGO;
 
 
     private GameObject[] _calendarDayBoxes = new GameObject[14];
@@ -289,14 +289,14 @@ public class Manager_UI : MonoBehaviour, IManager
         prefab_CalendarTimelineEvent = Resources.Load<GameObject>("Prefabs/UI/CalendarTimelineEvent");
         prefab_Menu_Travel = Resources.Load<GameObject>("Prefabs/UI/TravelMenu");
 
-        this.gameObject.AddComponent<PrefabConstructor_PopUp>();
-        prefabConstructor_popup = this.GetComponent<PrefabConstructor_PopUp>();
+        this.gameObject.AddComponent<PrefabConstructor_Popup>();
+        prefabConstructor_popup = this.GetComponent<PrefabConstructor_Popup>();
         this.gameObject.AddComponent<PrefabConstructor_PopUpOption>();
         prefabConstructor_popupOption = this.GetComponent<PrefabConstructor_PopUpOption>();
         this.gameObject.AddComponent<PrefabConstructor_TravelMenu>();
         prefabConstructor_travelMenu = this.GetComponent<PrefabConstructor_TravelMenu>();
-        this.gameObject.AddComponent<ToolTipManager>();
-        tooltipManager = this.GetComponent<ToolTipManager>();
+        this.gameObject.AddComponent<TooltipManager>();
+        tooltipManager = this.GetComponent<TooltipManager>();
 
         //Initiate UI GOs and Elements
         InitiateCanvas(ref _hiddenCanvasGO, "Canvas_Hidden", CanvasLayer.Hidden);
@@ -492,7 +492,7 @@ public class Manager_UI : MonoBehaviour, IManager
         InitiateCanvas(ref PopupCanvasGO_AboveCover, "Canvas_Popups_AboveCover", CanvasLayer.AboveCover);
         InitiateCanvas(ref _screenCoverMainMenuCanvasGO, "Canvas_ScreenCoverMainMenu", CanvasLayer.MainMenuScreenCover);
         InitiateCanvas(ref _mainMenuCanvasGO, "Canvas_MainMenu", CanvasLayer.MainMenu);
-        InitiateCanvas(ref ToolTipCanvasGO, "Canvas_ToolTip", CanvasLayer.ToolTip);
+        InitiateCanvas(ref TooltipCanvasGO, "Canvas_Tooltip", CanvasLayer.Tooltip);
 
 
         //there's probably a better way to collect these
@@ -689,16 +689,16 @@ public class Manager_UI : MonoBehaviour, IManager
         _screenCoverMainMenuCanvasGO.SetActive(false);
         _mainMenuCanvasGO.SetActive(false);
 
-        //ToolTips
+        //Tooltips
 
 
         
-        tooltipManager.UpdateTooltip(_toggleTimeButton.gameObject, "Toggle Time", InputCommand.ToggleTime, "Start or pause the progression of time.", true);
-        tooltipManager.UpdateTooltip(_increaseSpeedButton.gameObject, "Increase Speed", InputCommand.IncreaseSpeed, "", true);
-        tooltipManager.UpdateTooltip(_decreaseSpeedButton.gameObject, "Decrease Speed", InputCommand.DecreaseSpeed, "", true);
-        tooltipManager.UpdateTooltip(_toggleCalendarButton.gameObject, "Toggle Calendar", InputCommand.ToggleCalendar, "", true);
-        tooltipManager.UpdateTooltip(_calendarPagePreviousButton.gameObject, "Previous Week", InputCommand.CalendarPagePrevious, "", true);
-        tooltipManager.UpdateTooltip(_calendarPageNextButton.gameObject, "Next Week", InputCommand.CalendarPageNext, "", true);
+        tooltipManager.AttachTooltip(_toggleTimeButton.gameObject, "Toggle Time", InputCommand.ToggleTime, "Start or pause the progression of time.", true);
+        tooltipManager.AttachTooltip(_increaseSpeedButton.gameObject, "Increase Speed", InputCommand.IncreaseSpeed, "", true);
+        tooltipManager.AttachTooltip(_decreaseSpeedButton.gameObject, "Decrease Speed", InputCommand.DecreaseSpeed, "", true);
+        tooltipManager.AttachTooltip(_toggleCalendarButton.gameObject, "Toggle Calendar", InputCommand.ToggleCalendar, "", true);
+        tooltipManager.AttachTooltip(_calendarPagePreviousButton.gameObject, "Previous Week", InputCommand.CalendarPagePrevious, "", true);
+        tooltipManager.AttachTooltip(_calendarPageNextButton.gameObject, "Next Week", InputCommand.CalendarPageNext, "", true);
 
         //Time Panel Click Listeners
         _toggleTimeButton.onClick.AddListener(Click_ToggleTimeButton);
@@ -1735,7 +1735,7 @@ public class Manager_UI : MonoBehaviour, IManager
                 //set color
                 calendarTimelineEvent.GetComponent<Image>().color = _colors_events[scheduledEvent.SimAction.ID];
                 //set tooltip
-                tooltipManager.UpdateTooltip(calendarTimelineEvent, scheduledEvent);
+                tooltipManager.AttachTooltip(calendarTimelineEvent, scheduledEvent);
             }
         }
     }
