@@ -5831,13 +5831,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   prefab_Button: {fileID: 0}
+  MainMenuManager: {fileID: 0}
+  TooltipManager: {fileID: 0}
+  TimeControlManager: {fileID: 0}
+  CalendarManager: {fileID: 0}
+  ActionMenuManager: {fileID: 0}
   prefabConstructor_popup: {fileID: 0}
   prefabConstructor_popupOption: {fileID: 0}
   prefabConstructor_travelMenu: {fileID: 0}
-  TooltipManager: {fileID: 0}
-  CalendarManager: {fileID: 0}
   PopupCanvasGO: {fileID: 0}
   PopupCanvasGO_AboveCover: {fileID: 0}
+  ScreenCoverMainMenuCanvasGO: {fileID: 0}
+  MainMenuCanvasGO: {fileID: 0}
   TooltipCanvasGO: {fileID: 0}
 --- !u!114 &364967767
 MonoBehaviour:

@@ -39,6 +39,13 @@ public class ActionMenuManager : MonoBehaviour
     private Button _actionMenuProduceRecordMusicButton;
     private Button _actionMenuProduceMusicVideoButton;
 
+    private bool _isActionMenuSocialExpanded = true;
+    private bool _isActionMenuScoutExpanded = true;
+    private bool _isActionMenuBusinessExpanded = true;
+    private bool _isActionMenuManagementExpanded = true;
+    private bool _isActionMenuGigExpanded = true;
+    private bool _isActionMenuProduceExpanded = true;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -94,12 +101,6 @@ public class ActionMenuManager : MonoBehaviour
         ToggleActionMenu_Produce(true);
     }
 
-    private bool _isActionMenuSocialExpanded = true;
-    private bool _isActionMenuScoutExpanded = true;
-    private bool _isActionMenuBusinessExpanded = true;
-    private bool _isActionMenuManagementExpanded = true;
-    private bool _isActionMenuGigExpanded = true;
-    private bool _isActionMenuProduceExpanded = true;
 
     private void ToggleActionMenu(GameObject menuContainer, GameObject subMenuContainer, Button menuMainButton, ref bool isExpanded, int targetHeight, bool forceClose = false)
     {
@@ -218,12 +219,14 @@ public class ActionMenuManager : MonoBehaviour
     private void Click_ToggleActionSubMenu_Scout_Travel()
     {
         ToggleActionMenu_Social(true);
-        Managers.UI.prefabConstructor_travelMenu.CreateAndDisplay();
+        Managers.UI.prefabConstructor_travelMenu.Toggle();
     }
 
     // Update is called once per frame
-    void Update()
+    void OnGUI()
     {
-        
+
+        _actionMenuScoutTravelButton.image.color = Managers.UI.prefabConstructor_travelMenu.MenuGO ? _actionMenuScoutTravelButton.colors.pressedColor : _actionMenuScoutTravelButton.colors.normalColor;
+
     }
 }
