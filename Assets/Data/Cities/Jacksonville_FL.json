@@ -1,5 +1,8 @@
 {
     "cityID": "Jacksonville_FL",
+    "cityName": "Jacksonville",
+    "stateName": "Florida",
+    "stateAbbreviated": "FL",
     "latitude": 30.3322,
     "longitude": -81.6557,
     "population": 1024311,
@@ -255,6 +258,17 @@
             "duration": {
                 "text": "7 hr 33 min",
                 "value": 27181
+            }
+        },
+        {
+            "cityID": "Bangor_ME",
+            "distance": {
+                "text": "1,371 miles",
+                "value": 2206923
+            },
+            "duration": {
+                "text": "20 hr 12 min",
+                "value": 72715
             }
         },
         {

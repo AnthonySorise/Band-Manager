@@ -25,6 +25,7 @@ public enum Data_CityID
     Wichita_KS,
     Louisville_KY,
     NewOrleans_LA,
+    Bangor_ME,
     Baltimore_MD,
     Boston_MA,
     Detroit_MI,

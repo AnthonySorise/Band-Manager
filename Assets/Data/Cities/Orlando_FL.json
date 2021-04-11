@@ -1,5 +1,8 @@
 {
     "cityID": "Orlando_FL",
+    "cityName": "Orlando_FL",
+    "stateName": "Florida",
+    "stateAbbreviated": "FL",
     "latitude": 28.4772,
     "longitude": -81.3369,
     "population": 499968,
@@ -255,6 +258,17 @@
             "duration": {
                 "text": "8 hr 57 min",
                 "value": 32237
+            }
+        },
+        {
+            "cityID": "Bangor_ME",
+            "distance": {
+                "text": "1,520 miles",
+                "value": 2446494
+            },
+            "duration": {
+                "text": "22 hr 25 min",
+                "value": 80678
             }
         },
         {

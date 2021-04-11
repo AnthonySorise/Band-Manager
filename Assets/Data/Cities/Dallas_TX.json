@@ -1,5 +1,8 @@
 {
     "cityID": "Dallas_TX",
+    "cityName": "Dallas_TX",
+    "stateName": "Texas",
+    "stateAbbreviated": "TX",
     "latitude": 32.7767,
     "longitude": -96.797,
     "population": 5069798,
@@ -255,6 +258,17 @@
             "duration": {
                 "text": "7 hr 42 min",
                 "value": 27707
+            }
+        },
+        {
+            "cityID": "Bangor_ME",
+            "distance": {
+                "text": "1,995 miles",
+                "value": 3210344
+            },
+            "duration": {
+                "text": "30 hr",
+                "value": 106701
             }
         },
         {

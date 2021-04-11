@@ -1,5 +1,8 @@
 {
     "cityID": "Richmond_VA",
+    "cityName": "Richmond",
+    "stateName": "Virginia",
+    "stateAbbreviated": "VA",
     "latitude": 37.5407,
     "longitude": -77.436,
     "population": 227032,
@@ -255,6 +258,17 @@
             "duration": {
                 "text": "14 hr 16 min",
                 "value": 51344
+            }
+        },
+        {
+            "cityID": "Bangor_ME",
+            "distance": {
+                "text": "774 miles",
+                "value": 1245976
+            },
+            "duration": {
+                "text": "11 hr 50 min",
+                "value": 42609
             }
         },
         {

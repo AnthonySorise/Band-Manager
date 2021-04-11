@@ -1,5 +1,8 @@
 {
     "cityID": "Austin_TX",
+    "cityName": "Austin",
+    "stateName": "Texas",
+    "stateAbbreviated": "TX",
     "latitude": 30.2672,
     "longitude": -97.7431,
     "population": 1356311,
@@ -255,6 +258,17 @@
             "duration": {
                 "text": "7 hr 42 min",
                 "value": 27743
+            }
+        },
+        {
+            "cityID": "Bangor_ME",
+            "distance": {
+                "text": "2,190 miles",
+                "value": 3524408
+            },
+            "duration": {
+                "text": "32 hr",
+                "value": 116884
             }
         },
         {

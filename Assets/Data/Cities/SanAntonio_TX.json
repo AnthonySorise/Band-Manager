@@ -1,5 +1,8 @@
 {
     "cityID": "SanAntonio_TX",
+    "cityName": "San Antonio",
+    "stateName": "Texas",
+    "stateAbbreviated": "TX",
     "latitude": 29.4241,
     "longitude": -98.4936,
     "population": 2424200,
@@ -255,6 +258,17 @@
             "duration": {
                 "text": "8 hr 7 min",
                 "value": 29238
+            }
+        },
+        {
+            "cityID": "Bangor_ME",
+            "distance": {
+                "text": "2,269 miles",
+                "value": 3651290
+            },
+            "duration": {
+                "text": "34 hr",
+                "value": 121142
             }
         },
         {

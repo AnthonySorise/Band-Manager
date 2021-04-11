@@ -1,5 +1,8 @@
 {
     "cityID": "Birmingham_AL",
+    "cityName": "Birmingham",
+    "stateName": "AL",
+    "stateAbbreviated": "Alabama",
     "latitude": 33.518589,
     "longitude": -86.810356,
     "population": 798871,
@@ -255,6 +258,17 @@
             "duration": {
                 "text": "4 hr 46 min",
                 "value": 17142
+            }
+        },
+        {
+            "cityID": "Bangor_ME",
+            "distance": {
+                "text": "1,409 miles",
+                "value": 2267730
+            },
+            "duration": {
+                "text": "21 hr 1 min",
+                "value": 75661
             }
         },
         {

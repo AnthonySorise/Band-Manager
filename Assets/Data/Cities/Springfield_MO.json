@@ -1,5 +1,8 @@
 {
     "cityID": "Springfield_MO",
+    "cityName": "Springfield_MO",
+    "stateName": "Missouri",
+    "stateAbbreviated": "MO",
     "latitude": 37.209,
     "longitude": -93.2923,
     "population": 167376,
@@ -255,6 +258,17 @@
             "duration": {
                 "text": "10 hr 30 min",
                 "value": 37824
+            }
+        },
+        {
+            "cityID": "Bangor_ME",
+            "distance": {
+                "text": "1,620 miles",
+                "value": 2607428
+            },
+            "duration": {
+                "text": "24 hr",
+                "value": 87738
             }
         },
         {

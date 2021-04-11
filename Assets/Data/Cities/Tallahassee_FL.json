@@ -1,5 +1,8 @@
 {
     "cityID": "Tallahassee_FL",
+    "cityName": "Tallahassee",
+    "stateName": "Florida",
+    "stateAbbreviated": "FL",
     "latitude": 30.4383,
     "longitude": -84.2807,
     "population": 191049,
@@ -255,6 +258,17 @@
             "duration": {
                 "text": "5 hr 21 min",
                 "value": 19230
+            }
+        },
+        {
+            "cityID": "Bangor_ME",
+            "distance": {
+                "text": "1,532 miles",
+                "value": 2465877
+            },
+            "duration": {
+                "text": "22 hr 35 min",
+                "value": 81294
             }
         },
         {

@@ -1,5 +1,8 @@
 {
     "cityID": "Minneapolis_MN",
+    "cityName": "Minneapolis_MN",
+    "stateName": "Minnesota",
+    "stateAbbreviated": "MN",
     "latitude": 44.9778,
     "longitude": -93.265,
     "population": 844685,
@@ -255,6 +258,17 @@
             "duration": {
                 "text": "18 hr 7 min",
                 "value": 65228
+            }
+        },
+        {
+            "cityID": "Bangor_ME",
+            "distance": {
+                "text": "1,617 miles",
+                "value": 2602780
+            },
+            "duration": {
+                "text": "24 hr",
+                "value": 87153
             }
         },
         {

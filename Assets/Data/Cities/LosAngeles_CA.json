@@ -1,5 +1,8 @@
 {
     "cityID": "LosAngeles_CA",
+    "cityName": "Los Angeles",
+    "stateName": "California",
+    "stateAbbreviated": "CA",
     "latitude": 34.052235,
     "longitude": -118.243683,
     "population": 10439684,
@@ -255,6 +258,17 @@
             "duration": {
                 "text": "27 hr",
                 "value": 98763
+            }
+        },
+        {
+            "cityID": "Bangor_ME",
+            "distance": {
+                "text": "3,210 miles",
+                "value": 5165699
+            },
+            "duration": {
+                "text": "47 hr",
+                "value": 169929
             }
         },
         {

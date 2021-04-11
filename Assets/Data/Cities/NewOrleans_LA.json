@@ -1,5 +1,8 @@
 {
     "cityID": "NewOrleans_LA",
+    "cityName": "New Orleans",
+    "stateName": "Louisiana",
+    "stateAbbreviated": "LA",
     "latitude": 30.0687,
     "longitude": -89.9288,
     "population": 745514,
@@ -255,6 +258,17 @@
             "duration": {
                 "text": "1 min",
                 "value": 0
+            }
+        },
+        {
+            "cityID": "Bangor_ME",
+            "distance": {
+                "text": "1,740 miles",
+                "value": 2800311
+            },
+            "duration": {
+                "text": "26 hr",
+                "value": 92504
             }
         },
         {

@@ -1,5 +1,8 @@
 {
     "cityID": "Billings_MT",
+    "cityName": "Billings",
+    "stateName": "Montana",
+    "stateAbbreviated": "MT",
     "latitude": 45.7833,
     "longitude": -108.5007,
     "population": 109642,
@@ -255,6 +258,17 @@
             "duration": {
                 "text": "27 hr",
                 "value": 97902
+            }
+        },
+        {
+            "cityID": "Bangor_ME",
+            "distance": {
+                "text": "2,457 miles",
+                "value": 3954891
+            },
+            "duration": {
+                "text": "36 hr",
+                "value": 130190
             }
         },
         {

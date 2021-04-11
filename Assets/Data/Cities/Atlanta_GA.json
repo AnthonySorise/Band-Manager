@@ -1,5 +1,8 @@
 {
     "cityID": "Atlanta_GA",
+    "cityName": "Atlanta",
+    "stateName": "Georgia",
+    "stateAbbreviated": "GA",
     "latitude": 33.749,
     "longitude": -84.388,
     "population": 1168836,
@@ -255,6 +258,17 @@
             "duration": {
                 "text": "6 hr 27 min",
                 "value": 23230
+            }
+        },
+        {
+            "cityID": "Bangor_ME",
+            "distance": {
+                "text": "1,305 miles",
+                "value": 2099804
+            },
+            "duration": {
+                "text": "19 hr 36 min",
+                "value": 70551
             }
         },
         {

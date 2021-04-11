@@ -1,5 +1,8 @@
 {
     "cityID": "Denver_CO",
+    "cityName": "Denver",
+    "stateName": "Colorado",
+    "stateAbbreviated": "CO",
     "latitude": 38.8674,
     "longitude": -104.7606,
     "population": 2658303,
@@ -255,6 +258,17 @@
             "duration": {
                 "text": "18 hr 30 min",
                 "value": 66572
+            }
+        },
+        {
+            "cityID": "Bangor_ME",
+            "distance": {
+                "text": "2,227 miles",
+                "value": 3583584
+            },
+            "duration": {
+                "text": "33 hr",
+                "value": 119254
             }
         },
         {

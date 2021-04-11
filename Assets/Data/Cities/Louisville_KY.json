@@ -1,5 +1,8 @@
 {
     "cityID": "Louisville_KY",
+    "cityName": "Louisville",
+    "stateName": "Kentucky",
+    "stateAbbreviated": "KY",
     "latitude": 38.2527,
     "longitude": -85.7585,
     "population": 1062238,
@@ -255,6 +258,17 @@
             "duration": {
                 "text": "9 hr 59 min",
                 "value": 35958
+            }
+        },
+        {
+            "cityID": "Bangor_ME",
+            "distance": {
+                "text": "1,198 miles",
+                "value": 1927465
+            },
+            "duration": {
+                "text": "18 hr 4 min",
+                "value": 65055
             }
         },
         {

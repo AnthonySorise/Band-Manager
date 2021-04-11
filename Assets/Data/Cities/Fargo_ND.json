@@ -1,5 +1,8 @@
 {
     "cityID": "Fargo_ND",
+    "cityName": "Fargo",
+    "stateName": "North Dakota",
+    "stateAbbreviated": "ND",
     "latitude": 46.8772,
     "longitude": -96.7898,
     "population": 122359,
@@ -255,6 +258,17 @@
             "duration": {
                 "text": "21 hr 32 min",
                 "value": 77529
+            }
+        },
+        {
+            "cityID": "Bangor_ME",
+            "distance": {
+                "text": "1,853 miles",
+                "value": 2981800
+            },
+            "duration": {
+                "text": "28 hr",
+                "value": 99568
             }
         },
         {

@@ -1,5 +1,8 @@
 {
     "cityID": "Omaha_NE",
+    "cityName": "Omaha",
+    "stateName": "Nebraska",
+    "stateAbbreviated": "NE",
     "latitude": 41.2565,
     "longitude": -95.9345,
     "population": 751629,
@@ -255,6 +258,17 @@
             "duration": {
                 "text": "15 hr 43 min",
                 "value": 56598
+            }
+        },
+        {
+            "cityID": "Bangor_ME",
+            "distance": {
+                "text": "1,661 miles",
+                "value": 2673499
+            },
+            "duration": {
+                "text": "25 hr",
+                "value": 89482
             }
         },
         {

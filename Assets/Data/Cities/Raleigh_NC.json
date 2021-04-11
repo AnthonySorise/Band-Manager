@@ -1,5 +1,8 @@
 {
     "cityID": "Raleigh_NC",
+    "cityName": "Raleigh",
+    "stateName": "North Carolina",
+    "stateAbbreviated": "NC",
     "latitude": 35.7796,
     "longitude": -78.6382,
     "population": 1510029,
@@ -255,6 +258,17 @@
             "duration": {
                 "text": "12 hr 30 min",
                 "value": 44986
+            }
+        },
+        {
+            "cityID": "Bangor_ME",
+            "distance": {
+                "text": "943 miles",
+                "value": 1518110
+            },
+            "duration": {
+                "text": "14 hr 16 min",
+                "value": 51364
             }
         },
         {

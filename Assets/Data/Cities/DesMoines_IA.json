@@ -1,5 +1,8 @@
 {
     "cityID": "DesMoines_IA",
+    "cityName": "DesMoines",
+    "stateName": "Iowa",
+    "stateAbbreviated": "IA",
     "latitude": 41.5868,
     "longitude": -93.625,
     "population": 452069,
@@ -255,6 +258,17 @@
             "duration": {
                 "text": "15 hr 4 min",
                 "value": 54236
+            }
+        },
+        {
+            "cityID": "Bangor_ME",
+            "distance": {
+                "text": "1,528 miles",
+                "value": 2459314
+            },
+            "duration": {
+                "text": "22 hr 55 min",
+                "value": 82519
             }
         },
         {

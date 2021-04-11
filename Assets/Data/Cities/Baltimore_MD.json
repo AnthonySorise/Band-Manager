@@ -1,5 +1,8 @@
 {
     "cityID": "Baltimore_MD",
+    "cityName": "Baltimore",
+    "stateName": "Maryland",
+    "stateAbbreviated": "MD",
     "latitude": 39.2904,
     "longitude": -76.6122,
     "population": 1465655,
@@ -255,6 +258,17 @@
             "duration": {
                 "text": "16 hr 15 min",
                 "value": 58514
+            }
+        },
+        {
+            "cityID": "Bangor_ME",
+            "distance": {
+                "text": "627 miles",
+                "value": 1009241
+            },
+            "duration": {
+                "text": "9 hr 39 min",
+                "value": 34744
             }
         },
         {

@@ -1,5 +1,8 @@
 {
     "cityID": "Cincinnati_OH",
+    "cityName": "Cincinnati",
+    "stateName": "Ohio",
+    "stateAbbreviated": "OH",
     "latitude": 39.1031,
     "longitude": -84.512,
     "population": 441672,
@@ -255,6 +258,17 @@
             "duration": {
                 "text": "11 hr 28 min",
                 "value": 41294
+            }
+        },
+        {
+            "cityID": "Bangor_ME",
+            "distance": {
+                "text": "1,096 miles",
+                "value": 1763929
+            },
+            "duration": {
+                "text": "16 hr 32 min",
+                "value": 59522
             }
         },
         {

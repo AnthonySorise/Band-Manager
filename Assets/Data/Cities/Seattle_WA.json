@@ -1,5 +1,8 @@
 {
     "cityID": "Seattle_WA",
+    "cityName": "Seattle",
+    "stateName": "Washington",
+    "stateAbbreviated": "WA",
     "latitude": 47.6062,
     "longitude": -122.3321,
     "population": 1422523,
@@ -255,6 +258,17 @@
             "duration": {
                 "text": "39 hr",
                 "value": 139895
+            }
+        },
+        {
+            "cityID": "Bangor_ME",
+            "distance": {
+                "text": "3,274 miles",
+                "value": 5268783
+            },
+            "duration": {
+                "text": "48 hr",
+                "value": 174302
             }
         },
         {

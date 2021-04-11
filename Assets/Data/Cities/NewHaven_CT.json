@@ -1,5 +1,8 @@
 {
     "cityID": "NewHaven_CT",
+    "cityName": "NewHaven",
+    "stateName": "Connecticut",
+    "stateAbbreviated": "CT",
     "latitude": 41.3112,
     "longitude": -72.9246,
     "population": 795204,
@@ -255,6 +258,17 @@
             "duration": {
                 "text": "20 hr 23 min",
                 "value": 73355
+            }
+        },
+        {
+            "cityID": "Bangor_ME",
+            "distance": {
+                "text": "364 miles",
+                "value": 585960
+            },
+            "duration": {
+                "text": "5 hr 29 min",
+                "value": 19754
             }
         },
         {

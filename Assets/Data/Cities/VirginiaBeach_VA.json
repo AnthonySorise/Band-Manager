@@ -1,5 +1,8 @@
 {
     "cityID": "VirginiaBeach_VA",
+    "cityName": "Virginia Beach",
+    "stateName": "Virginia",
+    "stateAbbreviated": "VA",
     "latitude": 36.8529,
     "longitude": -75.978,
     "population": 1359814,
@@ -255,6 +258,17 @@
             "duration": {
                 "text": "15 hr 20 min",
                 "value": 55181
+            }
+        },
+        {
+            "cityID": "Bangor_ME",
+            "distance": {
+                "text": "803 miles",
+                "value": 1292035
+            },
+            "duration": {
+                "text": "12 hr 54 min",
+                "value": 46467
             }
         },
         {

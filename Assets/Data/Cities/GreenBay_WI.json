@@ -1,5 +1,8 @@
 {
     "cityID": "GreenBay_WI",
+    "cityName": "Green Bay",
+    "stateName": "Wisconsin",
+    "stateAbbreviated": "WI",
     "latitude": 44.5133,
     "longitude": -88.0133,
     "population": 105116,
@@ -255,6 +258,17 @@
             "duration": {
                 "text": "16 hr 32 min",
                 "value": 59531
+            }
+        },
+        {
+            "cityID": "Bangor_ME",
+            "distance": {
+                "text": "1,415 miles",
+                "value": 2277016
+            },
+            "duration": {
+                "text": "21 hr 17 min",
+                "value": 76634
             }
         },
         {

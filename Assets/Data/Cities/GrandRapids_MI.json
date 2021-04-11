@@ -1,5 +1,8 @@
 {
     "cityID": "GrandRapids_MI",
+    "cityName": "Grand Rapids",
+    "stateName": "Michigan",
+    "stateAbbreviated": "MI",
     "latitude": 42.9634,
     "longitude": -85.6681,
     "population": 315815,
@@ -255,6 +258,17 @@
             "duration": {
                 "text": "15 hr 35 min",
                 "value": 56119
+            }
+        },
+        {
+            "cityID": "Bangor_ME",
+            "distance": {
+                "text": "981 miles",
+                "value": 1578524
+            },
+            "duration": {
+                "text": "15 hr 47 min",
+                "value": 56812
             }
         },
         {

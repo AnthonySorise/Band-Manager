@@ -1,5 +1,8 @@
 {
     "cityID": "SanFrancisco_CA",
+    "cityName": "San Francisco",
+    "stateName": "California",
+    "stateAbbreviated": "CA",
     "latitude": 37.7562,
     "longitude": -122.443,
     "population": 4261772,
@@ -255,6 +258,17 @@
             "duration": {
                 "text": "33 hr",
                 "value": 119830
+            }
+        },
+        {
+            "cityID": "Bangor_ME",
+            "distance": {
+                "text": "3,324 miles",
+                "value": 5348763
+            },
+            "duration": {
+                "text": "49 hr",
+                "value": 176941
             }
         },
         {

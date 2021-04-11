@@ -1,5 +1,8 @@
 {
     "cityID": "Detroit_MI",
+    "cityName": "Detroit",
+    "stateName": "Michigan",
+    "stateAbbreviated": "MI",
     "latitude": 42.3314,
     "longitude": -83.0458,
     "population": 1439437,
@@ -255,6 +258,17 @@
             "duration": {
                 "text": "15 hr 21 min",
                 "value": 55260
+            }
+        },
+        {
+            "cityID": "Bangor_ME",
+            "distance": {
+                "text": "851 miles",
+                "value": 1369346
+            },
+            "duration": {
+                "text": "14 hr 4 min",
+                "value": 50642
             }
         },
         {

@@ -1,5 +1,8 @@
 {
     "cityID": "KansasCity_MO",
+    "cityName": "Kansas City",
+    "stateName": "Missouri",
+    "stateAbbreviated": "MO",
     "latitude": 39.0997,
     "longitude": -94.5786,
     "population": 1214524,
@@ -255,6 +258,17 @@
             "duration": {
                 "text": "12 hr 59 min",
                 "value": 46733
+            }
+        },
+        {
+            "cityID": "Bangor_ME",
+            "distance": {
+                "text": "1,644 miles",
+                "value": 2646394
+            },
+            "duration": {
+                "text": "25 hr",
+                "value": 88628
             }
         },
         {

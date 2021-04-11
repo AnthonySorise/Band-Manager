@@ -1,5 +1,8 @@
 {
     "cityID": "Philadelphia_PA",
+    "cityName": "Philadelphia",
+    "stateName": "Pennsylvania",
+    "stateAbbreviated": "PA",
     "latitude": 39.9526,
     "longitude": -75.1652,
     "population": 1702146,
@@ -255,6 +258,17 @@
             "duration": {
                 "text": "17 hr 48 min",
                 "value": 64052
+            }
+        },
+        {
+            "cityID": "Bangor_ME",
+            "distance": {
+                "text": "534 miles",
+                "value": 859360
+            },
+            "duration": {
+                "text": "8 hr 12 min",
+                "value": 29492
             }
         },
         {

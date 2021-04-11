@@ -1,5 +1,8 @@
 {
     "cityID": "Milwaukee_WI",
+    "cityName": "Milwaukee",
+    "stateName": "Wisconsin",
+    "stateAbbreviated": "WI",
     "latitude": 43.0389,
     "longitude": -87.9065,
     "population": 595351,
@@ -255,6 +258,17 @@
             "duration": {
                 "text": "14 hr 50 min",
                 "value": 53412
+            }
+        },
+        {
+            "cityID": "Bangor_ME",
+            "distance": {
+                "text": "1,301 miles",
+                "value": 2093321
+            },
+            "duration": {
+                "text": "19 hr 36 min",
+                "value": 70568
             }
         },
         {

@@ -1,5 +1,8 @@
 {
     "cityID": "Madison_WI",
+    "cityName": "Madison",
+    "stateName": "Wisconsin",
+    "stateAbbreviated": "WI",
     "latitude": 43.0731,
     "longitude": -89.4012,
     "population": 255214,
@@ -255,6 +258,17 @@
             "duration": {
                 "text": "15 hr 9 min",
                 "value": 54566
+            }
+        },
+        {
+            "cityID": "Bangor_ME",
+            "distance": {
+                "text": "1,356 miles",
+                "value": 2181607
+            },
+            "duration": {
+                "text": "20 hr 26 min",
+                "value": 73562
             }
         },
         {

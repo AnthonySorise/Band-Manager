@@ -1,5 +1,8 @@
 {
     "cityID": "Sacramento_CA",
+    "cityName": "Sacramento",
+    "stateName": "California",
+    "stateAbbreviated": "CA",
     "latitude": 38.5667,
     "longitude": -121.4683,
     "population": 1450057,
@@ -255,6 +258,17 @@
             "duration": {
                 "text": "33 hr",
                 "value": 118539
+            }
+        },
+        {
+            "cityID": "Bangor_ME",
+            "distance": {
+                "text": "3,235 miles",
+                "value": 5206430
+            },
+            "duration": {
+                "text": "48 hr",
+                "value": 171797
             }
         },
         {

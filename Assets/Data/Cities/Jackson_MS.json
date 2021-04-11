@@ -1,5 +1,8 @@
 {
     "cityID": "Jackson_MS",
+    "cityName": "Jackson",
+    "stateName": "Mississippi",
+    "stateAbbreviated": "MS",
     "latitude": 32.2988,
     "longitude": -90.1848,
     "population": 166965,
@@ -255,6 +258,17 @@
             "duration": {
                 "text": "2 hr 52 min",
                 "value": 10346
+            }
+        },
+        {
+            "cityID": "Bangor_ME",
+            "distance": {
+                "text": "1,645 miles",
+                "value": 2647345
+            },
+            "duration": {
+                "text": "24 hr",
+                "value": 87874
             }
         },
         {

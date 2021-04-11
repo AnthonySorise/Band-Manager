@@ -1,5 +1,8 @@
 {
     "cityID": "SaltLakeCity_UT",
+    "cityName": "Salt Lake City",
+    "stateName": "Utah",
+    "stateAbbreviated": "UT",
     "latitude": 40.7608,
     "longitude": -111.891,
     "population": 567954,
@@ -255,6 +258,17 @@
             "duration": {
                 "text": "27 hr",
                 "value": 95840
+            }
+        },
+        {
+            "cityID": "Bangor_ME",
+            "distance": {
+                "text": "2,592 miles",
+                "value": 4170681
+            },
+            "duration": {
+                "text": "38 hr",
+                "value": 138159
             }
         },
         {

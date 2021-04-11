@@ -1,5 +1,8 @@
 {
     "cityID": "SiouxFalls_SD",
+    "cityName": "SiouxFalls",
+    "stateName": "South Dakota",
+    "stateAbbreviated": "SD",
     "latitude": 43.546,
     "longitude": -96.7313,
     "population": 176888,
@@ -255,6 +258,17 @@
             "duration": {
                 "text": "18 hr 16 min",
                 "value": 65754
+            }
+        },
+        {
+            "cityID": "Bangor_ME",
+            "distance": {
+                "text": "1,783 miles",
+                "value": 2868929
+            },
+            "duration": {
+                "text": "27 hr",
+                "value": 95634
             }
         },
         {

@@ -1,5 +1,8 @@
 {
     "cityID": "Chicago_IL",
+    "cityName": "Chicago",
+    "stateName": "Illinois",
+    "stateAbbreviated": "IL",
     "latitude": 41.8373,
     "longitude": -87.6862,
     "population": 3688194,
@@ -255,6 +258,17 @@
             "duration": {
                 "text": "13 hr 35 min",
                 "value": 48883
+            }
+        },
+        {
+            "cityID": "Bangor_ME",
+            "distance": {
+                "text": "1,210 miles",
+                "value": 1947907
+            },
+            "duration": {
+                "text": "18 hr 15 min",
+                "value": 65694
             }
         },
         {

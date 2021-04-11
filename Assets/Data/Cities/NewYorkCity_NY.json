@@ -1,5 +1,8 @@
 {
     "cityID": "NewYorkCity_NY",
+    "cityName": "New York City",
+    "stateName": "New York",
+    "stateAbbreviated": "",
     "latitude": 40.7128,
     "longitude": -74.006,
     "population": 9966614,
@@ -255,6 +258,17 @@
             "duration": {
                 "text": "19 hr 8 min",
                 "value": 68875
+            }
+        },
+        {
+            "cityID": "Bangor_ME",
+            "distance": {
+                "text": "442 miles",
+                "value": 711338
+            },
+            "duration": {
+                "text": "6 hr 56 min",
+                "value": 24954
             }
         },
         {

@@ -1,5 +1,8 @@
 {
     "cityID": "Wilmington_NC",
+    "cityName": "Wilmington",
+    "stateName": "North Carolina",
+    "stateAbbreviated": "NC",
     "latitude": 34.2104,
     "longitude": -77.8868,
     "population": 119045,
@@ -255,6 +258,17 @@
             "duration": {
                 "text": "12 hr 30 min",
                 "value": 44975
+            }
+        },
+        {
+            "cityID": "Bangor_ME",
+            "distance": {
+                "text": "1,030 miles",
+                "value": 1657162
+            },
+            "duration": {
+                "text": "15 hr 34 min",
+                "value": 56048
             }
         },
         {

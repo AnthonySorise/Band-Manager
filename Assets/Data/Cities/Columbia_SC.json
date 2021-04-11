@@ -1,5 +1,8 @@
 {
     "cityID": "Columbia_SC",
+    "cityName": "Columbia",
+    "stateName": "South Carolina",
+    "stateAbbreviated": "SC",
     "latitude": 45.613,
     "longitude": -98.3126,
     "population": 133114,
@@ -255,6 +258,17 @@
             "duration": {
                 "text": "21 hr 8 min",
                 "value": 76079
+            }
+        },
+        {
+            "cityID": "Bangor_ME",
+            "distance": {
+                "text": "1,912 miles",
+                "value": 3077614
+            },
+            "duration": {
+                "text": "29 hr",
+                "value": 104500
             }
         },
         {

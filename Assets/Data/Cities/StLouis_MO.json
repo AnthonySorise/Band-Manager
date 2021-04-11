@@ -1,5 +1,8 @@
 {
     "cityID": "StLouis_MO",
+    "cityName": "St. Louis",
+    "stateName": "Missouri",
+    "stateAbbreviated": "MO",
     "latitude": 38.627,
     "longitude": -90.1994,
     "population": 545211,
@@ -255,6 +258,17 @@
             "duration": {
                 "text": "9 hr 54 min",
                 "value": 35621
+            }
+        },
+        {
+            "cityID": "Bangor_ME",
+            "distance": {
+                "text": "1,405 miles",
+                "value": 2261228
+            },
+            "duration": {
+                "text": "21 hr 7 min",
+                "value": 75995
             }
         },
         {

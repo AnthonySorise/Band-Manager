@@ -1,5 +1,8 @@
 {
     "cityID": "Knoxville_TN",
+    "cityName": "Knoxville_TN",
+    "stateName": "Tennessee",
+    "stateAbbreviated": "TN",
     "latitude": 35.9606,
     "longitude": -83.9207,
     "population": 366486,
@@ -255,6 +258,17 @@
             "duration": {
                 "text": "8 hr 26 min",
                 "value": 30384
+            }
+        },
+        {
+            "cityID": "Bangor_ME",
+            "distance": {
+                "text": "1,152 miles",
+                "value": 1854725
+            },
+            "duration": {
+                "text": "17 hr 19 min",
+                "value": 62359
             }
         },
         {

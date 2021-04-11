@@ -1,5 +1,8 @@
 {
     "cityID": "Wichita_KS",
+    "cityName": "Wichita",
+    "stateName": "Kansas",
+    "stateAbbreviated": "KS",
     "latitude": 37.6872,
     "longitude": -97.3301,
     "population": 390591,
@@ -255,6 +258,17 @@
             "duration": {
                 "text": "12 hr 43 min",
                 "value": 45758
+            }
+        },
+        {
+            "cityID": "Bangor_ME",
+            "distance": {
+                "text": "1,838 miles",
+                "value": 2957713
+            },
+            "duration": {
+                "text": "27 hr",
+                "value": 98746
             }
         },
         {

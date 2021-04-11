@@ -1,5 +1,8 @@
 {
     "cityID": "Cleveland_OH",
+    "cityName": "Cleveland",
+    "stateName": "Ohio",
+    "stateAbbreviated": "OH",
     "latitude": 41.4993,
     "longitude": -81.6944,
     "population": 583371,
@@ -255,6 +258,17 @@
             "duration": {
                 "text": "15 hr 11 min",
                 "value": 54637
+            }
+        },
+        {
+            "cityID": "Bangor_ME",
+            "distance": {
+                "text": "866 miles",
+                "value": 1394284
+            },
+            "duration": {
+                "text": "13 hr 2 min",
+                "value": 46913
             }
         },
         {

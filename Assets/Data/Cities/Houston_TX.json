@@ -1,5 +1,8 @@
 {
     "cityID": "Houston_TX",
+    "cityName": "Houston",
+    "stateName": "Texas",
+    "stateAbbreviated": "TX",
     "latitude": 29.7604,
     "longitude": -95.3698,
     "population": 2923758,
@@ -255,6 +258,17 @@
             "duration": {
                 "text": "5 hr 14 min",
                 "value": 18832
+            }
+        },
+        {
+            "cityID": "Bangor_ME",
+            "distance": {
+                "text": "2,075 miles",
+                "value": 3338722
+            },
+            "duration": {
+                "text": "31 hr",
+                "value": 110230
             }
         },
         {

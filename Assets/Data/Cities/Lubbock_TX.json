@@ -1,5 +1,8 @@
 {
     "cityID": "Lubbock_TX",
+    "cityName": "Lubbock",
+    "stateName": "Texas",
+    "stateAbbreviated": "TX",
     "latitude": 33.5779,
     "longitude": -101.8552,
     "population": 928668,
@@ -255,6 +258,17 @@
             "duration": {
                 "text": "12 hr 28 min",
                 "value": 44876
+            }
+        },
+        {
+            "cityID": "Bangor_ME",
+            "distance": {
+                "text": "2,249 miles",
+                "value": 3619246
+            },
+            "duration": {
+                "text": "34 hr",
+                "value": 120709
             }
         },
         {

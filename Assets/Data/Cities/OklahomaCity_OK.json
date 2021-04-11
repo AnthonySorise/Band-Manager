@@ -1,5 +1,8 @@
 {
     "cityID": "OklahomaCity_OK",
+    "cityName": "Oklahoma City",
+    "stateName": "Oklahoma",
+    "stateAbbreviated": "OK",
     "latitude": 35.4676,
     "longitude": -97.5164,
     "population": 1276594,
@@ -255,6 +258,17 @@
             "duration": {
                 "text": "10 hr 29 min",
                 "value": 37763
+            }
+        },
+        {
+            "cityID": "Bangor_ME",
+            "distance": {
+                "text": "1,902 miles",
+                "value": 3061731
+            },
+            "duration": {
+                "text": "28 hr",
+                "value": 102217
             }
         },
         {

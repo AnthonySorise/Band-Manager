@@ -1,5 +1,8 @@
 {
     "cityID": "Charleston_SC",
+    "cityName": "Charleston",
+    "stateName": "South Carolina",
+    "stateAbbreviated": "SC",
     "latitude": 32.7765,
     "longitude": -79.9311,
     "population": 392180,
@@ -255,6 +258,17 @@
             "duration": {
                 "text": "11 hr 9 min",
                 "value": 40155
+            }
+        },
+        {
+            "cityID": "Bangor_ME",
+            "distance": {
+                "text": "1,197 miles",
+                "value": 1926826
+            },
+            "duration": {
+                "text": "17 hr 53 min",
+                "value": 64372
             }
         },
         {

@@ -1,5 +1,8 @@
 {
     "cityID": "Buffalo_NY",
+    "cityName": "Buffalo",
+    "stateName": "NY",
+    "stateAbbreviated": "New York",
     "latitude": 42.8864,
     "longitude": -78.8784,
     "population": 466658,
@@ -255,6 +258,17 @@
             "duration": {
                 "text": "17 hr 59 min",
                 "value": 64721
+            }
+        },
+        {
+            "cityID": "Bangor_ME",
+            "distance": {
+                "text": "682 miles",
+                "value": 1097074
+            },
+            "duration": {
+                "text": "10 hr 15 min",
+                "value": 36874
             }
         },
         {

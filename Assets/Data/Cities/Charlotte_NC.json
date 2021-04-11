@@ -1,5 +1,8 @@
 {
     "cityID": "Charlotte_NC",
+    "cityName": "Charlotte",
+    "stateName": "North Carolina",
+    "stateAbbreviated": "NC",
     "latitude": 35.2271,
     "longitude": -80.8431,
     "population": 392180,
@@ -255,6 +258,17 @@
             "duration": {
                 "text": "10 hr 11 min",
                 "value": 36642
+            }
+        },
+        {
+            "cityID": "Bangor_ME",
+            "distance": {
+                "text": "1,066 miles",
+                "value": 1715455
+            },
+            "duration": {
+                "text": "16 hr 4 min",
+                "value": 57812
             }
         },
         {

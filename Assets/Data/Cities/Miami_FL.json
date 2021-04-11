@@ -1,5 +1,8 @@
 {
     "cityID": "Miami_FL",
+    "cityName": "Miami",
+    "stateName": "Florida",
+    "stateAbbreviated": "FL",
     "latitude": 25.8696,
     "longitude": -80.3046,
     "population": 2293099,
@@ -255,6 +258,17 @@
             "duration": {
                 "text": "12 hr 7 min",
                 "value": 43632
+            }
+        },
+        {
+            "cityID": "Bangor_ME",
+            "distance": {
+                "text": "1,717 miles",
+                "value": 2763238
+            },
+            "duration": {
+                "text": "25 hr",
+                "value": 90423
             }
         },
         {

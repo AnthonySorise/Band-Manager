@@ -1,5 +1,8 @@
 {
     "cityID": "Syracuse_NY",
+    "cityName": "Syracuse",
+    "stateName": "New York",
+    "stateAbbreviated": "NY",
     "latitude": 43.0481,
     "longitude": -76.1474,
     "population": 143396,
@@ -255,6 +258,17 @@
             "duration": {
                 "text": "20 hr 6 min",
                 "value": 72333
+            }
+        },
+        {
+            "cityID": "Bangor_ME",
+            "distance": {
+                "text": "538 miles",
+                "value": 866196
+            },
+            "duration": {
+                "text": "8 hr 5 min",
+                "value": 29128
             }
         },
         {

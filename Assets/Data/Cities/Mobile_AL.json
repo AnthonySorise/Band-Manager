@@ -1,5 +1,8 @@
 {
     "cityID": "Mobile_AL",
+    "cityName": "Mobile",
+    "stateName": "Alabama",
+    "stateAbbreviated": "AL",
     "latitude": 30.695366,
     "longitude": -88.039894,
     "population": 190265,
@@ -255,6 +258,17 @@
             "duration": {
                 "text": "1 hr 53 min",
                 "value": 6760
+            }
+        },
+        {
+            "cityID": "Bangor_ME",
+            "distance": {
+                "text": "1,633 miles",
+                "value": 2627314
+            },
+            "duration": {
+                "text": "24 hr",
+                "value": 87095
             }
         },
         {

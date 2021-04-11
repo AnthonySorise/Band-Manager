@@ -1,5 +1,8 @@
 {
     "cityID": "Nashville_TN",
+    "cityName": "Nashville",
+    "stateName": "Tennessee",
+    "stateAbbreviated": "TN",
     "latitude": 36.1627,
     "longitude": -86.7816,
     "population": 957137,
@@ -255,6 +258,17 @@
             "duration": {
                 "text": "7 hr 27 min",
                 "value": 26848
+            }
+        },
+        {
+            "cityID": "Bangor_ME",
+            "distance": {
+                "text": "1,332 miles",
+                "value": 2143468
+            },
+            "duration": {
+                "text": "19 hr 58 min",
+                "value": 71879
             }
         },
         {

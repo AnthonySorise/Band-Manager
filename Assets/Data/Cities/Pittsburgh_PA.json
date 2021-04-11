@@ -1,5 +1,8 @@
 {
     "cityID": "Pittsburgh_PA",
+    "cityName": "Pittsburgh",
+    "stateName": "Pennsylvania",
+    "stateAbbreviated": "PA",
     "latitude": 40.4406,
     "longitude": -79.9959,
     "population": 302407,
@@ -255,6 +258,17 @@
             "duration": {
                 "text": "15 hr 54 min",
                 "value": 57236
+            }
+        },
+        {
+            "cityID": "Bangor_ME",
+            "distance": {
+                "text": "799 miles",
+                "value": 1285319
+            },
+            "duration": {
+                "text": "12 hr 26 min",
+                "value": 44741
             }
         },
         {

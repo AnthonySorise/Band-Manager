@@ -1,5 +1,8 @@
 {
     "cityID": "LasVegas_NV",
+    "cityName": "Las Vegas",
+    "stateName": "Nevada",
+    "stateAbbreviated": "NV",
     "latitude": 36.1699,
     "longitude": -115.1398,
     "population": 1187190,
@@ -255,6 +258,17 @@
             "duration": {
                 "text": "25 hr",
                 "value": 90991
+            }
+        },
+        {
+            "cityID": "Bangor_ME",
+            "distance": {
+                "text": "2,942 miles",
+                "value": 4735132
+            },
+            "duration": {
+                "text": "43 hr",
+                "value": 155916
             }
         },
         {

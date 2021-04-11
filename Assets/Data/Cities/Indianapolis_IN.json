@@ -1,5 +1,8 @@
 {
     "cityID": "Indianapolis_IN",
+    "cityName": "Indianapolis",
+    "stateName": "Indiana",
+    "stateAbbreviated": "IN",
     "latitude": 39.7771,
     "longitude": -86.1458,
     "population": 1128906,
@@ -255,6 +258,17 @@
             "duration": {
                 "text": "11 hr 40 min",
                 "value": 42010
+            }
+        },
+        {
+            "cityID": "Bangor_ME",
+            "distance": {
+                "text": "1,163 miles",
+                "value": 1871058
+            },
+            "duration": {
+                "text": "17 hr 30 min",
+                "value": 62997
             }
         },
         {

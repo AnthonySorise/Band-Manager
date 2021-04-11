@@ -1,5 +1,8 @@
 {
     "cityID": "ElPaso_TX",
+    "cityName": "El Paso",
+    "stateName": "Texas",
+    "stateAbbreviated": "TX",
     "latitude": 31.7619,
     "longitude": -106.485,
     "population": 785289,
@@ -255,6 +258,17 @@
             "duration": {
                 "text": "15 hr 47 min",
                 "value": 56846
+            }
+        },
+        {
+            "cityID": "Bangor_ME",
+            "distance": {
+                "text": "2,629 miles",
+                "value": 4230885
+            },
+            "duration": {
+                "text": "39 hr",
+                "value": 139315
             }
         },
         {

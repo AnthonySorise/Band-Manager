@@ -1,6 +1,9 @@
 {
     "cityID": "SanDiego_CA",
-    "latitude": 32.8312,
+    "cityName": "San Diego",
+  "stateName": "California",
+  "stateAbbreviated": "CA",
+  "latitude": 32.8312,
     "longitude": -117.1225,
     "population": 2453268,
     "travelTo": [
@@ -255,6 +258,17 @@
             "duration": {
                 "text": "26 hr",
                 "value": 94273
+            }
+        },
+        {
+            "cityID": "Bangor_ME",
+            "distance": {
+                "text": "3,264 miles",
+                "value": 5252556
+            },
+            "duration": {
+                "text": "48 hr",
+                "value": 172688
             }
         },
         {

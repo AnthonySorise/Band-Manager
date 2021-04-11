@@ -1,5 +1,8 @@
 {
     "cityID": "Fresno_CA",
+    "cityName": "Fresno_CA",
+    "stateName": "California",
+    "stateAbbreviated": "CA",
     "latitude": 36.7831,
     "longitude": -119.7941,
     "population": 1151013,
@@ -255,6 +258,17 @@
             "duration": {
                 "text": "30 hr",
                 "value": 109489
+            }
+        },
+        {
+            "cityID": "Bangor_ME",
+            "distance": {
+                "text": "3,338 miles",
+                "value": 5371369
+            },
+            "duration": {
+                "text": "49 hr",
+                "value": 176957
             }
         },
         {

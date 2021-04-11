@@ -1,5 +1,8 @@
 {
     "cityID": "Spokane_WA",
+    "cityName": "Spokane_WA",
+    "stateName": "Washinton",
+    "stateAbbreviated": "WA",
     "latitude": 47.6588,
     "longitude": -117.426,
     "population": 217108,
@@ -255,6 +258,17 @@
             "duration": {
                 "text": "35 hr",
                 "value": 126821
+            }
+        },
+        {
+            "cityID": "Bangor_ME",
+            "distance": {
+                "text": "2,996 miles",
+                "value": 4821614
+            },
+            "duration": {
+                "text": "44 hr",
+                "value": 159069
             }
         },
         {

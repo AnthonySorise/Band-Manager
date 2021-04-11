@@ -1,5 +1,8 @@
 {
     "cityID": "Boston_MA",
+    "cityName": "Boston",
+    "stateName": "Massachusetts",
+    "stateAbbreviated": "MA",
     "latitude": 42.3601,
     "longitude": -71.0589,
     "population": 1387336,
@@ -255,6 +258,17 @@
             "duration": {
                 "text": "22 hr 23 min",
                 "value": 80572
+            }
+        },
+        {
+            "cityID": "Bangor_ME",
+            "distance": {
+                "text": "235 miles",
+                "value": 378790
+            },
+            "duration": {
+                "text": "3 hr 38 min",
+                "value": 13065
             }
         },
         {

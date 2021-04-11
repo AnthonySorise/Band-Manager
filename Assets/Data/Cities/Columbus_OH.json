@@ -1,5 +1,8 @@
 {
     "cityID": "Columbus_OH",
+    "cityName": "Columbus",
+    "stateName": "Ohio",
+    "stateAbbreviated": "OH",
     "latitude": 39.9612,
     "longitude": -82.9988,
     "population": 879170,
@@ -255,6 +258,17 @@
             "duration": {
                 "text": "13 hr 3 min",
                 "value": 47006
+            }
+        },
+        {
+            "cityID": "Bangor_ME",
+            "distance": {
+                "text": "989 miles",
+                "value": 1591949
+            },
+            "duration": {
+                "text": "14 hr 55 min",
+                "value": 53724
             }
         },
         {

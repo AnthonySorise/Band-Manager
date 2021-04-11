@@ -1,5 +1,8 @@
 {
     "cityID": "Memphis_TN",
+    "cityName": "Memphis",
+    "stateName": "Tennessee",
+    "stateAbbreviated": "TN",
     "latitude": 35.1495,
     "longitude": -90.049,
     "population": 850842,
@@ -255,6 +258,17 @@
             "duration": {
                 "text": "5 hr 48 min",
                 "value": 20853
+            }
+        },
+        {
+            "cityID": "Bangor_ME",
+            "distance": {
+                "text": "1,543 miles",
+                "value": 2482914
+            },
+            "duration": {
+                "text": "23 hr 2 min",
+                "value": 82906
             }
         },
         {

@@ -1,5 +1,8 @@
 {
     "cityID": "Reno_NV",
+    "cityName": "Reno",
+    "stateName": "Nevada",
+    "stateAbbreviated": "NV",
     "latitude": 39.5296,
     "longitude": -119.8138,
     "population": 349741,
@@ -255,6 +258,17 @@
             "duration": {
                 "text": "32 hr",
                 "value": 115445
+            }
+        },
+        {
+            "cityID": "Bangor_ME",
+            "distance": {
+                "text": "3,104 miles",
+                "value": 4996188
+            },
+            "duration": {
+                "text": "46 hr",
+                "value": 164239
             }
         },
         {

@@ -1,5 +1,8 @@
 {
     "cityID": "Albuquerque_NM",
+    "cityName": "Albuquerque",
+    "stateName": "New Mexico",
+    "stateAbbreviated": "NM",
     "latitude": 35.0844,
     "longitude": -106.6504,
     "population": 558545,
@@ -255,6 +258,17 @@
             "duration": {
                 "text": "17 hr",
                 "value": 61215
+            }
+        },
+        {
+            "cityID": "Bangor_ME",
+            "distance": {
+                "text": "2,446 miles",
+                "value": 3936450
+            },
+            "duration": {
+                "text": "36 hr",
+                "value": 130470
             }
         },
         {

@@ -1,5 +1,8 @@
 {
     "cityID": "Phoenix_AZ",
+    "cityName": "Phoenix",
+    "stateName": "Phoenix_AZ",
+    "stateAbbreviated": "AZ",
     "latitude": 33.448376,
     "longitude": -112.074036,
     "population": 4137931,
@@ -255,6 +258,17 @@
             "duration": {
                 "text": "22 hr",
                 "value": 79170
+            }
+        },
+        {
+            "cityID": "Bangor_ME",
+            "distance": {
+                "text": "2,862 miles",
+                "value": 4605282
+            },
+            "duration": {
+                "text": "43 hr",
+                "value": 153392
             }
         },
         {

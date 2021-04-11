@@ -1,5 +1,8 @@
 {
     "cityID": "Boise_ID",
+    "cityName": "Boise",
+    "stateName": "Idaho",
+    "stateAbbreviated": "ID",
     "latitude": 43.615,
     "longitude": -116.2023,
     "population": 226570,
@@ -255,6 +258,17 @@
             "duration": {
                 "text": "31 hr",
                 "value": 112709
+            }
+        },
+        {
+            "cityID": "Bangor_ME",
+            "distance": {
+                "text": "2,887 miles",
+                "value": 4646719
+            },
+            "duration": {
+                "text": "43 hr",
+                "value": 153115
             }
         },
         {
