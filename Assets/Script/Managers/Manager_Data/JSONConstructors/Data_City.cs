@@ -99,6 +99,9 @@ public class TravelTo
 public class Data_City
 {
     public string cityID;
+    public string cityName;
+    public string stateName;
+    public string stateAbbreviated;
     public double latitude;
     public double longitude;
     public int population;

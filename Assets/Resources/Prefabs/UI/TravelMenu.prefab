@@ -4839,7 +4839,7 @@ GameObject:
   - component: {fileID: 4250439285039701528}
   - component: {fileID: 4250439285039701509}
   m_Layer: 0
-  m_Name: 'TravelMenui_MapUI_Detroit_MI '
+  m_Name: TravelMenu_MapUI_Detroit_MI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6045,7 +6045,7 @@ GameObject:
   - component: {fileID: 8323646763040028430}
   - component: {fileID: 1412578285355627790}
   m_Layer: 0
-  m_Name: TravelMenu_MapUI_Albuquerque_MN
+  m_Name: TravelMenu_MapUI_Albuquerque_NM
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
