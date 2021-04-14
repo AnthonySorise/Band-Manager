@@ -2,9 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum PropertyID
+{
+    Vehicle_DecentVan,
+    Vehicle_TourBus,
+    Plane_PrivatePlane,
+    Plane_LuxaryJet
+}
+
 public class Sim_Property : MonoBehaviour
 {
-    public List<Property> Properties { get; private set; }
+    public Dictionary<PropertyID, Property> Properties { get; private set; }
 
     // Start is called before the first frame update
     void Start()
