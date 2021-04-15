@@ -183,6 +183,8 @@ public class Manager_Data : MonoBehaviour, IManager {
                 distance = travelToData.distance.value;
             }
         }
+        //convert to miles
+        distance = (int)(distance / 1609.344f);
         return distance;
     }
     public TimeSpan? getCityAutomobileTravelTime(Data_CityID fromCity, Data_CityID toCity)
