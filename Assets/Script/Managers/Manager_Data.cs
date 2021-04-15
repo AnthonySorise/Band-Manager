@@ -151,7 +151,7 @@ public class Manager_Data : MonoBehaviour, IManager {
 		}
 	}
 
-    public void JSON_LoadData_City()
+    private void JSON_LoadData_City()
     {
         foreach (Data_CityID cityID in Enum.GetValues(typeof(Data_CityID)))
         {
@@ -185,14 +185,14 @@ public class Manager_Data : MonoBehaviour, IManager {
         }
         return distance;
     }
-    public int? getCityAutomobileTravelTime(Data_CityID fromCity, Data_CityID toCity)
+    public TimeSpan? getCityAutomobileTravelTime(Data_CityID fromCity, Data_CityID toCity)
     {
-        int? duration = null;
+        TimeSpan? duration = null;
         foreach (TravelTo travelToData in CityData[fromCity].travelTo)
         {
             if (travelToData.cityID == toCity.ToString())
             {
-                duration = travelToData.duration.value;
+                duration = TimeSpan.FromSeconds(travelToData.duration.value);
             }
         }
         return duration;

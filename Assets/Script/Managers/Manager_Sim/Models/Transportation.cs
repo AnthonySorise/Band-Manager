@@ -6,15 +6,18 @@ using UnityEngine;
 public class Transportation
 {
     public string Name { get; private set; }
-    public Func<int> CostFunction { get; private set; }
-    public int Capacity { get; private set; }
+    public Func<int, int> CostFromMilesFunction { get; private set; }
+    public int? Capacity { get; private set; }
+    public int? MPG { get; private set; }
+    public bool IsPrivatelyOwnend { get; private set; }
 
 
-
-    public Transportation(string name, Func<int> costFunction, int? capacity = null)
+    public Transportation(string name, Func<int, int> costFunction, int? capacity = null, int? mpg = null, bool isPrivatelyOwned = true)
     {
         Name = name;
-        CostFunction = costFunction;
-        capacity = Capacity;
+        CostFromMilesFunction = costFunction;
+        Capacity = capacity;
+        MPG = mpg;
+        IsPrivatelyOwnend = isPrivatelyOwned;
     }
 }
