@@ -113,7 +113,7 @@ public class Sim_Travel : MonoBehaviour
         {//plane
             int distance = Managers.Data.getCityDistance(cityFrom, cityTo).Value;
             float milesPerMinute = isTravelingEast(cityFrom, cityTo) ? 9.73f : 8.64f;
-            float totalMinutes = distance * milesPerMinute;
+            float totalMinutes = distance / milesPerMinute;
             if (!Transportations[transportID].IsPrivatelyOwnend)
             {
                 totalMinutes += 120;//airpot time
