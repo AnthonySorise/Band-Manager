@@ -7,7 +7,7 @@ public class BandManager : NPC{
 
     public Property[] Assets { get; private set; }
 
-    public BandManager(NPCGender gender, int age) : base(gender, age)
+    public BandManager(NPCGender gender, int age, Data_CityID city) : base(gender, age, city)
     {
 
 	}

@@ -20,8 +20,13 @@ public abstract class NPC{
     public DateTime? DeathDay { get; private set; }
     public List<NPCTraitMajor> TraitsMajor { get; private set; }
     public List<NPCTraitMinor> TraitsMinor { get; private set; }
+    public int Cash { get; private set; }
+    public Data_CityID HomeCity { get; private set; }
+    public Data_CityID BaseCity { get; private set; }
+    public Data_CityID CurrentCity { get; private set; }
+    public Data_CityID? CityEnRoute { get; private set; }
 
-    public NPC(NPCGender gender, int age)
+    public NPC(NPCGender gender, int age, Data_CityID city)
     {
         ID = createID();
         Gender = gender;
@@ -29,9 +34,18 @@ public abstract class NPC{
         DeathDay = null;
         FirstName = createFirstName(gender);
         LastName = createLastName();
-        
+
+        HomeCity = city;
+        BaseCity = city;
+        CurrentCity = city;
+        CityEnRoute = null;
+
         TraitsMajor = new List<NPCTraitMajor>();
         TraitsMinor = new List<NPCTraitMinor>();
+
+        Cash = 0;
+
+
 
         Store();
 	}
