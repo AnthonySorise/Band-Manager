@@ -14,7 +14,7 @@ public class Sim_NPC : MonoBehaviour
         _npcs = new Dictionary<int, NPC>();
         _npcGraveyard = new Dictionary<int, NPC>();
 
-        BandManager player = new BandManager(NPCGender.Male, 35, Data_CityID.Detroit_MI);
+        BandManager player = new BandManager(NPCGender.Male, 35, CityID.Detroit_MI);
         Debug.Log("Player Created");
         Debug.Log(player.ID + " " + player.Gender.ToString() + " " + player.FirstName + " " + player.LastName + " " + player.BirthDay.ToString() + " ");
     }

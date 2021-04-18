@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-public enum Data_CityID
+public enum CityID
 {
     Birmingham_AL,
     Mobile_AL,

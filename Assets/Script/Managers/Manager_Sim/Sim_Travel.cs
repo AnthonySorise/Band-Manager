@@ -5,9 +5,9 @@ using UnityEngine;
 
 public enum TransportationID
 {
-    Vehicle_ShadyVan,
-    Vehicle_DecentVan,
-    Vehicle_TourBus,
+    Automobile_ShadyVan,
+    Automobile_DecentVan,
+    Automobile_TourBus,
     Plane_Coach,
     Plane_FirstClass,
     Plane_PrivatePlane,
@@ -25,14 +25,14 @@ public class Sim_Travel : MonoBehaviour
         //initiate transportaions
 
         //Shady Van
-        Transportation Vehicle_ShadyVan = new Transportation(TransportationID.Vehicle_ShadyVan.ToString(), 8, 10);
-        Transportations.Add(TransportationID.Vehicle_ShadyVan, Vehicle_ShadyVan);
+        Transportation Automobile_ShadyVan = new Transportation(TransportationID.Automobile_ShadyVan.ToString(), 8, 10);
+        Transportations.Add(TransportationID.Automobile_ShadyVan, Automobile_ShadyVan);
         //Decent Van
-        Transportation Vehicle_DecentVan = new Transportation(TransportationID.Vehicle_DecentVan.ToString(), 8, 17);
-        Transportations.Add(TransportationID.Vehicle_DecentVan, Vehicle_DecentVan);
+        Transportation Automobile_DecentVan = new Transportation(TransportationID.Automobile_DecentVan.ToString(), 8, 17);
+        Transportations.Add(TransportationID.Automobile_DecentVan, Automobile_DecentVan);
         //Tour Bus
-        Transportation Vehicle_TourBus = new Transportation(TransportationID.Vehicle_TourBus.ToString(), 20, 5);
-        Transportations.Add(TransportationID.Vehicle_TourBus, Vehicle_TourBus);
+        Transportation Automobile_TourBus = new Transportation(TransportationID.Automobile_TourBus.ToString(), 20, 5);
+        Transportations.Add(TransportationID.Automobile_TourBus, Automobile_TourBus);
         //Plane_Coach
         Transportation Plane_Coach = new Transportation(TransportationID.Plane_Coach.ToString(), null, null, true);
         Transportations.Add(TransportationID.Plane_Coach, Plane_Coach);
@@ -42,7 +42,7 @@ public class Sim_Travel : MonoBehaviour
 
     }
 
-    public void Travel(NPC npc, Data_CityID travelFrom, Data_CityID travelTo, DateTime? arrivalTime = null)
+    public void Travel(NPC npc, CityID travelFrom, CityID travelTo, DateTime? arrivalTime = null)
     {
 
 
@@ -57,11 +57,11 @@ public class Sim_Travel : MonoBehaviour
 
 
 
-    public float TravelCost(TransportationID transportation, Data_CityID cityFrom, Data_CityID cityTo)
+    public float TravelCost(TransportationID transportation, CityID cityFrom, CityID cityTo)
     {
-        if (transportation.ToString().Contains("Vehicle_"))
-        {//vehicle
-            int miles = Managers.Data.getCityDistance(cityFrom, cityTo).Value;
+        if (transportation.ToString().Contains("Automobile_"))
+        {//automobile
+            int miles = Managers.Data.DistanceByAutomobile(cityFrom, cityTo);
             int milesPerGallon = Transportations[TransportationID.Plane_Coach].MPG.Value;
             return (miles / milesPerGallon) * gasPricePerGallon;
         }
@@ -72,7 +72,7 @@ public class Sim_Travel : MonoBehaviour
             {
                 //Airline
                 float baseMilesPerDollar = 3.5f;
-                int miles = Managers.Data.getCityDistance(cityFrom, cityTo).Value;
+                int miles = Managers.Data.DistanceByAirplane(cityFrom, cityTo);
                 float x = miles;
                 if (x < 600)
                 {
@@ -89,49 +89,16 @@ public class Sim_Travel : MonoBehaviour
             else
             {
                 //Private
-                TimeSpan timespan = TravelTime(transportation, cityFrom, cityTo);
+                TimeSpan timespan = Managers.Data.TravelTimeByAirplane(cityFrom, cityTo);
                 int pricePerMinute = 25;
                 return pricePerMinute * timespan.Minutes;
             }
         }
         else
         {
-            Debug.Log("Error: Unrecognized Vehicle ID");
+            Debug.Log("Error: Unrecognized Automobile ID");
             return 0;
         }
-    }
-
-    public TimeSpan TravelTime(TransportationID transportID, Data_CityID cityFrom, Data_CityID cityTo)
-    {
-        TimeSpan timeSpan = new TimeSpan();
-
-        if (transportID.ToString().Contains("Vehicle_"))
-        {//vehicle
-            timeSpan = Managers.Data.getCityAutomobileTravelTime(cityFrom, cityTo).Value;
-        }
-        else if (transportID.ToString().Contains("Plane_"))
-        {//plane
-            int distance = Managers.Data.getCityDistance(cityFrom, cityTo).Value;
-            float milesPerMinute = isTravelingEast(cityFrom, cityTo) ? 9.73f : 8.64f;
-            float totalMinutes = distance / milesPerMinute;
-            if (!Transportations[transportID].IsPrivatelyOwnend)
-            {
-                totalMinutes += 120;//airpot time
-            }
-            timeSpan = TimeSpan.FromMinutes((totalMinutes));
-        }
-        return timeSpan;
-    }
-
-    private bool isTravelingEast(Data_CityID cityFrom, Data_CityID cityTo)
-    {
-        double cityFromLongitude = Managers.Data.CityData[cityFrom].longitude;
-        double cityToLongitude = Managers.Data.CityData[cityTo].longitude;
-        if (cityFromLongitude < cityToLongitude)
-        {
-            return true;
-        }
-        return false;
     }
 
 

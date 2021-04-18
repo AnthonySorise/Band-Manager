@@ -21,12 +21,12 @@ public abstract class NPC{
     public List<NPCTraitMajor> TraitsMajor { get; private set; }
     public List<NPCTraitMinor> TraitsMinor { get; private set; }
     public int Cash { get; private set; }
-    public Data_CityID HomeCity { get; private set; }
-    public Data_CityID BaseCity { get; private set; }
-    public Data_CityID CurrentCity { get; private set; }
-    public Data_CityID? CityEnRoute { get; private set; }
+    public CityID HomeCity { get; private set; }
+    public CityID BaseCity { get; private set; }
+    public CityID CurrentCity { get; private set; }
+    public CityID? CityEnRoute { get; private set; }
 
-    public NPC(NPCGender gender, int age, Data_CityID city)
+    public NPC(NPCGender gender, int age, CityID city)
     {
         ID = createID();
         Gender = gender;

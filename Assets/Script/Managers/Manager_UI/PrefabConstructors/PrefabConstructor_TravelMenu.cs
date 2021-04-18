@@ -6,9 +6,11 @@ using UnityEngine.UI;
 
 public class PrefabConstructor_TravelMenu : MonoBehaviour{
 
+    private CityID? toCity = null;
+
     private GameObject prefab_Menu_Travel;
     public GameObject MenuGO;
-    private Dictionary<Data_CityID, Button> _cityButtons;
+    private Dictionary<CityID, Button> _cityButtons;
     //private string _menuName = "Menu_Travel";
     private TextMeshProUGUI _text_CurrentCityName;
     private TextMeshProUGUI _text_CurrentCityState;
@@ -27,7 +29,7 @@ public class PrefabConstructor_TravelMenu : MonoBehaviour{
     private void Start()
     {
         prefab_Menu_Travel = Resources.Load<GameObject>("Prefabs/UI/TravelMenu");
-        _cityButtons = new Dictionary<Data_CityID, Button>();
+        _cityButtons = new Dictionary<CityID, Button>();
         MenuGO = null;
     }
 
@@ -53,16 +55,7 @@ public class PrefabConstructor_TravelMenu : MonoBehaviour{
             _cityButtons.Clear();
         }
 
-        foreach (Data_CityID cityID in Data_CityID.GetValues(typeof(Data_CityID)))
-        {
-            //store
-            Button thisButton = GameObject.Find("TravelMenu_MapUI_" + cityID.ToString()).GetComponent<Button>();
-            _cityButtons.Add(cityID, thisButton);
 
-            //add tooltips
-            Data_City cityData = Managers.Data.CityData[cityID];
-            Managers.UI.TooltipManager.AttachTooltip(thisButton.gameObject, cityData.cityName + ", " + cityData.stateAbbreviated);
-        }
 
         //init
         _text_CurrentCityName = GameObject.Find("TravelMenu_Info_CurrentCity_CityName").GetComponent<TextMeshProUGUI>();
@@ -80,22 +73,62 @@ public class PrefabConstructor_TravelMenu : MonoBehaviour{
         _button_close = GameObject.Find("TravelMenu_Header_CloseButton").GetComponent<Button>();
 
 
-        //button and dropdown behavior
+        //buttons
+        foreach (CityID cityID in CityID.GetValues(typeof(CityID)))
+        {
+            //store
+            Button thisButton = GameObject.Find("TravelMenu_MapUI_" + cityID.ToString()).GetComponent<Button>();
+            _cityButtons.Add(cityID, thisButton);
+
+            //add tooltips
+            Data_City cityData = Managers.Data.CityData[cityID];
+            Managers.UI.TooltipManager.AttachTooltip(thisButton.gameObject, cityData.cityName + ", " + cityData.stateAbbreviated);
+
+            //add button listener
+            thisButton.onClick.AddListener(() =>
+            {
+                toCity = cityID;
+            });
+        }
 
         _button_close.onClick.AddListener(Destroy);
 
+        //menuGO
         MenuGO = menu;
 
         //trigger sound
         Managers.Audio.PlayAudio(Asset_wav.Click_04, AudioChannel.SFX);
     }
 
+    public void Destroy()
+    {
+        if (MenuGO)
+        {
+            Destroy(MenuGO);
+        }
+        MenuGO = null;
+        //trigger sound
+        Managers.Audio.PlayAudio(Asset_wav.Click_02, AudioChannel.SFX);
+    }
+
+
+
     private void updateTexts()
     {
-        Data_CityID currentCity = Managers.Sim.NPC.getPlayerCharacter().CurrentCity;
+        CityID currentCity = Managers.Sim.NPC.getPlayerCharacter().CurrentCity;
         _text_CurrentCityName.text = Managers.Data.CityData[currentCity].cityName;
         _text_CurrentCityState.text = Managers.Data.CityData[currentCity].stateName;
         _text_CurrentCityPopulation.text = Managers.Data.CityData[currentCity].population.ToString();
+        if(toCity != null)
+        {
+            _text_TravelToCityName.text = Managers.Data.CityData[toCity.Value].cityName;
+            _text_TravelToCityState.text = Managers.Data.CityData[toCity.Value].stateName;
+            _text_TravelToCityPopulation.text = Managers.Data.CityData[toCity.Value].population.ToString();
+        }
+    }
+    private void updateButtons()
+    {
+
     }
 
 
@@ -109,14 +142,5 @@ public class PrefabConstructor_TravelMenu : MonoBehaviour{
         updateTexts();
     }
 
-    public void Destroy()
-    {
-        if (MenuGO)
-        {
-            Destroy(MenuGO);
-        }
-        MenuGO = null;
-        //trigger sound
-        Managers.Audio.PlayAudio(Asset_wav.Click_02, AudioChannel.SFX);
-    }
+
 }

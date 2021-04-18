@@ -20,7 +20,7 @@ public class Manager_Data : MonoBehaviour, IManager {
     //private string _dirINI;
 
     //Stored Data
-    public Dictionary<Data_CityID, Data_City> CityData { get; private set; }
+    public Dictionary<CityID, Data_City> CityData { get; private set; }
 
     private GameObject[] _iniFileCreators = new GameObject[INIFilename.GetNames(typeof(INIFilename)).Length];
 
@@ -43,7 +43,7 @@ public class Manager_Data : MonoBehaviour, IManager {
 
 
         //JSON
-        CityData = new Dictionary<Data_CityID, Data_City>();
+        CityData = new Dictionary<CityID, Data_City>();
         JSON_LoadData_City();
 
 
@@ -153,7 +153,7 @@ public class Manager_Data : MonoBehaviour, IManager {
 
     private void JSON_LoadData_City()
     {
-        foreach (Data_CityID cityID in Enum.GetValues(typeof(Data_CityID)))
+        foreach (CityID cityID in Enum.GetValues(typeof(CityID)))
         {
             string path = FilePathJSON("Cities/" + cityID.ToString());
             if (File.Exists(path) == false)
@@ -173,9 +173,9 @@ public class Manager_Data : MonoBehaviour, IManager {
     }
 
     //Helpers
-    public int? getCityDistance(Data_CityID fromCity, Data_CityID toCity)
+    public int DistanceByAutomobile(CityID fromCity, CityID toCity)
     {
-        int? distance = null;
+        int distance = 0;
         foreach(TravelTo travelToData in CityData[fromCity].travelTo)
         {
             if (travelToData.cityID == toCity.ToString())
@@ -187,9 +187,9 @@ public class Manager_Data : MonoBehaviour, IManager {
         distance = (int)(distance / 1609.344f);
         return distance;
     }
-    public TimeSpan? getCityAutomobileTravelTime(Data_CityID fromCity, Data_CityID toCity)
+    public TimeSpan TravelTimeByAutomobile(CityID fromCity, CityID toCity)
     {
-        TimeSpan? duration = null;
+        TimeSpan duration = new TimeSpan();
         foreach (TravelTo travelToData in CityData[fromCity].travelTo)
         {
             if (travelToData.cityID == toCity.ToString())
@@ -198,5 +198,75 @@ public class Manager_Data : MonoBehaviour, IManager {
             }
         }
         return duration;
+    }
+
+    private int distanceFromCoordinates(double latitude, double longitude, double otherLatitude, double otherLongitude)
+    {
+        var d1 = latitude * (Math.PI / 180.0);
+        var num1 = longitude * (Math.PI / 180.0);
+        var d2 = otherLatitude * (Math.PI / 180.0);
+        var num2 = otherLongitude * (Math.PI / 180.0) - num1;
+        var d3 = Math.Pow(Math.Sin((d2 - d1) / 2.0), 2.0) + Math.Cos(d1) * Math.Cos(d2) * Math.Pow(Math.Sin(num2 / 2.0), 2.0);
+
+        double meters = 6376500.0 * (2.0 * Math.Atan2(Math.Sqrt(d3), Math.Sqrt(1.0 - d3)));
+        //convert to miles
+        return (int)(meters / 1609.344f);
+    }
+    public int DistanceByAirplane(CityID fromCity, CityID toCity)
+    {
+        double fromLatitude = CityData[fromCity].latitude;
+        double fromLongitude = CityData[fromCity].longitude;
+        double toLatitude = CityData[toCity].latitude;
+        double toLongitude = CityData[toCity].longitude;
+
+        return distanceFromCoordinates(fromLatitude, fromLongitude, toLatitude, toLongitude);
+    }
+
+    public TimeSpan TravelTimeByAirplane(CityID fromCity, CityID toCity)
+    {
+        int distance = DistanceByAirplane(fromCity, toCity);
+        double fromLongitude = CityData[fromCity].longitude;
+        double toLongitude = CityData[toCity].longitude;
+
+        float flightFixedTime = 20;
+        float milesPerMinute = 6.9f;
+
+        if (fromLongitude < toLongitude)//traveling east - jetstream
+        {
+            double fastestMilesPerLongitude = 55;
+            double capHighMilesPerLongitude = 82.5;
+            double slowestMilesPerLongitude = 110;
+            double trailOffToZero = 15;
+
+            float maxJetStreamModifier = 1.18f;
+            float capJetStreamModifier = 1.06f;
+
+            double thisLongitudeDistance = Math.Abs(Math.Abs(fromLongitude) - Math.Abs(toLongitude));
+            double thisMilesPerLongitude = distance / thisLongitudeDistance;
+
+            if (thisMilesPerLongitude <= fastestMilesPerLongitude)
+            {
+                milesPerMinute = milesPerMinute * maxJetStreamModifier;
+            }
+            else if (thisMilesPerLongitude > fastestMilesPerLongitude && thisMilesPerLongitude < capHighMilesPerLongitude)
+            {
+                float modiferSpread = maxJetStreamModifier - capJetStreamModifier;
+                double milesPerLongitudeSpread = capHighMilesPerLongitude - fastestMilesPerLongitude;
+                float percentageOfModifer = 1f - (float)((thisMilesPerLongitude - fastestMilesPerLongitude) / milesPerLongitudeSpread);
+                milesPerMinute = milesPerMinute * (1 + (modiferSpread * percentageOfModifer));
+            }
+            else if (thisMilesPerLongitude >= capHighMilesPerLongitude && thisMilesPerLongitude <= slowestMilesPerLongitude)
+            {
+                milesPerMinute = milesPerMinute * capJetStreamModifier;
+            }
+            else if(thisMilesPerLongitude > slowestMilesPerLongitude && thisMilesPerLongitude <= slowestMilesPerLongitude + trailOffToZero)
+            {
+                float modiferSpread = capJetStreamModifier - 1f;
+                double milesPerLongitudeSpread = trailOffToZero;
+                float percentageOfModifer = 1f - (float)((thisMilesPerLongitude - slowestMilesPerLongitude) / milesPerLongitudeSpread);
+                milesPerMinute = milesPerMinute * (1 + (modiferSpread * percentageOfModifer));
+            }
+        }
+        return TimeSpan.FromMinutes(flightFixedTime + (milesPerMinute * distance));
     }
 }
