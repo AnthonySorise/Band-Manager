@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -6,12 +7,13 @@ using UnityEngine.UI;
 
 public class PrefabConstructor_TravelMenu : MonoBehaviour{
 
-    private CityID? toCity = null;
+    private CityID? _toCity = null;
+    private TransportationID _transportation = TransportationID.Airplane_Coach;
 
     private GameObject prefab_Menu_Travel;
     public GameObject MenuGO;
     private Dictionary<CityID, Button> _cityButtons;
-    //private string _menuName = "Menu_Travel";
+
     private TextMeshProUGUI _text_CurrentCityName;
     private TextMeshProUGUI _text_CurrentCityState;
     private TextMeshProUGUI _text_CurrentCityPopulation;
@@ -87,7 +89,7 @@ public class PrefabConstructor_TravelMenu : MonoBehaviour{
             //add button listener
             thisButton.onClick.AddListener(() =>
             {
-                toCity = cityID;
+                _toCity = cityID;
             });
         }
 
@@ -119,11 +121,15 @@ public class PrefabConstructor_TravelMenu : MonoBehaviour{
         _text_CurrentCityName.text = Managers.Data.CityData[currentCity].cityName;
         _text_CurrentCityState.text = Managers.Data.CityData[currentCity].stateName;
         _text_CurrentCityPopulation.text = Managers.Data.CityData[currentCity].population.ToString();
-        if(toCity != null)
+        if(_toCity != null)
         {
-            _text_TravelToCityName.text = Managers.Data.CityData[toCity.Value].cityName;
-            _text_TravelToCityState.text = Managers.Data.CityData[toCity.Value].stateName;
-            _text_TravelToCityPopulation.text = Managers.Data.CityData[toCity.Value].population.ToString();
+            _text_TravelToCityName.text = Managers.Data.CityData[_toCity.Value].cityName;
+            _text_TravelToCityState.text = Managers.Data.CityData[_toCity.Value].stateName;
+            _text_TravelToCityPopulation.text = Managers.Data.CityData[_toCity.Value].population.ToString();
+
+            TimeSpan timeSpan = Managers.Sim.Travel.TravelTime(_transportation, currentCity, _toCity.Value);
+            _text_TravelTime.text = new DateTime(timeSpan.Ticks).ToString("HH:mm");
+            _text_TravelCost.text = Managers.Sim.Travel.TravelCost(_transportation, currentCity, _toCity.Value).ToString();
         }
     }
     private void updateButtons()

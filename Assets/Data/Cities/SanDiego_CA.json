@@ -1,9 +1,9 @@
 {
     "cityID": "SanDiego_CA",
     "cityName": "San Diego",
-  "stateName": "California",
-  "stateAbbreviated": "CA",
-  "latitude": 32.8312,
+    "stateName": "California",
+    "stateAbbreviated": "CA",
+    "latitude": 32.8312,
     "longitude": -117.1225,
     "population": 2453268,
     "travelTo": [

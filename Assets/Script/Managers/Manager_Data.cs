@@ -267,6 +267,6 @@ public class Manager_Data : MonoBehaviour, IManager {
                 milesPerMinute = milesPerMinute * (1 + (modiferSpread * percentageOfModifer));
             }
         }
-        return TimeSpan.FromMinutes(flightFixedTime + (milesPerMinute * distance));
+        return TimeSpan.FromMinutes(flightFixedTime + (distance / milesPerMinute));
     }
 }

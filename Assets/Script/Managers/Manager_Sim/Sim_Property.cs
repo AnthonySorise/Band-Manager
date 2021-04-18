@@ -4,8 +4,8 @@ using UnityEngine;
 
 public enum PropertyID
 {
-    Vehicle_DecentVan,
-    Vehicle_TourBus,
+    Automobile_DecentVan,
+    Automobile_TourBus,
     Plane_PrivatePlane,
     Plane_LuxaryJet
 }

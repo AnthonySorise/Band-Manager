@@ -1,8 +1,8 @@
 {
     "cityID": "Buffalo_NY",
     "cityName": "Buffalo",
-    "stateName": "NY",
-    "stateAbbreviated": "New York",
+    "stateName": "New York",
+    "stateAbbreviated": "NY",
     "latitude": 42.8864,
     "longitude": -78.8784,
     "population": 466658,

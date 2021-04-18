@@ -1,8 +1,8 @@
 {
     "cityID": "Birmingham_AL",
     "cityName": "Birmingham",
-    "stateName": "AL",
-    "stateAbbreviated": "Alabama",
+    "stateName": "Alabama",
+    "stateAbbreviated": "AL",
     "latitude": 33.518589,
     "longitude": -86.810356,
     "population": 798871,
