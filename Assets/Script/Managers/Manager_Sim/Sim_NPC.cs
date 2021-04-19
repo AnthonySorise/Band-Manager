@@ -33,9 +33,10 @@ public class Sim_NPC : MonoBehaviour
     {
         return _npcs[npcID];
     }
-    public NPC getPlayerCharacter()
+    public BandManager getPlayerCharacter()
     {
-        return _npcs[1];
+        BandManager playerCharacter = _npcs[1] as BandManager;
+        return playerCharacter;
     }
 
 

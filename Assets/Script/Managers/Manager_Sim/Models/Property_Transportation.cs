@@ -2,14 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Property_Transportation
+public class Property_Transportation : Property
 {
-    public string Name { get; private set; }
-    public Transportation Transportation { get; private set; }
+    public TransportationID TransportationID { get; private set; }
 
-    public Property_Transportation(string name, Transportation  transportation)
+    public Property_Transportation(string name, TransportationID transportationID) :base(name)
     {
-        Name = name;
-        transportation = Transportation;
+        TransportationID = transportationID;
     }
 }
