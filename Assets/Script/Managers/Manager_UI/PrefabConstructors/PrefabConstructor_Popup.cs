@@ -17,9 +17,15 @@ public class PrefabConstructor_Popup : MonoBehaviour {
     public void CreateAndDisplay(SimAction simAction)
     {
         string popupName = "Popup_" + simAction.ID.ToString();
-        if (GameObject.Find(popupName))
+        //if (GameObject.Find(popupName))
+        //{
+        //    Debug.Log("Error: " + popupName + " already exists");
+        //    return;
+        //}
+        if(simAction.Options == null &&
+            simAction.PopupHeaderText == null &&
+            simAction.PopupBodyText == null)
         {
-            Debug.Log("Error: " + popupName + " already exists");
             return;
         }
 

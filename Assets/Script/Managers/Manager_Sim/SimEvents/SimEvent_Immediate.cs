@@ -1,4 +1,5 @@
 ﻿using System;
+using UnityEngine;
 
 public class SimEvent_Immediate {
 
@@ -9,7 +10,7 @@ public class SimEvent_Immediate {
         _simAction = simAction;
         if (duration == null)
         {
-            _duration = new TimeSpan(1, 0, 0);
+            _duration = new TimeSpan(0, 0, 0);
         }
         else
         {
@@ -20,6 +21,7 @@ public class SimEvent_Immediate {
             if (!simAction.ShouldDelay())
             {
                 _simAction.Trigger();
+                ConvertToScheduled(true);
             }
             else
             {
@@ -28,7 +30,16 @@ public class SimEvent_Immediate {
         }
     }
 
-    public void ConvertToScheduled () {
-        SimEvent_Scheduled scheduled = new SimEvent_Scheduled(_simAction, Managers.Time.CurrentDT);
+    public void ConvertToScheduled (bool isTriggered = false)
+    {
+        if (isTriggered)
+        {
+            
+            SimEvent_Scheduled scheduled = new SimEvent_Scheduled(_simAction, Managers.Time.CurrentDT, _duration, Managers.Time.CurrentDT);
+        }
+        else
+        {
+            SimEvent_Scheduled scheduled = new SimEvent_Scheduled(_simAction, Managers.Time.CurrentDT, _duration);
+        }
     }
 }

@@ -44,10 +44,10 @@ public class PrefabConstructor_TravelMenu : MonoBehaviour{
 
     public void Toggle()
     {
-        if (Managers.UI.IsScreenCovered() == true)
-        {
-            return;
-        }
+        //if (Managers.UI.IsScreenCovered() == true)
+        //{
+        //    return;
+        //}
         if (MenuGO)
         {
             Destroy();
@@ -123,12 +123,19 @@ public class PrefabConstructor_TravelMenu : MonoBehaviour{
         });
 
         _button_close.onClick.AddListener(Destroy);
+        _button_submit.onClick.AddListener(handleSubmitButton);
 
         //menuGO
         MenuGO = menu;
 
         //trigger sound
         Managers.Audio.PlayAudio(Asset_wav.Click_04, AudioChannel.SFX);
+    }
+
+    private void handleSubmitButton()
+    {
+        CityID currentCity = Managers.Sim.NPC.getPlayerCharacter().CurrentCity;
+        Managers.Sim.Travel.SimEvent_QueryTravel(1, _transportationID, currentCity, _toCity.Value);
     }
 
     public void Destroy()
@@ -149,7 +156,7 @@ public class PrefabConstructor_TravelMenu : MonoBehaviour{
         _text_CurrentCityName.text = Managers.Data.CityData[currentCity].cityName;
         _text_CurrentCityState.text = Managers.Data.CityData[currentCity].stateName;
         _text_CurrentCityPopulation.text = Managers.Data.CityData[currentCity].population.ToString();
-        if(_toCity != null && Managers.Sim.Travel.IsValidSubmission(_transportationID, currentCity, _toCity.Value))
+        if(_toCity != null && Managers.Sim.Travel.IsValidSubmission(1, _transportationID, currentCity, _toCity.Value))
         {
             _text_TravelToCityName.text = Managers.Data.CityData[_toCity.Value].cityName;
             _text_TravelToCityState.text = Managers.Data.CityData[_toCity.Value].stateName;
@@ -262,7 +269,7 @@ public class PrefabConstructor_TravelMenu : MonoBehaviour{
             }
             else
             {
-                if (Managers.Sim.Travel.IsValidSubmission(_transportationID, currentCityID, cityID)){
+                if (Managers.Sim.Travel.IsValidSubmission(1, _transportationID, currentCityID, cityID)){
                     _cityButtons[cityID].image.color = _color_cityButtonValidVehicle;
                 }
                 else
@@ -273,7 +280,7 @@ public class PrefabConstructor_TravelMenu : MonoBehaviour{
         }
 
         //submission button
-        if (_toCity == null || !Managers.Sim.Travel.IsValidSubmission(_transportationID, currentCityID, _toCity.Value))
+        if (_toCity == null || !Managers.Sim.Travel.IsValidSubmission(1, _transportationID, currentCityID, _toCity.Value))
         {
             _button_submit.interactable = false;
         }

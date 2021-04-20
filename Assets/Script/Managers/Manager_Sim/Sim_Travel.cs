@@ -2,8 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-
+using UnityEngine.Events;
 
 public class Sim_Travel : MonoBehaviour
 {
@@ -129,9 +128,9 @@ public class Sim_Travel : MonoBehaviour
         }
     }
 
-    public bool IsValidSubmission(TransportationID transportationID, CityID fromCityID, CityID toCityID)
+    public bool IsValidSubmission(int npcID, TransportationID transportationID, CityID fromCityID, CityID toCityID)
     {
-        if (fromCityID == toCityID)
+        if (Managers.Sim.NPC.getNPC(1).CityEnRoute != null || fromCityID == toCityID)
         {
             return false;
         }
@@ -163,6 +162,105 @@ public class Sim_Travel : MonoBehaviour
         else { return false; }
     }
 
+
+
+
+    public void SimEvent_QueryTravel(int npcID, TransportationID transportationID, CityID fromCityID, CityID toCityID)
+    {
+        TimeSpan travelTime = TravelTime(transportationID, fromCityID, toCityID);
+        DateTime arrivalTime = Managers.Time.CurrentDT.Add(travelTime);
+
+        List<int> npcs = new List<int>() { npcID };
+
+        UnityAction option01 = () => {
+            Managers.Sim.Travel.SimEvent_InitiateTravel(npcID, transportationID, fromCityID, toCityID);
+        };
+        UnityAction option02 = () => {
+            Debug.Log("Travel canceled.");
+        };
+
+        Action<GameObject> tt_option01 = (GameObject go) => { Managers.UI.TooltipManager.AttachTooltip(go, "Start travel to " + Managers.Data.CityData[toCityID].cityName.ToString()); };
+        Action<GameObject> tt_option02 = (GameObject go) => { Managers.UI.TooltipManager.AttachTooltip(go, "Cancel travel."); };
+
+        SimActionOption SimActionOption01 = new SimActionOption(option01, "Let's go!", tt_option01);
+        SimActionOption SimActionOption02 = new SimActionOption(option02, "Let's not.", tt_option02);
+
+        List<SimActionOption> popupOptionsList = new List<SimActionOption>
+        {
+            SimActionOption01,
+            SimActionOption02
+        };
+
+        UnityAction initialAction = () => {
+
+        };
+        Func<bool> validCondition = () => { return true; };
+        Func<bool> delayCondition = () => { return false;  };
+
+        //triggerDate  TODO  date dropdown
+        //DateTime triggerDate = new DateTime();
+
+        SimAction simAction = new SimAction(SimActionID.NPC_Travel, npcs, validCondition, delayCondition, initialAction, popupOptionsList, true, "Travel to " + Managers.Data.CityData[toCityID].cityName.ToString(), "Let's get a move on!", Asset_png.Popup_Vinyl, Asset_wav.event_generic);
+
+        //TODO conditional to determine immediate or scheduled event
+        //SimEvent_Scheduled SimEvent_Scheduled04 = new SimEvent_Scheduled(simAction, triggerDate);
+        SimEvent_Immediate SimEvent_QueryTravel = new SimEvent_Immediate(simAction);
+    }
+    public void SimEvent_InitiateTravel(int npcID, TransportationID transportationID, CityID fromCityID, CityID toCityID)
+    {
+        TimeSpan travelTime = TravelTime(transportationID, fromCityID, toCityID);
+        DateTime arrivalTime = Managers.Time.CurrentDT.Add(travelTime);
+
+        List<int> npcs = new List<int>() { npcID };
+
+        UnityAction initialAction = () => {
+            Managers.Sim.NPC.getNPC(npcID).TravelStart(toCityID);
+            if (Managers.UI.prefabConstructor_travelMenu.MenuGO != null)
+            {
+                Managers.UI.prefabConstructor_travelMenu.Toggle();
+            }
+            SimEvent_FinishTravel(npcID, transportationID, fromCityID, toCityID, arrivalTime);
+        };
+        Func<bool> validCondition = () => { return true; };
+        Func<bool> delayCondition = () => { return false; };
+
+        //triggerDate  TODO  date dropdown
+        //DateTime triggerDate = new DateTime();
+
+        SimAction simAction = new SimAction(SimActionID.NPC_Travel, npcs, validCondition, delayCondition, initialAction);
+
+        //TODO conditional to determine immediate or scheduled event
+        //SimEvent_Scheduled SimEvent_Scheduled04 = new SimEvent_Scheduled(simAction, triggerDate);
+        SimEvent_Immediate SimEvent_InitiateTravel = new SimEvent_Immediate(simAction, travelTime);
+    }
+    public void SimEvent_FinishTravel(int npcID, TransportationID transportationID, CityID fromCityID, CityID toCityID, DateTime triggerDate)
+    {
+        List<int> npcs = new List<int>() { npcID };
+
+        UnityAction option01 = () => {
+            Debug.Log("End Travel");
+        };
+
+        Action<GameObject> tt_option01 = (GameObject go) => { Managers.UI.TooltipManager.AttachTooltip(go, "Welcome to " + Managers.Data.CityData[toCityID].cityName.ToString()); };
+
+        SimActionOption SimActionOption01 = new SimActionOption(option01, "Welcome!", tt_option01);
+
+        List<SimActionOption> popupOptionsList = new List<SimActionOption>
+        {
+            SimActionOption01
+        };
+
+        UnityAction initialAction = () => {
+            Managers.Sim.NPC.getNPC(npcID).TravelEnd();
+        };
+        Func<bool> validCondition = () => { return true; };
+        Func<bool> delayCondition = () => { return false; };
+
+
+        SimAction simAction = new SimAction(SimActionID.NPC_Travel, npcs, validCondition, delayCondition, initialAction, null, true, "Welcome to " + Managers.Data.CityData[toCityID].cityName.ToString(), "", Asset_png.Popup_Vinyl, Asset_wav.event_generic);
+
+        SimEvent_Scheduled SimEvent_FinishTravel = new SimEvent_Scheduled(simAction, triggerDate);
+    }
 
     // Update is called once per frame
     void Update()

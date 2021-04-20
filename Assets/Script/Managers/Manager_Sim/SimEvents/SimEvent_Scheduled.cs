@@ -1,24 +1,25 @@
 ﻿using System;
+using UnityEngine;
 
 public class SimEvent_Scheduled
 {
     public SimAction SimAction { get; private set; }
     public DateTime ScheduledDT { get; private set; }
-    private DateTime? _triggeredDT;
     public TimeSpan Duration { get; private set; }
+    private DateTime? _triggeredDT;
 
-    public SimEvent_Scheduled(SimAction simAction, DateTime scheduledDT, TimeSpan? duration = null) {
+    public SimEvent_Scheduled(SimAction simAction, DateTime scheduledDT, TimeSpan? duration = null, DateTime? triggeredDT = null) {
         SimAction = simAction;
         ScheduledDT = scheduledDT;
-        _triggeredDT = null;
         if(duration == null)
         {
-            Duration = new TimeSpan(1, 0, 0);
+            Duration = new TimeSpan(0, 0, 0);
         }
         else
         {
             Duration = duration.Value;
         }
+        _triggeredDT = triggeredDT;
 
         Store();
     }
@@ -52,7 +53,7 @@ public class SimEvent_Scheduled
                 Remove();
             }
         }
-        else if ((IsTimeToTrigger()) && !SimAction.ShouldDelay())
+        else if (IsTimeToTrigger() && !SimAction.ShouldDelay())
         {
             SimAction.Trigger();
             _triggeredDT = Managers.Time.CurrentDT;

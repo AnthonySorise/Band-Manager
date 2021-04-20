@@ -76,7 +76,11 @@ public class SimAction {
 
     public void Trigger() {
         if (IsValid())
-        {            
+        {
+            if(_initialAction != null)
+            {
+                _initialAction();
+            }
             if(NPCs.Contains(1))
             {
                 

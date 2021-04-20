@@ -90,4 +90,17 @@ public abstract class NPC{
         }
         return age;
     }
+
+    public void TravelStart(CityID toCity)
+    {
+        CityEnRoute = toCity;
+    }
+    public void TravelEnd()
+    {
+        if (CityEnRoute != null)
+        {
+            CurrentCity = CityEnRoute.Value;
+            CityEnRoute = null;
+        }
+    }
 }
