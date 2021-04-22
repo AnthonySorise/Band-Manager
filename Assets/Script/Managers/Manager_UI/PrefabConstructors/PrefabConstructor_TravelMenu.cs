@@ -135,7 +135,7 @@ public class PrefabConstructor_TravelMenu : MonoBehaviour{
     private void handleSubmitButton()
     {
         CityID currentCity = Managers.Sim.NPC.getPlayerCharacter().CurrentCity;
-        Managers.Sim.Travel.SimEvent_QueryTravel(1, _transportationID, currentCity, _toCity.Value);
+        Managers.Sim.Travel.SIM_QueryTravel(1, _transportationID, currentCity, _toCity.Value);
     }
 
     public void Destroy()

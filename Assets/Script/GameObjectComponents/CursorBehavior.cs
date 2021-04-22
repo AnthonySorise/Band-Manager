@@ -14,11 +14,6 @@ public class CursorBehavior : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         Cursor.SetCursor(texture, vector, CursorMode.Auto);
     }
 
-    public void SetDefault()
-    {
-        SetCursor(Asset_png.Cursor_Default);
-    }
-
     public void OnPointerEnter(PointerEventData eventData)
     {
         Asset_png cursorPng = ForceDefault ? Asset_png.Cursor_Default : Asset_png.Cursor_Hover;
@@ -32,11 +27,9 @@ public class CursorBehavior : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 
     public void OnDestroy()
     {
-        SetCursor(Asset_png.Cursor_Default);
-    }
-
-    public void OnDisable()
-    {
-        SetCursor(Asset_png.Cursor_Default);
+        if (this.gameObject.activeSelf)
+        {
+            SetCursor(Asset_png.Cursor_Default);
+        }
     }
 }

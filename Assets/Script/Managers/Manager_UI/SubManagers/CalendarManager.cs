@@ -820,7 +820,7 @@ public class CalendarManager : MonoBehaviour
         }
     }
 
-    private void UpdateCalendarPanel(bool isUpdateWeek01 = true, bool isUpdateWeek02 = true)
+    public void UpdateCalendarPanel(bool isUpdateWeek01 = true, bool isUpdateWeek02 = true, bool forceUpdateCalendarTimeline = false)
     {
         DateTime startOfDay = Managers.Time.CurrentDT.Date;
         DateTime endOfTheDay = Managers.Time.CurrentDT.AddDays(1).Date;
@@ -828,13 +828,6 @@ public class CalendarManager : MonoBehaviour
         int calendarBoxWidth = (int)(_calendarWeek01Sunday.GetComponent<RectTransform>().sizeDelta.x);
         int timelineWidth = (int)(_calendarTimeline.GetComponent<RectTransform>().sizeDelta.x);
         List<SimEvent_Scheduled> playerScheduledEvents = new List<SimEvent_Scheduled>();
-
-        bool isNewCalendarSelectedDay = false;
-        if (_calendarSelectedDay_previous != _calendarSelectedDay)
-        {
-            isNewCalendarSelectedDay = true;
-            _calendarSelectedDay_previous = _calendarSelectedDay;
-        }
 
         //Date tracking
         if (_calendarLastUpdateDT == null)
@@ -1037,7 +1030,13 @@ public class CalendarManager : MonoBehaviour
         timelineTimeOverlayRectTransform.sizeDelta = new Vector2(timeLineFill, timelineTimeOverlayRectTransform.sizeDelta.y);
         //Update Timeline - Scheduled Items
         Transform calendarTimelineTransform = _calendarTimeline.GetComponent<RectTransform>();
-        if (isNewCalendarSelectedDay)
+        bool isNewCalendarSelectedDay = false;
+        if (_calendarSelectedDay_previous != _calendarSelectedDay)
+        {
+            isNewCalendarSelectedDay = true;
+            _calendarSelectedDay_previous = _calendarSelectedDay;
+        }
+        if (isNewCalendarSelectedDay || forceUpdateCalendarTimeline)
         {
             foreach (Transform child in calendarTimelineTransform)
             {

@@ -18,7 +18,7 @@ public class PrefabConstructor_PopUpOption : MonoBehaviour
             }
             if (Managers.Time.IsPaused)
             {
-                Managers.Time.Play();
+                //Managers.Time.Play();
             }
             simActionOption.CallBack();
         }

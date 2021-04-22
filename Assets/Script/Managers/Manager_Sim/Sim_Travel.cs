@@ -42,27 +42,17 @@ public class Sim_Travel : MonoBehaviour
 
     }
 
-    public void Travel(NPC npc, CityID travelFrom, CityID travelTo, DateTime? arrivalTime = null)
+
+    public TimeSpan TravelTime(TransportationID transportationID, CityID cityFrom, CityID cityTo)
     {
-
-
-
-
-        //TO DO  Sim_Finance
-    }
-
-    //TO DO  Travel SimAction/popup code
-
-    public TimeSpan TravelTime(TransportationID transportation, CityID cityFrom, CityID cityTo)
-    {
-        TimeSpan timeSpan = new TimeSpan();
-        if (transportation.ToString().Contains("Automobile_"))
-        {//automobile
+        TimeSpan timeSpan = new TimeSpan(0, 0, 0);
+        if (IsAutomobile(transportationID))
+        {
             return Managers.Data.TravelTimeByAutomobile(cityFrom, cityTo);
         }
-        else if (transportation.ToString().Contains("Airplane_"))
-        {//airplane
-            int airportTime = Transportations[transportation].IsOwnable() ? minsPrivateAirportTime : minsCommercialAirportTime;
+        else if (IsAirplane(transportationID))
+        {
+            int airportTime = Transportations[transportationID].IsOwnable() ? minsPrivateAirportTime : minsCommercialAirportTime;
             TimeSpan flightTime = Managers.Data.TravelTimeByAirplane(cityFrom, cityTo);
             return flightTime + TimeSpan.FromMinutes(airportTime);
         }
@@ -73,18 +63,18 @@ public class Sim_Travel : MonoBehaviour
         }
     }
 
-    public float TravelCost(TransportationID transportation, CityID cityFrom, CityID cityTo)
+    public float TravelCost(TransportationID transportationID, CityID cityFrom, CityID cityTo)
     {
-        if (transportation.ToString().Contains("Automobile_"))
-        {//automobile
+        if (IsAutomobile(transportationID))
+        {
             int miles = Managers.Data.DistanceByAutomobile(cityFrom, cityTo);
-            int milesPerGallon = Transportations[transportation].MPG.Value;
+            int milesPerGallon = Transportations[transportationID].MPG.Value;
             return (miles / milesPerGallon) * gasPricePerGallon;
         }
-        else if (transportation.ToString().Contains("Airplane_"))
-        {//airplane
+        else if (IsAirplane(transportationID))
+        {
 
-            if (!Transportations[transportation].IsOwnable())
+            if (!Transportations[transportationID].IsOwnable())
             {
                 //Airline
                 float baseMilesPerDollar = 3.5f;
@@ -106,7 +96,7 @@ public class Sim_Travel : MonoBehaviour
                 {
                     cost = 90 + (cost / 10);
                 }
-                if (transportation.ToString().Contains("FirstClass"))
+                if (transportationID.ToString().Contains("FirstClass"))
                 {
                     cost = cost * 2;
                 }
@@ -117,7 +107,6 @@ public class Sim_Travel : MonoBehaviour
                 //Private
                 TimeSpan timespan = Managers.Data.TravelTimeByAirplane(cityFrom, cityTo);
                 int pricePerMinute = 25;
-                Debug.Log(timespan.TotalMinutes);
                 return (float)(pricePerMinute * timespan.TotalMinutes);
             }
         }
@@ -126,6 +115,23 @@ public class Sim_Travel : MonoBehaviour
             Debug.Log("Error: Unrecognized Automobile ID");
             return 0;
         }
+    }
+
+    public bool IsAutomobile(TransportationID transportationID)
+    {
+        if (transportationID.ToString().Contains("Automobile_"))
+        {
+            return true;
+        }
+        return false;
+    }
+    public bool IsAirplane(TransportationID transportationID)
+    {
+        if (transportationID.ToString().Contains("Airplane_"))
+        {
+            return true;
+        }
+        return false;
     }
 
     public bool IsValidSubmission(int npcID, TransportationID transportationID, CityID fromCityID, CityID toCityID)
@@ -137,7 +143,7 @@ public class Sim_Travel : MonoBehaviour
         TimeSpan travelTime = TravelTime(transportationID, fromCityID, toCityID);
         TimeSpan automobileTravelTime = TravelTime(TransportationID.Automobile_ShadyVan, fromCityID, toCityID);
 
-        if (transportationID.ToString().Contains("Automobile_"))
+        if (IsAutomobile(transportationID))
         {//automobile
             if (travelTime.TotalHours > maxAutomobileDriveTimeHrs)
             {
@@ -148,7 +154,7 @@ public class Sim_Travel : MonoBehaviour
                 return true;
             }
         }
-        else if (transportationID.ToString().Contains("Airplane_"))
+        else if (IsAirplane(transportationID))
         {//airplane
             if (travelTime > automobileTravelTime)
             {
@@ -165,7 +171,7 @@ public class Sim_Travel : MonoBehaviour
 
 
 
-    public void SimEvent_QueryTravel(int npcID, TransportationID transportationID, CityID fromCityID, CityID toCityID)
+    public void SIM_QueryTravel(int npcID, TransportationID transportationID, CityID fromCityID, CityID toCityID)
     {
         TimeSpan travelTime = TravelTime(transportationID, fromCityID, toCityID);
         DateTime arrivalTime = Managers.Time.CurrentDT.Add(travelTime);
@@ -173,7 +179,7 @@ public class Sim_Travel : MonoBehaviour
         List<int> npcs = new List<int>() { npcID };
 
         UnityAction option01 = () => {
-            Managers.Sim.Travel.SimEvent_InitiateTravel(npcID, transportationID, fromCityID, toCityID);
+            Managers.Sim.Travel.SIM_InitiateTravel(npcID, transportationID, fromCityID, toCityID);
         };
         UnityAction option02 = () => {
             Debug.Log("Travel canceled.");
@@ -200,13 +206,13 @@ public class Sim_Travel : MonoBehaviour
         //triggerDate  TODO  date dropdown
         //DateTime triggerDate = new DateTime();
 
-        SimAction simAction = new SimAction(SimActionID.NPC_Travel, npcs, validCondition, delayCondition, initialAction, popupOptionsList, true, "Travel to " + Managers.Data.CityData[toCityID].cityName.ToString(), "Let's get a move on!", Asset_png.Popup_Vinyl, Asset_wav.event_generic);
+        SimAction simAction = new SimAction(SimActionID.NPC_Travel, npcs, validCondition, delayCondition, initialAction, popupOptionsList, true, "Travel to " + Managers.Data.CityData[toCityID].cityName.ToString(), "Let's get a move on!", Asset_png.Popup_Vinyl, Asset_wav.Click_04);
 
         //TODO conditional to determine immediate or scheduled event
         //SimEvent_Scheduled SimEvent_Scheduled04 = new SimEvent_Scheduled(simAction, triggerDate);
         SimEvent_Immediate SimEvent_QueryTravel = new SimEvent_Immediate(simAction);
     }
-    public void SimEvent_InitiateTravel(int npcID, TransportationID transportationID, CityID fromCityID, CityID toCityID)
+    public void SIM_InitiateTravel(int npcID, TransportationID transportationID, CityID fromCityID, CityID toCityID)
     {
         TimeSpan travelTime = TravelTime(transportationID, fromCityID, toCityID);
         DateTime arrivalTime = Managers.Time.CurrentDT.Add(travelTime);
@@ -219,7 +225,7 @@ public class Sim_Travel : MonoBehaviour
             {
                 Managers.UI.prefabConstructor_travelMenu.Toggle();
             }
-            SimEvent_FinishTravel(npcID, transportationID, fromCityID, toCityID, arrivalTime);
+            SIM_FinishTravel(npcID, transportationID, fromCityID, toCityID, arrivalTime);
         };
         Func<bool> validCondition = () => { return true; };
         Func<bool> delayCondition = () => { return false; };
@@ -233,7 +239,7 @@ public class Sim_Travel : MonoBehaviour
         //SimEvent_Scheduled SimEvent_Scheduled04 = new SimEvent_Scheduled(simAction, triggerDate);
         SimEvent_Immediate SimEvent_InitiateTravel = new SimEvent_Immediate(simAction, travelTime);
     }
-    public void SimEvent_FinishTravel(int npcID, TransportationID transportationID, CityID fromCityID, CityID toCityID, DateTime triggerDate)
+    public void SIM_FinishTravel(int npcID, TransportationID transportationID, CityID fromCityID, CityID toCityID, DateTime triggerDate)
     {
         List<int> npcs = new List<int>() { npcID };
 
@@ -257,9 +263,11 @@ public class Sim_Travel : MonoBehaviour
         Func<bool> delayCondition = () => { return false; };
 
 
-        SimAction simAction = new SimAction(SimActionID.NPC_Travel, npcs, validCondition, delayCondition, initialAction, null, true, "Welcome to " + Managers.Data.CityData[toCityID].cityName.ToString(), "", Asset_png.Popup_Vinyl, Asset_wav.event_generic);
+        SimAction simAction = new SimAction(SimActionID.NPC_Travel, npcs, validCondition, delayCondition, initialAction, null, true, "Welcome to " + Managers.Data.CityData[toCityID].cityName.ToString(), "", Asset_png.Popup_Vinyl, Asset_wav.Click_04);
 
         SimEvent_Scheduled SimEvent_FinishTravel = new SimEvent_Scheduled(simAction, triggerDate);
+
+        Managers.UI.CalendarManager.UpdateCalendarPanel(true,  true, true);
     }
 
     // Update is called once per frame
