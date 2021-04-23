@@ -1,803 +1,803 @@
 {
-    "cityID": "Birmingham_AL",
-    "cityName": "Birmingham",
-    "stateName": "Alabama",
-    "stateAbbreviated": "AL",
-    "latitude": 33.518589,
-    "longitude": -86.810356,
-    "population": 798871,
-    "travelTo": [
-        {
-            "cityID": "Birmingham_AL",
-            "distance": {
-                "text": "1 ft",
-                "value": 0
-            },
-            "duration": {
-                "text": "1 min",
-                "value": 0
-            }
-        },
-        {
-            "cityID": "Mobile_AL",
-            "distance": {
-                "text": "257 miles",
-                "value": 412948
-            },
-            "duration": {
-                "text": "3 hr 40 min",
-                "value": 13202
-            }
-        },
-        {
-            "cityID": "Phoenix_AZ",
-            "distance": {
-                "text": "1,669 miles",
-                "value": 2686133
-            },
-            "duration": {
-                "text": "25 hr",
-                "value": 88446
-            }
-        },
-        {
-            "cityID": "LosAngeles_CA",
-            "distance": {
-                "text": "2,038 miles",
-                "value": 3279287
-            },
-            "duration": {
-                "text": "30 hr",
-                "value": 106663
-            }
-        },
-        {
-            "cityID": "SanFrancisco_CA",
-            "distance": {
-                "text": "2,338 miles",
-                "value": 3761900
-            },
-            "duration": {
-                "text": "34 hr",
-                "value": 123565
-            }
-        },
-        {
-            "cityID": "SanDiego_CA",
-            "distance": {
-                "text": "1,994 miles",
-                "value": 3209808
-            },
-            "duration": {
-                "text": "29 hr",
-                "value": 102953
-            }
-        },
-        {
-            "cityID": "Sacramento_CA",
-            "distance": {
-                "text": "2,328 miles",
-                "value": 3747052
-            },
-            "duration": {
-                "text": "34 hr",
-                "value": 122557
-            }
-        },
-        {
-            "cityID": "Fresno_CA",
-            "distance": {
-                "text": "2,166 miles",
-                "value": 3485400
-            },
-            "duration": {
-                "text": "32 hr",
-                "value": 113737
-            }
-        },
-        {
-            "cityID": "Denver_CO",
-            "distance": {
-                "text": "1,272 miles",
-                "value": 2047792
-            },
-            "duration": {
-                "text": "19 hr 11 min",
-                "value": 69084
-            }
-        },
-        {
-            "cityID": "NewHaven_CT",
-            "distance": {
-                "text": "1,048 miles",
-                "value": 1686578
-            },
-            "duration": {
-                "text": "15 hr 42 min",
-                "value": 56524
-            }
-        },
-        {
-            "cityID": "Miami_FL",
-            "distance": {
-                "text": "749 miles",
-                "value": 1205227
-            },
-            "duration": {
-                "text": "11 hr 43 min",
-                "value": 42207
-            }
-        },
-        {
-            "cityID": "Jacksonville_FL",
-            "distance": {
-                "text": "462 miles",
-                "value": 742884
-            },
-            "duration": {
-                "text": "7 hr 11 min",
-                "value": 25869
-            }
-        },
-        {
-            "cityID": "Tampa_FL",
-            "distance": {
-                "text": "543 miles",
-                "value": 873200
-            },
-            "duration": {
-                "text": "8 hr 46 min",
-                "value": 31577
-            }
-        },
-        {
-            "cityID": "Orlando_FL",
-            "distance": {
-                "text": "534 miles",
-                "value": 858879
-            },
-            "duration": {
-                "text": "8 hr 44 min",
-                "value": 31419
-            }
-        },
-        {
-            "cityID": "Tallahassee_FL",
-            "distance": {
-                "text": "301 miles",
-                "value": 483722
-            },
-            "duration": {
-                "text": "5 hr 1 min",
-                "value": 18043
-            }
-        },
-        {
-            "cityID": "Atlanta_GA",
-            "distance": {
-                "text": "147 miles",
-                "value": 236430
-            },
-            "duration": {
-                "text": "2 hr 15 min",
-                "value": 8072
-            }
-        },
-        {
-            "cityID": "Boise_ID",
-            "distance": {
-                "text": "2,063 miles",
-                "value": 3320483
-            },
-            "duration": {
-                "text": "31 hr",
-                "value": 110727
-            }
-        },
-        {
-            "cityID": "Chicago_IL",
-            "distance": {
-                "text": "662 miles",
-                "value": 1065317
-            },
-            "duration": {
-                "text": "9 hr 49 min",
-                "value": 35326
-            }
-        },
-        {
-            "cityID": "Indianapolis_IN",
-            "distance": {
-                "text": "479 miles",
-                "value": 771244
-            },
-            "duration": {
-                "text": "6 hr 59 min",
-                "value": 25124
-            }
-        },
-        {
-            "cityID": "DesMoines_IA",
-            "distance": {
-                "text": "840 miles",
-                "value": 1351180
-            },
-            "duration": {
-                "text": "12 hr 43 min",
-                "value": 45804
-            }
-        },
-        {
-            "cityID": "Wichita_KS",
-            "distance": {
-                "text": "822 miles",
-                "value": 1322440
-            },
-            "duration": {
-                "text": "11 hr 56 min",
-                "value": 42973
-            }
-        },
-        {
-            "cityID": "Louisville_KY",
-            "distance": {
-                "text": "366 miles",
-                "value": 589008
-            },
-            "duration": {
-                "text": "5 hr 20 min",
-                "value": 19197
-            }
-        },
-        {
-            "cityID": "NewOrleans_LA",
-            "distance": {
-                "text": "332 miles",
-                "value": 534093
-            },
-            "duration": {
-                "text": "4 hr 46 min",
-                "value": 17142
-            }
-        },
-        {
-            "cityID": "Bangor_ME",
-            "distance": {
-                "text": "1,409 miles",
-                "value": 2267730
-            },
-            "duration": {
-                "text": "21 hr 1 min",
-                "value": 75661
-            }
-        },
-        {
-            "cityID": "Baltimore_MD",
-            "distance": {
-                "text": "780 miles",
-                "value": 1255495
-            },
-            "duration": {
-                "text": "11 hr 36 min",
-                "value": 41774
-            }
-        },
-        {
-            "cityID": "Boston_MA",
-            "distance": {
-                "text": "1,181 miles",
-                "value": 1901339
-            },
-            "duration": {
-                "text": "17 hr 41 min",
-                "value": 63688
-            }
-        },
-        {
-            "cityID": "Detroit_MI",
-            "distance": {
-                "text": "724 miles",
-                "value": 1165948
-            },
-            "duration": {
-                "text": "10 hr 39 min",
-                "value": 38368
-            }
-        },
-        {
-            "cityID": "GrandRapids_MI",
-            "distance": {
-                "text": "738 miles",
-                "value": 1186900
-            },
-            "duration": {
-                "text": "10 hr 57 min",
-                "value": 39402
-            }
-        },
-        {
-            "cityID": "Minneapolis_MN",
-            "distance": {
-                "text": "1,075 miles",
-                "value": 1729720
-            },
-            "duration": {
-                "text": "15 hr 38 min",
-                "value": 56259
-            }
-        },
-        {
-            "cityID": "Jackson_MS",
-            "distance": {
-                "text": "237 miles",
-                "value": 381127
-            },
-            "duration": {
-                "text": "3 hr 29 min",
-                "value": 12511
-            }
-        },
-        {
-            "cityID": "KansasCity_MO",
-            "distance": {
-                "text": "696 miles",
-                "value": 1119587
-            },
-            "duration": {
-                "text": "10 hr 47 min",
-                "value": 38832
-            }
-        },
-        {
-            "cityID": "StLouis_MO",
-            "distance": {
-                "text": "500 miles",
-                "value": 803960
-            },
-            "duration": {
-                "text": "7 hr 16 min",
-                "value": 26179
-            }
-        },
-        {
-            "cityID": "Springfield_MO",
-            "distance": {
-                "text": "530 miles",
-                "value": 853754
-            },
-            "duration": {
-                "text": "8 hr 20 min",
-                "value": 30023
-            }
-        },
-        {
-            "cityID": "Billings_MT",
-            "distance": {
-                "text": "1,715 miles",
-                "value": 2760061
-            },
-            "duration": {
-                "text": "26 hr",
-                "value": 92502
-            }
-        },
-        {
-            "cityID": "Omaha_NE",
-            "distance": {
-                "text": "880 miles",
-                "value": 1416030
-            },
-            "duration": {
-                "text": "13 hr 29 min",
-                "value": 48559
-            }
-        },
-        {
-            "cityID": "LasVegas_NV",
-            "distance": {
-                "text": "1,827 miles",
-                "value": 2939509
-            },
-            "duration": {
-                "text": "26 hr",
-                "value": 95253
-            }
-        },
-        {
-            "cityID": "Reno_NV",
-            "distance": {
-                "text": "2,264 miles",
-                "value": 3643878
-            },
-            "duration": {
-                "text": "33 hr",
-                "value": 119732
-            }
-        },
-        {
-            "cityID": "Albuquerque_NM",
-            "distance": {
-                "text": "1,253 miles",
-                "value": 2017301
-            },
-            "duration": {
-                "text": "18 hr 12 min",
-                "value": 65500
-            }
-        },
-        {
-            "cityID": "NewYorkCity_NY",
-            "distance": {
-                "text": "963 miles",
-                "value": 1549177
-            },
-            "duration": {
-                "text": "14 hr 28 min",
-                "value": 52087
-            }
-        },
-        {
-            "cityID": "Buffalo_NY",
-            "distance": {
-                "text": "895 miles",
-                "value": 1440098
-            },
-            "duration": {
-                "text": "13 hr 15 min",
-                "value": 47681
-            }
-        },
-        {
-            "cityID": "Syracuse_NY",
-            "distance": {
-                "text": "1,039 miles",
-                "value": 1672875
-            },
-            "duration": {
-                "text": "15 hr 21 min",
-                "value": 55258
-            }
-        },
-        {
-            "cityID": "Raleigh_NC",
-            "distance": {
-                "text": "552 miles",
-                "value": 888419
-            },
-            "duration": {
-                "text": "8 hr 15 min",
-                "value": 29701
-            }
-        },
-        {
-            "cityID": "Charlotte_NC",
-            "distance": {
-                "text": "392 miles",
-                "value": 630166
-            },
-            "duration": {
-                "text": "5 hr 55 min",
-                "value": 21315
-            }
-        },
-        {
-            "cityID": "Wilmington_NC",
-            "distance": {
-                "text": "565 miles",
-                "value": 909323
-            },
-            "duration": {
-                "text": "8 hr 15 min",
-                "value": 29702
-            }
-        },
-        {
-            "cityID": "Fargo_ND",
-            "distance": {
-                "text": "1,308 miles",
-                "value": 2105574
-            },
-            "duration": {
-                "text": "19 hr 2 min",
-                "value": 68499
-            }
-        },
-        {
-            "cityID": "Columbus_OH",
-            "distance": {
-                "text": "570 miles",
-                "value": 916908
-            },
-            "duration": {
-                "text": "8 hr 22 min",
-                "value": 30104
-            }
-        },
-        {
-            "cityID": "Cleveland_OH",
-            "distance": {
-                "text": "712 miles",
-                "value": 1145978
-            },
-            "duration": {
-                "text": "10 hr 29 min",
-                "value": 37738
-            }
-        },
-        {
-            "cityID": "Cincinnati_OH",
-            "distance": {
-                "text": "463 miles",
-                "value": 744942
-            },
-            "duration": {
-                "text": "6 hr 47 min",
-                "value": 24448
-            }
-        },
-        {
-            "cityID": "OklahomaCity_OK",
-            "distance": {
-                "text": "711 miles",
-                "value": 1144023
-            },
-            "duration": {
-                "text": "10 hr 20 min",
-                "value": 37212
-            }
-        },
-        {
-            "cityID": "Portland_OR",
-            "distance": {
-                "text": "2,493 miles",
-                "value": 4012234
-            },
-            "duration": {
-                "text": "37 hr",
-                "value": 134044
-            }
-        },
-        {
-            "cityID": "Philadelphia_PA",
-            "distance": {
-                "text": "882 miles",
-                "value": 1418936
-            },
-            "duration": {
-                "text": "13 hr 7 min",
-                "value": 47230
-            }
-        },
-        {
-            "cityID": "Pittsburgh_PA",
-            "distance": {
-                "text": "751 miles",
-                "value": 1208250
-            },
-            "duration": {
-                "text": "11 hr 9 min",
-                "value": 40147
-            }
-        },
-        {
-            "cityID": "Charleston_SC",
-            "distance": {
-                "text": "452 miles",
-                "value": 726703
-            },
-            "duration": {
-                "text": "6 hr 52 min",
-                "value": 24721
-            }
-        },
-        {
-            "cityID": "Columbia_SC",
-            "distance": {
-                "text": "1,259 miles",
-                "value": 2026322
-            },
-            "duration": {
-                "text": "18 hr 55 min",
-                "value": 68122
-            }
-        },
-        {
-            "cityID": "SiouxFalls_SD",
-            "distance": {
-                "text": "1,058 miles",
-                "value": 1702791
-            },
-            "duration": {
-                "text": "16 hr 3 min",
-                "value": 57771
-            }
-        },
-        {
-            "cityID": "Nashville_TN",
-            "distance": {
-                "text": "192 miles",
-                "value": 308694
-            },
-            "duration": {
-                "text": "2 hr 49 min",
-                "value": 10163
-            }
-        },
-        {
-            "cityID": "Memphis_TN",
-            "distance": {
-                "text": "245 miles",
-                "value": 394926
-            },
-            "duration": {
-                "text": "3 hr 35 min",
-                "value": 12881
-            }
-        },
-        {
-            "cityID": "Knoxville_TN",
-            "distance": {
-                "text": "257 miles",
-                "value": 413457
-            },
-            "duration": {
-                "text": "3 hr 48 min",
-                "value": 13673
-            }
-        },
-        {
-            "cityID": "Dallas_TX",
-            "distance": {
-                "text": "637 miles",
-                "value": 1024660
-            },
-            "duration": {
-                "text": "9 hr 15 min",
-                "value": 33323
-            }
-        },
-        {
-            "cityID": "Houston_TX",
-            "distance": {
-                "text": "666 miles",
-                "value": 1072504
-            },
-            "duration": {
-                "text": "9 hr 41 min",
-                "value": 34845
-            }
-        },
-        {
-            "cityID": "SanAntonio_TX",
-            "distance": {
-                "text": "862 miles",
-                "value": 1386656
-            },
-            "duration": {
-                "text": "12 hr 35 min",
-                "value": 45279
-            }
-        },
-        {
-            "cityID": "Austin_TX",
-            "distance": {
-                "text": "776 miles",
-                "value": 1249098
-            },
-            "duration": {
-                "text": "12 hr 1 min",
-                "value": 43281
-            }
-        },
-        {
-            "cityID": "Lubbock_TX",
-            "distance": {
-                "text": "982 miles",
-                "value": 1580784
-            },
-            "duration": {
-                "text": "14 hr 13 min",
-                "value": 51167
-            }
-        },
-        {
-            "cityID": "ElPaso_TX",
-            "distance": {
-                "text": "1,272 miles",
-                "value": 2046604
-            },
-            "duration": {
-                "text": "18 hr 16 min",
-                "value": 65777
-            }
-        },
-        {
-            "cityID": "SaltLakeCity_UT",
-            "distance": {
-                "text": "1,767 miles",
-                "value": 2844445
-            },
-            "duration": {
-                "text": "27 hr",
-                "value": 95759
-            }
-        },
-        {
-            "cityID": "VirginiaBeach_VA",
-            "distance": {
-                "text": "728 miles",
-                "value": 1171782
-            },
-            "duration": {
-                "text": "11 hr 4 min",
-                "value": 39827
-            }
-        },
-        {
-            "cityID": "Richmond_VA",
-            "distance": {
-                "text": "677 miles",
-                "value": 1089760
-            },
-            "duration": {
-                "text": "10 hr",
-                "value": 36013
-            }
-        },
-        {
-            "cityID": "Seattle_WA",
-            "distance": {
-                "text": "2,531 miles",
-                "value": 4073953
-            },
-            "duration": {
-                "text": "38 hr",
-                "value": 136653
-            }
-        },
-        {
-            "cityID": "Spokane_WA",
-            "distance": {
-                "text": "2,254 miles",
-                "value": 3626784
-            },
-            "duration": {
-                "text": "34 hr",
-                "value": 121417
-            }
-        },
-        {
-            "cityID": "Milwaukee_WI",
-            "distance": {
-                "text": "759 miles",
-                "value": 1220932
-            },
-            "duration": {
-                "text": "11 hr 10 min",
-                "value": 40202
-            }
-        },
-        {
-            "cityID": "Madison_WI",
-            "distance": {
-                "text": "813 miles",
-                "value": 1308547
-            },
-            "duration": {
-                "text": "11 hr 51 min",
-                "value": 42654
-            }
-        },
-        {
-            "cityID": "GreenBay_WI",
-            "distance": {
-                "text": "873 miles",
-                "value": 1404627
-            },
-            "duration": {
-                "text": "12 hr 51 min",
-                "value": 46269
-            }
-        }
-    ]
+  "cityID": "Birmingham_AL",
+  "cityName": "Birmingham",
+  "stateName": "Alabama",
+  "stateAbbreviated": "AL",
+  "latitude": 33.518589,
+  "longitude": -86.810356,
+  "population": 798871,
+  "travelTo": [
+    {
+      "cityID": "Birmingham_AL",
+      "distance": {
+        "text": "1 ft",
+        "value": 0
+      },
+      "duration": {
+        "text": "1 min",
+        "value": 0
+      }
+    },
+    {
+      "cityID": "Mobile_AL",
+      "distance": {
+        "text": "257 miles",
+        "value": 412948
+      },
+      "duration": {
+        "text": "3 hr 40 min",
+        "value": 13202
+      }
+    },
+    {
+      "cityID": "Phoenix_AZ",
+      "distance": {
+        "text": "1,669 miles",
+        "value": 2686133
+      },
+      "duration": {
+        "text": "25 hr",
+        "value": 88446
+      }
+    },
+    {
+      "cityID": "LosAngeles_CA",
+      "distance": {
+        "text": "2,038 miles",
+        "value": 3279287
+      },
+      "duration": {
+        "text": "30 hr",
+        "value": 106663
+      }
+    },
+    {
+      "cityID": "SanFrancisco_CA",
+      "distance": {
+        "text": "2,338 miles",
+        "value": 3761900
+      },
+      "duration": {
+        "text": "34 hr",
+        "value": 123565
+      }
+    },
+    {
+      "cityID": "SanDiego_CA",
+      "distance": {
+        "text": "1,994 miles",
+        "value": 3209808
+      },
+      "duration": {
+        "text": "29 hr",
+        "value": 102953
+      }
+    },
+    {
+      "cityID": "Sacramento_CA",
+      "distance": {
+        "text": "2,328 miles",
+        "value": 3747052
+      },
+      "duration": {
+        "text": "34 hr",
+        "value": 122557
+      }
+    },
+    {
+      "cityID": "Fresno_CA",
+      "distance": {
+        "text": "2,166 miles",
+        "value": 3485400
+      },
+      "duration": {
+        "text": "32 hr",
+        "value": 113737
+      }
+    },
+    {
+      "cityID": "Denver_CO",
+      "distance": {
+        "text": "1,272 miles",
+        "value": 2047792
+      },
+      "duration": {
+        "text": "19 hr 11 min",
+        "value": 69084
+      }
+    },
+    {
+      "cityID": "NewHaven_CT",
+      "distance": {
+        "text": "1,048 miles",
+        "value": 1686578
+      },
+      "duration": {
+        "text": "15 hr 42 min",
+        "value": 56524
+      }
+    },
+    {
+      "cityID": "Miami_FL",
+      "distance": {
+        "text": "749 miles",
+        "value": 1205227
+      },
+      "duration": {
+        "text": "11 hr 43 min",
+        "value": 42207
+      }
+    },
+    {
+      "cityID": "Jacksonville_FL",
+      "distance": {
+        "text": "462 miles",
+        "value": 742884
+      },
+      "duration": {
+        "text": "7 hr 11 min",
+        "value": 25869
+      }
+    },
+    {
+      "cityID": "Tampa_FL",
+      "distance": {
+        "text": "543 miles",
+        "value": 873200
+      },
+      "duration": {
+        "text": "8 hr 46 min",
+        "value": 31577
+      }
+    },
+    {
+      "cityID": "Orlando_FL",
+      "distance": {
+        "text": "534 miles",
+        "value": 858879
+      },
+      "duration": {
+        "text": "8 hr 44 min",
+        "value": 31419
+      }
+    },
+    {
+      "cityID": "Tallahassee_FL",
+      "distance": {
+        "text": "301 miles",
+        "value": 483722
+      },
+      "duration": {
+        "text": "5 hr 1 min",
+        "value": 18043
+      }
+    },
+    {
+      "cityID": "Atlanta_GA",
+      "distance": {
+        "text": "147 miles",
+        "value": 236430
+      },
+      "duration": {
+        "text": "2 hr 15 min",
+        "value": 8072
+      }
+    },
+    {
+      "cityID": "Boise_ID",
+      "distance": {
+        "text": "2,063 miles",
+        "value": 3320483
+      },
+      "duration": {
+        "text": "31 hr",
+        "value": 110727
+      }
+    },
+    {
+      "cityID": "Chicago_IL",
+      "distance": {
+        "text": "662 miles",
+        "value": 1065317
+      },
+      "duration": {
+        "text": "9 hr 49 min",
+        "value": 35326
+      }
+    },
+    {
+      "cityID": "Indianapolis_IN",
+      "distance": {
+        "text": "479 miles",
+        "value": 771244
+      },
+      "duration": {
+        "text": "6 hr 59 min",
+        "value": 25124
+      }
+    },
+    {
+      "cityID": "DesMoines_IA",
+      "distance": {
+        "text": "840 miles",
+        "value": 1351180
+      },
+      "duration": {
+        "text": "12 hr 43 min",
+        "value": 45804
+      }
+    },
+    {
+      "cityID": "Wichita_KS",
+      "distance": {
+        "text": "822 miles",
+        "value": 1322440
+      },
+      "duration": {
+        "text": "11 hr 56 min",
+        "value": 42973
+      }
+    },
+    {
+      "cityID": "Louisville_KY",
+      "distance": {
+        "text": "366 miles",
+        "value": 589008
+      },
+      "duration": {
+        "text": "5 hr 20 min",
+        "value": 19197
+      }
+    },
+    {
+      "cityID": "NewOrleans_LA",
+      "distance": {
+        "text": "332 miles",
+        "value": 534093
+      },
+      "duration": {
+        "text": "4 hr 46 min",
+        "value": 17142
+      }
+    },
+    {
+      "cityID": "Bangor_ME",
+      "distance": {
+        "text": "1,409 miles",
+        "value": 2267730
+      },
+      "duration": {
+        "text": "21 hr 1 min",
+        "value": 75661
+      }
+    },
+    {
+      "cityID": "Baltimore_MD",
+      "distance": {
+        "text": "780 miles",
+        "value": 1255495
+      },
+      "duration": {
+        "text": "11 hr 36 min",
+        "value": 41774
+      }
+    },
+    {
+      "cityID": "Boston_MA",
+      "distance": {
+        "text": "1,181 miles",
+        "value": 1901339
+      },
+      "duration": {
+        "text": "17 hr 41 min",
+        "value": 63688
+      }
+    },
+    {
+      "cityID": "Detroit_MI",
+      "distance": {
+        "text": "724 miles",
+        "value": 1165948
+      },
+      "duration": {
+        "text": "10 hr 39 min",
+        "value": 38368
+      }
+    },
+    {
+      "cityID": "GrandRapids_MI",
+      "distance": {
+        "text": "738 miles",
+        "value": 1186900
+      },
+      "duration": {
+        "text": "10 hr 57 min",
+        "value": 39402
+      }
+    },
+    {
+      "cityID": "Minneapolis_MN",
+      "distance": {
+        "text": "1,075 miles",
+        "value": 1729720
+      },
+      "duration": {
+        "text": "15 hr 38 min",
+        "value": 56259
+      }
+    },
+    {
+      "cityID": "Jackson_MS",
+      "distance": {
+        "text": "237 miles",
+        "value": 381127
+      },
+      "duration": {
+        "text": "3 hr 29 min",
+        "value": 12511
+      }
+    },
+    {
+      "cityID": "KansasCity_MO",
+      "distance": {
+        "text": "696 miles",
+        "value": 1119587
+      },
+      "duration": {
+        "text": "10 hr 47 min",
+        "value": 38832
+      }
+    },
+    {
+      "cityID": "StLouis_MO",
+      "distance": {
+        "text": "500 miles",
+        "value": 803960
+      },
+      "duration": {
+        "text": "7 hr 16 min",
+        "value": 26179
+      }
+    },
+    {
+      "cityID": "Springfield_MO",
+      "distance": {
+        "text": "530 miles",
+        "value": 853754
+      },
+      "duration": {
+        "text": "8 hr 20 min",
+        "value": 30023
+      }
+    },
+    {
+      "cityID": "Billings_MT",
+      "distance": {
+        "text": "1,715 miles",
+        "value": 2760061
+      },
+      "duration": {
+        "text": "26 hr",
+        "value": 92502
+      }
+    },
+    {
+      "cityID": "Omaha_NE",
+      "distance": {
+        "text": "880 miles",
+        "value": 1416030
+      },
+      "duration": {
+        "text": "13 hr 29 min",
+        "value": 48559
+      }
+    },
+    {
+      "cityID": "LasVegas_NV",
+      "distance": {
+        "text": "1,827 miles",
+        "value": 2939509
+      },
+      "duration": {
+        "text": "26 hr",
+        "value": 95253
+      }
+    },
+    {
+      "cityID": "Reno_NV",
+      "distance": {
+        "text": "2,264 miles",
+        "value": 3643878
+      },
+      "duration": {
+        "text": "33 hr",
+        "value": 119732
+      }
+    },
+    {
+      "cityID": "Albuquerque_NM",
+      "distance": {
+        "text": "1,253 miles",
+        "value": 2017301
+      },
+      "duration": {
+        "text": "18 hr 12 min",
+        "value": 65500
+      }
+    },
+    {
+      "cityID": "NewYorkCity_NY",
+      "distance": {
+        "text": "963 miles",
+        "value": 1549177
+      },
+      "duration": {
+        "text": "14 hr 28 min",
+        "value": 52087
+      }
+    },
+    {
+      "cityID": "Buffalo_NY",
+      "distance": {
+        "text": "895 miles",
+        "value": 1440098
+      },
+      "duration": {
+        "text": "13 hr 15 min",
+        "value": 47681
+      }
+    },
+    {
+      "cityID": "Syracuse_NY",
+      "distance": {
+        "text": "1,039 miles",
+        "value": 1672875
+      },
+      "duration": {
+        "text": "15 hr 21 min",
+        "value": 55258
+      }
+    },
+    {
+      "cityID": "Raleigh_NC",
+      "distance": {
+        "text": "552 miles",
+        "value": 888419
+      },
+      "duration": {
+        "text": "8 hr 15 min",
+        "value": 29701
+      }
+    },
+    {
+      "cityID": "Charlotte_NC",
+      "distance": {
+        "text": "392 miles",
+        "value": 630166
+      },
+      "duration": {
+        "text": "5 hr 55 min",
+        "value": 21315
+      }
+    },
+    {
+      "cityID": "Wilmington_NC",
+      "distance": {
+        "text": "565 miles",
+        "value": 909323
+      },
+      "duration": {
+        "text": "8 hr 15 min",
+        "value": 29702
+      }
+    },
+    {
+      "cityID": "Fargo_ND",
+      "distance": {
+        "text": "1,308 miles",
+        "value": 2105574
+      },
+      "duration": {
+        "text": "19 hr 2 min",
+        "value": 68499
+      }
+    },
+    {
+      "cityID": "Columbus_OH",
+      "distance": {
+        "text": "570 miles",
+        "value": 916908
+      },
+      "duration": {
+        "text": "8 hr 22 min",
+        "value": 30104
+      }
+    },
+    {
+      "cityID": "Cleveland_OH",
+      "distance": {
+        "text": "712 miles",
+        "value": 1145978
+      },
+      "duration": {
+        "text": "10 hr 29 min",
+        "value": 37738
+      }
+    },
+    {
+      "cityID": "Cincinnati_OH",
+      "distance": {
+        "text": "463 miles",
+        "value": 744942
+      },
+      "duration": {
+        "text": "6 hr 47 min",
+        "value": 24448
+      }
+    },
+    {
+      "cityID": "OklahomaCity_OK",
+      "distance": {
+        "text": "711 miles",
+        "value": 1144023
+      },
+      "duration": {
+        "text": "10 hr 20 min",
+        "value": 37212
+      }
+    },
+    {
+      "cityID": "Portland_OR",
+      "distance": {
+        "text": "2,493 miles",
+        "value": 4012234
+      },
+      "duration": {
+        "text": "37 hr",
+        "value": 134044
+      }
+    },
+    {
+      "cityID": "Philadelphia_PA",
+      "distance": {
+        "text": "882 miles",
+        "value": 1418936
+      },
+      "duration": {
+        "text": "13 hr 7 min",
+        "value": 47230
+      }
+    },
+    {
+      "cityID": "Pittsburgh_PA",
+      "distance": {
+        "text": "751 miles",
+        "value": 1208250
+      },
+      "duration": {
+        "text": "11 hr 9 min",
+        "value": 40147
+      }
+    },
+    {
+      "cityID": "Charleston_SC",
+      "distance": {
+        "text": "452 miles",
+        "value": 726703
+      },
+      "duration": {
+        "text": "6 hr 52 min",
+        "value": 24721
+      }
+    },
+    {
+      "cityID": "Columbia_SC",
+      "distance": {
+        "text": "359 miles",
+        "value": 577575
+      },
+      "duration": {
+        "text": "5 hr 24 min",
+        "value": 19469
+      }
+    },
+    {
+      "cityID": "SiouxFalls_SD",
+      "distance": {
+        "text": "1,058 miles",
+        "value": 1702791
+      },
+      "duration": {
+        "text": "16 hr 3 min",
+        "value": 57771
+      }
+    },
+    {
+      "cityID": "Nashville_TN",
+      "distance": {
+        "text": "192 miles",
+        "value": 308694
+      },
+      "duration": {
+        "text": "2 hr 49 min",
+        "value": 10163
+      }
+    },
+    {
+      "cityID": "Memphis_TN",
+      "distance": {
+        "text": "245 miles",
+        "value": 394926
+      },
+      "duration": {
+        "text": "3 hr 35 min",
+        "value": 12881
+      }
+    },
+    {
+      "cityID": "Knoxville_TN",
+      "distance": {
+        "text": "257 miles",
+        "value": 413457
+      },
+      "duration": {
+        "text": "3 hr 48 min",
+        "value": 13673
+      }
+    },
+    {
+      "cityID": "Dallas_TX",
+      "distance": {
+        "text": "637 miles",
+        "value": 1024660
+      },
+      "duration": {
+        "text": "9 hr 15 min",
+        "value": 33323
+      }
+    },
+    {
+      "cityID": "Houston_TX",
+      "distance": {
+        "text": "666 miles",
+        "value": 1072504
+      },
+      "duration": {
+        "text": "9 hr 41 min",
+        "value": 34845
+      }
+    },
+    {
+      "cityID": "SanAntonio_TX",
+      "distance": {
+        "text": "862 miles",
+        "value": 1386656
+      },
+      "duration": {
+        "text": "12 hr 35 min",
+        "value": 45279
+      }
+    },
+    {
+      "cityID": "Austin_TX",
+      "distance": {
+        "text": "776 miles",
+        "value": 1249098
+      },
+      "duration": {
+        "text": "12 hr 1 min",
+        "value": 43281
+      }
+    },
+    {
+      "cityID": "Lubbock_TX",
+      "distance": {
+        "text": "982 miles",
+        "value": 1580784
+      },
+      "duration": {
+        "text": "14 hr 13 min",
+        "value": 51167
+      }
+    },
+    {
+      "cityID": "ElPaso_TX",
+      "distance": {
+        "text": "1,272 miles",
+        "value": 2046604
+      },
+      "duration": {
+        "text": "18 hr 16 min",
+        "value": 65777
+      }
+    },
+    {
+      "cityID": "SaltLakeCity_UT",
+      "distance": {
+        "text": "1,767 miles",
+        "value": 2844445
+      },
+      "duration": {
+        "text": "27 hr",
+        "value": 95759
+      }
+    },
+    {
+      "cityID": "VirginiaBeach_VA",
+      "distance": {
+        "text": "728 miles",
+        "value": 1171782
+      },
+      "duration": {
+        "text": "11 hr 4 min",
+        "value": 39827
+      }
+    },
+    {
+      "cityID": "Richmond_VA",
+      "distance": {
+        "text": "677 miles",
+        "value": 1089760
+      },
+      "duration": {
+        "text": "10 hr",
+        "value": 36013
+      }
+    },
+    {
+      "cityID": "Seattle_WA",
+      "distance": {
+        "text": "2,531 miles",
+        "value": 4073953
+      },
+      "duration": {
+        "text": "38 hr",
+        "value": 136653
+      }
+    },
+    {
+      "cityID": "Spokane_WA",
+      "distance": {
+        "text": "2,254 miles",
+        "value": 3626784
+      },
+      "duration": {
+        "text": "34 hr",
+        "value": 121417
+      }
+    },
+    {
+      "cityID": "Milwaukee_WI",
+      "distance": {
+        "text": "759 miles",
+        "value": 1220932
+      },
+      "duration": {
+        "text": "11 hr 10 min",
+        "value": 40202
+      }
+    },
+    {
+      "cityID": "Madison_WI",
+      "distance": {
+        "text": "813 miles",
+        "value": 1308547
+      },
+      "duration": {
+        "text": "11 hr 51 min",
+        "value": 42654
+      }
+    },
+    {
+      "cityID": "GreenBay_WI",
+      "distance": {
+        "text": "873 miles",
+        "value": 1404627
+      },
+      "duration": {
+        "text": "12 hr 51 min",
+        "value": 46269
+      }
+    }
+  ]
 }
