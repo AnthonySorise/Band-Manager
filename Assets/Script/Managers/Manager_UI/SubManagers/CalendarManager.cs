@@ -827,7 +827,6 @@ public class CalendarManager : MonoBehaviour
         float timePercentage = (float)(Managers.Time.CurrentDT.Ticks - startOfDay.Ticks) / (float)(endOfTheDay.Ticks - startOfDay.Ticks);
         int calendarBoxWidth = (int)(_calendarWeek01Sunday.GetComponent<RectTransform>().sizeDelta.x);
         int timelineWidth = (int)(_calendarTimeline.GetComponent<RectTransform>().sizeDelta.x);
-        //List<SimEvent_Scheduled> playerScheduledEvents = new List<SimEvent_Scheduled>();
 
         //Date tracking
         if (_calendarLastUpdateDT == null)
@@ -901,83 +900,85 @@ public class CalendarManager : MonoBehaviour
 
             foreach (SimEvent_Scheduled simEvent in thisDTPlayerScheduledEvents)
             {
-                switch (simEvent.SimAction.ID)
+                if(simEvent.Duration != TimeSpan.Zero)
                 {
-                    case (SimActionID.NPC_Gig):
-                        if (!hasGig)
-                        {
-                            _calendarDayBoxIcons_ImageComponent[i][indexIcon].enabled = true;
-                            if (_calendarDayBoxIcons_ImageComponent[i][indexIcon].sprite.texture != Managers.Assets.GetSprite(Asset_png.icon_daybox_gig).texture)
+                    switch (simEvent.SimAction.ID)
+                    {
+                        case (SimActionID.NPC_Gig):
+                            if (!hasGig)
                             {
-                                _calendarDayBoxIcons_ImageComponent[i][indexIcon].sprite = Managers.Assets.GetSprite(Asset_png.icon_daybox_gig);
+                                _calendarDayBoxIcons_ImageComponent[i][indexIcon].enabled = true;
+                                if (_calendarDayBoxIcons_ImageComponent[i][indexIcon].sprite.texture != Managers.Assets.GetSprite(Asset_png.icon_daybox_gig).texture)
+                                {
+                                    _calendarDayBoxIcons_ImageComponent[i][indexIcon].sprite = Managers.Assets.GetSprite(Asset_png.icon_daybox_gig);
+                                }
+                                indexIcon += 1;
+                                hasGig = true;
                             }
-                            indexIcon += 1;
-                            hasGig = true;
-                        }
-                        break;
-                    case SimActionID.NPC_Media:
-                        if (!hasMedia)
-                        {
-                            _calendarDayBoxIcons_ImageComponent[i][indexIcon].enabled = true;
-                            if (_calendarDayBoxIcons_ImageComponent[i][indexIcon].sprite.texture != Managers.Assets.GetSprite(Asset_png.icon_daybox_media).texture)
+                            break;
+                        case SimActionID.NPC_Media:
+                            if (!hasMedia)
                             {
-                                _calendarDayBoxIcons_ImageComponent[i][indexIcon].sprite = Managers.Assets.GetSprite(Asset_png.icon_daybox_media);
+                                _calendarDayBoxIcons_ImageComponent[i][indexIcon].enabled = true;
+                                if (_calendarDayBoxIcons_ImageComponent[i][indexIcon].sprite.texture != Managers.Assets.GetSprite(Asset_png.icon_daybox_media).texture)
+                                {
+                                    _calendarDayBoxIcons_ImageComponent[i][indexIcon].sprite = Managers.Assets.GetSprite(Asset_png.icon_daybox_media);
+                                }
+                                indexIcon += 1;
+                                hasMedia = true;
                             }
-                            indexIcon += 1;
-                            hasMedia = true;
-                        }
-                        break;
-                    case SimActionID.NPC_Produce:
-                        if (!hasProduce)
-                        {
-                            _calendarDayBoxIcons_ImageComponent[i][indexIcon].enabled = true;
-                            if (_calendarDayBoxIcons_ImageComponent[i][indexIcon].sprite.texture != Managers.Assets.GetSprite(Asset_png.icon_daybox_produce).texture)
+                            break;
+                        case SimActionID.NPC_Produce:
+                            if (!hasProduce)
                             {
-                                _calendarDayBoxIcons_ImageComponent[i][indexIcon].sprite = Managers.Assets.GetSprite(Asset_png.icon_daybox_produce);
+                                _calendarDayBoxIcons_ImageComponent[i][indexIcon].enabled = true;
+                                if (_calendarDayBoxIcons_ImageComponent[i][indexIcon].sprite.texture != Managers.Assets.GetSprite(Asset_png.icon_daybox_produce).texture)
+                                {
+                                    _calendarDayBoxIcons_ImageComponent[i][indexIcon].sprite = Managers.Assets.GetSprite(Asset_png.icon_daybox_produce);
+                                }
+                                indexIcon += 1;
+                                hasProduce = true;
                             }
-                            indexIcon += 1;
-                            hasProduce = true;
-                        }
-                        break;
-                    case SimActionID.NPC_Scout:
-                        if (!hasScout)
-                        {
-                            _calendarDayBoxIcons_ImageComponent[i][indexIcon].enabled = true;
-                            if (_calendarDayBoxIcons_ImageComponent[i][indexIcon].sprite.texture != Managers.Assets.GetSprite(Asset_png.icon_daybox_scout).texture)
+                            break;
+                        case SimActionID.NPC_Scout:
+                            if (!hasScout)
                             {
-                                _calendarDayBoxIcons_ImageComponent[i][indexIcon].sprite = Managers.Assets.GetSprite(Asset_png.icon_daybox_scout);
+                                _calendarDayBoxIcons_ImageComponent[i][indexIcon].enabled = true;
+                                if (_calendarDayBoxIcons_ImageComponent[i][indexIcon].sprite.texture != Managers.Assets.GetSprite(Asset_png.icon_daybox_scout).texture)
+                                {
+                                    _calendarDayBoxIcons_ImageComponent[i][indexIcon].sprite = Managers.Assets.GetSprite(Asset_png.icon_daybox_scout);
+                                }
+                                indexIcon += 1;
+                                hasScout = true;
                             }
-                            indexIcon += 1;
-                            hasScout = true;
-                        }
-                        break;
-                    case SimActionID.NPC_Special:
-                        if (!hasSpecial)
-                        {
-                            _calendarDayBoxIcons_ImageComponent[i][indexIcon].enabled = true;
-                            if (_calendarDayBoxIcons_ImageComponent[i][indexIcon].sprite.texture != Managers.Assets.GetSprite(Asset_png.icon_daybox_special).texture)
+                            break;
+                        case SimActionID.NPC_Special:
+                            if (!hasSpecial)
                             {
-                                _calendarDayBoxIcons_ImageComponent[i][indexIcon].sprite = Managers.Assets.GetSprite(Asset_png.icon_daybox_special);
+                                _calendarDayBoxIcons_ImageComponent[i][indexIcon].enabled = true;
+                                if (_calendarDayBoxIcons_ImageComponent[i][indexIcon].sprite.texture != Managers.Assets.GetSprite(Asset_png.icon_daybox_special).texture)
+                                {
+                                    _calendarDayBoxIcons_ImageComponent[i][indexIcon].sprite = Managers.Assets.GetSprite(Asset_png.icon_daybox_special);
+                                }
+                                indexIcon += 1;
+                                hasSpecial = true;
                             }
-                            indexIcon += 1;
-                            hasSpecial = true;
-                        }
-                        break;
-                    case SimActionID.NPC_Travel:
-                        if (!hasTravel)
-                        {
-                            _calendarDayBoxIcons_ImageComponent[i][indexIcon].enabled = true;
-                            if (_calendarDayBoxIcons_ImageComponent[i][indexIcon].sprite.texture != Managers.Assets.GetSprite(Asset_png.icon_daybox_travel).texture)
+                            break;
+                        case SimActionID.NPC_Travel:
+                            if (!hasTravel)
                             {
-                                _calendarDayBoxIcons_ImageComponent[i][indexIcon].sprite = Managers.Assets.GetSprite(Asset_png.icon_daybox_travel);
+                                _calendarDayBoxIcons_ImageComponent[i][indexIcon].enabled = true;
+                                if (_calendarDayBoxIcons_ImageComponent[i][indexIcon].sprite.texture != Managers.Assets.GetSprite(Asset_png.icon_daybox_travel).texture)
+                                {
+                                    _calendarDayBoxIcons_ImageComponent[i][indexIcon].sprite = Managers.Assets.GetSprite(Asset_png.icon_daybox_travel);
+                                }
+                                indexIcon += 1;
+                                hasTravel = true;
                             }
-                            indexIcon += 1;
-                            hasTravel = true;
-                        }
-                        break;
+                            break;
+                    }
                 }
             }
-
 
             //Selected DayBox
             if (DateTime.Compare(thisDT.Date, _calendarSelectedDay.Value) == 0)
