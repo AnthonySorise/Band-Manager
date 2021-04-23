@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -82,7 +83,7 @@ public class Manager_Sim : MonoBehaviour, IManager {
                 returnList.Add(simEvent);
             }
         }
-        return returnList;
+        return returnList.OrderBy(o => o.ScheduledDT).ToList();
     }
 
 }

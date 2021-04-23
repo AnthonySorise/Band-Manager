@@ -827,7 +827,7 @@ public class CalendarManager : MonoBehaviour
         float timePercentage = (float)(Managers.Time.CurrentDT.Ticks - startOfDay.Ticks) / (float)(endOfTheDay.Ticks - startOfDay.Ticks);
         int calendarBoxWidth = (int)(_calendarWeek01Sunday.GetComponent<RectTransform>().sizeDelta.x);
         int timelineWidth = (int)(_calendarTimeline.GetComponent<RectTransform>().sizeDelta.x);
-        List<SimEvent_Scheduled> playerScheduledEvents = new List<SimEvent_Scheduled>();
+        //List<SimEvent_Scheduled> playerScheduledEvents = new List<SimEvent_Scheduled>();
 
         //Date tracking
         if (_calendarLastUpdateDT == null)
@@ -890,7 +890,7 @@ public class CalendarManager : MonoBehaviour
             {
                 dayBoxIconImageComponent.enabled = false;
             }
-            playerScheduledEvents = Managers.Sim.MatchingSimEventScheduled(1, thisDT).OrderBy(o => o.ScheduledDT).ToList();
+            List<SimEvent_Scheduled> thisDTPlayerScheduledEvents = Managers.Sim.MatchingSimEventScheduled(1, thisDT);
             var indexIcon = 0;
             bool hasGig = false;
             bool hasMedia = false;
@@ -899,7 +899,7 @@ public class CalendarManager : MonoBehaviour
             bool hasSpecial = false;
             bool hasTravel = false;
 
-            foreach (SimEvent_Scheduled simEvent in playerScheduledEvents)
+            foreach (SimEvent_Scheduled simEvent in thisDTPlayerScheduledEvents)
             {
                 switch (simEvent.SimAction.ID)
                 {
@@ -1055,7 +1055,7 @@ public class CalendarManager : MonoBehaviour
             }
         }
 
-        playerScheduledEvents = Managers.Sim.MatchingSimEventScheduled(1, _calendarSelectedDay.Value).OrderBy(o => o.ScheduledDT).ToList();
+        List<SimEvent_Scheduled> playerScheduledEvents = Managers.Sim.MatchingSimEventScheduled(1, _calendarSelectedDay.Value);
         foreach (SimEvent_Scheduled scheduledEvent in playerScheduledEvents)
         {
             bool isExist = false;
@@ -1066,7 +1066,14 @@ public class CalendarManager : MonoBehaviour
                     isExist = true;
                 }
             }
-            if (!isExist)
+            bool hasRemainder = false;
+            {
+                if (scheduledEvent.ScheduledDT.Day != scheduledEvent.ScheduledDT.Add(scheduledEvent.Duration).Day)
+                {
+                    hasRemainder = true;
+                }
+            }
+            if (!isExist && Managers.UI.Colors_events.ContainsKey(scheduledEvent.SimAction.ID))
             {
                 //create and place scheduled item
                 GameObject calendarTimelineEvent = MonoBehaviour.Instantiate(prefab_CalendarTimelineEvent);
@@ -1075,14 +1082,59 @@ public class CalendarManager : MonoBehaviour
                 CalendarTimelineEvent_RectTransform.SetParent(calendarTimelineTransform, false);
                 //set width
                 TimeSpan fullDay = new TimeSpan(24, 0, 0);
-                int width = (int)(timelineWidth * (scheduledEvent.Duration.TotalSeconds / fullDay.TotalSeconds));
+                TimeSpan duration = scheduledEvent.Duration;
+                if (hasRemainder)
+                {
+                    duration = fullDay - scheduledEvent.ScheduledDT.TimeOfDay;
+                }
+                int width = (int)(timelineWidth * (duration.TotalSeconds / fullDay.TotalSeconds));
                 CalendarTimelineEvent_RectTransform.sizeDelta = new Vector2(width, CalendarTimelineEvent_RectTransform.sizeDelta.y);
                 //set position
                 TimeSpan timeSinceMidnight = scheduledEvent.ScheduledDT - scheduledEvent.ScheduledDT.Date;
                 int startPosition = (int)(timelineWidth * (timeSinceMidnight.TotalSeconds / fullDay.TotalSeconds));
                 CalendarTimelineEvent_RectTransform.anchoredPosition = new Vector2(startPosition, 0);
                 //set color
-                calendarTimelineEvent.GetComponent<Image>().color = Managers.UI._colors_events[scheduledEvent.SimAction.ID];
+                calendarTimelineEvent.GetComponent<Image>().color = Managers.UI.Colors_events[scheduledEvent.SimAction.ID];
+                //set tooltip
+                Managers.UI.TooltipManager.AttachTooltip(calendarTimelineEvent, scheduledEvent);
+            }
+        }
+        //Day Before remainder
+        List<SimEvent_Scheduled> playerScheduledEvents_DayBefore = Managers.Sim.MatchingSimEventScheduled(1, _calendarSelectedDay.Value.AddDays(-1));
+        foreach (SimEvent_Scheduled scheduledEvent in playerScheduledEvents_DayBefore)
+        {
+            bool isExist = false;
+            foreach (RectTransform child in calendarTimelineTransform)
+            {
+                if (child.gameObject.name == "CalendarTimelineEvent_" + scheduledEvent.ScheduledDT.ToString() + "_Remainder")
+                {
+                    isExist = true;
+                }
+            }
+            bool hasRemainder = false;
+            {
+                if (scheduledEvent.ScheduledDT.Day != scheduledEvent.ScheduledDT.Add(scheduledEvent.Duration).Day)
+                {
+                    hasRemainder = true;
+                }
+            }
+            if (hasRemainder && !isExist && Managers.UI.Colors_events.ContainsKey(scheduledEvent.SimAction.ID))
+            {
+                //create and place scheduled item
+                GameObject calendarTimelineEvent = MonoBehaviour.Instantiate(prefab_CalendarTimelineEvent);
+                calendarTimelineEvent.name = "CalendarTimelineEvent_" + scheduledEvent.ScheduledDT.ToString() + "_Remainder";
+                RectTransform CalendarTimelineEvent_RectTransform = calendarTimelineEvent.GetComponent<RectTransform>();
+                CalendarTimelineEvent_RectTransform.SetParent(calendarTimelineTransform, false);
+                //set width
+                TimeSpan fullDay = new TimeSpan(24, 0, 0);
+                TimeSpan duration = scheduledEvent.ScheduledDT.Add(scheduledEvent.Duration).TimeOfDay;
+                int width = (int)(timelineWidth * (duration.TotalSeconds / fullDay.TotalSeconds));
+                CalendarTimelineEvent_RectTransform.sizeDelta = new Vector2(width, CalendarTimelineEvent_RectTransform.sizeDelta.y);
+                //set position
+                int startPosition = 0;
+                CalendarTimelineEvent_RectTransform.anchoredPosition = new Vector2(startPosition, 0);
+                //set color
+                calendarTimelineEvent.GetComponent<Image>().color = Managers.UI.Colors_events[scheduledEvent.SimAction.ID];
                 //set tooltip
                 Managers.UI.TooltipManager.AttachTooltip(calendarTimelineEvent, scheduledEvent);
             }

@@ -32,7 +32,7 @@ public class Manager_UI : MonoBehaviour, IManager
     //Font
 
     //Colors
-    public Dictionary<SimActionID, Color32> _colors_events;
+    public Dictionary<SimActionID, Color32> Colors_events;
 
     //UI Prefabs
     public GameObject prefab_Button;
@@ -67,7 +67,7 @@ public class Manager_UI : MonoBehaviour, IManager
         //mainFont = Resources.Load<Font>("Fonts/ConcertOne-Regular");
 
         //colors
-        _colors_events = new Dictionary<SimActionID, Color32>
+        Colors_events = new Dictionary<SimActionID, Color32>
         {
             [SimActionID.NPC_Gig] = new Color32(215, 103, 54, 255),
             [SimActionID.NPC_Media] = new Color32(142, 181, 71, 255),
