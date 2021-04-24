@@ -74,27 +74,27 @@ public class Manager_Input : MonoBehaviour, IManager {
                 {
                     //Menu
                     case InputCommand.ToggleMainMenuPanel:
-                        Managers.UI.MainMenuManager.KeyDown_ToggleMainMenu();
+                        Managers.UI.MainMenu.KeyDown_ToggleMainMenu();
                         return;
                     //Time
                     case InputCommand.ToggleTime:
-                        Managers.UI.TimeControlManager.KeyDown_ToggleTimeButton();
+                        Managers.UI.TimeControl.KeyDown_ToggleTimeButton();
                         return;
                     case InputCommand.IncreaseSpeed:
-                        Managers.UI.TimeControlManager.KeyDown_IncreaseSpeedButton();
+                        Managers.UI.TimeControl.KeyDown_IncreaseSpeedButton();
                         return;
                     case InputCommand.DecreaseSpeed:
-                        Managers.UI.TimeControlManager.KeyDown_DecreaseSpeedButton();
+                        Managers.UI.TimeControl.KeyDown_DecreaseSpeedButton();
                         return;
                     //Calendar
                     case InputCommand.ToggleCalendar:
-                        Managers.UI.CalendarManager.KeyDown_ToggleCalendarButton();
+                        Managers.UI.Calendar.KeyDown_ToggleCalendarButton();
                         return;
                     case InputCommand.CalendarPagePrevious:
-                        Managers.UI.CalendarManager.KeyDown_CalendarPagePrevious();
+                        Managers.UI.Calendar.KeyDown_CalendarPagePrevious();
                         return;
                     case InputCommand.CalendarPageNext:
-                        Managers.UI.CalendarManager.KeyDown_CalendarPageNext();
+                        Managers.UI.Calendar.KeyDown_CalendarPageNext();
                         return;
                 }
             }
@@ -106,18 +106,18 @@ public class Manager_Input : MonoBehaviour, IManager {
                 {
                     //Time
                     case InputCommand.IncreaseSpeed:
-                        Managers.UI.TimeControlManager.Hold_IncreaseSpeedButton();
+                        Managers.UI.TimeControl.Hold_IncreaseSpeedButton();
                         return;
                     case InputCommand.DecreaseSpeed:
-                        Managers.UI.TimeControlManager.Hold_DecreaseSpeedButton();
+                        Managers.UI.TimeControl.Hold_DecreaseSpeedButton();
                         return;
 
                     //Calendar
                     case InputCommand.CalendarPagePrevious:
-                        Managers.UI.CalendarManager.Hold_CalendarPagePrevious();
+                        Managers.UI.Calendar.Hold_CalendarPagePrevious();
                         return;
                     case InputCommand.CalendarPageNext:
-                        Managers.UI.CalendarManager.Hold_CalendarPageNext();
+                        Managers.UI.Calendar.Hold_CalendarPageNext();
                         return;
 
                     //Audio
@@ -136,23 +136,23 @@ public class Manager_Input : MonoBehaviour, IManager {
 				{
                     //Time
                     case InputCommand.ToggleTime:
-                        Managers.UI.TimeControlManager.KeyUp_ToggleTimeButon();
+                        Managers.UI.TimeControl.KeyUp_ToggleTimeButon();
                         return;
                     case InputCommand.IncreaseSpeed:
-                        Managers.UI.TimeControlManager.KeyUp_IncreaseSpeedButton();
+                        Managers.UI.TimeControl.KeyUp_IncreaseSpeedButton();
                         return;
                     case InputCommand.DecreaseSpeed:
-                        Managers.UI.TimeControlManager.KeyUp_DecreaseSpeedButton();
+                        Managers.UI.TimeControl.KeyUp_DecreaseSpeedButton();
                         return;
                     //Calendar
                     case InputCommand.ToggleCalendar:
-                        Managers.UI.CalendarManager.KeyUp_ToggleCalendarButton();
+                        Managers.UI.Calendar.KeyUp_ToggleCalendarButton();
                         return;
                     case InputCommand.CalendarPagePrevious:
-                        Managers.UI.CalendarManager.KeyUp_CalendarPagePrevious();
+                        Managers.UI.Calendar.KeyUp_CalendarPagePrevious();
                         return;
                     case InputCommand.CalendarPageNext:
-                        Managers.UI.CalendarManager.KeyUp_CalendarPageNext();
+                        Managers.UI.Calendar.KeyUp_CalendarPageNext();
                         return;
                 }
 			}
@@ -178,16 +178,16 @@ public class Manager_Input : MonoBehaviour, IManager {
                 switch (gameObjectSelected)
                 {
                     case "Button_IncreaseSpeed":
-                        Managers.UI.TimeControlManager.Hold_IncreaseSpeedButton();
+                        Managers.UI.TimeControl.Hold_IncreaseSpeedButton();
                         break;
                     case "Button_DecreaseSpeed":
-                        Managers.UI.TimeControlManager.Hold_DecreaseSpeedButton();
+                        Managers.UI.TimeControl.Hold_DecreaseSpeedButton();
                         break;
                     case "Button_CalendarPagePrevious":
-                        Managers.UI.CalendarManager.Hold_CalendarPagePrevious();
+                        Managers.UI.Calendar.Hold_CalendarPagePrevious();
                         break;
                     case "Button_CalendarPageNext":
-                        Managers.UI.CalendarManager.Hold_CalendarPageNext();
+                        Managers.UI.Calendar.Hold_CalendarPageNext();
                         break;
                     default:
                         return;
@@ -200,10 +200,10 @@ public class Manager_Input : MonoBehaviour, IManager {
                 switch (gameObjectSelected)
                 {
                     case "Button_IncreaseSpeed":
-                        Managers.UI.TimeControlManager.HoldEnd_IncreaseSpeedButton();
+                        Managers.UI.TimeControl.HoldEnd_IncreaseSpeedButton();
                         break;
                     case "Button_DecreaseSpeed":
-                        Managers.UI.TimeControlManager.HoldEnd_DecreaseSpeedButton();
+                        Managers.UI.TimeControl.HoldEnd_DecreaseSpeedButton();
                         break;
                     default:
                         return;

@@ -54,7 +54,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Assets\Script\Managers\Manager_Data\INIFile.cs" />
-    <Compile Include="Assets\Script\Managers\Manager_UI\PrefabConstructors\PrefabConstructor_PopUpOption.cs" />
     <Compile Include="Assets\Script\Managers\Manager_Input.cs" />
     <Compile Include="Assets\LeanTween\Framework\LeanTween.cs" />
     <Compile Include="Assets\LeanTween\Examples\Scripts\LogoCinematic.cs" />
@@ -68,11 +67,11 @@
     <Compile Include="Assets\LeanTween\Examples\Archived\TestingPunch.cs" />
     <Compile Include="Assets\LeanTween\Framework\LTSeq.cs" />
     <Compile Include="Assets\Script\Managers\Manager_Sim\Models\NPC.cs" />
-    <Compile Include="Assets\Script\Managers\Manager_Sim\SimEvents\SimActionOption.cs" />
+    <Compile Include="Assets\Script\Managers\Manager_Sim\SimEventSystem\SimActionOption.cs" />
     <Compile Include="Assets\Script\Managers\Manager_Sim\Sim_NPC.cs" />
-    <Compile Include="Assets\Script\Managers\Manager_Sim\SimEvents\SimEvent_Immediate.cs" />
+    <Compile Include="Assets\Script\Managers\Manager_Sim\SimEventSystem\SimEvent_Immediate.cs" />
     <Compile Include="Assets\LeanTween\Examples\Scripts\GeneralUISpace.cs" />
-    <Compile Include="Assets\Script\Managers\Manager_UI\SubManagers\TimeControlManager.cs" />
+    <Compile Include="Assets\Script\Managers\Manager_UI\UI_TimeControl.cs" />
     <Compile Include="Assets\LeanTween\Framework\LeanAudio.cs" />
     <Compile Include="Assets\Script\Utilities\RNG.cs" />
     <Compile Include="Assets\Script\GameObjectComponents\Draggable.cs" />
@@ -80,10 +79,10 @@
     <Compile Include="Assets\Script\Managers\Manager_Assets.cs" />
     <Compile Include="Assets\Script\Managers\Manager_Audio.cs" />
     <Compile Include="Assets\Script\Managers\Manager_GO.cs" />
-    <Compile Include="Assets\Script\Managers\Manager_UI\PrefabConstructors\PrefabConstructor_TravelMenu.cs" />
-    <Compile Include="Assets\Script\Managers\Manager_Sim\SimEvents\SimEvent_Scheduled.cs" />
+    <Compile Include="Assets\Script\Managers\Manager_UI\UL_TravelMenu.cs" />
+    <Compile Include="Assets\Script\Managers\Manager_Sim\SimEventSystem\SimEvent_Scheduled.cs" />
     <Compile Include="Assets\Script\Utilities\SetAnchor.cs" />
-    <Compile Include="Assets\Script\Managers\Manager_UI\SubManagers\CalendarManager.cs" />
+    <Compile Include="Assets\Script\Managers\Manager_UI\UI_Calendar.cs" />
     <Compile Include="Assets\Script\Managers\Manager_UI.cs" />
     <Compile Include="Assets\LeanTween\Examples\Scripts\GeneralSimpleUI.cs" />
     <Compile Include="Assets\Script\Managers\Manager_Sim\Models\Transportation.cs" />
@@ -104,21 +103,21 @@
     <Compile Include="Assets\Script\GameObjectComponents\CursorBehavior.cs" />
     <Compile Include="Assets\Script\Managers\Manager_Sim\Models\NPCTraitMinor.cs" />
     <Compile Include="Assets\LeanTween\Examples\Scripts\GeneralEventsListeners.cs" />
-    <Compile Include="Assets\Script\Managers\Manager_Sim\SimEvents\SimAction.cs" />
+    <Compile Include="Assets\Script\Managers\Manager_Sim\SimEventSystem\SimAction.cs" />
     <Compile Include="Assets\LeanTween\Examples\Scripts\PathSplineTrack.cs" />
     <Compile Include="Assets\Script\Managers\Manager_Sim\Sim_TEST.cs" />
     <Compile Include="Assets\LeanTween\Framework\LeanTest.cs" />
     <Compile Include="Assets\LeanTween\Examples\Scripts\TestingZLegacy.cs" />
-    <Compile Include="Assets\Script\Managers\Manager_UI\PrefabConstructors\PrefabConstructor_Popup.cs" />
+    <Compile Include="Assets\Script\Managers\Manager_UI\UL_Popup.cs" />
     <Compile Include="Assets\LeanTween\Examples\Scripts\PathSpline2d.cs" />
     <Compile Include="Assets\Script\GameObjectComponents\ClickableGO.cs" />
-    <Compile Include="Assets\Script\Managers\Manager_Sim\SimEvents\SimEvent_MTTH.cs" />
+    <Compile Include="Assets\Script\Managers\Manager_Sim\SimEventSystem\SimEvent_MTTH.cs" />
     <Compile Include="Assets\Script\Managers\Managers.cs" />
     <Compile Include="Assets\LeanTween\Examples\Scripts\TestingZLegacyExt.cs" />
     <Compile Include="Assets\LeanTween\Examples\Scripts\PathSplinePerformance.cs" />
-    <Compile Include="Assets\Script\Managers\Manager_UI\SubManagers\TooltipManager.cs" />
+    <Compile Include="Assets\Script\Managers\Manager_UI\UI_Tooltip.cs" />
     <Compile Include="Assets\LeanTween\Examples\Scripts\PathBezier2d.cs" />
-    <Compile Include="Assets\Script\Managers\Manager_UI\SubManagers\MainMenuManager.cs" />
+    <Compile Include="Assets\Script\Managers\Manager_UI\UI_MainMenu.cs" />
     <Compile Include="Assets\Script\Managers\Manager_Camera.cs" />
     <Compile Include="Assets\Script\Managers\Manager_Sim\Models\Property.cs" />
     <Compile Include="Assets\Script\Managers\Manager_Sim\Sim_Property.cs" />
@@ -127,7 +126,7 @@
     <Compile Include="Assets\LeanTween\Examples\Scripts\GeneralSequencer.cs" />
     <Compile Include="Assets\LeanTween\Examples\Archived\OldGUIExamplesCS.cs" />
     <Compile Include="Assets\LeanTween\Examples\Scripts\GeneralBasic.cs" />
-    <Compile Include="Assets\Script\Managers\Manager_UI\SubManagers\ActionMenuManager.cs" />
+    <Compile Include="Assets\Script\Managers\Manager_UI\UI_ActionMenu.cs" />
     <Compile Include="Assets\LeanTween\Examples\Archived\TestingRigidbodyCS.cs" />
     <Compile Include="Assets\LeanTween\Examples\Scripts\Following.cs" />
   </ItemGroup>

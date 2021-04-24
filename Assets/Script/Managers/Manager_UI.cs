@@ -37,15 +37,14 @@ public class Manager_UI : MonoBehaviour, IManager
     //UI Prefabs
     public GameObject prefab_Button;
 
-    //UI SubManagers and Constructors
-    public MainMenuManager MainMenuManager;
-    public TooltipManager TooltipManager;
-    public TimeControlManager TimeControlManager;
-    public CalendarManager CalendarManager;
-    public ActionMenuManager ActionMenuManager;
-    public PrefabConstructor_Popup prefabConstructor_popup;
-    public PrefabConstructor_PopUpOption prefabConstructor_popupOption;
-    public PrefabConstructor_TravelMenu prefabConstructor_travelMenu;
+    //UI SubManagers
+    public UI_MainMenu MainMenu;
+    public UI_Tooltip Tooltip;
+    public UI_TimeControl TimeControl;
+    public UI_Calendar Calendar;
+    public UI_ActionMenu ActionMenu;
+    public UI_Popup Popup;
+    public UI_TravelMenu TravelMenu;
 
     //Canvases
     private GameObject _hiddenCanvasGO;
@@ -80,15 +79,14 @@ public class Manager_UI : MonoBehaviour, IManager
         //UI Prefabs
         prefab_Button = Resources.Load<GameObject>("Prefabs/UI/Button");
 
-        //Constructors and SubManagers
-        prefabConstructor_popup = this.gameObject.AddComponent<PrefabConstructor_Popup>();
-        prefabConstructor_popupOption = this.gameObject.AddComponent<PrefabConstructor_PopUpOption>();
-        prefabConstructor_travelMenu = this.gameObject.AddComponent<PrefabConstructor_TravelMenu>();
-        MainMenuManager = this.gameObject.AddComponent<MainMenuManager>();
-        TooltipManager = this.gameObject.AddComponent<TooltipManager>();
-        TimeControlManager = this.gameObject.AddComponent<TimeControlManager>();
-        CalendarManager = this.gameObject.AddComponent<CalendarManager>();
-        ActionMenuManager = this.gameObject.AddComponent<ActionMenuManager>();
+        //SubManagers
+        Popup = this.gameObject.AddComponent<UI_Popup>();
+        TravelMenu = this.gameObject.AddComponent<UI_TravelMenu>();
+        MainMenu = this.gameObject.AddComponent<UI_MainMenu>();
+        Tooltip = this.gameObject.AddComponent<UI_Tooltip>();
+        TimeControl = this.gameObject.AddComponent<UI_TimeControl>();
+        Calendar = this.gameObject.AddComponent<UI_Calendar>();
+        ActionMenu = this.gameObject.AddComponent<UI_ActionMenu>();
 
         //Initiate UI GOs and Elements
         InitiateCanvas(ref _hiddenCanvasGO, "Canvas_Hidden", CanvasLayer.Hidden);
