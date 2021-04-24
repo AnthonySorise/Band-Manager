@@ -185,8 +185,8 @@ public class Sim_Travel : MonoBehaviour
             Debug.Log("Travel canceled.");
         };
 
-        Action<GameObject> tt_option01 = (GameObject go) => { Managers.UI.Tooltip.AttachTooltip(go, "Start travel to " + Managers.Data.CityData[toCityID].cityName.ToString()); };
-        Action<GameObject> tt_option02 = (GameObject go) => { Managers.UI.Tooltip.AttachTooltip(go, "Cancel travel."); };
+        Action<GameObject> tt_option01 = (GameObject go) => { Managers.UI.Tooltip.SetTooltip(go, "Start travel to " + Managers.Data.CityData[toCityID].cityName.ToString()); };
+        Action<GameObject> tt_option02 = (GameObject go) => { Managers.UI.Tooltip.SetTooltip(go, "Cancel travel."); };
 
         SimActionOption SimActionOption01 = new SimActionOption(option01, "Let's go!", tt_option01);
         SimActionOption SimActionOption02 = new SimActionOption(option02, "Let's not.", tt_option02);
@@ -221,10 +221,10 @@ public class Sim_Travel : MonoBehaviour
 
         UnityAction initialAction = () => {
             Managers.Sim.NPC.getNPC(npcID).TravelStart(toCityID);
-            if (Managers.UI.TravelMenu.MenuGO != null)
-            {
-                Managers.UI.TravelMenu.Toggle();
-            }
+            //if (Managers.UI.TravelMenu.MenuGO != null)
+            //{
+            //    Managers.UI.TravelMenu.Toggle();
+            //}
             SIM_FinishTravel(npcID, transportationID, fromCityID, toCityID, arrivalTime);
         };
         Func<bool> validCondition = () => { return true; };
@@ -247,7 +247,7 @@ public class Sim_Travel : MonoBehaviour
             Debug.Log("End Travel");
         };
 
-        Action<GameObject> tt_option01 = (GameObject go) => { Managers.UI.Tooltip.AttachTooltip(go, "Welcome to " + Managers.Data.CityData[toCityID].cityName.ToString()); };
+        Action<GameObject> tt_option01 = (GameObject go) => { Managers.UI.Tooltip.SetTooltip(go, "Welcome to " + Managers.Data.CityData[toCityID].cityName.ToString()); };
 
         SimActionOption SimActionOption01 = new SimActionOption(option01, "Welcome!", tt_option01);
 

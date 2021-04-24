@@ -33,9 +33,9 @@ public class UI_TimeControl : MonoBehaviour
         Managers.UI.InitiateButton(ref _decreaseSpeedButton, "Button_DecreaseSpeed");
 
         //Tooltips
-        Managers.UI.Tooltip.AttachTooltip(_toggleTimeButton.gameObject, "Toggle Time", InputCommand.ToggleTime, "Start or pause the progression of time.", true);
-        Managers.UI.Tooltip.AttachTooltip(_increaseSpeedButton.gameObject, "Increase Speed", InputCommand.IncreaseSpeed, "", true);
-        Managers.UI.Tooltip.AttachTooltip(_decreaseSpeedButton.gameObject, "Decrease Speed", InputCommand.DecreaseSpeed, "", true);
+        Managers.UI.Tooltip.SetTooltip(_toggleTimeButton.gameObject, "Toggle Time", InputCommand.ToggleTime, "Start or pause the progression of time.", true);
+        Managers.UI.Tooltip.SetTooltip(_increaseSpeedButton.gameObject, "Increase Speed", InputCommand.IncreaseSpeed, "", true);
+        Managers.UI.Tooltip.SetTooltip(_decreaseSpeedButton.gameObject, "Decrease Speed", InputCommand.DecreaseSpeed, "", true);
 
         //Time Panel Click Listeners
         _toggleTimeButton.onClick.AddListener(Click_ToggleTimeButton);

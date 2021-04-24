@@ -96,12 +96,15 @@ public class UI_TravelMenu : MonoBehaviour{
             _cityButtons.Add(cityID, thisButton);
 
             //add tooltips
-            Managers.UI.Tooltip.AttachTooltip(thisButton.gameObject, cityLabel);
+            Managers.UI.Tooltip.SetTooltip(thisButton.gameObject, cityLabel);
 
             //add button listener
             thisButton.onClick.AddListener(() =>
             {
-                _toCity = cityID;
+            if (Managers.Sim.NPC.GetPlayerCharacter().CityEnRoute == null)
+                {
+                    _toCity = cityID;
+                }
             });
 
             //add city to dropdown
@@ -134,7 +137,7 @@ public class UI_TravelMenu : MonoBehaviour{
 
     private void handleSubmitButton()
     {
-        CityID currentCity = Managers.Sim.NPC.getPlayerCharacter().CurrentCity;
+        CityID currentCity = Managers.Sim.NPC.GetPlayerCharacter().CurrentCity;
         Managers.Sim.Travel.SIM_QueryTravel(1, _transportationID, currentCity, _toCity.Value);
     }
 
@@ -152,7 +155,7 @@ public class UI_TravelMenu : MonoBehaviour{
 
     private void updateTexts()
     {
-        CityID currentCity = Managers.Sim.NPC.getPlayerCharacter().CurrentCity;
+        CityID currentCity = Managers.Sim.NPC.GetPlayerCharacter().CurrentCity;
         _text_CurrentCityName.text = Managers.Data.CityData[currentCity].cityName;
         _text_CurrentCityState.text = Managers.Data.CityData[currentCity].stateName;
         _text_CurrentCityPopulation.text = Managers.Data.CityData[currentCity].population.ToString();
@@ -178,7 +181,7 @@ public class UI_TravelMenu : MonoBehaviour{
     }
     private void updateButtons()
     {
-        CityID currentCityID = Managers.Sim.NPC.getPlayerCharacter().CurrentCity;
+        CityID currentCityID = Managers.Sim.NPC.GetPlayerCharacter().CurrentCity;
         Data_City currentCityData = Managers.Data.CityData[currentCityID];
         Data_City toCityData = (_toCity == null) ? null : Managers.Data.CityData[_toCity.Value];
 
@@ -224,11 +227,31 @@ public class UI_TravelMenu : MonoBehaviour{
         foreach (CityID cityID in CityID.GetValues(typeof(CityID)))
         {
             //dropdowns
+            if (_dropDown_TravelTo.IsInteractable())
+            {
+                if(Managers.Sim.NPC.GetPlayerCharacter().CityEnRoute != null)
+                {
+                    string tooltipMessage = "Currently traveling to " + Managers.Data.CityData[_toCity.Value].cityName;
+
+                    _dropDown_TravelTo.interactable = false;
+                    Managers.UI.Tooltip.SetTooltip(_dropDown_TravelTo.gameObject, tooltipMessage);
+                }
+            }
+            else
+            {
+                if (Managers.Sim.NPC.GetPlayerCharacter().CityEnRoute == null)
+                {
+                    _dropDown_TravelTo.interactable = true;
+                    Managers.UI.Tooltip.DisableTooltip(_dropDown_TravelTo.gameObject);
+                }
+            }
+
+
             List<TransportationID> validTransportations = new List<TransportationID>();
             foreach (TransportationID transportationID in TransportationID.GetValues(typeof(TransportationID)))
             {
                 bool playerCharacterHasItem = false;
-                foreach (PropertyID propertyID in Managers.Sim.NPC.getPlayerCharacter().Properties)
+                foreach (PropertyID propertyID in Managers.Sim.NPC.GetPlayerCharacter().Properties)
                 {
                     if(Managers.Sim.Property.Properties[propertyID] is Property_Transportation)
                     {

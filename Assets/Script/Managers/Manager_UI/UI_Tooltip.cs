@@ -21,21 +21,21 @@ public class UI_Tooltip : MonoBehaviour {
         _toolTipGO.SetActive(false); 
     }
 
-    public void AttachTooltip(GameObject go, string header, List<string> textList, bool hasDelay = false)
+    public void SetTooltip(GameObject go, string header, List<string> textList, bool hasDelay = false)
     {
         initTooltipBehavior(go, header, textList, hasDelay);
     }
-    public void AttachTooltip(GameObject go, string header, string text, bool hasDelay = false)
+    public void SetTooltip(GameObject go, string header, string text, bool hasDelay = false)
     {
         List<string> textList = new List<string> { text };
         initTooltipBehavior(go, header, textList, hasDelay);
     }
-    public void AttachTooltip(GameObject go, string text, bool hasDelay = false)
+    public void SetTooltip(GameObject go, string text, bool hasDelay = false)
     {
         List<string> textList = new List<string> { text };
         initTooltipBehavior(go, "", textList, hasDelay);
     }
-    public void AttachTooltip(GameObject go, string ButtonName, InputCommand inputCommand, string description, bool hasDelay = false)
+    public void SetTooltip(GameObject go, string ButtonName, InputCommand inputCommand, string description, bool hasDelay = false)
     {
         List<string> textList = new List<string>();
         textList.Add("<color=#ADD8E6>" + Managers.Input.GetKeysAsString(inputCommand) + "</color>");
@@ -44,7 +44,7 @@ public class UI_Tooltip : MonoBehaviour {
         }
         initTooltipBehavior(go, ButtonName, textList, hasDelay);
     }
-    public void AttachTooltip(GameObject go, SimEvent_Scheduled scheduledEvent)
+    public void SetTooltip(GameObject go, SimEvent_Scheduled scheduledEvent)
     {
         string header = "";
         switch (scheduledEvent.SimAction.ID)
@@ -84,27 +84,15 @@ public class UI_Tooltip : MonoBehaviour {
 
     private void initTooltipBehavior(GameObject go, string header, List<string> textList, bool hasDelay)
     {
-        if (go.GetComponent<TooltipBehavior>() == null)
-        {
-            TooltipBehavior tooltipBehavior = go.AddComponent<TooltipBehavior>();
-            tooltipBehavior.Header = header;
-            tooltipBehavior.TextList = textList;
-            tooltipBehavior.HasDelay = hasDelay;
-        }
-        else
-        {
-            updateGOtooltipBehavior(go, header, textList, hasDelay);
-        }
-    }
-    private void updateGOtooltipBehavior(GameObject go, string header, List<string> textList, bool hasDelay)
-    {
         TooltipBehavior tooltipBehavior = go.GetComponent<TooltipBehavior>();
-        if (tooltipBehavior)
+        if (tooltipBehavior == null)
         {
-            tooltipBehavior.Header = header;
-            tooltipBehavior.TextList = textList;
-            tooltipBehavior.HasDelay = hasDelay;
+            tooltipBehavior = go.AddComponent<TooltipBehavior>();
         }
+        tooltipBehavior.Header = header;
+        tooltipBehavior.TextList = textList;
+        tooltipBehavior.HasDelay = hasDelay;
+        tooltipBehavior.IsActive = true;
     }
 
     public void onGOenter(string header, List<string> textList, bool hasDelay)
@@ -167,7 +155,31 @@ public class UI_Tooltip : MonoBehaviour {
         _toolTipBackground.GetComponent<RectTransform>().sizeDelta = backgroundSize;
     }
 
-    
+    public void DisableTooltip(GameObject go)
+    {
+        TooltipBehavior tooltipBehavior = go.GetComponent<TooltipBehavior>();
+        if (tooltipBehavior)
+        {
+            tooltipBehavior.IsActive = false;
+        }
+        else
+        {
+            Debug.Log("Tooltip not attached to " + go.name);
+        }
+    }
+    public void EnableTooltip(GameObject go)
+    {
+        TooltipBehavior tooltipBehavior = go.GetComponent<TooltipBehavior>();
+        if (tooltipBehavior)
+        {
+            tooltipBehavior.IsActive = true;
+        }
+        else
+        {
+            Debug.Log("Tooltip not attached to " + go.name);
+        }
+    }
+
 
     private void Update()
     {
@@ -203,11 +215,19 @@ public class TooltipBehavior : MonoBehaviour, IPointerEnterHandler, IPointerExit
     public string Header;
     public List<string> TextList;
     public bool HasDelay;
+    public bool IsActive;
 
+    private void Start()
+    {
+        IsActive = true;
+    }
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        Managers.UI.Tooltip.onGOenter(Header, TextList, HasDelay);
+        if (IsActive)
+        {
+            Managers.UI.Tooltip.onGOenter(Header, TextList, HasDelay);
+        }
     }
 
     public void OnPointerExit(PointerEventData eventData)

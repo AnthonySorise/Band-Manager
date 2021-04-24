@@ -507,9 +507,9 @@ public class UI_Calendar : MonoBehaviour
         }
 
         //tooltips
-        Managers.UI.Tooltip.AttachTooltip(_toggleCalendarButton.gameObject, "Toggle Calendar", InputCommand.ToggleCalendar, "", true);
-        Managers.UI.Tooltip.AttachTooltip(_calendarPagePreviousButton.gameObject, "Previous Week", InputCommand.CalendarPagePrevious, "", true);
-        Managers.UI.Tooltip.AttachTooltip(_calendarPageNextButton.gameObject, "Next Week", InputCommand.CalendarPageNext, "", true);
+        Managers.UI.Tooltip.SetTooltip(_toggleCalendarButton.gameObject, "Toggle Calendar", InputCommand.ToggleCalendar, "", true);
+        Managers.UI.Tooltip.SetTooltip(_calendarPagePreviousButton.gameObject, "Previous Week", InputCommand.CalendarPagePrevious, "", true);
+        Managers.UI.Tooltip.SetTooltip(_calendarPageNextButton.gameObject, "Next Week", InputCommand.CalendarPageNext, "", true);
 
         //Click Listeners
         _toggleCalendarButton.onClick.AddListener(Click_ToggleCalendarButton);
@@ -1097,7 +1097,7 @@ public class UI_Calendar : MonoBehaviour
                 //set color
                 calendarTimelineEvent.GetComponent<Image>().color = Managers.UI.Colors_events[scheduledEvent.SimAction.ID];
                 //set tooltip
-                Managers.UI.Tooltip.AttachTooltip(calendarTimelineEvent, scheduledEvent);
+                Managers.UI.Tooltip.SetTooltip(calendarTimelineEvent, scheduledEvent);
             }
         }
         //Day Before remainder
@@ -1137,7 +1137,7 @@ public class UI_Calendar : MonoBehaviour
                 //set color
                 calendarTimelineEvent.GetComponent<Image>().color = Managers.UI.Colors_events[scheduledEvent.SimAction.ID];
                 //set tooltip
-                Managers.UI.Tooltip.AttachTooltip(calendarTimelineEvent, scheduledEvent);
+                Managers.UI.Tooltip.SetTooltip(calendarTimelineEvent, scheduledEvent);
             }
         }
     }
