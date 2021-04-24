@@ -136,38 +136,55 @@ public class Sim_Travel : MonoBehaviour
 
     public bool IsValidSubmission(int npcID, TransportationID transportationID, CityID fromCityID, CityID toCityID)
     {
-        if (Managers.Sim.NPC.getNPC(1).CityEnRoute != null || fromCityID == toCityID)
+        string invalidText = IsValidSubmission_InvalidText(npcID, transportationID, fromCityID, toCityID);
+        if (invalidText == "error")
+        {
+            Debug.Log("Error: Vehicle not recognized");
+        }
+        if (invalidText != "" || invalidText == "error")
         {
             return false;
         }
+        else
+        {
+            return true;
+        }
+    }
+    public string IsValidSubmission_InvalidText(int npcID, TransportationID transportationID, CityID fromCityID, CityID toCityID)
+    {
+        if (fromCityID == toCityID)
+        {
+            return "Must select city to travel to";
+        }
+
         TimeSpan travelTime = TravelTime(transportationID, fromCityID, toCityID);
         TimeSpan automobileTravelTime = TravelTime(TransportationID.Automobile_ShadyVan, fromCityID, toCityID);
 
         if (IsAutomobile(transportationID))
         {//automobile
-            if (travelTime.TotalHours > maxAutomobileDriveTimeHrs)
+            TimeSpan travelTime_ReturnTrip = TravelTime(transportationID, toCityID, fromCityID);
+            if (travelTime.TotalHours > maxAutomobileDriveTimeHrs || travelTime_ReturnTrip.TotalHours > maxAutomobileDriveTimeHrs)
             {
-                return false;
+                return "Too far to travel by vehicle";
             }
             else
             {
-                return true;
+                return "";
             }
         }
         else if (IsAirplane(transportationID))
         {//airplane
             if (travelTime > automobileTravelTime)
             {
-                return false;
+                return "It would be faster to travel by vehicle";
             }
             else
             {
-                return true;
+                return "";
             }
         }
-        else { return false; }
+        else { return "error"; }
     }
-
 
 
 
@@ -220,7 +237,7 @@ public class Sim_Travel : MonoBehaviour
         List<int> npcs = new List<int>() { npcID };
 
         UnityAction initialAction = () => {
-            Managers.Sim.NPC.getNPC(npcID).TravelStart(toCityID);
+            Managers.Sim.NPC.GetNPC(npcID).TravelStart(toCityID);
             //if (Managers.UI.TravelMenu.MenuGO != null)
             //{
             //    Managers.UI.TravelMenu.Toggle();
@@ -257,7 +274,7 @@ public class Sim_Travel : MonoBehaviour
         };
 
         UnityAction initialAction = () => {
-            Managers.Sim.NPC.getNPC(npcID).TravelEnd();
+            Managers.Sim.NPC.GetNPC(npcID).TravelEnd();
         };
         Func<bool> validCondition = () => { return true; };
         Func<bool> delayCondition = () => { return false; };

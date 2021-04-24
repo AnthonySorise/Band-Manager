@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 public class UI_TravelMenu : MonoBehaviour{
 
-    private CityID? _toCity = null;
+    private CityID _toCity;
     private TransportationID _transportationID = TransportationID.Automobile_ShadyVan;
 
     private Color _color_cityButtonCurrentCity = Color.green;
@@ -35,8 +35,11 @@ public class UI_TravelMenu : MonoBehaviour{
     private Button _button_submit;
     private Button _button_close;
 
+    private string _button_submit_tooltipText = "";
+
     private void Start()
     {
+        _toCity = Managers.Sim.NPC.GetPlayerCharacter().CurrentCity;
         prefab_Menu_Travel = Resources.Load<GameObject>("Prefabs/UI/TravelMenu");
         _cityButtons = new Dictionary<CityID, Button>();
         MenuGO = null;
@@ -138,7 +141,7 @@ public class UI_TravelMenu : MonoBehaviour{
     private void handleSubmitButton()
     {
         CityID currentCity = Managers.Sim.NPC.GetPlayerCharacter().CurrentCity;
-        Managers.Sim.Travel.SIM_QueryTravel(1, _transportationID, currentCity, _toCity.Value);
+        Managers.Sim.Travel.SIM_QueryTravel(1, _transportationID, currentCity, _toCity);
     }
 
     public void Destroy()
@@ -159,15 +162,15 @@ public class UI_TravelMenu : MonoBehaviour{
         _text_CurrentCityName.text = Managers.Data.CityData[currentCity].cityName;
         _text_CurrentCityState.text = Managers.Data.CityData[currentCity].stateName;
         _text_CurrentCityPopulation.text = Managers.Data.CityData[currentCity].population.ToString();
-        if(_toCity != null && Managers.Sim.Travel.IsValidSubmission(1, _transportationID, currentCity, _toCity.Value))
+        if(Managers.Sim.Travel.IsValidSubmission(1, _transportationID, currentCity, _toCity))
         {
-            _text_TravelToCityName.text = Managers.Data.CityData[_toCity.Value].cityName;
-            _text_TravelToCityState.text = Managers.Data.CityData[_toCity.Value].stateName;
-            _text_TravelToCityPopulation.text = Managers.Data.CityData[_toCity.Value].population.ToString();
+            _text_TravelToCityName.text = Managers.Data.CityData[_toCity].cityName;
+            _text_TravelToCityState.text = Managers.Data.CityData[_toCity].stateName;
+            _text_TravelToCityPopulation.text = Managers.Data.CityData[_toCity].population.ToString();
 
-            TimeSpan timeSpan = Managers.Sim.Travel.TravelTime(_transportationID, currentCity, _toCity.Value);
+            TimeSpan timeSpan = Managers.Sim.Travel.TravelTime(_transportationID, currentCity, _toCity);
             _text_TravelTime.text = new DateTime(timeSpan.Ticks).ToString("HH:mm");
-            _text_TravelCost.text = Managers.Sim.Travel.TravelCost(_transportationID, currentCity, _toCity.Value).ToString();
+            _text_TravelCost.text = Managers.Sim.Travel.TravelCost(_transportationID, currentCity, _toCity).ToString();
         }
         else
         {
@@ -181,9 +184,11 @@ public class UI_TravelMenu : MonoBehaviour{
     }
     private void updateButtons()
     {
-        CityID currentCityID = Managers.Sim.NPC.GetPlayerCharacter().CurrentCity;
+        NPC_BandBanager playerCharacter = Managers.Sim.NPC.GetPlayerCharacter();
+        CityID currentCityID = playerCharacter.CurrentCity;
         Data_City currentCityData = Managers.Data.CityData[currentCityID];
-        Data_City toCityData = (_toCity == null) ? null : Managers.Data.CityData[_toCity.Value];
+        Data_City toCityData = Managers.Data.CityData[_toCity];
+        
 
         for (var i = 0; i < _dropDown_TravelTo.options.Count; i++) {            
             if (toCityData == null)
@@ -229,9 +234,9 @@ public class UI_TravelMenu : MonoBehaviour{
             //dropdowns
             if (_dropDown_TravelTo.IsInteractable())
             {
-                if(Managers.Sim.NPC.GetPlayerCharacter().CityEnRoute != null)
+                if(playerCharacter.CityEnRoute != null)
                 {
-                    string tooltipMessage = "Currently traveling to " + Managers.Data.CityData[_toCity.Value].cityName;
+                    string tooltipMessage = "Currently traveling to " + toCityData.cityName;
 
                     _dropDown_TravelTo.interactable = false;
                     Managers.UI.Tooltip.SetTooltip(_dropDown_TravelTo.gameObject, tooltipMessage);
@@ -239,7 +244,7 @@ public class UI_TravelMenu : MonoBehaviour{
             }
             else
             {
-                if (Managers.Sim.NPC.GetPlayerCharacter().CityEnRoute == null)
+                if (playerCharacter.CityEnRoute == null)
                 {
                     _dropDown_TravelTo.interactable = true;
                     Managers.UI.Tooltip.DisableTooltip(_dropDown_TravelTo.gameObject);
@@ -251,7 +256,7 @@ public class UI_TravelMenu : MonoBehaviour{
             foreach (TransportationID transportationID in TransportationID.GetValues(typeof(TransportationID)))
             {
                 bool playerCharacterHasItem = false;
-                foreach (PropertyID propertyID in Managers.Sim.NPC.GetPlayerCharacter().Properties)
+                foreach (PropertyID propertyID in playerCharacter.Properties)
                 {
                     if(Managers.Sim.Property.Properties[propertyID] is Property_Transportation)
                     {
@@ -286,7 +291,7 @@ public class UI_TravelMenu : MonoBehaviour{
             {//current city selected    
                 _cityButtons[cityID].image.color = _color_cityButtonCurrentCity;
             }
-            else if (_toCity != null && cityID == _toCity.Value)
+            else if (cityID == _toCity)
             {//to city selected
                 _cityButtons[cityID].image.color = _color_cityButtonToCity;
             }
@@ -303,13 +308,37 @@ public class UI_TravelMenu : MonoBehaviour{
         }
 
         //submission button
-        if (_toCity == null || !Managers.Sim.Travel.IsValidSubmission(1, _transportationID, currentCityID, _toCity.Value))
+        bool submitShouldBeInactive = (Managers.Sim.Travel.IsValidSubmission(1, _transportationID, currentCityID, _toCity) == false) || playerCharacter.CityEnRoute != null;
+        string submitButtonTooltipText = "";
+        if (playerCharacter.CityEnRoute != null)
         {
-            _button_submit.interactable = false;
+            submitButtonTooltipText = "Currently traveling to " + Managers.Data.CityData[playerCharacter.CityEnRoute.Value].cityName;
         }
         else
         {
-            _button_submit.interactable = true;
+            submitButtonTooltipText = Managers.Sim.Travel.IsValidSubmission_InvalidText(1, _transportationID, currentCityID, _toCity);
+        }
+        if (_button_submit.IsInteractable())
+        {
+            if (submitShouldBeInactive)
+            {
+                _button_submit.interactable = false;
+                _button_submit_tooltipText = submitButtonTooltipText;
+                Managers.UI.Tooltip.SetTooltip(_button_submit.gameObject, _button_submit_tooltipText);
+            }
+        }
+        else
+        {
+            if (!submitShouldBeInactive)
+            {
+                _button_submit.interactable = true;
+                Managers.UI.Tooltip.DisableTooltip(_button_submit.gameObject);
+            }//tooltip update
+            else if(submitButtonTooltipText != _button_submit_tooltipText)
+            {
+                _button_submit_tooltipText = submitButtonTooltipText;
+                Managers.UI.Tooltip.SetTooltip(_button_submit.gameObject, _button_submit_tooltipText);
+            }
         }
     }
 

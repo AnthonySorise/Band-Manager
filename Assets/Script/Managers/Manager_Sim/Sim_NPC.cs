@@ -29,7 +29,7 @@ public class Sim_NPC : MonoBehaviour
         _npcGraveyard.Add(npc.ID, npc);
     }
 
-    public NPC getNPC(int npcID)
+    public NPC GetNPC(int npcID)
     {
         return _npcs[npcID];
     }
