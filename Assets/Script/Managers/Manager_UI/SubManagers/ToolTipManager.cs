@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class TooltipManager : MonoBehaviour {
@@ -81,30 +82,50 @@ public class TooltipManager : MonoBehaviour {
 
     }
 
-    //Tooltip
     private void initTooltipBehavior(GameObject go, string header, List<string> textList, bool hasDelay)
     {
-        Action onEnter = () =>
+        if (go.GetComponent<TooltipBehavior>() == null)
         {
-            if (!hasDelay)
-            {
-                UpdateTextAndDisplayGO(header, textList);
-            }
-            else
-            {
-                _isTooltipInQueue = true;
-                StartCoroutine(DelayedTooltip(header, textList));
-            }
-        };
-        Action onExit = () =>
+            TooltipBehavior tooltipBehavior = go.AddComponent<TooltipBehavior>();
+            tooltipBehavior.Header = header;
+            tooltipBehavior.TextList = textList;
+            tooltipBehavior.HasDelay = hasDelay;
+        }
+        else
         {
-            _isTooltipInQueue = false;
+            updateGOtooltipBehavior(go, header, textList, hasDelay);
+        }
+    }
+    private void updateGOtooltipBehavior(GameObject go, string header, List<string> textList, bool hasDelay)
+    {
+        TooltipBehavior tooltipBehavior = go.GetComponent<TooltipBehavior>();
+        if (tooltipBehavior)
+        {
+            tooltipBehavior.Header = header;
+            tooltipBehavior.TextList = textList;
+            tooltipBehavior.HasDelay = hasDelay;
+        }
+    }
 
-            _toolTipText.text = "";
-            _toolTipGO.GetComponent<RectTransform>().position = new Vector2(5000, 5000);
-            _toolTipGO.SetActive(false);
-        };
-        MouseOverEvent.OnGameObjectMouseOver(go, onEnter, onExit);
+    public void onGOenter(string header, List<string> textList, bool hasDelay)
+    {
+        if (!hasDelay)
+        {
+            updateTextAndDisplayTooltipGO(header, textList);
+        }
+        else
+        {
+            _isTooltipInQueue = true;
+            StartCoroutine(DelayedTooltip(header, textList));
+        }
+    }
+    public void onGOexit(string header, List<string> textList, bool hasDelay)
+    {
+        _isTooltipInQueue = false;
+
+        _toolTipText.text = "";
+        _toolTipGO.GetComponent<RectTransform>().position = new Vector2(5000, 5000);
+        _toolTipGO.SetActive(false);
     }
 
     IEnumerator DelayedTooltip(string header, List<string> textList)
@@ -112,12 +133,12 @@ public class TooltipManager : MonoBehaviour {
         yield return new WaitForSecondsRealtime(1.5f);
         if (_isTooltipInQueue != false)
         {
-            UpdateTextAndDisplayGO(header, textList);
+            updateTextAndDisplayTooltipGO(header, textList);
             _isTooltipInQueue = false;
         }
     }
 
-    public void UpdateTextAndDisplayGO(string header, List<string> textList)
+    private void updateTextAndDisplayTooltipGO(string header, List<string> textList)
     {
         _toolTipText.text = "";
 
@@ -146,6 +167,8 @@ public class TooltipManager : MonoBehaviour {
         _toolTipBackground.GetComponent<RectTransform>().sizeDelta = backgroundSize;
     }
 
+    
+
     private void Update()
     {
         //update Tooltip position
@@ -169,6 +192,34 @@ public class TooltipManager : MonoBehaviour {
             var toolTipPosition = new Vector2(x, y);
 
             _toolTipGO.GetComponent<RectTransform>().position = toolTipPosition;
+        }
+    }
+}
+
+
+
+public class TooltipBehavior : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+{
+    public string Header;
+    public List<string> TextList;
+    public bool HasDelay;
+
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        Managers.UI.TooltipManager.onGOenter(Header, TextList, HasDelay);
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        Managers.UI.TooltipManager.onGOexit(Header, TextList, HasDelay);
+    }
+
+    public void OnDestroy()
+    {
+        if (this.gameObject.activeSelf)
+        {
+            Managers.UI.TooltipManager.onGOexit(Header, TextList, HasDelay);
         }
     }
 }
