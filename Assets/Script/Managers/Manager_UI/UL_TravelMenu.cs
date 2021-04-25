@@ -8,7 +8,7 @@ using UnityEngine.UI;
 public class UI_TravelMenu : MonoBehaviour{
 
     private CityID _toCity;
-    private TransportationID _transportationID = TransportationID.Automobile_ShadyVan;
+    private TransportationID _transportationID;
 
     private Color _color_cityButtonCurrentCity = Color.green;
     private Color _color_cityButtonToCity = Color.yellow;
@@ -36,6 +36,13 @@ public class UI_TravelMenu : MonoBehaviour{
     private Button _button_close;
 
     private string _button_submit_tooltipText = "";
+
+    //update vars
+    private CityID _OnLastUpdate_CurrentCity;
+    private CityID _OnLastUpdate_ToCity;
+    private CityID? _OnLastUpdate_CityEnRoute;
+    private TransportationID _OnLastUpdate_TransportationID;
+    private int _OnLastUpdate_NumTransportationProperties;
 
     private void Start()
     {
@@ -134,6 +141,9 @@ public class UI_TravelMenu : MonoBehaviour{
         //menuGO
         MenuGO = menu;
 
+        updateTexts();
+        updateButtons();
+
         //trigger sound
         Managers.Audio.PlayAudio(Asset_wav.Click_04, AudioChannel.SFX);
     }
@@ -204,10 +214,43 @@ public class UI_TravelMenu : MonoBehaviour{
             }
         }
 
+        List<TransportationID> validTransportations = new List<TransportationID>();
+        foreach (TransportationID transportationID in TransportationID.GetValues(typeof(TransportationID)))
+        {
+            bool playerCharacterHasItem = false;
+            foreach (PropertyID propertyID in playerCharacter.Properties)
+            {
+                if (Managers.Sim.Property.Properties[propertyID] is Property_Transportation)
+                {
+                    Property_Transportation transportProp = Managers.Sim.Property.Properties[propertyID] as Property_Transportation;
+                    if (transportProp.TransportationID == transportationID)
+                    {
+                        playerCharacterHasItem = true;
+                    }
+                }
+            }
+
+            if (!Managers.Sim.Travel.Transportations[transportationID].IsOwnable() || playerCharacterHasItem)
+            {
+                validTransportations.Add(transportationID);
+            }
+        }
+        if (validTransportations.Count == 0 || (validTransportations.Count != _validTransportOptions.Count))
+        {
+            _dropDown_TravelMethod.ClearOptions();
+            List<TMP_Dropdown.OptionData> newOptions = new List<TMP_Dropdown.OptionData>();
+            foreach (TransportationID transportationID in validTransportations)
+            {
+                newOptions.Add(new TMP_Dropdown.OptionData(Managers.Sim.Travel.Transportations[transportationID].Name));
+            }
+            _dropDown_TravelMethod.options = newOptions;
+            _validTransportOptions = validTransportations;
+        }
+
         bool selectedTransportIsAvailable = false;
         for (var i = 0; i < _dropDown_TravelMethod.options.Count; i++)
         {
-            if(Managers.Sim.Travel.Transportations[_transportationID].Name == _dropDown_TravelMethod.options[i].text)
+            if (Managers.Sim.Travel.Transportations[_transportationID].Name == _dropDown_TravelMethod.options[i].text)
             {
                 _dropDown_TravelMethod.value = i;
                 selectedTransportIsAvailable = true;
@@ -218,7 +261,7 @@ public class UI_TravelMenu : MonoBehaviour{
             _dropDown_TravelMethod.value = 0;
         }
 
-        if (_dropDown_TravelWith.options.Count == 0)
+        if (_dropDown_TravelWith.options.Count == 0)//should never happen
         {
             _dropDown_TravelWith.interactable = false;
         }
@@ -226,7 +269,6 @@ public class UI_TravelMenu : MonoBehaviour{
         {
             _dropDown_TravelWith.interactable = true;
         }
-
 
 
         foreach (CityID cityID in CityID.GetValues(typeof(CityID)))
@@ -250,41 +292,6 @@ public class UI_TravelMenu : MonoBehaviour{
                     Managers.UI.Tooltip.DisableTooltip(_dropDown_TravelTo.gameObject);
                 }
             }
-
-
-            List<TransportationID> validTransportations = new List<TransportationID>();
-            foreach (TransportationID transportationID in TransportationID.GetValues(typeof(TransportationID)))
-            {
-                bool playerCharacterHasItem = false;
-                foreach (PropertyID propertyID in playerCharacter.Properties)
-                {
-                    if(Managers.Sim.Property.Properties[propertyID] is Property_Transportation)
-                    {
-                        Property_Transportation transportProp = Managers.Sim.Property.Properties[propertyID] as Property_Transportation;
-                        if(transportProp.TransportationID == transportationID)
-                        {
-                            playerCharacterHasItem = true;
-                        }
-                    }
-                }
-
-                if (!Managers.Sim.Travel.Transportations[transportationID].IsOwnable() || playerCharacterHasItem)
-                {
-                    validTransportations.Add(transportationID);
-                }
-            }
-            if (validTransportations.Count == 0 || (validTransportations.Count != _validTransportOptions.Count))
-            {
-                _dropDown_TravelMethod.ClearOptions();
-                List<TMP_Dropdown.OptionData> newOptions = new List<TMP_Dropdown.OptionData>();
-                foreach (TransportationID transportationID in validTransportations)
-                {
-                    newOptions.Add(new TMP_Dropdown.OptionData(Managers.Sim.Travel.Transportations[transportationID].Name));
-                }
-                _dropDown_TravelMethod.options = newOptions;
-                _validTransportOptions = validTransportations;
-            }
-
 
             //city buttons
             if (cityID == currentCityID)
@@ -349,9 +356,23 @@ public class UI_TravelMenu : MonoBehaviour{
         {
             return;
         }
+        NPC_BandBanager playerCharacter = Managers.Sim.NPC.GetPlayerCharacter();
 
-        updateTexts();
-        updateButtons();
+        if (_OnLastUpdate_CurrentCity != playerCharacter.CurrentCity ||
+            _OnLastUpdate_ToCity != _toCity ||
+            _OnLastUpdate_CityEnRoute != playerCharacter.CityEnRoute ||
+            _OnLastUpdate_NumTransportationProperties != playerCharacter.Properties.Count ||
+            _OnLastUpdate_TransportationID != _transportationID)
+        {
+            updateTexts();
+            updateButtons();
+
+            _OnLastUpdate_CurrentCity = playerCharacter.CurrentCity;
+            _OnLastUpdate_ToCity = _toCity;
+            _OnLastUpdate_CityEnRoute = playerCharacter.CityEnRoute;
+            _OnLastUpdate_NumTransportationProperties = playerCharacter.Properties.Count;
+            _OnLastUpdate_TransportationID = _transportationID;
+        }
     }
 
 
