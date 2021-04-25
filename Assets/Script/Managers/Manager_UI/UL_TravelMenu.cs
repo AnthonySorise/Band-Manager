@@ -201,7 +201,7 @@ public class UI_TravelMenu : MonoBehaviour{
             string hourLabel = (hourText == "1") ? "Hour" : "Hours";
             string minuteLabel = (minuteText == "1") ? "Minute" : "Minutes";
 
-            //_text_TravelTime.text = hourText + " " + hourLabel + "\n" + minuteText + " " + minuteLabel;
+            _text_TravelTime.text = hourText + " " + hourLabel + "\n" + minuteText + " " + minuteLabel;
             _text_TravelCost.text = Managers.Sim.Travel.TravelCost(_transportationID, currentCity, _toCity).ToString("C0");
         }
         else
