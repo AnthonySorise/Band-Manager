@@ -31,6 +31,7 @@ public class UI_TravelMenu : MonoBehaviour{
     private TextMeshProUGUI _text_TravelCost;
     private TMP_Dropdown _dropDown_TravelTo;
     private TMP_Dropdown _dropDown_TravelMethod;
+    private TMP_Dropdown _dropDown_InTimeFor;
     private TMP_Dropdown _dropDown_TravelWith;
     private Button _button_submit;
     private Button _button_close;
@@ -91,6 +92,7 @@ public class UI_TravelMenu : MonoBehaviour{
         _text_TravelCost = GameObject.Find("TravelMenu_Info_TravelCost_Value").GetComponent<TextMeshProUGUI>();
         _dropDown_TravelTo = GameObject.Find("TravelMenu_Buttons_TravelTo_Dropdown").GetComponent<TMP_Dropdown>();
         _dropDown_TravelMethod = GameObject.Find("TravelMenu_Buttons_TravelMethod_Dropdown").GetComponent<TMP_Dropdown>();
+        _dropDown_InTimeFor = GameObject.Find("TravelMenu_Buttons_InTimeFor_Dropdown").GetComponent<TMP_Dropdown>();
         _dropDown_TravelWith = GameObject.Find("TravelMenu_Buttons_TravelWith_Dropdown").GetComponent<TMP_Dropdown>();
         _button_submit = GameObject.Find("TravelMenu_Buttons_Submit_Button").GetComponent<Button>();
         _button_close = GameObject.Find("TravelMenu_Header_CloseButton").GetComponent<Button>();
@@ -125,6 +127,7 @@ public class UI_TravelMenu : MonoBehaviour{
 
         _dropDown_TravelTo.ClearOptions();
         _dropDown_TravelMethod.ClearOptions();
+        _dropDown_InTimeFor.ClearOptions();
         _dropDown_TravelWith.ClearOptions();
 
         _dropDown_TravelTo.AddOptions(cityOptions);
@@ -279,7 +282,16 @@ public class UI_TravelMenu : MonoBehaviour{
             _dropDown_TravelMethod.value = 0;
         }
 
-        if (_dropDown_TravelWith.options.Count == 0)//should never happen
+        if (_dropDown_InTimeFor.options.Count == 0)
+        {
+            _dropDown_InTimeFor.interactable = false;
+        }
+        else
+        {
+            _dropDown_InTimeFor.interactable = true;
+        }
+
+        if (_dropDown_TravelWith.options.Count == 0)
         {
             _dropDown_TravelWith.interactable = false;
         }
