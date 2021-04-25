@@ -32,7 +32,7 @@ public class Transportation
 
     public bool IsOwnable()
     {
-        foreach (Property property in Managers.Sim.Property.Properties.Values)
+        foreach (Property property in Managers.Sim.Property.PropertyModels.Values)
         {
             if (property is Property_Transportation)
             {

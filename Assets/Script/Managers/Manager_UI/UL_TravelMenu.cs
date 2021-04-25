@@ -238,9 +238,9 @@ public class UI_TravelMenu : MonoBehaviour{
             bool playerCharacterHasItem = false;
             foreach (PropertyID propertyID in playerCharacter.Properties)
             {
-                if (Managers.Sim.Property.Properties[propertyID] is Property_Transportation)
+                if (Managers.Sim.Property.PropertyModels[propertyID] is Property_Transportation)
                 {
-                    Property_Transportation transportProp = Managers.Sim.Property.Properties[propertyID] as Property_Transportation;
+                    Property_Transportation transportProp = Managers.Sim.Property.PropertyModels[propertyID] as Property_Transportation;
                     if (transportProp.TransportationID == transportationID)
                     {
                         playerCharacterHasItem = true;

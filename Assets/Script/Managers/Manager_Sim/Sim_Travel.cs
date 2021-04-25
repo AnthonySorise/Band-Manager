@@ -165,7 +165,7 @@ public class Sim_Travel : MonoBehaviour
             TimeSpan travelTime_ReturnTrip = TravelTime(transportationID, toCityID, fromCityID);
             if (travelTime.TotalHours > maxAutomobileDriveTimeHrs || travelTime_ReturnTrip.TotalHours > maxAutomobileDriveTimeHrs)
             {
-                return "Too far to travel by vehicle";
+                return "Too far to travel by automobile";
             }
             else
             {
@@ -176,7 +176,7 @@ public class Sim_Travel : MonoBehaviour
         {//airplane
             if (travelTime > automobileTravelTime)
             {
-                return "It would be faster to travel by vehicle";
+                return "It would be faster to travel by automobile";
             }
             else
             {

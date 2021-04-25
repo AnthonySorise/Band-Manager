@@ -22,12 +22,13 @@ public class UI_ActionMenu : MonoBehaviour
     private GameObject _actionMenuBusinessSubMenu;
     private Button _actionMenuBusinessFinanceButton;
     private Button _actionMenuBusinessContractsButton;
-    private Button _actionMenuBusinessPromotionButton;
+    private Button _actionMenuBusinessPropertyButton;
     private GameObject _actionMenuManagementContainer;
     private Button _actionMenuManagementButton;
     private GameObject _actionMenuManagementSubMenu;
     private Button _actionMenuManagementFormBandButton;
     private Button _actionMenuManagementManageBandButton;
+    private Button _actionMenuManagementPromotionButton;
     private GameObject _actionMenuGigContainer;
     private Button _actionMenuGigButton;
     private GameObject _actionMenuGigSubMenu;
@@ -65,12 +66,13 @@ public class UI_ActionMenu : MonoBehaviour
         Managers.UI.InitiateGO(ref _actionMenuBusinessSubMenu, "Panel_ActionMenu_Business_SubMenu");
         Managers.UI.InitiateButton(ref _actionMenuBusinessFinanceButton, "Button_ActionMenu_Business_Finance");
         Managers.UI.InitiateButton(ref _actionMenuBusinessContractsButton, "Button_ActionMenu_Business_Contracts");
-        Managers.UI.InitiateButton(ref _actionMenuBusinessPromotionButton, "Button_ActionMenu_Business_Promotion");
+        Managers.UI.InitiateButton(ref _actionMenuBusinessPropertyButton, "Button_ActionMenu_Business_Property");
         Managers.UI.InitiateGO(ref _actionMenuManagementContainer, "Panel_ActionMenu_Management_Container");
         Managers.UI.InitiateButton(ref _actionMenuManagementButton, "Button_ActionMenu_Management");
         Managers.UI.InitiateGO(ref _actionMenuManagementSubMenu, "Panel_ActionMenu_Management_SubMenu");
         Managers.UI.InitiateButton(ref _actionMenuManagementFormBandButton, "Button_ActionMenu_Management_FormBand");
         Managers.UI.InitiateButton(ref _actionMenuManagementManageBandButton, "Button_ActionMenu_Management_ManageBand");
+        Managers.UI.InitiateButton(ref _actionMenuManagementPromotionButton, "Button_ActionMenu_Management_Promotion");
         Managers.UI.InitiateGO(ref _actionMenuGigContainer, "Panel_ActionMenu_Gig_Container");
         Managers.UI.InitiateButton(ref _actionMenuGigButton, "Button_ActionMenu_Gig");
         Managers.UI.InitiateGO(ref _actionMenuGigSubMenu, "Panel_ActionMenu_Gig_SubMenu");
@@ -133,7 +135,7 @@ public class UI_ActionMenu : MonoBehaviour
         ToggleActionMenu(_actionMenuSocialContainer, _actionMenuSocialSubMenu, _actionMenuSocialButton, ref _isActionMenuSocialExpanded, 135, forceClose);
         ToggleActionMenu(_actionMenuScoutContainer, _actionMenuScoutSubMenu, _actionMenuScoutButton, ref _isActionMenuScoutExpanded, 135, true);
         ToggleActionMenu(_actionMenuBusinessContainer, _actionMenuBusinessSubMenu, _actionMenuBusinessButton, ref _isActionMenuBusinessExpanded, 180, true);
-        ToggleActionMenu(_actionMenuManagementContainer, _actionMenuManagementSubMenu, _actionMenuManagementButton, ref _isActionMenuManagementExpanded, 135, true);
+        ToggleActionMenu(_actionMenuManagementContainer, _actionMenuManagementSubMenu, _actionMenuManagementButton, ref _isActionMenuManagementExpanded, 180, true);
         ToggleActionMenu(_actionMenuGigContainer, _actionMenuGigSubMenu, _actionMenuGigButton, ref _isActionMenuGigExpanded, 135, true);
         ToggleActionMenu(_actionMenuProduceContainer, _actionMenuProduceSubMenu, _actionMenuProduceButton, ref _isActionMenuProduceExpanded, 135, true);
     }
@@ -142,7 +144,7 @@ public class UI_ActionMenu : MonoBehaviour
         ToggleActionMenu(_actionMenuSocialContainer, _actionMenuSocialSubMenu, _actionMenuSocialButton, ref _isActionMenuSocialExpanded, 135, true);
         ToggleActionMenu(_actionMenuScoutContainer, _actionMenuScoutSubMenu, _actionMenuScoutButton, ref _isActionMenuScoutExpanded, 135, forceClose);
         ToggleActionMenu(_actionMenuBusinessContainer, _actionMenuBusinessSubMenu, _actionMenuBusinessButton, ref _isActionMenuBusinessExpanded, 180, true);
-        ToggleActionMenu(_actionMenuManagementContainer, _actionMenuManagementSubMenu, _actionMenuManagementButton, ref _isActionMenuManagementExpanded, 135, true);
+        ToggleActionMenu(_actionMenuManagementContainer, _actionMenuManagementSubMenu, _actionMenuManagementButton, ref _isActionMenuManagementExpanded, 180, true);
         ToggleActionMenu(_actionMenuGigContainer, _actionMenuGigSubMenu, _actionMenuGigButton, ref _isActionMenuGigExpanded, 135, true);
         ToggleActionMenu(_actionMenuProduceContainer, _actionMenuProduceSubMenu, _actionMenuProduceButton, ref _isActionMenuProduceExpanded, 135, true);
     }
@@ -151,7 +153,7 @@ public class UI_ActionMenu : MonoBehaviour
         ToggleActionMenu(_actionMenuSocialContainer, _actionMenuSocialSubMenu, _actionMenuSocialButton, ref _isActionMenuSocialExpanded, 135, true);
         ToggleActionMenu(_actionMenuScoutContainer, _actionMenuScoutSubMenu, _actionMenuScoutButton, ref _isActionMenuScoutExpanded, 135, true);
         ToggleActionMenu(_actionMenuBusinessContainer, _actionMenuBusinessSubMenu, _actionMenuBusinessButton, ref _isActionMenuBusinessExpanded, 180, forceClose);
-        ToggleActionMenu(_actionMenuManagementContainer, _actionMenuManagementSubMenu, _actionMenuManagementButton, ref _isActionMenuManagementExpanded, 135, true);
+        ToggleActionMenu(_actionMenuManagementContainer, _actionMenuManagementSubMenu, _actionMenuManagementButton, ref _isActionMenuManagementExpanded, 180, true);
         ToggleActionMenu(_actionMenuGigContainer, _actionMenuGigSubMenu, _actionMenuGigButton, ref _isActionMenuGigExpanded, 135, true);
         ToggleActionMenu(_actionMenuProduceContainer, _actionMenuProduceSubMenu, _actionMenuProduceButton, ref _isActionMenuProduceExpanded, 135, true);
     }
@@ -160,7 +162,7 @@ public class UI_ActionMenu : MonoBehaviour
         ToggleActionMenu(_actionMenuSocialContainer, _actionMenuSocialSubMenu, _actionMenuSocialButton, ref _isActionMenuSocialExpanded, 135, true);
         ToggleActionMenu(_actionMenuScoutContainer, _actionMenuScoutSubMenu, _actionMenuScoutButton, ref _isActionMenuScoutExpanded, 135, true);
         ToggleActionMenu(_actionMenuBusinessContainer, _actionMenuBusinessSubMenu, _actionMenuBusinessButton, ref _isActionMenuBusinessExpanded, 180, true);
-        ToggleActionMenu(_actionMenuManagementContainer, _actionMenuManagementSubMenu, _actionMenuManagementButton, ref _isActionMenuManagementExpanded, 135, forceClose);
+        ToggleActionMenu(_actionMenuManagementContainer, _actionMenuManagementSubMenu, _actionMenuManagementButton, ref _isActionMenuManagementExpanded, 180, forceClose);
         ToggleActionMenu(_actionMenuGigContainer, _actionMenuGigSubMenu, _actionMenuGigButton, ref _isActionMenuGigExpanded, 135, true);
         ToggleActionMenu(_actionMenuProduceContainer, _actionMenuProduceSubMenu, _actionMenuProduceButton, ref _isActionMenuProduceExpanded, 135, true);
     }
@@ -169,7 +171,7 @@ public class UI_ActionMenu : MonoBehaviour
         ToggleActionMenu(_actionMenuSocialContainer, _actionMenuSocialSubMenu, _actionMenuSocialButton, ref _isActionMenuSocialExpanded, 135, true);
         ToggleActionMenu(_actionMenuScoutContainer, _actionMenuScoutSubMenu, _actionMenuScoutButton, ref _isActionMenuScoutExpanded, 135, true);
         ToggleActionMenu(_actionMenuBusinessContainer, _actionMenuBusinessSubMenu, _actionMenuBusinessButton, ref _isActionMenuBusinessExpanded, 180, true);
-        ToggleActionMenu(_actionMenuManagementContainer, _actionMenuManagementSubMenu, _actionMenuManagementButton, ref _isActionMenuManagementExpanded, 135, true);
+        ToggleActionMenu(_actionMenuManagementContainer, _actionMenuManagementSubMenu, _actionMenuManagementButton, ref _isActionMenuManagementExpanded, 180, true);
         ToggleActionMenu(_actionMenuGigContainer, _actionMenuGigSubMenu, _actionMenuGigButton, ref _isActionMenuGigExpanded, 135, forceClose);
         ToggleActionMenu(_actionMenuProduceContainer, _actionMenuProduceSubMenu, _actionMenuProduceButton, ref _isActionMenuProduceExpanded, 135, true);
     }
@@ -178,7 +180,7 @@ public class UI_ActionMenu : MonoBehaviour
         ToggleActionMenu(_actionMenuSocialContainer, _actionMenuSocialSubMenu, _actionMenuSocialButton, ref _isActionMenuSocialExpanded, 135, true);
         ToggleActionMenu(_actionMenuScoutContainer, _actionMenuScoutSubMenu, _actionMenuScoutButton, ref _isActionMenuScoutExpanded, 135, true);
         ToggleActionMenu(_actionMenuBusinessContainer, _actionMenuBusinessSubMenu, _actionMenuBusinessButton, ref _isActionMenuBusinessExpanded, 180, true);
-        ToggleActionMenu(_actionMenuManagementContainer, _actionMenuManagementSubMenu, _actionMenuManagementButton, ref _isActionMenuManagementExpanded, 135, true);
+        ToggleActionMenu(_actionMenuManagementContainer, _actionMenuManagementSubMenu, _actionMenuManagementButton, ref _isActionMenuManagementExpanded, 180, true);
         ToggleActionMenu(_actionMenuGigContainer, _actionMenuGigSubMenu, _actionMenuGigButton, ref _isActionMenuGigExpanded, 135, true);
         ToggleActionMenu(_actionMenuProduceContainer, _actionMenuProduceSubMenu, _actionMenuProduceButton, ref _isActionMenuProduceExpanded, 135, forceClose);
     }
