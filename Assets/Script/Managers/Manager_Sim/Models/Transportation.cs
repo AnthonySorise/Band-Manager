@@ -11,7 +11,7 @@ public enum TransportationID
     Airplane_Coach,
     Airplane_FirstClass,
     Airplane_PrivateAirplane,
-    Airplane_LuxaryJet
+    Airplane_LuxuryJet
 }
 
 public class Transportation

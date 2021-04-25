@@ -36,9 +36,9 @@ public class Sim_Travel : MonoBehaviour
         //Airplane_PrivateAirplane
         Transportation Airplane_PrivateAirplane = new Transportation(TransportationID.Airplane_PrivateAirplane, "Private Plane", 20);
         Transportations.Add(TransportationID.Airplane_PrivateAirplane, Airplane_PrivateAirplane);
-        //Airplane_LuxaryJet
-        Transportation Airplane_LuxaryJet = new Transportation(TransportationID.Airplane_LuxaryJet, "Luxary Jet", 20);
-        Transportations.Add(TransportationID.Airplane_LuxaryJet, Airplane_LuxaryJet);
+        //Airplane_LuxuryJet
+        Transportation Airplane_LuxuryJet = new Transportation(TransportationID.Airplane_LuxuryJet, "Luxury Jet", 20);
+        Transportations.Add(TransportationID.Airplane_LuxuryJet, Airplane_LuxuryJet);
 
     }
 

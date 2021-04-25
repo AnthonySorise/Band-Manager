@@ -8,7 +8,7 @@ public enum PropertyID
     Automobile_DecentVan,
     Automobile_TourBus,
     Airplane_PrivateAirplane,
-    Airplane_LuxaryJet
+    Airplane_LuxuryJet
 }
 
 public class Sim_Property : MonoBehaviour
@@ -28,8 +28,8 @@ public class Sim_Property : MonoBehaviour
         Properties.Add(PropertyID.Automobile_TourBus, Automobile_TourBus);
         Property_Transportation Airplane_PrivateAirplane = new Property_Transportation("Private Plane", TransportationID.Airplane_PrivateAirplane);
         Properties.Add(PropertyID.Airplane_PrivateAirplane, Airplane_PrivateAirplane);
-        Property_Transportation Airplane_LuxaryJet = new Property_Transportation("Luxary Jet", TransportationID.Airplane_LuxaryJet);
-        Properties.Add(PropertyID.Airplane_LuxaryJet, Airplane_LuxaryJet);
+        Property_Transportation Airplane_LuxuryJet = new Property_Transportation("Luxury Jet", TransportationID.Airplane_LuxuryJet);
+        Properties.Add(PropertyID.Airplane_LuxuryJet, Airplane_LuxuryJet);
     }
 
     // Update is called once per frame

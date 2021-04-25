@@ -11,7 +11,7 @@ public class NPC_BandBanager : NPC{
     {
         Properties = new List<PropertyID>();
         Properties.Add(PropertyID.Automobile_ShadyVan);
-        Properties.Add(PropertyID.Airplane_LuxaryJet);
+        Properties.Add(PropertyID.Airplane_LuxuryJet);
     }
 
 }
