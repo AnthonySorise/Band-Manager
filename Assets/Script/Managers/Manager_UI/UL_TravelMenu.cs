@@ -35,6 +35,8 @@ public class UI_TravelMenu : MonoBehaviour{
     private Button _button_submit;
     private Button _button_close;
 
+    private DateTime _departureTime;
+
     private string _button_submit_tooltipText = "";
 
     //update vars
@@ -151,7 +153,11 @@ public class UI_TravelMenu : MonoBehaviour{
     private void handleSubmitButton()
     {
         CityID currentCity = Managers.Sim.NPC.GetPlayerCharacter().CurrentCity;
-        Managers.Sim.Travel.SIM_QueryTravel(1, _transportationID, currentCity, _toCity);
+        if (Managers.Sim.Travel.IsValidSubmission(1, _transportationID, currentCity, _toCity))
+        {
+            _departureTime = Managers.Time.CurrentDT;
+            Managers.Sim.Travel.SIM_QueryTravel(1, _transportationID, currentCity, _toCity);
+        }
     }
 
     public void Destroy()
@@ -168,28 +174,40 @@ public class UI_TravelMenu : MonoBehaviour{
 
     private void updateTexts()
     {
+        NPC_BandBanager playerCharacter = Managers.Sim.NPC.GetPlayerCharacter();
+
         CityID currentCity = Managers.Sim.NPC.GetPlayerCharacter().CurrentCity;
         _text_CurrentCityName.text = Managers.Data.CityData[currentCity].cityName;
         _text_CurrentCityState.text = Managers.Data.CityData[currentCity].stateName;
         _text_CurrentCityPopulation.text = Managers.Data.CityData[currentCity].population.ToString();
-        if(Managers.Sim.Travel.IsValidSubmission(1, _transportationID, currentCity, _toCity))
-        {
-            _text_TravelToCityName.text = Managers.Data.CityData[_toCity].cityName;
-            _text_TravelToCityState.text = Managers.Data.CityData[_toCity].stateName;
-            _text_TravelToCityPopulation.text = Managers.Data.CityData[_toCity].population.ToString();
 
+        _text_TravelToCityName.text = Managers.Data.CityData[_toCity].cityName;
+        _text_TravelToCityState.text = Managers.Data.CityData[_toCity].stateName;
+        _text_TravelToCityPopulation.text = Managers.Data.CityData[_toCity].population.ToString("n0");
+
+        if (Managers.Sim.Travel.IsValidSubmission(1, _transportationID, currentCity, _toCity))
+        {
             TimeSpan timeSpan = Managers.Sim.Travel.TravelTime(_transportationID, currentCity, _toCity);
-            _text_TravelTime.text = new DateTime(timeSpan.Ticks).ToString("HH:mm");
-            _text_TravelCost.text = Managers.Sim.Travel.TravelCost(_transportationID, currentCity, _toCity).ToString();
+            if(playerCharacter.CityEnRoute != null)
+            {
+                TimeSpan timeSinceDeparture = Managers.Time.CurrentDT - _departureTime;
+                timeSpan -= timeSinceDeparture;
+            }
+
+            
+            string hourText = (timeSpan.Ticks > 0) ? new DateTime(timeSpan.Ticks).Hour.ToString() : "0";
+            string minuteText = (timeSpan.Ticks > 0) ? new DateTime(timeSpan.Ticks).Minute.ToString() : "0";
+
+            string hourLabel = (hourText == "1") ? "Hour" : "Hours";
+            string minuteLabel = (minuteText == "1") ? "Minute" : "Minutes";
+
+            _text_TravelTime.text = hourText + " " + hourLabel + "\n" + minuteText + " " + minuteLabel;
+            _text_TravelCost.text = Managers.Sim.Travel.TravelCost(_transportationID, currentCity, _toCity).ToString("C0");
         }
         else
         {
-            string placeholder = "---";
-            _text_TravelToCityName.text = placeholder;
-            _text_TravelToCityState.text = placeholder;
-            _text_TravelToCityPopulation.text = placeholder;
-            _text_TravelTime.text = placeholder;
-            _text_TravelCost.text = placeholder;
+            _text_TravelTime.text = Managers.Sim.Travel.IsValidSubmission_InvalidText(1, _transportationID, currentCity, _toCity);
+            _text_TravelCost.text = " ";
         }
     }
     private void updateButtons()
@@ -304,7 +322,7 @@ public class UI_TravelMenu : MonoBehaviour{
             }
             else
             {
-                if (Managers.Sim.Travel.IsValidSubmission(1, _transportationID, currentCityID, cityID)){
+                if (playerCharacter.CityEnRoute == null && Managers.Sim.Travel.IsValidSubmission(1, _transportationID, currentCityID, cityID)){
                     _cityButtons[cityID].image.color = _color_cityButtonValidVehicle;
                 }
                 else
@@ -356,6 +374,9 @@ public class UI_TravelMenu : MonoBehaviour{
         {
             return;
         }
+
+        
+
         NPC_BandBanager playerCharacter = Managers.Sim.NPC.GetPlayerCharacter();
 
         if (_OnLastUpdate_CurrentCity != playerCharacter.CurrentCity ||
@@ -364,14 +385,18 @@ public class UI_TravelMenu : MonoBehaviour{
             _OnLastUpdate_NumTransportationProperties != playerCharacter.Properties.Count ||
             _OnLastUpdate_TransportationID != _transportationID)
         {
-            updateTexts();
             updateButtons();
+            updateTexts();
 
             _OnLastUpdate_CurrentCity = playerCharacter.CurrentCity;
             _OnLastUpdate_ToCity = _toCity;
             _OnLastUpdate_CityEnRoute = playerCharacter.CityEnRoute;
             _OnLastUpdate_NumTransportationProperties = playerCharacter.Properties.Count;
             _OnLastUpdate_TransportationID = _transportationID;
+        }
+        else if (playerCharacter.CityEnRoute != null)
+        {
+            updateTexts();
         }
     }
 
