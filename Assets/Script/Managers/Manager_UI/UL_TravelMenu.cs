@@ -135,7 +135,6 @@ public class UI_TravelMenu : MonoBehaviour{
             _toCity = (CityID)i;
         });
 
-        //_transportationID = _validTransportOptions[_dropDown_TravelMethod.value];
         _dropDown_TravelMethod.onValueChanged.AddListener((i) => {
             _transportationID = _validTransportOptions[i];
         });
@@ -177,7 +176,7 @@ public class UI_TravelMenu : MonoBehaviour{
 
     private void updateTexts()
     {
-        NPC_BandBanager playerCharacter = Managers.Sim.NPC.GetPlayerCharacter();
+        NPC_BandManager playerCharacter = Managers.Sim.NPC.GetPlayerCharacter();
 
         CityID currentCity = Managers.Sim.NPC.GetPlayerCharacter().CurrentCity;
         _text_CurrentCityName.text = Managers.Data.CityData[currentCity].cityName;
@@ -215,7 +214,7 @@ public class UI_TravelMenu : MonoBehaviour{
     }
     private void updateButtons()
     {
-        NPC_BandBanager playerCharacter = Managers.Sim.NPC.GetPlayerCharacter();
+        NPC_BandManager playerCharacter = Managers.Sim.NPC.GetPlayerCharacter();
         CityID currentCityID = playerCharacter.CurrentCity;
         Data_City currentCityData = Managers.Data.CityData[currentCityID];
         Data_City toCityData = Managers.Data.CityData[_toCity];
@@ -235,38 +234,19 @@ public class UI_TravelMenu : MonoBehaviour{
             }
         }
 
-        List<TransportationID> validTransportations = new List<TransportationID>();
-        foreach (TransportationID transportationID in TransportationID.GetValues(typeof(TransportationID)))
-        {
-            bool playerCharacterHasItem = false;
-            foreach (PropertyID propertyID in playerCharacter.Properties)
-            {
-                if (Managers.Sim.Property.PropertyModels[propertyID] is Property_Transportation)
-                {
-                    Property_Transportation transportProp = Managers.Sim.Property.PropertyModels[propertyID] as Property_Transportation;
-                    if (transportProp.TransportationID == transportationID)
-                    {
-                        playerCharacterHasItem = true;
-                    }
-                }
-            }
+        List<TransportationID> validTransportations = Managers.Sim.Travel.ValidTransportations(1);
 
-            if (!Managers.Sim.Travel.Transportations[transportationID].IsOwnable() || playerCharacterHasItem)
-            {
-                validTransportations.Add(transportationID);
-            }
-        }
-        if (validTransportations.Count == 0 || (validTransportations.Count != _validTransportOptions.Count))
+        _dropDown_TravelMethod.ClearOptions();
+        List<TMP_Dropdown.OptionData> newOptions = new List<TMP_Dropdown.OptionData>();
+        foreach (TransportationID transportationID in validTransportations)
         {
-            _dropDown_TravelMethod.ClearOptions();
-            List<TMP_Dropdown.OptionData> newOptions = new List<TMP_Dropdown.OptionData>();
-            foreach (TransportationID transportationID in validTransportations)
-            {
-                newOptions.Add(new TMP_Dropdown.OptionData(Managers.Sim.Travel.Transportations[transportationID].Name));
-            }
-            _dropDown_TravelMethod.options = newOptions;
-            _validTransportOptions = validTransportations;
+            TMP_Dropdown.OptionData dropdownItem = new TMP_Dropdown.OptionData(Managers.Sim.Travel.Transportations[transportationID].Name);
+            newOptions.Add(dropdownItem);
+                
         }
+        _dropDown_TravelMethod.options = newOptions;
+        _validTransportOptions = validTransportations;
+
 
         bool selectedTransportIsAvailable = false;
         for (var i = 0; i < _dropDown_TravelMethod.options.Count; i++)
@@ -389,7 +369,7 @@ public class UI_TravelMenu : MonoBehaviour{
 
         
 
-        NPC_BandBanager playerCharacter = Managers.Sim.NPC.GetPlayerCharacter();
+        NPC_BandManager playerCharacter = Managers.Sim.NPC.GetPlayerCharacter();
 
         if (_OnLastUpdate_CurrentCity != playerCharacter.CurrentCity ||
             _OnLastUpdate_ToCity != _toCity ||

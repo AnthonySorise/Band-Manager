@@ -5,6 +5,7 @@ using UnityEngine;
 
 public enum TransportationID
 {
+    Automobile_RentalVan,
     Automobile_ShadyVan,
     Automobile_DecentVan,
     Automobile_TourBus,

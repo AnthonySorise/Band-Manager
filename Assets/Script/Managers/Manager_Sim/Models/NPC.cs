@@ -21,10 +21,10 @@ public abstract class NPC{
     public List<NPCTraitMajor> TraitsMajor { get; private set; }
     public List<NPCTraitMinor> TraitsMinor { get; private set; }
     public int Cash { get; private set; }
-    public CityID HomeCity { get; private set; }
-    public CityID BaseCity { get; private set; }
-    public CityID CurrentCity { get; private set; }
-    public CityID? CityEnRoute { get; private set; }
+    public CityID HomeCity;
+    public CityID BaseCity;
+    public CityID CurrentCity;
+    public CityID? CityEnRoute;
 
     public NPC(NPCGender gender, int age, CityID city)
     {
@@ -91,11 +91,11 @@ public abstract class NPC{
         return age;
     }
 
-    public void TravelStart(CityID toCity)
+    public virtual void TravelStart(CityID toCity, TransportationID? transportationID = null)
     {
         CityEnRoute = toCity;
     }
-    public void TravelEnd()
+    public virtual void TravelEnd()
     {
         if (CityEnRoute != null)
         {

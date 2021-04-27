@@ -14,7 +14,7 @@ public class Sim_NPC : MonoBehaviour
         _npcs = new Dictionary<int, NPC>();
         _npcGraveyard = new Dictionary<int, NPC>();
 
-        NPC_BandBanager player = new NPC_BandBanager(NPCGender.Male, 35, CityID.Detroit_MI);
+        NPC_BandManager player = new NPC_BandManager(NPCGender.Male, 35, CityID.Detroit_MI);
         Debug.Log("Player Created");
         Debug.Log(player.ID + " " + player.Gender.ToString() + " " + player.FirstName + " " + player.LastName + " " + player.BirthDay.ToString() + " ");
     }
@@ -33,9 +33,9 @@ public class Sim_NPC : MonoBehaviour
     {
         return _npcs[npcID];
     }
-    public NPC_BandBanager GetPlayerCharacter()
+    public NPC_BandManager GetPlayerCharacter()
     {
-        NPC_BandBanager playerCharacter = _npcs[1] as NPC_BandBanager;
+        NPC_BandManager playerCharacter = _npcs[1] as NPC_BandManager;
         return playerCharacter;
     }
 
