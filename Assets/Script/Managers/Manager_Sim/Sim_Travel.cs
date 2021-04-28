@@ -11,37 +11,37 @@ public class Sim_Travel : MonoBehaviour
     public int maxAutomobileDriveTimeHrs = 6;
 
     private int gasPricePerGallon = 2;
-    public Dictionary<TransportationID, Transportation> Transportations { get; private set; }
+    public Dictionary<TransportationID, Transportation> TransportationModels { get; private set; }
 
     // Start is called before the first frame update
     void Start()
     {
         //initiate transportaions
-        Transportations = new Dictionary<TransportationID, Transportation>();
+        TransportationModels = new Dictionary<TransportationID, Transportation>();
         //Rental Van
         Transportation Automobile_RentalVan = new Transportation(TransportationID.Automobile_RentalVan, "Rental Van", 8, 10);
-        Transportations.Add(TransportationID.Automobile_RentalVan, Automobile_RentalVan);
+        TransportationModels.Add(TransportationID.Automobile_RentalVan, Automobile_RentalVan);
         //Shady Van
         Transportation Automobile_ShadyVan = new Transportation(TransportationID.Automobile_ShadyVan, "Shady Van", 8, 10);
-        Transportations.Add(TransportationID.Automobile_ShadyVan, Automobile_ShadyVan);
+        TransportationModels.Add(TransportationID.Automobile_ShadyVan, Automobile_ShadyVan);
         //Decent Van
         Transportation Automobile_DecentVan = new Transportation(TransportationID.Automobile_DecentVan, "Decent Van", 8, 17);
-        Transportations.Add(TransportationID.Automobile_DecentVan, Automobile_DecentVan);
+        TransportationModels.Add(TransportationID.Automobile_DecentVan, Automobile_DecentVan);
         //Tour Bus
         Transportation Automobile_TourBus = new Transportation(TransportationID.Automobile_TourBus, "Tour Bus", 20, 5);
-        Transportations.Add(TransportationID.Automobile_TourBus, Automobile_TourBus);
+        TransportationModels.Add(TransportationID.Automobile_TourBus, Automobile_TourBus);
         //Airplane_Coach
         Transportation Airplane_Coach = new Transportation(TransportationID.Airplane_Coach, "Fly - Coach", null, null);
-        Transportations.Add(TransportationID.Airplane_Coach, Airplane_Coach);
+        TransportationModels.Add(TransportationID.Airplane_Coach, Airplane_Coach);
         //Airplane_FirstClass
         Transportation Airplane_FirstClass = new Transportation(TransportationID.Airplane_FirstClass, "Fly - First Class", null, null);
-        Transportations.Add(TransportationID.Airplane_FirstClass, Airplane_FirstClass);
+        TransportationModels.Add(TransportationID.Airplane_FirstClass, Airplane_FirstClass);
         //Airplane_PrivateAirplane
         Transportation Airplane_PrivateAirplane = new Transportation(TransportationID.Airplane_PrivateAirplane, "Private Plane", 20);
-        Transportations.Add(TransportationID.Airplane_PrivateAirplane, Airplane_PrivateAirplane);
+        TransportationModels.Add(TransportationID.Airplane_PrivateAirplane, Airplane_PrivateAirplane);
         //Airplane_LuxuryJet
         Transportation Airplane_LuxuryJet = new Transportation(TransportationID.Airplane_LuxuryJet, "Luxury Jet", 20);
-        Transportations.Add(TransportationID.Airplane_LuxuryJet, Airplane_LuxuryJet);
+        TransportationModels.Add(TransportationID.Airplane_LuxuryJet, Airplane_LuxuryJet);
 
     }
 
@@ -55,7 +55,7 @@ public class Sim_Travel : MonoBehaviour
         }
         else if (IsAirplane(transportationID))
         {
-            int airportTime = Transportations[transportationID].IsOwnable() ? minsPrivateAirportTime : minsCommercialAirportTime;
+            int airportTime = TransportationModels[transportationID].IsOwnable() ? minsPrivateAirportTime : minsCommercialAirportTime;
             TimeSpan flightTime = Managers.Data.TravelTimeByAirplane(cityFrom, cityTo);
             return flightTime + TimeSpan.FromMinutes(airportTime);
         }
@@ -71,7 +71,7 @@ public class Sim_Travel : MonoBehaviour
         if (IsAutomobile(transportationID))
         {
             int miles = Managers.Data.DistanceByAutomobile(cityFrom, cityTo);
-            int milesPerGallon = Transportations[transportationID].MPG.Value;
+            int milesPerGallon = TransportationModels[transportationID].MPG.Value;
             int gasPrice = (miles / milesPerGallon) * gasPricePerGallon;
             if(transportationID == TransportationID.Automobile_RentalVan)
             {
@@ -84,7 +84,7 @@ public class Sim_Travel : MonoBehaviour
         }
         else if (IsAirplane(transportationID))
         {
-            if (!Transportations[transportationID].IsOwnable())
+            if (!TransportationModels[transportationID].IsOwnable())
             {
                 //Commercial Flight
                 float baseMilesPerDollar = 3.5f;
@@ -151,13 +151,25 @@ public class Sim_Travel : MonoBehaviour
 
         foreach (TransportationID transportationID in TransportationID.GetValues(typeof(TransportationID)))
         {
-            if (!Managers.Sim.Travel.Transportations[transportationID].IsOwnable() || //commercial/public travel and rentals
-                (character.isOwnerOfTransportation(transportationID) && (character.AttachedTransportation == transportationID || character.CurrentCity == character.BaseCity) ))//owned vehicles that are available
+            if (!Managers.Sim.Travel.TransportationModels[transportationID].IsOwnable() || //commercial/public travel and rentals
+                (character.IsOwnerOfTransportation(transportationID) && (character.AttachedTransportation == transportationID || character.CurrentCity == character.BaseCity) ))//owned vehicles that are available
             {
                 validTransportations.Add(transportationID);
             }
         }
         //TO DO rental van details
+        int numValidAutomobiles = 0;
+        foreach(TransportationID transportationID in validTransportations)
+        {
+            if (Managers.Sim.Travel.IsAutomobile(transportationID))
+            {
+                numValidAutomobiles++;
+            }
+        }
+        if(numValidAutomobiles > 1)
+        {
+            validTransportations.Remove(TransportationID.Automobile_RentalVan);
+        }
         return validTransportations;
     }
 
@@ -222,6 +234,8 @@ public class Sim_Travel : MonoBehaviour
 
     public void SIM_QueryTravel(int npcID, TransportationID transportationID, CityID fromCityID, CityID toCityID)
     {
+        NPC_BandManager character = Managers.Sim.NPC.GetNPC(npcID) as NPC_BandManager;
+
         TimeSpan travelTime = TravelTime(transportationID, fromCityID, toCityID);
         DateTime arrivalTime = Managers.Time.CurrentDT.Add(travelTime);
 
@@ -253,7 +267,15 @@ public class Sim_Travel : MonoBehaviour
         //triggerDate  TODO  date dropdown
         //DateTime triggerDate = new DateTime();
         List<int> npcs = new List<int>() { npcID };
-        SimAction simAction = new SimAction(SimActionID.NPC_Travel, npcs, validCondition, delayCondition, initialAction, popupOptionsList, true, "Travel to " + Managers.Data.CityData[toCityID].cityName, "Let's get a move on!", Asset_png.Popup_Vinyl, Asset_wav.Click_04);
+        string headerText = "Travel to " + Managers.Data.CityData[toCityID].cityName;
+        string bodyText = "Lets get a move on!";
+
+        if (character.IsAttachedVehicleBeingRemoved(transportationID))
+        {
+            bodyText += "\n\n" + Managers.Sim.Travel.TransportationModels[character.AttachedTransportation.Value].Name + " will be returned to " + Managers.Data.CityData[character.BaseCity].cityName;
+        }
+
+        SimAction simAction = new SimAction(SimActionID.NPC_Travel, npcs, validCondition, delayCondition, initialAction, popupOptionsList, true, headerText, bodyText, Asset_png.Popup_Vinyl, Asset_wav.Click_04);
 
         //TODO conditional to determine immediate or scheduled event
         //SimEvent_Scheduled SimEvent_Scheduled04 = new SimEvent_Scheduled(simAction, triggerDate);

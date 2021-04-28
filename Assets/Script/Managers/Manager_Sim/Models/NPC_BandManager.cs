@@ -21,10 +21,16 @@ public class NPC_BandManager : NPC{
     public override void TravelStart(CityID toCity, TransportationID? transportationID = null)
     {
         CityEnRoute = toCity;
-
-        if (transportationID != null && isOwnerOfTransportation(transportationID.Value))
+        if(transportationID != null)
         {
-            AttachedTransportation = transportationID.Value;
+            if (IsOwnerOfTransportation(transportationID.Value))
+            {
+                AttachedTransportation = transportationID.Value;
+            }
+            if (IsAttachedVehicleBeingRemoved(transportationID.Value))
+            {
+                AttachedTransportation = null;
+            }
         }
     }
     public override void TravelEnd()
@@ -41,7 +47,7 @@ public class NPC_BandManager : NPC{
         }
     }
 
-    public bool isOwnerOfTransportation(TransportationID transportationID)
+    public bool IsOwnerOfTransportation(TransportationID transportationID)
     {
         bool characterOwnsTransportation = false;
         foreach (PropertyID propertyID in Properties)
@@ -57,4 +63,9 @@ public class NPC_BandManager : NPC{
         }
         return characterOwnsTransportation;
     }
+    public bool IsAttachedVehicleBeingRemoved(TransportationID transportationID)
+    {
+        return (AttachedTransportation != null) && (AttachedTransportation != transportationID);
+    }
+
 }

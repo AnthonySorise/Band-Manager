@@ -240,7 +240,7 @@ public class UI_TravelMenu : MonoBehaviour{
         List<TMP_Dropdown.OptionData> newOptions = new List<TMP_Dropdown.OptionData>();
         foreach (TransportationID transportationID in validTransportations)
         {
-            TMP_Dropdown.OptionData dropdownItem = new TMP_Dropdown.OptionData(Managers.Sim.Travel.Transportations[transportationID].Name);
+            TMP_Dropdown.OptionData dropdownItem = new TMP_Dropdown.OptionData(Managers.Sim.Travel.TransportationModels[transportationID].Name);
             newOptions.Add(dropdownItem);
                 
         }
@@ -251,7 +251,7 @@ public class UI_TravelMenu : MonoBehaviour{
         bool selectedTransportIsAvailable = false;
         for (var i = 0; i < _dropDown_TravelMethod.options.Count; i++)
         {
-            if (Managers.Sim.Travel.Transportations[_transportationID].Name == _dropDown_TravelMethod.options[i].text)
+            if (Managers.Sim.Travel.TransportationModels[_transportationID].Name == _dropDown_TravelMethod.options[i].text)
             {
                 _dropDown_TravelMethod.value = i;
                 selectedTransportIsAvailable = true;
