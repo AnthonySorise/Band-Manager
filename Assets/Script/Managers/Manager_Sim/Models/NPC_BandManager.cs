@@ -14,24 +14,24 @@ public class NPC_BandManager : NPC{
     {
         Properties = new List<PropertyID>();
         Properties.Add(PropertyID.Automobile_ShadyVan);
-        Properties.Add(PropertyID.Airplane_LuxuryJet);
+        Properties.Add(PropertyID.Airplane_LuxuryJet);//FOR TESTING
+        AttachedTransportation = null;
     }
 
 
     public override void TravelStart(CityID toCity, TransportationID? transportationID = null)
     {
         CityEnRoute = toCity;
-        if(transportationID != null)
+
+        if (IsOwnerOfTransportation(transportationID.Value))
         {
-            if (IsOwnerOfTransportation(transportationID.Value))
-            {
-                AttachedTransportation = transportationID.Value;
-            }
-            if (IsAttachedVehicleBeingRemoved(transportationID.Value))
-            {
-                AttachedTransportation = null;
-            }
+            AttachedTransportation = transportationID.Value;
         }
+        if (IsAttachedVehicleBeingRemoved(transportationID.Value))
+        {
+            AttachedTransportation = null;
+        }
+
     }
     public override void TravelEnd()
     {

@@ -157,7 +157,6 @@ public class Sim_Travel : MonoBehaviour
                 validTransportations.Add(transportationID);
             }
         }
-        //TO DO rental van details
         int numValidAutomobiles = 0;
         foreach(TransportationID transportationID in validTransportations)
         {
@@ -275,7 +274,7 @@ public class Sim_Travel : MonoBehaviour
             bodyText += "\n\n" + Managers.Sim.Travel.TransportationModels[character.AttachedTransportation.Value].Name + " will be returned to " + Managers.Data.CityData[character.BaseCity].cityName;
         }
 
-        SimAction simAction = new SimAction(SimActionID.NPC_Travel, npcs, validCondition, delayCondition, initialAction, popupOptionsList, true, headerText, bodyText, Asset_png.Popup_Vinyl, Asset_wav.Click_04);
+        SimAction simAction = new SimAction(SimActionID.NPC_Travel, npcs, validCondition, delayCondition, initialAction, null, popupOptionsList, true, headerText, bodyText, Asset_png.Popup_Vinyl, Asset_wav.Click_04);
 
         //TODO conditional to determine immediate or scheduled event
         //SimEvent_Scheduled SimEvent_Scheduled04 = new SimEvent_Scheduled(simAction, triggerDate);
@@ -296,11 +295,11 @@ public class Sim_Travel : MonoBehaviour
         //triggerDate  TODO  date dropdown
         //DateTime triggerDate = new DateTime();
         List<int> npcs = new List<int>() { npcID };
-        SimAction simAction = new SimAction(SimActionID.NPC_Travel, npcs, validCondition, delayCondition, initialAction);
+        SimAction simAction = new SimAction(SimActionID.NPC_Travel, npcs, validCondition, delayCondition, initialAction, travelTime);
 
         //TODO conditional to determine immediate or scheduled event
         //SimEvent_Scheduled SimEvent_Scheduled04 = new SimEvent_Scheduled(simAction, triggerDate);
-        SimEvent_Immediate SimEvent_InitiateTravel = new SimEvent_Immediate(simAction, travelTime);
+        SimEvent_Immediate SimEvent_InitiateTravel = new SimEvent_Immediate(simAction);
     }
     public void SIM_FinishTravel(int npcID, TransportationID transportationID, CityID fromCityID, CityID toCityID, DateTime triggerDate)
     {
@@ -324,11 +323,11 @@ public class Sim_Travel : MonoBehaviour
         Func<bool> delayCondition = () => { return false; };
 
         List<int> npcs = new List<int>() { npcID };
-        SimAction simAction = new SimAction(SimActionID.NPC_Travel, npcs, validCondition, delayCondition, initialAction, null, true, "Welcome to " + Managers.Data.CityData[toCityID].cityName, "", Asset_png.Popup_Vinyl, Asset_wav.Click_04);
+        SimAction simAction = new SimAction(SimActionID.NPC_Travel, npcs, validCondition, delayCondition, initialAction, null, null, true, "Welcome to " + Managers.Data.CityData[toCityID].cityName, "", Asset_png.Popup_Vinyl, Asset_wav.Click_04);
 
         SimEvent_Scheduled SimEvent_FinishTravel = new SimEvent_Scheduled(simAction, triggerDate);
 
-        Managers.UI.Calendar.UpdateCalendarPanel(true,  true, true);
+        Managers.UI.Calendar.UpdateCalendarPanel(true, true, true);
     }
 
 

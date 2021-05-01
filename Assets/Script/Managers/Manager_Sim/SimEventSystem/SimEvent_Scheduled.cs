@@ -5,20 +5,11 @@ public class SimEvent_Scheduled
 {
     public SimAction SimAction { get; private set; }
     public DateTime ScheduledDT { get; private set; }
-    public TimeSpan Duration { get; private set; }
     private DateTime? _triggeredDT;
 
-    public SimEvent_Scheduled(SimAction simAction, DateTime scheduledDT, TimeSpan? duration = null, DateTime? triggeredDT = null) {
+    public SimEvent_Scheduled(SimAction simAction, DateTime scheduledDT, DateTime? triggeredDT = null) {
         SimAction = simAction;
         ScheduledDT = scheduledDT;
-        if(duration == null)
-        {
-            Duration = new TimeSpan(0, 0, 0);
-        }
-        else
-        {
-            Duration = duration.Value;
-        }
         _triggeredDT = triggeredDT;
 
         Store();
@@ -48,7 +39,7 @@ public class SimEvent_Scheduled
         }
         else if(_triggeredDT != null)
         {
-            if (Managers.Time.CurrentDT.CompareTo(_triggeredDT + Duration) == 1)
+            if (Managers.Time.CurrentDT.CompareTo(_triggeredDT + SimAction.Duration) == 1)
             {
                 Remove();
             }

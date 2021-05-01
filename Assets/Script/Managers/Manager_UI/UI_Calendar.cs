@@ -889,7 +889,7 @@ public class UI_Calendar : MonoBehaviour
             {
                 dayBoxIconImageComponent.enabled = false;
             }
-            List<SimEvent_Scheduled> thisDTPlayerScheduledEvents = Managers.Sim.MatchingSimEventScheduled(1, thisDT);
+            List<SimEvent_Scheduled> thisDTPlayerScheduledEvents = Managers.Sim.GetScheduledSimEvents(1, thisDT);
             var indexIcon = 0;
             bool hasGig = false;
             bool hasMedia = false;
@@ -900,7 +900,7 @@ public class UI_Calendar : MonoBehaviour
 
             foreach (SimEvent_Scheduled simEvent in thisDTPlayerScheduledEvents)
             {
-                if(simEvent.Duration != TimeSpan.Zero)
+                if(simEvent.SimAction.Duration != TimeSpan.Zero)
                 {
                     switch (simEvent.SimAction.ID)
                     {
@@ -1056,7 +1056,7 @@ public class UI_Calendar : MonoBehaviour
             }
         }
 
-        List<SimEvent_Scheduled> playerScheduledEvents = Managers.Sim.MatchingSimEventScheduled(1, _calendarSelectedDay.Value);
+        List<SimEvent_Scheduled> playerScheduledEvents = Managers.Sim.GetScheduledSimEvents(1, _calendarSelectedDay.Value);
         foreach (SimEvent_Scheduled scheduledEvent in playerScheduledEvents)
         {
             bool isExist = false;
@@ -1069,7 +1069,7 @@ public class UI_Calendar : MonoBehaviour
             }
             bool hasRemainder = false;
             {
-                if (scheduledEvent.ScheduledDT.Day != scheduledEvent.ScheduledDT.Add(scheduledEvent.Duration).Day)
+                if (scheduledEvent.ScheduledDT.Day != scheduledEvent.ScheduledDT.Add(scheduledEvent.SimAction.Duration).Day)
                 {
                     hasRemainder = true;
                 }
@@ -1083,7 +1083,7 @@ public class UI_Calendar : MonoBehaviour
                 CalendarTimelineEvent_RectTransform.SetParent(calendarTimelineTransform, false);
                 //set width
                 TimeSpan fullDay = new TimeSpan(24, 0, 0);
-                TimeSpan duration = scheduledEvent.Duration;
+                TimeSpan duration = scheduledEvent.SimAction.Duration;
                 if (hasRemainder)
                 {
                     duration = fullDay - scheduledEvent.ScheduledDT.TimeOfDay;
@@ -1101,7 +1101,7 @@ public class UI_Calendar : MonoBehaviour
             }
         }
         //Day Before remainder
-        List<SimEvent_Scheduled> playerScheduledEvents_DayBefore = Managers.Sim.MatchingSimEventScheduled(1, _calendarSelectedDay.Value.AddDays(-1));
+        List<SimEvent_Scheduled> playerScheduledEvents_DayBefore = Managers.Sim.GetScheduledSimEvents(1, _calendarSelectedDay.Value.AddDays(-1));
         foreach (SimEvent_Scheduled scheduledEvent in playerScheduledEvents_DayBefore)
         {
             bool isExist = false;
@@ -1114,7 +1114,7 @@ public class UI_Calendar : MonoBehaviour
             }
             bool hasRemainder = false;
             {
-                if (scheduledEvent.ScheduledDT.Day != scheduledEvent.ScheduledDT.Add(scheduledEvent.Duration).Day)
+                if (scheduledEvent.ScheduledDT.Day != scheduledEvent.ScheduledDT.Add(scheduledEvent.SimAction.Duration).Day)
                 {
                     hasRemainder = true;
                 }
@@ -1128,7 +1128,7 @@ public class UI_Calendar : MonoBehaviour
                 CalendarTimelineEvent_RectTransform.SetParent(calendarTimelineTransform, false);
                 //set width
                 TimeSpan fullDay = new TimeSpan(24, 0, 0);
-                TimeSpan duration = scheduledEvent.ScheduledDT.Add(scheduledEvent.Duration).TimeOfDay;
+                TimeSpan duration = scheduledEvent.ScheduledDT.Add(scheduledEvent.SimAction.Duration).TimeOfDay;
                 int width = (int)(timelineWidth * (duration.TotalSeconds / fullDay.TotalSeconds));
                 CalendarTimelineEvent_RectTransform.sizeDelta = new Vector2(width, CalendarTimelineEvent_RectTransform.sizeDelta.y);
                 //set position

@@ -4,18 +4,9 @@ using UnityEngine;
 public class SimEvent_Immediate {
 
     private SimAction _simAction;
-    private TimeSpan _duration;
 
-    public SimEvent_Immediate(SimAction simAction, TimeSpan? duration = null) {
+    public SimEvent_Immediate(SimAction simAction) {
         _simAction = simAction;
-        if (duration == null)
-        {
-            _duration = new TimeSpan(0, 0, 0);
-        }
-        else
-        {
-            _duration = duration.Value;
-        }
 
         if (_simAction.IsValid()) {
             if (!simAction.ShouldDelay())
@@ -35,11 +26,11 @@ public class SimEvent_Immediate {
         if (isTriggered)
         {
             
-            SimEvent_Scheduled scheduled = new SimEvent_Scheduled(_simAction, Managers.Time.CurrentDT, _duration, Managers.Time.CurrentDT);
+            SimEvent_Scheduled scheduled = new SimEvent_Scheduled(_simAction, Managers.Time.CurrentDT, Managers.Time.CurrentDT);
         }
         else
         {
-            SimEvent_Scheduled scheduled = new SimEvent_Scheduled(_simAction, Managers.Time.CurrentDT, _duration);
+            SimEvent_Scheduled scheduled = new SimEvent_Scheduled(_simAction, Managers.Time.CurrentDT);
         }
     }
 }

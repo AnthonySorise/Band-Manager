@@ -73,17 +73,40 @@ public class Manager_Sim : MonoBehaviour, IManager {
         IsProcessingTick = false;
     }
 
-    public List<SimEvent_Scheduled> MatchingSimEventScheduled(int npcID, DateTime dateTime)
+    public List<SimEvent_Scheduled> GetScheduledSimEvents(int npcID, DateTime? dateTime = null)
     {
         List<SimEvent_Scheduled> returnList = new List<SimEvent_Scheduled>();
         foreach (SimEvent_Scheduled simEvent in _simEvents_Scheduled)
         {
-            if (simEvent.SimAction.NPCs.Contains(npcID) && simEvent.ScheduledDT.Date.CompareTo(dateTime.Date) == 0)
+            if (simEvent.SimAction.NPCs.Contains(npcID))
             {
-                returnList.Add(simEvent);
+                if(dateTime ==  null || simEvent.ScheduledDT.Date.CompareTo(dateTime.Value.Date) == 0)
+                {
+                    returnList.Add(simEvent);
+                }
             }
         }
         return returnList.OrderBy(o => o.ScheduledDT).ToList();
     }
 
+    public bool IsAvailableForEvent(int npcID, DateTime dateTime, TimeSpan duration)
+    {
+        List<SimEvent_Scheduled> scheduledEvents = GetScheduledSimEvents(npcID);
+        foreach (SimEvent_Scheduled scheduledEvent in scheduledEvents)
+        {
+            if (scheduledEvent.ScheduledDT.Date == dateTime.Date)//starts same day
+            {
+                DateTime aStart = dateTime;
+                DateTime aEnd = dateTime + duration;
+                DateTime bStart = scheduledEvent.ScheduledDT;
+                DateTime bEnd = scheduledEvent.ScheduledDT + scheduledEvent.SimAction.Duration;
+
+                if (aStart < bEnd && bStart < aEnd)
+                {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
 }

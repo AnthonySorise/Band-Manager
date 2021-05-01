@@ -23,11 +23,13 @@ public enum SimActionID
 
 public class SimAction {
     public SimActionID ID { get; private set; }
+    public List<int> NPCs { get; private set; }
     private Func<bool> _validCondition;
     private Func<bool> _delayCondition;
     private UnityAction _initialAction;
+    
+    public TimeSpan Duration { get; private set; }
 
-    public List<int> NPCs { get; private set; }
     public List<SimActionOption> Options { get; private set; }
     public bool PopupHaltsGame { get; private set; }
     public string PopupHeaderText { get; private set; }
@@ -36,11 +38,12 @@ public class SimAction {
     public Asset_wav PopupTriggerSound { get; private set; }
 
     public SimAction(
-        SimActionID id, 
-        List<int> npcs, 
-        Func<bool> validCondition, 
-        Func<bool> delayCondition, 
+        SimActionID id,
+        List<int> npcs,
+        Func<bool> validCondition,
+        Func<bool> delayCondition,
         UnityAction initialAction,
+        TimeSpan? duration = null,
         List<SimActionOption> options = null, 
         bool popupHaltsGame = false, 
         string popupHeaderText = null, 
@@ -53,6 +56,15 @@ public class SimAction {
         _validCondition = validCondition;
         _delayCondition = delayCondition;
         _initialAction = initialAction;
+
+        if (duration == null)
+        {
+            Duration = new TimeSpan(0, 0, 0);
+        }
+        else
+        {
+            Duration = duration.Value;
+        }
 
         Options = options;
         PopupHaltsGame = popupHaltsGame;

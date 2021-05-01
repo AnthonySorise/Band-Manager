@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -38,7 +39,6 @@ public class Sim_NPC : MonoBehaviour
         NPC_BandManager playerCharacter = _npcs[1] as NPC_BandManager;
         return playerCharacter;
     }
-
 
     // Update is called once per frame
     void Update()

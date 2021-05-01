@@ -28,7 +28,7 @@ public class Sim_TEST : MonoBehaviour
         List<int> npcs = new List<int>() { 1 };
         Func<bool> validCondition = () => { return true; };
         Func<bool> delayCondition = () => { return false; };
-        SimAction simAction = new SimAction(SimActionID.Test_Popup01, npcs, validCondition, delayCondition, null, null, false, "Test Scheduled Event", "This is a test event that is scheduled to fire on " + triggerDate.ToShortDateString() + " but not pause time.", Asset_png.Popup_Vinyl, Asset_wav.event_generic);
+        SimAction simAction = new SimAction(SimActionID.Test_Popup01, npcs, validCondition, delayCondition, null, null, null, false, "Test Scheduled Event", "This is a test event that is scheduled to fire on " + triggerDate.ToShortDateString() + " but not pause time.", Asset_png.Popup_Vinyl, Asset_wav.event_generic);
         SimEvent_Scheduled SimEvent_Scheduled01 = new SimEvent_Scheduled(simAction, triggerDate);
     }
 
@@ -38,7 +38,7 @@ public class Sim_TEST : MonoBehaviour
         List<int> npcs = new List<int>() { 1 };
         Func<bool> validCondition = () => { return true; };
         Func<bool> delayCondition = () => { return false; };
-        SimAction simAction = new SimAction(SimActionID.Test_Popup02, npcs, validCondition, delayCondition, null, null, true, "Test Scheduled Event", "This is a test event that is scheduled to fire on " + triggerDate.ToShortDateString() + " AND prevents progress until you click OK.", Asset_png.Popup_Vinyl, Asset_wav.event_generic);
+        SimAction simAction = new SimAction(SimActionID.Test_Popup02, npcs, validCondition, delayCondition, null, null, null, true, "Test Scheduled Event", "This is a test event that is scheduled to fire on " + triggerDate.ToShortDateString() + " AND prevents progress until you click OK.", Asset_png.Popup_Vinyl, Asset_wav.event_generic);
         SimEvent_Scheduled SimEvent_Scheduled02 = new SimEvent_Scheduled(simAction, triggerDate);
     }
 
@@ -83,7 +83,7 @@ public class Sim_TEST : MonoBehaviour
         Func<bool> validCondition = () => { return true; };
         Func<bool> delayCondition = () => { return false; };
 
-        SimAction simAction = new SimAction(SimActionID.Test_Popup03, npcs, validCondition, delayCondition, initialAction, optionList, false, "Test Scheduled Event", "This is a test event that is scheduled to fire on " + triggerDate.ToShortDateString() + ".  It has four options but does not pause time.", Asset_png.Popup_Vinyl, Asset_wav.event_generic);
+        SimAction simAction = new SimAction(SimActionID.Test_Popup03, npcs, validCondition, delayCondition, initialAction, null, optionList, false, "Test Scheduled Event", "This is a test event that is scheduled to fire on " + triggerDate.ToShortDateString() + ".  It has four options but does not pause time.", Asset_png.Popup_Vinyl, Asset_wav.event_generic);
         SimEvent_Scheduled SimEvent_Scheduled03 = new SimEvent_Scheduled(simAction, triggerDate);
     }
 
@@ -123,7 +123,7 @@ public class Sim_TEST : MonoBehaviour
             return (Managers.Time.CurrentDT.Hour < 4);
         };
 
-        SimAction simAction = new SimAction(SimActionID.Test_Popup04, npcs, validCondition, delayCondition, initialAction, popupOptionsList, true, "Test Scheduled Event", "This is a test event that is scheduled to fire on " + triggerDate.ToShortDateString() + " AFTER 4:00AM!  It has three options AND you must select one to continue.", Asset_png.Popup_Vinyl, Asset_wav.event_generic);
+        SimAction simAction = new SimAction(SimActionID.Test_Popup04, npcs, validCondition, delayCondition, initialAction, null, popupOptionsList, true, "Test Scheduled Event", "This is a test event that is scheduled to fire on " + triggerDate.ToShortDateString() + " AFTER 4:00AM!  It has three options AND you must select one to continue.", Asset_png.Popup_Vinyl, Asset_wav.event_generic);
         SimEvent_Scheduled SimEvent_Scheduled04 = new SimEvent_Scheduled(simAction, triggerDate);
     }
 
@@ -162,7 +162,7 @@ public class Sim_TEST : MonoBehaviour
             return (Managers.Time.CurrentDT < triggerTime);
         };
 
-        SimAction simAction = new SimAction(SimActionID.Test_Popup05, npcs, validCondition, delayCondition, initialAction, popupOptionsList, true, "Test MTTH Event", "This is a test event that is triggered based on Mean Time To Happen.  After 3 days, this event has a 50% chance to trigger, and it only triggers at a random time during business hours.", Asset_png.Popup_Vinyl, Asset_wav.event_generic);
+        SimAction simAction = new SimAction(SimActionID.Test_Popup05, npcs, validCondition, delayCondition, initialAction, null, popupOptionsList, true, "Test MTTH Event", "This is a test event that is triggered based on Mean Time To Happen.  After 3 days, this event has a 50% chance to trigger, and it only triggers at a random time during business hours.", Asset_png.Popup_Vinyl, Asset_wav.event_generic);
         SimEvent_MTTH SimEvent_MTTH01 = new SimEvent_MTTH(simAction, Managers.Time.CurrentDT, Managers.Time.CurrentDT.AddDays(3));
     }
 
@@ -171,7 +171,7 @@ public class Sim_TEST : MonoBehaviour
         List<int> npcs = new List<int>() { 1 };
         Func<bool> validCondition = () => { return true; };
         Func<bool> delayCondition = () => { return false; };
-        SimAction simAction = new SimAction(SimActionID.Test_Popup05_1, npcs, validCondition, delayCondition, null, null, true, "Option Selected", "You chose option one.", Asset_png.Popup_Vinyl, Asset_wav.event_generic);
+        SimAction simAction = new SimAction(SimActionID.Test_Popup05_1, npcs, validCondition, delayCondition, null, null, null, true, "Option Selected", "You chose option one.", Asset_png.Popup_Vinyl, Asset_wav.event_generic);
         SimEvent_Immediate SimEvent_Immediate = new SimEvent_Immediate(simAction);
     }
     private void SIM_TestPopup05_option02()
@@ -179,7 +179,7 @@ public class Sim_TEST : MonoBehaviour
         List<int> npcs = new List<int>() { 1 };
         Func<bool> validCondition = () => { return true; };
         Func<bool> delayCondition = () => { return false; };
-        SimAction simAction = new SimAction(SimActionID.Test_Popup05_2, npcs, validCondition, delayCondition, null, null, true, "Option Selected", "You chose option two.", Asset_png.Popup_Vinyl, Asset_wav.event_generic);
+        SimAction simAction = new SimAction(SimActionID.Test_Popup05_2, npcs, validCondition, delayCondition, null, null, null, true, "Option Selected", "You chose option two.", Asset_png.Popup_Vinyl, Asset_wav.event_generic);
         SimEvent_Immediate SimEvent_Immediate = new SimEvent_Immediate(simAction);
     }
 
@@ -188,7 +188,7 @@ public class Sim_TEST : MonoBehaviour
     {
         Func<bool> validCondition = () => { return true; };
         Func<bool> delayCondition = () => { return false; };
-        SimAction simAction = new SimAction(simActionID, npcs, validCondition, delayCondition, null, null, false, "Test Travel Event", "This is a test travel event that is scheduled to fire on " + triggerDate.ToShortDateString() + " at 8:30AM - but not pause time.  The even will last for one hour.", Asset_png.Popup_Vinyl, Asset_wav.event_generic);
+        SimAction simAction = new SimAction(simActionID, npcs, validCondition, delayCondition, null, null, null, false, "Test Travel Event", "This is a test travel event that is scheduled to fire on " + triggerDate.ToShortDateString() + " at 8:30AM - but not pause time.  The even will last for one hour.", Asset_png.Popup_Vinyl, Asset_wav.event_generic);
         SimEvent_Scheduled SimEvent_Scheduled01 = new SimEvent_Scheduled(simAction, triggerDate);
     }
     private void SIM_ScheduleProduction(SimActionID simActionID, List<int> npcs, DateTime triggerDate)
@@ -196,16 +196,16 @@ public class Sim_TEST : MonoBehaviour
         Func<bool> validCondition = () => { return true; };
         Func<bool> delayCondition = () => { return false; };
         TimeSpan duration = new TimeSpan(3, 0, 0);
-        SimAction simAction = new SimAction(simActionID, npcs, validCondition, delayCondition, null, null, false, "Test Production Event", "This is a test production  event that is scheduled to fire on " + triggerDate.ToShortDateString() + " at 6:00PM - but not pause time.  The even will last for three hours.", Asset_png.Popup_Vinyl, Asset_wav.event_generic);
-        SimEvent_Scheduled SimEvent_Scheduled01 = new SimEvent_Scheduled(simAction, triggerDate, duration);
+        SimAction simAction = new SimAction(simActionID, npcs, validCondition, delayCondition, null, duration, null, false, "Test Production Event", "This is a test production  event that is scheduled to fire on " + triggerDate.ToShortDateString() + " at 6:00PM - but not pause time.  The even will last for three hours.", Asset_png.Popup_Vinyl, Asset_wav.event_generic);
+        SimEvent_Scheduled SimEvent_Scheduled01 = new SimEvent_Scheduled(simAction, triggerDate);
     }
     private void SIM_ScheduleGig(SimActionID simActionID, List<int> npcs, DateTime triggerDate)
     {
         Func<bool> validCondition = () => { return true; };
         Func<bool> delayCondition = () => { return false; };
         TimeSpan duration = new TimeSpan(2, 0, 0);
-        SimAction simAction = new SimAction(simActionID, npcs, validCondition, delayCondition, null, null, false, "Test Gig Event", "This is a test gig event that is scheduled to fire on " + triggerDate.ToShortDateString() + " at 11:15AM - but not pause time.  The even will last for two hours.", Asset_png.Popup_Vinyl, Asset_wav.event_generic);
-        SimEvent_Scheduled SimEvent_Scheduled01 = new SimEvent_Scheduled(simAction, triggerDate, duration);
+        SimAction simAction = new SimAction(simActionID, npcs, validCondition, delayCondition, null, duration, null, false, "Test Gig Event", "This is a test gig event that is scheduled to fire on " + triggerDate.ToShortDateString() + " at 11:15AM - but not pause time.  The even will last for two hours.", Asset_png.Popup_Vinyl, Asset_wav.event_generic);
+        SimEvent_Scheduled SimEvent_Scheduled01 = new SimEvent_Scheduled(simAction, triggerDate);
     }
 
 }

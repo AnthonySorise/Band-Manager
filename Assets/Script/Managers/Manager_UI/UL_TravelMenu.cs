@@ -50,6 +50,7 @@ public class UI_TravelMenu : MonoBehaviour{
     private void Start()
     {
         _toCity = Managers.Sim.NPC.GetPlayerCharacter().CurrentCity;
+        _transportationID = TransportationID.Automobile_ShadyVan;
         prefab_Menu_Travel = Resources.Load<GameObject>("Prefabs/UI/TravelMenu");
         _cityButtons = new Dictionary<CityID, Button>();
         MenuGO = null;
@@ -247,7 +248,6 @@ public class UI_TravelMenu : MonoBehaviour{
         _dropDown_TravelMethod.options = newOptions;
         _validTransportOptions = validTransportations;
 
-
         bool selectedTransportIsAvailable = false;
         for (var i = 0; i < _dropDown_TravelMethod.options.Count; i++)
         {
@@ -257,6 +257,7 @@ public class UI_TravelMenu : MonoBehaviour{
                 selectedTransportIsAvailable = true;
             }
         }
+
         if (!selectedTransportIsAvailable)
         {
             _dropDown_TravelMethod.value = 0;
