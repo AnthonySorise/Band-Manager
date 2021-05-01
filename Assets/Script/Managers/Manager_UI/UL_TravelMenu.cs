@@ -182,7 +182,7 @@ public class UI_TravelMenu : MonoBehaviour{
         CityID currentCity = Managers.Sim.NPC.GetPlayerCharacter().CurrentCity;
         _text_CurrentCityName.text = Managers.Data.CityData[currentCity].cityName;
         _text_CurrentCityState.text = Managers.Data.CityData[currentCity].stateName;
-        _text_CurrentCityPopulation.text = Managers.Data.CityData[currentCity].population.ToString();
+        _text_CurrentCityPopulation.text = Managers.Data.CityData[currentCity].population.ToString("n0");
 
         _text_TravelToCityName.text = Managers.Data.CityData[_toCity].cityName;
         _text_TravelToCityState.text = Managers.Data.CityData[_toCity].stateName;
