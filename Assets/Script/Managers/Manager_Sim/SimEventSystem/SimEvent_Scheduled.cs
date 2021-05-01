@@ -33,11 +33,7 @@ public class SimEvent_Scheduled
     }
 
     public void Check() {
-        if (!SimAction.IsValid())
-        {
-            Remove();
-        }
-        else if(_triggeredDT != null)
+        if(_triggeredDT != null)
         {
             if (Managers.Time.CurrentDT.CompareTo(_triggeredDT + SimAction.Duration) == 1)
             {
@@ -49,9 +45,5 @@ public class SimEvent_Scheduled
             SimAction.Trigger();
             _triggeredDT = Managers.Time.CurrentDT;
         }
-    }
-
-    public void Cancel() {
-        SimAction.Cancel();
     }
 }

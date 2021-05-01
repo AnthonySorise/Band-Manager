@@ -66,11 +66,7 @@ public class SimEvent_MTTH {
 
     public void Check()
     {
-        if (!_simAction.IsValid())
-        {
-            Remove();
-        }
-        else if (_triggeredDT != null)
+        if (_triggeredDT != null)
         {
             if (Managers.Time.CurrentDT.CompareTo(_triggeredDT + _simAction.Duration) == 1)
             {
@@ -82,9 +78,5 @@ public class SimEvent_MTTH {
             _simAction.Trigger();
             _triggeredDT = Managers.Time.CurrentDT;
         }
-    }
-    
-    public void Cancel() {
-        _simAction.Cancel();
     }
 }

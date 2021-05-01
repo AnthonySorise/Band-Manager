@@ -23,8 +23,8 @@ public enum SimActionID
 
 public class SimAction {
     public SimActionID ID { get; private set; }
-    public List<int> NPCs { get; private set; }
-    private Func<bool> _validCondition;
+    public List<int> NPCs { get; private set; }  //consider making just one id, no list
+    private Func<bool> _validCondition;//TO DO turn into Func<string> _invalidMessage
     private Func<bool> _delayCondition;
     private UnityAction _initialAction;
     
@@ -78,16 +78,12 @@ public class SimAction {
         return _validCondition();
     }
 
-    public void Cancel() {
-        _validCondition = () => {return false;};
-    }
-
     public bool ShouldDelay() {
         return _delayCondition();
     }
 
     public void Trigger() {
-        if (IsValid())
+        if (IsValid())//To DO, if invalid, display popup with _invalidMessage()
         {
             if(_initialAction != null)
             {
@@ -96,7 +92,7 @@ public class SimAction {
             if(NPCs.Contains(1))
             {
                 
-                Managers.UI.Popup.CreateAndDisplay(this);
+                Managers.UI.Popup.BuildAndDisplay(this);
             }
             else
             {

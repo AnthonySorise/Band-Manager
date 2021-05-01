@@ -89,8 +89,9 @@ public class Manager_Sim : MonoBehaviour, IManager {
         return returnList.OrderBy(o => o.ScheduledDT).ToList();
     }
 
-    public bool IsAvailableForEvent(int npcID, DateTime dateTime, TimeSpan duration)
+    public SimEvent_Scheduled ConflictingEvent(int npcID, DateTime dateTime, TimeSpan duration)
     {
+        SimEvent_Scheduled conflictingEvent = null;
         List<SimEvent_Scheduled> scheduledEvents = GetScheduledSimEvents(npcID);
         foreach (SimEvent_Scheduled scheduledEvent in scheduledEvents)
         {
@@ -103,10 +104,14 @@ public class Manager_Sim : MonoBehaviour, IManager {
 
                 if (aStart < bEnd && bStart < aEnd)
                 {
-                    return false;
+                    conflictingEvent = scheduledEvent;
                 }
             }
         }
-        return true;
+        return conflictingEvent;
+    }
+    public bool IsAvailableForEvent(int npcID, DateTime dateTime, TimeSpan duration)
+    {
+        return (ConflictingEvent(npcID, dateTime, duration) == null);
     }
 }

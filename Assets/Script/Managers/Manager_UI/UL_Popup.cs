@@ -16,7 +16,7 @@ public class UI_Popup : MonoBehaviour {
         _popupOption = new UI_PopupOption();
     }
 
-    public void CreateAndDisplay(SimAction simAction)
+    public void BuildAndDisplay(SimAction simAction)
     {
         string popupName = "Popup_" + simAction.ID.ToString();
         //if (GameObject.Find(popupName))
@@ -76,7 +76,7 @@ public class UI_Popup : MonoBehaviour {
             string buttonName = "Popup_" + simAction.ID.ToString() + "_buttonClose";
             SimActionOption option = new SimActionOption(closePopup, "OK");
 
-            _popupOption.CreateAndDisplay(option, buttonName, buttonsTransform);
+            _popupOption.BuildAndDisplay(option, buttonName, buttonsTransform);
         }
         else
         {
@@ -84,7 +84,7 @@ public class UI_Popup : MonoBehaviour {
             {
                 var buttonName = "Popup_" + simAction.ID.ToString() + "_button_0" + (i+1).ToString();
 
-                _popupOption.CreateAndDisplay(simAction.Options[i], buttonName, buttonsTransform);
+                _popupOption.BuildAndDisplay(simAction.Options[i], buttonName, buttonsTransform);
 
                 Button buttonComponent = GameObject.Find(buttonName).GetComponent<Button>();
                 buttonComponent.onClick.AddListener(closePopup);
@@ -114,7 +114,7 @@ public class UI_Popup : MonoBehaviour {
 
 public class UI_PopupOption
 {
-    public void CreateAndDisplay(SimActionOption simActionOption, string goName, Transform containerTransform)
+    public void BuildAndDisplay(SimActionOption simActionOption, string goName, Transform containerTransform)
     {
         void ButtonPress()
         {

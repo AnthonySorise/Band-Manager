@@ -209,7 +209,7 @@ public class UI_TravelMenu : MonoBehaviour{
         }
         else
         {
-            _text_TravelTime.text = Managers.Sim.Travel.IsValidSubmission_InvalidText(1, _transportationID, currentCity, _toCity);
+            _text_TravelTime.text = Managers.Sim.Travel.IsValidSubmission_invalidMessage(1, _transportationID, currentCity, _toCity);
             _text_TravelCost.text = " ";
         }
     }
@@ -334,7 +334,7 @@ public class UI_TravelMenu : MonoBehaviour{
         }
         else
         {
-            submitButtonTooltipText = Managers.Sim.Travel.IsValidSubmission_InvalidText(1, _transportationID, currentCityID, _toCity);
+            submitButtonTooltipText = Managers.Sim.Travel.IsValidSubmission_invalidMessage(1, _transportationID, currentCityID, _toCity);
         }
         if (_button_submit.IsInteractable())
         {
