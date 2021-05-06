@@ -24,36 +24,31 @@ public enum SimActionID
 public class SimAction {
     public SimActionID ID { get; private set; }
     public List<int> NPCs { get; private set; }  //consider making just one id, no list
-    private Func<bool> _validCondition;//TO DO turn into Func<string> _invalidMessage
+    private Func<string> _validCondition_invalidMessage;//TO DO turn into Func<string> _invalidMessage
     private Func<bool> _delayCondition;
     private UnityAction _initialAction;
     
     public TimeSpan Duration { get; private set; }
 
-    public List<SimActionOption> Options { get; private set; }
-    public bool PopupHaltsGame { get; private set; }
-    public string PopupHeaderText { get; private set; }
-    public string PopupBodyText { get; private set; }
-    public Asset_png PopupBodyImg { get; private set; }
-    public Asset_wav PopupTriggerSound { get; private set; }
+    public string Description_presentTense { get; private set; }
+    public string Description_futureTense { get; private set; }
+
+    public SimAction_PopupConfig PopupConfig { get; private set; }
 
     public SimAction(
         SimActionID id,
         List<int> npcs,
-        Func<bool> validCondition,
+        Func<string> validCondition_invalidMessage,
         Func<bool> delayCondition,
         UnityAction initialAction,
         TimeSpan? duration = null,
-        List<SimActionOption> options = null, 
-        bool popupHaltsGame = false, 
-        string popupHeaderText = null, 
-        string popupBodyText = null, 
-        Asset_png popupBodyImg = Asset_png.None, 
-        Asset_wav popupTriggerSound = Asset_wav.None)
+        string description_presentTense = "",
+        string description_futureTense = "",
+        SimAction_PopupConfig popupConfig = null)
     {
         ID = id;
         NPCs = npcs;
-        _validCondition = validCondition;
+        _validCondition_invalidMessage = validCondition_invalidMessage;
         _delayCondition = delayCondition;
         _initialAction = initialAction;
 
@@ -66,16 +61,18 @@ public class SimAction {
             Duration = duration.Value;
         }
 
-        Options = options;
-        PopupHaltsGame = popupHaltsGame;
-        PopupHeaderText = popupHeaderText;
-        PopupBodyText = popupBodyText;
-        PopupBodyImg = popupBodyImg;
-        PopupTriggerSound = popupTriggerSound;
+        Description_presentTense = description_presentTense;
+        Description_futureTense = description_futureTense;
+
+        PopupConfig = popupConfig;
     }
 
+    public string IsValid_invalidMessage()
+    {
+        return _validCondition_invalidMessage();
+    }
     public bool IsValid() {
-        return _validCondition();
+        return (_validCondition_invalidMessage() == "");
     }
 
     public bool ShouldDelay() {
@@ -99,5 +96,32 @@ public class SimAction {
                 //choose option using option's AI modifiers
             }
         }
+    }
+}
+
+
+public class SimAction_PopupConfig
+{
+    public List<SimActionOption> Options { get; private set; }
+    public bool PopupHaltsGame { get; private set; }
+    public string PopupHeaderText { get; private set; }
+    public string PopupBodyText { get; private set; }
+    public Asset_png PopupBodyImg { get; private set; }
+    public Asset_wav PopupTriggerSound { get; private set; }
+
+    public SimAction_PopupConfig(
+        List<SimActionOption> options = null,
+        bool popupHaltsGame = false,
+        string popupHeaderText = null,
+        string popupBodyText = null,
+        Asset_png popupBodyImg = Asset_png.None,
+        Asset_wav popupTriggerSound = Asset_wav.None)
+    {
+        Options = options;
+        PopupHaltsGame = popupHaltsGame;
+        PopupHeaderText = popupHeaderText;
+        PopupBodyText = popupBodyText;
+        PopupBodyImg = popupBodyImg;
+        PopupTriggerSound = popupTriggerSound;
     }
 }
