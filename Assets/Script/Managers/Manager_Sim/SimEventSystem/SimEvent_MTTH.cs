@@ -6,7 +6,6 @@ public class SimEvent_MTTH {
     private SimAction _simAction;
     private DateTime _startCheckingDT;
     private double _daysUntilFiftyPercentChance;
-    private DateTime? _triggeredDT;
     private double _daysPerCheck;
     private DateTime _lastCheckedDT;
     private bool _mtthCheckPassed;
@@ -16,7 +15,6 @@ public class SimEvent_MTTH {
         _simAction = simAction;
         _startCheckingDT = startCheckingDT;
         _daysUntilFiftyPercentChance = (fiftyPercentChanceDT - startCheckingDT).TotalDays;
-        _triggeredDT = null;
         _daysPerCheck = daysPerCheck;
         _mtthCheckPassed = false;
 
@@ -66,9 +64,9 @@ public class SimEvent_MTTH {
 
     public void Check()
     {
-        if (_triggeredDT != null)
+        if (_simAction.TriggeredDT != null)
         {
-            if (Managers.Time.CurrentDT.CompareTo(_triggeredDT + _simAction.Duration) == 1)
+            if (_simAction.IsFuture())
             {
                 Remove();
             }
@@ -76,7 +74,6 @@ public class SimEvent_MTTH {
         else if ((_mtthCheckPassed || MTTHCheck()) && !_simAction.ShouldDelay())
         {
             _simAction.Trigger();
-            _triggeredDT = Managers.Time.CurrentDT;
         }
     }
 }

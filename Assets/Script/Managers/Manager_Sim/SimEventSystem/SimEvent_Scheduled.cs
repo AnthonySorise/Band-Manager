@@ -5,12 +5,10 @@ public class SimEvent_Scheduled
 {
     public SimAction SimAction { get; private set; }
     public DateTime ScheduledDT { get; private set; }
-    private DateTime? _triggeredDT;
 
     public SimEvent_Scheduled(SimAction simAction, DateTime scheduledDT, DateTime? triggeredDT = null) {
         SimAction = simAction;
         ScheduledDT = scheduledDT;
-        _triggeredDT = triggeredDT;
 
         Store();
     }
@@ -33,9 +31,9 @@ public class SimEvent_Scheduled
     }
 
     public void Check() {
-        if(_triggeredDT != null)
+        if(SimAction.TriggeredDT != null)
         {
-            if (Managers.Time.CurrentDT.CompareTo(_triggeredDT + SimAction.Duration) == 1)
+            if (SimAction.IsFuture())
             {
                 Remove();
             }
@@ -43,7 +41,6 @@ public class SimEvent_Scheduled
         else if (IsTimeToTrigger() && !SimAction.ShouldDelay())
         {
             SimAction.Trigger();
-            _triggeredDT = Managers.Time.CurrentDT;
         }
     }
 }

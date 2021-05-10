@@ -24,23 +24,25 @@ public enum SimActionID
 public class SimAction {
     public SimActionID ID { get; private set; }
     public List<int> NPCs { get; private set; }  //consider making just one id, no list
-    private Func<string> _validCondition_invalidMessage;//TO DO turn into Func<string> _invalidMessage
+    private Func<string> _invalidMessage;
     private Func<bool> _delayCondition;
     private UnityAction _initialAction;
-    
+
+    public DateTime? TriggeredDT { get; private set; }
     public TimeSpan Duration { get; private set; }
 
-    public string Description_presentTense { get; private set; }
-    public string Description_futureTense { get; private set; }
+    private string _descriptionPresentTense;
+    private string _descriptionFutureTense;
 
     public SimAction_PopupConfig PopupConfig { get; private set; }
+    
 
     public SimAction(
         SimActionID id,
         List<int> npcs,
-        Func<string> validCondition_invalidMessage,
+        Func<string> invalidMessage,
         Func<bool> delayCondition,
-        UnityAction initialAction,
+        UnityAction initialAction = null,
         TimeSpan? duration = null,
         string description_presentTense = "",
         string description_futureTense = "",
@@ -48,10 +50,11 @@ public class SimAction {
     {
         ID = id;
         NPCs = npcs;
-        _validCondition_invalidMessage = validCondition_invalidMessage;
+        _invalidMessage = invalidMessage;
         _delayCondition = delayCondition;
         _initialAction = initialAction;
 
+        TriggeredDT = null;
         if (duration == null)
         {
             Duration = new TimeSpan(0, 0, 0);
@@ -61,18 +64,47 @@ public class SimAction {
             Duration = duration.Value;
         }
 
-        Description_presentTense = description_presentTense;
-        Description_futureTense = description_futureTense;
+        _descriptionPresentTense = description_presentTense;
+        _descriptionFutureTense = description_futureTense;
 
         PopupConfig = popupConfig;
     }
 
-    public string IsValid_invalidMessage()
+    public bool IsPast()
     {
-        return _validCondition_invalidMessage();
+        return (Managers.Time.CurrentDT.CompareTo(TriggeredDT) < 0);
+    }
+    public bool IsPresent()
+    {
+        return (!IsPast() && !IsFuture());
+    }
+    public bool IsFuture()
+    {
+        return (Managers.Time.CurrentDT.CompareTo(TriggeredDT + Duration) > 0);
+    }
+
+    public string GetDescription()
+    {
+        if (IsPresent())
+        {
+            return _descriptionPresentTense;
+        }
+        else if (IsFuture())
+        {
+            return _descriptionFutureTense;
+        }
+        else
+        {
+            return "";
+        }
+    }
+
+    public string IsValid_InvalidMessage()
+    {
+        return _invalidMessage();
     }
     public bool IsValid() {
-        return (_validCondition_invalidMessage() == "");
+        return (_invalidMessage() == "");
     }
 
     public bool ShouldDelay() {
@@ -80,21 +112,26 @@ public class SimAction {
     }
 
     public void Trigger() {
-        if (IsValid())//To DO, if invalid, display popup with _invalidMessage()
+        TriggeredDT = Managers.Time.CurrentDT;
+        if (IsValid())
         {
             if(_initialAction != null)
             {
                 _initialAction();
             }
-            if(NPCs.Contains(1))
+            if(NPCs.Contains(1) && PopupConfig != null)
             {
                 
-                Managers.UI.Popup.BuildAndDisplay(this);
+                Managers.UI.Popup.BuildAndDisplay(this);//change argument to PopupConfig and not SimAction
             }
             else
             {
                 //choose option using option's AI modifiers
             }
+        }
+        else
+        {
+            //To DO, if invalid, display popup with _invalidMessage(), and run _Cancel
         }
     }
 }
