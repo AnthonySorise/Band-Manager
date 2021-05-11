@@ -23,10 +23,11 @@ public enum SimActionID
 
 public class SimAction {
     public SimActionID ID { get; private set; }
-    public List<int> NPCs { get; private set; }  //consider making just one id, no list
+    public int NPCid { get; private set; }
     private Func<string> _invalidMessage;
     private Func<bool> _delayCondition;
-    private UnityAction _initialAction;
+    private UnityAction _callback;
+    List<UnityAction> _optionCallbacks;
 
     public DateTime? TriggeredDT { get; private set; }
     public TimeSpan Duration { get; private set; }
@@ -35,24 +36,26 @@ public class SimAction {
     private string _descriptionFutureTense;
 
     public SimAction_PopupConfig PopupConfig { get; private set; }
-    
+
 
     public SimAction(
         SimActionID id,
-        List<int> npcs,
+        int npcID,
         Func<string> invalidMessage,
         Func<bool> delayCondition,
-        UnityAction initialAction = null,
+        UnityAction callback = null,
+        List<UnityAction> optionCallbacks = null,
         TimeSpan? duration = null,
         string description_presentTense = "",
         string description_futureTense = "",
         SimAction_PopupConfig popupConfig = null)
     {
         ID = id;
-        NPCs = npcs;
+        NPCid = npcID;
         _invalidMessage = invalidMessage;
         _delayCondition = delayCondition;
-        _initialAction = initialAction;
+        _callback = callback;
+        _optionCallbacks = optionCallbacks;
 
         TriggeredDT = null;
         if (duration == null)
@@ -112,17 +115,16 @@ public class SimAction {
     }
 
     public void Trigger() {
-        TriggeredDT = Managers.Time.CurrentDT;
         if (IsValid())
         {
-            if(_initialAction != null)
+            TriggeredDT = Managers.Time.CurrentDT;
+            if (_callback != null)
             {
-                _initialAction();
+                _callback();
             }
-            if(NPCs.Contains(1) && PopupConfig != null)
+            if(NPCid == 1 && PopupConfig != null)
             {
-                
-                Managers.UI.Popup.BuildAndDisplay(this);//change argument to PopupConfig and not SimAction
+                Managers.UI.Popup.BuildAndDisplay(PopupConfig, _optionCallbacks);
             }
             else
             {
@@ -139,7 +141,8 @@ public class SimAction {
 
 public class SimAction_PopupConfig
 {
-    public List<SimActionOption> Options { get; private set; }
+    public SimActionID ID { get; private set; }
+    public List<SimAction_PopupOptionConfig> Options { get; private set; }
     public bool PopupHaltsGame { get; private set; }
     public string PopupHeaderText { get; private set; }
     public string PopupBodyText { get; private set; }
@@ -147,18 +150,34 @@ public class SimAction_PopupConfig
     public Asset_wav PopupTriggerSound { get; private set; }
 
     public SimAction_PopupConfig(
-        List<SimActionOption> options = null,
+        SimActionID id,
+        List<SimAction_PopupOptionConfig> options = null,
         bool popupHaltsGame = false,
         string popupHeaderText = null,
         string popupBodyText = null,
         Asset_png popupBodyImg = Asset_png.None,
         Asset_wav popupTriggerSound = Asset_wav.None)
     {
+        ID = id;
         Options = options;
         PopupHaltsGame = popupHaltsGame;
         PopupHeaderText = popupHeaderText;
         PopupBodyText = popupBodyText;
         PopupBodyImg = popupBodyImg;
         PopupTriggerSound = popupTriggerSound;
+    }
+}
+
+public class SimAction_PopupOptionConfig {
+
+    public string ButtonText;
+    public Action<GameObject> SetToolTips;
+
+    public SimAction_PopupOptionConfig(
+        string buttonText = null, 
+        Action<GameObject> setTooltips = null)
+    {
+        ButtonText = buttonText;
+        SetToolTips = setTooltips;
     }
 }

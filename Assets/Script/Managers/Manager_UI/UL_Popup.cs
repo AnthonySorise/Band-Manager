@@ -16,20 +16,16 @@ public class UI_Popup : MonoBehaviour {
         _popupOption = new UI_PopupOption();
     }
 
-    public void BuildAndDisplay(SimAction simAction)
+    public void BuildAndDisplay(SimAction_PopupConfig popupConfig, List<UnityAction> optionCallbacks = null)
     {
-        string popupName = "Popup_" + simAction.ID.ToString();
-        //if (GameObject.Find(popupName))
-        //{
-        //    Debug.Log("Error: " + popupName + " already exists");
-        //    return;
-        //}
-        if(simAction.PopupConfig == null)
+        if(popupConfig == null)
         {
             return;
         }
 
-        Transform containerTransform = simAction.PopupConfig.PopupHaltsGame ? Managers.UI.PopupCanvasGO_AboveCover.transform : Managers.UI.PopupCanvasGO.transform;
+        string popupName = "Popup_" + popupConfig.ID.ToString();
+
+        Transform containerTransform = popupConfig.PopupHaltsGame ? Managers.UI.PopupCanvasGO_AboveCover.transform : Managers.UI.PopupCanvasGO.transform;
         GameObject popup = MonoBehaviour.Instantiate(_prefab_Popup, containerTransform);
         popup.transform.SetParent(containerTransform, false);
 
@@ -42,25 +38,25 @@ public class UI_Popup : MonoBehaviour {
         popup.name = popupName;
 
         //header
-        string headerName = "Popup_" + simAction.ID.ToString() + "_header";
+        string headerName = "Popup_" + popupConfig.ID.ToString() + "_header";
         popup_header.name = headerName;
-        popup_header.GetComponent<TextMeshProUGUI>().text = simAction.PopupConfig.PopupHeaderText;
+        popup_header.GetComponent<TextMeshProUGUI>().text = popupConfig.PopupHeaderText;
 
         //image
-        string imgName = "Popup_" + simAction.ID.ToString() + "_image";
-        if (simAction.PopupConfig.PopupBodyImg != Asset_png.None)
+        string imgName = "Popup_" + popupConfig.ID.ToString() + "_image";
+        if (popupConfig.PopupBodyImg != Asset_png.None)
         {
             popup_image.name = imgName;
-            popup_image.GetComponent<Image>().sprite = Managers.Assets.GetSprite(simAction.PopupConfig.PopupBodyImg);
+            popup_image.GetComponent<Image>().sprite = Managers.Assets.GetSprite(popupConfig.PopupBodyImg);
         }
 
         //body text
-        string bodyTextName = "Popup_" + simAction.ID.ToString() + "_bodyText";
+        string bodyTextName = "Popup_" + popupConfig.ID.ToString() + "_bodyText";
         popup_bodyText.name = bodyTextName;
-        popup_bodyText.GetComponent<TextMeshProUGUI>().text = simAction.PopupConfig.PopupBodyText;
+        popup_bodyText.GetComponent<TextMeshProUGUI>().text = popupConfig.PopupBodyText;
 
         //buttons
-        string buttonContainerName = "Popup_buttonContainer" + simAction.ID.ToString();
+        string buttonContainerName = "Popup_buttonContainer" + popupConfig.ID.ToString();
         popup_buttonContainer.name = buttonContainerName;
 
         Transform buttonsTransform = popup_buttonContainer.GetComponent<Transform>();
@@ -69,20 +65,20 @@ public class UI_Popup : MonoBehaviour {
             Managers.Audio.PlayAudio(Asset_wav.Click_02, AudioChannel.UI);
         };
 
-        if (simAction.PopupConfig.Options == null || simAction.PopupConfig.Options.Count == 0)
+        if (popupConfig.Options == null || popupConfig.Options.Count == 0 || optionCallbacks == null || optionCallbacks.Count == 0)
         {
-            string buttonName = "Popup_" + simAction.ID.ToString() + "_buttonClose";
-            SimActionOption option = new SimActionOption(closePopup, "OK");
+            string buttonName = "Popup_" + popupConfig.ID.ToString() + "_buttonClose";
+            SimAction_PopupOptionConfig optionConfig = new SimAction_PopupOptionConfig("OK");
 
-            _popupOption.BuildAndDisplay(option, buttonName, buttonsTransform);
+            _popupOption.BuildAndDisplay(optionConfig, closePopup, buttonName, buttonsTransform);
         }
         else
         {
-            for (int i = 0; i < simAction.PopupConfig.Options.Count; i++)
+            for (int i = 0; i < popupConfig.Options.Count; i++)
             {
-                var buttonName = "Popup_" + simAction.ID.ToString() + "_button_0" + (i+1).ToString();
+                var buttonName = "Popup_" + popupConfig.ID.ToString() + "_button_0" + (i+1).ToString();
 
-                _popupOption.BuildAndDisplay(simAction.PopupConfig.Options[i], buttonName, buttonsTransform);
+                _popupOption.BuildAndDisplay(popupConfig.Options[i], optionCallbacks[i] ,buttonName, buttonsTransform);
 
                 Button buttonComponent = GameObject.Find(buttonName).GetComponent<Button>();
                 buttonComponent.onClick.AddListener(closePopup);
@@ -90,13 +86,13 @@ public class UI_Popup : MonoBehaviour {
         }
         
         //trigger sound
-        if (simAction.PopupConfig.PopupTriggerSound != Asset_wav.None)
+        if (popupConfig.PopupTriggerSound != Asset_wav.None)
         {
-            Managers.Audio.PlayAudio(simAction.PopupConfig.PopupTriggerSound, AudioChannel.SFX);
+            Managers.Audio.PlayAudio(popupConfig.PopupTriggerSound, AudioChannel.SFX);
         }
 
         //halt game
-        if (simAction.PopupConfig.PopupHaltsGame)
+        if (popupConfig.PopupHaltsGame)
         {
             if (Managers.UI.IsScreenCovered() == false)
             {
@@ -112,7 +108,7 @@ public class UI_Popup : MonoBehaviour {
 
 public class UI_PopupOption
 {
-    public void BuildAndDisplay(SimActionOption simActionOption, string goName, Transform containerTransform)
+    public void BuildAndDisplay(SimAction_PopupOptionConfig popupOptionConfig, UnityAction optionCallback, string goName, Transform containerTransform)
     {
         void ButtonPress()
         {
@@ -124,7 +120,7 @@ public class UI_PopupOption
             {
                 //Managers.Time.Play();
             }
-            simActionOption.CallBack();
+            optionCallback();
         }
 
         GameObject button = MonoBehaviour.Instantiate(Managers.UI.prefab_Button);
@@ -133,15 +129,15 @@ public class UI_PopupOption
 
         button.GetComponent<Button>().onClick.AddListener(ButtonPress);
 
-        if (simActionOption.SetToolTips != null)
+        if (popupOptionConfig.SetToolTips != null)
         {
-            simActionOption.SetToolTips(button.gameObject);
+            popupOptionConfig.SetToolTips(button.gameObject);
         }
 
         TextMeshProUGUI tmpText = button.GetComponentInChildren<TextMeshProUGUI>();
-        if (!String.IsNullOrEmpty(simActionOption.ButtonText))
+        if (!String.IsNullOrEmpty(popupOptionConfig.ButtonText))
         {
-            tmpText.text = simActionOption.ButtonText;
+            tmpText.text = popupOptionConfig.ButtonText;
         }
     }
 }
