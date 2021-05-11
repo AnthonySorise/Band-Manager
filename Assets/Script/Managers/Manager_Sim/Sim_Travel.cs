@@ -296,8 +296,8 @@ public class Sim_Travel : MonoBehaviour
         };
 
 
-        string descriptionPresentTense = "Traveling to " + toCityData.cityID;
-        string descriptionFutureTense = "Will travel to " + toCityData.cityID;
+        string descriptionPresentTense = "Traveling to " + toCityData.cityName;
+        string descriptionFutureTense = "Will travel to " + toCityData.cityName;
 
 
         SimAction simAction = new SimAction(SimActionID.NPC_Travel, npcID, invalidConditionMessage, delayCondition, callback, null, travelTime, descriptionPresentTense, descriptionFutureTense);

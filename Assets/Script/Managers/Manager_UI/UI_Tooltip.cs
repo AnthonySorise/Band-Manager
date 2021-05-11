@@ -44,30 +44,9 @@ public class UI_Tooltip : MonoBehaviour {
         }
         initTooltipBehavior(go, ButtonName, textList, hasDelay);
     }
-    public void SetTooltip(GameObject go, SimEvent_Scheduled scheduledEvent)
+    public void SetTooltip(GameObject go, SimAction simAction)
     {
-        string header = "";
-        switch (scheduledEvent.SimAction.ID)
-        {
-            case SimActionID.NPC_Gig:
-                header = "Gig";
-                break;
-            case SimActionID.NPC_Media:
-                header = "Media";
-                break;
-            case SimActionID.NPC_Produce:
-                header = "Produce";
-                break;
-            case SimActionID.NPC_Scout:
-                header = "Scout";
-                break;
-            case SimActionID.NPC_Special:
-                header = "Special";
-                break;
-            case SimActionID.NPC_Travel:
-                header = "Travel";
-                break;
-        }
+        string header = simAction.GetDescription();
         List<string> textList = new List<string>();
         initTooltipBehavior(go, header, textList, false);
     }
