@@ -78,7 +78,7 @@ public class Manager_Sim : MonoBehaviour, IManager {
         List<SimEvent_Scheduled> returnList = new List<SimEvent_Scheduled>();
         foreach (SimEvent_Scheduled simEvent in _simEvents_Scheduled)
         {
-            if (simEvent.SimAction.NPCid == 1)
+            if (simEvent.SimAction.IDs.NPCid == 1)
             {
                 if(dateTime ==  null || simEvent.ScheduledDT.Date.CompareTo(dateTime.Value.Date) == 0)
                 {
@@ -100,7 +100,7 @@ public class Manager_Sim : MonoBehaviour, IManager {
                 DateTime aStart = dateTime;
                 DateTime aEnd = dateTime + duration;
                 DateTime bStart = scheduledEvent.ScheduledDT;
-                DateTime bEnd = scheduledEvent.ScheduledDT + scheduledEvent.SimAction.Duration;
+                DateTime bEnd = scheduledEvent.ScheduledDT + scheduledEvent.SimAction.TriggerData.Duration;
 
                 if (aStart < bEnd && bStart < aEnd)
                 {

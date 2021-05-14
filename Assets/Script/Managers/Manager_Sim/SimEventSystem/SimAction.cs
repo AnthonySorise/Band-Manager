@@ -22,60 +22,30 @@ public enum SimActionID
 }
 
 public class SimAction {
-    public SimActionID ID { get; private set; }
-    public int NPCid { get; private set; }
-    private Func<string> _invalidMessage;
-    private Func<bool> _delayCondition;
-    private UnityAction _callback;
-    List<UnityAction> _optionCallbacks;
-
-    public DateTime? TriggeredDT { get; private set; }
-    public TimeSpan Duration { get; private set; }
-
-    private string _descriptionPresentTense;
-    private string _descriptionFutureTense;
-
+    public SimAction_IDs IDs { get; private set; }
+    public SimAction_TriggerData TriggerData { get; private set; }
+    public SimAction_Callbacks Callbacks { get; private set; }
+    public SimAction_Descriptions Descriptions { get; private set; }
     public SimAction_PopupConfig PopupConfig { get; private set; }
 
-
     public SimAction(
-        SimActionID id,
-        int npcID,
-        Func<string> invalidMessage,
-        Func<bool> delayCondition,
-        UnityAction callback = null,
-        List<UnityAction> optionCallbacks = null,
-        TimeSpan? duration = null,
-        string description_presentTense = "",
-        string description_futureTense = "",
-        SimAction_PopupConfig popupConfig = null)
+        SimAction_IDs ids,
+        SimAction_TriggerData triggerData,
+        SimAction_Callbacks callbacks,
+        SimAction_Descriptions descriptions,
+        SimAction_PopupConfig popupConfigs
+    )
     {
-        ID = id;
-        NPCid = npcID;
-        _invalidMessage = invalidMessage;
-        _delayCondition = delayCondition;
-        _callback = callback;
-        _optionCallbacks = optionCallbacks;
-
-        TriggeredDT = null;
-        if (duration == null)
-        {
-            Duration = new TimeSpan(0, 0, 0);
-        }
-        else
-        {
-            Duration = duration.Value;
-        }
-
-        _descriptionPresentTense = description_presentTense;
-        _descriptionFutureTense = description_futureTense;
-
-        PopupConfig = popupConfig;
+        IDs = ids;
+        TriggerData = triggerData;
+        Callbacks = callbacks;
+        Descriptions = descriptions;
+        PopupConfig = popupConfigs;
     }
 
     public bool IsPast()
     {
-        return (Managers.Time.CurrentDT.CompareTo(TriggeredDT) < 0);
+        return (Managers.Time.CurrentDT.CompareTo(TriggerData.TriggeredDT) < 0);
     }
     public bool IsPresent()
     {
@@ -83,18 +53,18 @@ public class SimAction {
     }
     public bool IsFuture()
     {
-        return (Managers.Time.CurrentDT.CompareTo(TriggeredDT + Duration) > 0);
+        return (Managers.Time.CurrentDT.CompareTo(TriggerData.TriggeredDT + TriggerData.Duration) > 0);
     }
 
     public string GetDescription()
     {
-        if (IsPresent())
+        if (IsPresent() && Descriptions != null)
         {
-            return _descriptionPresentTense;
+            return Descriptions.DescriptionPresentTense;
         }
-        else if (IsFuture())
+        else if (IsFuture() && Descriptions != null)
         {
-            return _descriptionFutureTense;
+            return Descriptions.DescriptionFutureTense;
         }
         else
         {
@@ -104,27 +74,27 @@ public class SimAction {
 
     public string IsValid_InvalidMessage()
     {
-        return _invalidMessage();
+        return TriggerData.InvalidConditionMessage();
     }
     public bool IsValid() {
-        return (_invalidMessage() == "");
+        return (TriggerData.InvalidConditionMessage() == "");
     }
 
     public bool ShouldDelay() {
-        return _delayCondition();
+        return TriggerData.DelayCondition();
     }
 
     public void Trigger() {
         if (IsValid())
         {
-            TriggeredDT = Managers.Time.CurrentDT;
-            if (_callback != null)
+            TriggerData.TriggeredDT = Managers.Time.CurrentDT;
+            if (Callbacks != null && Callbacks.Callback != null)
             {
-                _callback();
+                Callbacks.Callback();
             }
-            if(NPCid == 1 && PopupConfig != null)
+            if(IDs.NPCid == 1 && PopupConfig != null)
             {
-                Managers.UI.Popup.BuildAndDisplay(PopupConfig, _optionCallbacks);
+                Managers.UI.Popup.BuildAndDisplay(PopupConfig, (Callbacks != null && Callbacks.OptionCallbacks != null) ? Callbacks.OptionCallbacks : null);
             }
             else
             {
@@ -138,6 +108,69 @@ public class SimAction {
     }
 }
 
+
+public class SimAction_IDs
+{
+    public SimActionID ID { get; private set; }
+    public int NPCid { get; private set; }
+
+    public SimAction_IDs(SimActionID id, int npcID)
+    {
+        ID = id;
+        NPCid = npcID;
+    }
+}
+
+public class SimAction_TriggerData  
+{
+    public Func<string> InvalidConditionMessage { get; private set; }
+    public Func<bool> DelayCondition { get; private set; }
+    public TimeSpan Duration { get; private set; }
+    public DateTime? TriggeredDT;
+
+    public SimAction_TriggerData(Func<string> invalidConditionMessage = null, Func<bool> delayCondition = null, TimeSpan? duration = null)
+    {
+        InvalidConditionMessage = invalidConditionMessage;
+        DelayCondition = delayCondition;
+        if (duration == null)
+        {
+            Duration = new TimeSpan(0, 0, 0);
+        }
+        else
+        {
+            Duration = duration.Value;
+        }
+        TriggeredDT = null;
+    }
+}
+
+public class SimAction_Callbacks
+{
+    public UnityAction Callback { get; private set; }
+    public List<UnityAction> OptionCallbacks { get; private set; }
+    public UnityAction CancelCallback { get; private set; }
+
+    public SimAction_Callbacks(UnityAction callback = null, List<UnityAction> optionCallbacks = null, UnityAction cancelCallbacks = null)
+    {
+        Callback = callback;
+        OptionCallbacks = optionCallbacks;
+        CancelCallback = cancelCallbacks;
+    }
+}
+
+public class SimAction_Descriptions
+{
+    public string DescriptionPresentTense { get; private set; }
+    public string DescriptionFutureTense { get; private set; }
+    public string CancelDescription { get; private set; }
+
+    public SimAction_Descriptions(string description_presentTense = "", string description_futureTense = "", string cancelDescription = "")
+    {
+        DescriptionPresentTense = description_presentTense;
+        DescriptionFutureTense = description_futureTense;
+        CancelDescription = cancelDescription;
+    }
+}
 
 public class SimAction_PopupConfig
 {
@@ -167,7 +200,6 @@ public class SimAction_PopupConfig
         PopupTriggerSound = popupTriggerSound;
     }
 }
-
 public class SimAction_PopupOptionConfig {
 
     public string ButtonText;

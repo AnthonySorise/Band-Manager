@@ -31,7 +31,7 @@ public class SimEvent_Scheduled
     }
 
     public void Check() {
-        if(SimAction.TriggeredDT != null)
+        if(SimAction.TriggerData.TriggeredDT != null)
         {
             if (SimAction.IsFuture())
             {

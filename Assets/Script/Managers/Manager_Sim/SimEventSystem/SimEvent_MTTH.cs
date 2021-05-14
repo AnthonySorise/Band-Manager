@@ -64,7 +64,7 @@ public class SimEvent_MTTH {
 
     public void Check()
     {
-        if (_simAction.TriggeredDT != null)
+        if (_simAction.TriggerData.TriggeredDT != null)
         {
             if (_simAction.IsFuture())
             {
