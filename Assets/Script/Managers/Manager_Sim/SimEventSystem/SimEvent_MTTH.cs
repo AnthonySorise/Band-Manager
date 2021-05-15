@@ -64,16 +64,13 @@ public class SimEvent_MTTH {
 
     public void Check()
     {
-        if (_simAction.TriggerData.TriggeredDT != null)
+        if (_simAction.HasHappened() || _simAction.IsCanceled())
         {
-            if (_simAction.IsFuture())
-            {
-                Remove();
-            }
+            Remove();
         }
-        else if ((_mtthCheckPassed || MTTHCheck()) && !_simAction.ShouldDelay())
+        else if (_mtthCheckPassed || MTTHCheck())
         {
-            _simAction.Trigger();
+            _simAction.AttemptTrigger();
         }
     }
 }

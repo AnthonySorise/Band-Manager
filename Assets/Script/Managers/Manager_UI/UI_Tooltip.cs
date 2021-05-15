@@ -46,7 +46,7 @@ public class UI_Tooltip : MonoBehaviour {
     }
     public void SetTooltip(GameObject go, SimAction simAction)
     {
-        string header = simAction.GetDescription();
+        string header = simAction.Description();
         List<string> textList = new List<string>();
         initTooltipBehavior(go, header, textList, false);
     }
@@ -86,12 +86,11 @@ public class UI_Tooltip : MonoBehaviour {
             StartCoroutine(DelayedTooltip(header, textList));
         }
     }
-    public void onGOexit(string header, List<string> textList, bool hasDelay)
+    public void onGOexit()
     {
         _isTooltipInQueue = false;
 
         _toolTipText.text = "";
-        _toolTipGO.GetComponent<RectTransform>().position = new Vector2(5000, 5000);
         _toolTipGO.SetActive(false);
     }
 
@@ -195,10 +194,12 @@ public class TooltipBehavior : MonoBehaviour, IPointerEnterHandler, IPointerExit
     public List<string> TextList;
     public bool HasDelay;
     public bool IsActive;
+    private bool _isDestroyed;
 
     private void Start()
     {
         IsActive = true;
+        _isDestroyed = false;
     }
 
     public void OnPointerEnter(PointerEventData eventData)
@@ -211,14 +212,11 @@ public class TooltipBehavior : MonoBehaviour, IPointerEnterHandler, IPointerExit
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        Managers.UI.Tooltip.onGOexit(Header, TextList, HasDelay);
+        Managers.UI.Tooltip.onGOexit();
     }
 
     public void OnDestroy()
     {
-        if (this.gameObject.activeSelf)
-        {
-            Managers.UI.Tooltip.onGOexit(Header, TextList, HasDelay);
-        }
+        Managers.UI.Tooltip.onGOexit();
     }
 }

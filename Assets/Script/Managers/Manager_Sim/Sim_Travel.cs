@@ -280,7 +280,7 @@ public class Sim_Travel : MonoBehaviour
             popupOptionConfig01,
             popupOptionConfig02
         };
-        SimAction_PopupConfig popupConfig = new SimAction_PopupConfig(SimActionID.NPC_Travel, popupOptionsConfig, true, headerText, bodyText, Asset_png.Popup_Vinyl, Asset_wav.Click_04);
+        SimAction_PopupConfig popupConfig = new SimAction_PopupConfig(popupOptionsConfig, true, headerText, bodyText, Asset_png.Popup_Vinyl, Asset_wav.Click_04);
 
         //Sim Action
         SimAction simAction = new SimAction(ids, triggerData, callBacks, null, popupConfig);
@@ -308,9 +308,7 @@ public class Sim_Travel : MonoBehaviour
         SimAction_Callbacks callbacks = new SimAction_Callbacks(callback);
 
         //Descriptions
-        string descriptionPresentTense = "Traveling to " + toCityData.cityName;
-        string descriptionFutureTense = "Will travel to " + toCityData.cityName;
-        SimAction_Descriptions descriptions = new SimAction_Descriptions(descriptionPresentTense, descriptionFutureTense);
+        SimAction_Descriptions descriptions = new SimAction_Descriptions("travel to " + toCityData.cityName);
 
         //Sim Action
         SimAction simAction = new SimAction(ids, triggerData, callbacks, descriptions, null);
@@ -335,11 +333,7 @@ public class Sim_Travel : MonoBehaviour
         UnityAction option01 = () => {
             Debug.Log("End Travel");
         };
-        List<UnityAction> optionCallbacks = new List<UnityAction>
-        {
-            option01
-        };
-        SimAction_Callbacks callbacks = new SimAction_Callbacks(callback, optionCallbacks);
+        SimAction_Callbacks callbacks = new SimAction_Callbacks(callback);
 
         //Popup Config
         string popupMessage = "Welcome to " + toCityData.cityName;
@@ -349,7 +343,7 @@ public class Sim_Travel : MonoBehaviour
         {
             popupOptionConfig01
         };
-        SimAction_PopupConfig popupConfig = new SimAction_PopupConfig(SimActionID.NPC_Travel, popupOptionsConfig, true, popupMessage, "", Asset_png.Popup_Vinyl, Asset_wav.Click_04);
+        SimAction_PopupConfig popupConfig = new SimAction_PopupConfig(popupOptionsConfig, true, popupMessage, "", Asset_png.Popup_Vinyl, Asset_wav.Click_04);
 
         //Sim Action
         SimAction simAction = new SimAction(ids, triggerData, callbacks, null, popupConfig);

@@ -6,7 +6,7 @@ public class SimEvent_Scheduled
     public SimAction SimAction { get; private set; }
     public DateTime ScheduledDT { get; private set; }
 
-    public SimEvent_Scheduled(SimAction simAction, DateTime scheduledDT, DateTime? triggeredDT = null) {
+    public SimEvent_Scheduled(SimAction simAction, DateTime scheduledDT) {
         SimAction = simAction;
         ScheduledDT = scheduledDT;
 
@@ -21,26 +21,17 @@ public class SimEvent_Scheduled
     }
 
     private bool IsTimeToTrigger() {
-        if (Managers.Time.CurrentDT >= ScheduledDT)
-        {
-            return true;
-        }
-        else {
-            return false;
-        }
+        return (Managers.Time.CurrentDT >= ScheduledDT && !SimAction.IsHappeningNow());
     }
 
     public void Check() {
-        if(SimAction.TriggerData.TriggeredDT != null)
+        if (SimAction.HasHappened() || SimAction.IsCanceled())
         {
-            if (SimAction.IsFuture())
-            {
-                Remove();
-            }
+            Remove();
         }
-        else if (IsTimeToTrigger() && !SimAction.ShouldDelay())
+        else if (IsTimeToTrigger())
         {
-            SimAction.Trigger();
+            SimAction.AttemptTrigger();
         }
     }
 }

@@ -31,7 +31,7 @@ public class Sim_TEST : MonoBehaviour
         Func<bool> delayCondition = () => { return false; };
         SimAction_TriggerData triggerData = new SimAction_TriggerData(invalidMessageCondition, delayCondition);
 
-        SimAction_PopupConfig popupConfig = new SimAction_PopupConfig(SimActionID.Test_Popup01, null, false, "Test Scheduled Event", "This is a test event that is scheduled to fire on " + triggerDate.ToShortDateString() + " but not pause time.", Asset_png.Popup_Vinyl, Asset_wav.event_generic);
+        SimAction_PopupConfig popupConfig = new SimAction_PopupConfig(null, false, "Test Scheduled Event", "This is a test event that is scheduled to fire on " + triggerDate.ToShortDateString() + " but not pause time.", Asset_png.Popup_Vinyl, Asset_wav.event_generic);
         SimAction simAction = new SimAction(ids, triggerData, null, null, popupConfig);
         SimEvent_Scheduled SimEvent_Scheduled01 = new SimEvent_Scheduled(simAction, triggerDate);
     }
@@ -40,14 +40,9 @@ public class Sim_TEST : MonoBehaviour
     private void SIM_TestPopup02(DateTime triggerDate)
     {
         SimAction_IDs ids = new SimAction_IDs(SimActionID.Test_Popup02, 1);
+        SimAction_PopupConfig popupConfig = new SimAction_PopupConfig(null, true, "Test Scheduled Event", "This is a test event that is scheduled to fire on " + triggerDate.ToShortDateString() + " AND prevents progress until you click OK.", Asset_png.Popup_Vinyl, Asset_wav.event_generic);
 
-        Func<string> invalidMessageCondition = () => { return ""; };
-        Func<bool> delayCondition = () => { return false; };
-        SimAction_TriggerData triggerData = new SimAction_TriggerData(invalidMessageCondition, delayCondition);
-    
-        SimAction_PopupConfig popupConfig = new SimAction_PopupConfig(SimActionID.Test_Popup02, null, true, "Test Scheduled Event", "This is a test event that is scheduled to fire on " + triggerDate.ToShortDateString() + " AND prevents progress until you click OK.", Asset_png.Popup_Vinyl, Asset_wav.event_generic);
-
-        SimAction simAction = new SimAction(ids, triggerData, null, null, popupConfig);
+        SimAction simAction = new SimAction(ids, null, null, null, popupConfig);
         SimEvent_Scheduled SimEvent_Scheduled02 = new SimEvent_Scheduled(simAction, triggerDate);
     }
 
@@ -101,7 +96,7 @@ public class Sim_TEST : MonoBehaviour
             SimActionOption04
         };
 
-        SimAction_PopupConfig popupConfig = new SimAction_PopupConfig(SimActionID.Test_Popup03, optionList, false, "Test Scheduled Event", "This is a test event that is scheduled to fire on " + triggerDate.ToShortDateString() + ".  It has four options but does not pause time.", Asset_png.Popup_Vinyl, Asset_wav.event_generic);
+        SimAction_PopupConfig popupConfig = new SimAction_PopupConfig(optionList, false, "Test Scheduled Event", "This is a test event that is scheduled to fire on " + triggerDate.ToShortDateString() + ".  It has four options but does not pause time.", Asset_png.Popup_Vinyl, Asset_wav.event_generic);
         SimAction simAction = new SimAction(ids, triggerData, callbacks, null, popupConfig);
         SimEvent_Scheduled SimEvent_Scheduled03 = new SimEvent_Scheduled(simAction, triggerDate);
     }
@@ -154,7 +149,7 @@ public class Sim_TEST : MonoBehaviour
             SimActionOption03
         };
 
-        SimAction_PopupConfig popupConfig = new SimAction_PopupConfig(SimActionID.Test_Popup04, popupOptionsList, true, "Test Scheduled Event", "This is a test event that is scheduled to fire on " + triggerDate.ToShortDateString() + " AFTER 4:00AM!  It has three options AND you must select one to continue.", Asset_png.Popup_Vinyl, Asset_wav.event_generic);
+        SimAction_PopupConfig popupConfig = new SimAction_PopupConfig(popupOptionsList, true, "Test Scheduled Event", "This is a test event that is scheduled to fire on " + triggerDate.ToShortDateString() + " AFTER 4:00AM!  It has three options AND you must select one to continue.", Asset_png.Popup_Vinyl, Asset_wav.event_generic);
         SimAction simAction = new SimAction(ids, triggerData, callbacks, null, popupConfig);
         SimEvent_Scheduled SimEvent_Scheduled04 = new SimEvent_Scheduled(simAction, triggerDate);
     }
@@ -164,7 +159,6 @@ public class Sim_TEST : MonoBehaviour
     {
         SimAction_IDs ids = new SimAction_IDs(SimActionID.Test_Popup05, 1);
 
-        Func<string> invalidConditionMessage = () => { return ""; };
         int randomHour = UnityEngine.Random.Range(9, 17);
         int randomMinute = UnityEngine.Random.Range(0, 60);
         Func<bool> delayCondition = () =>
@@ -172,7 +166,7 @@ public class Sim_TEST : MonoBehaviour
             DateTime triggerTime = new DateTime(Managers.Time.CurrentDT.Year, Managers.Time.CurrentDT.Month, Managers.Time.CurrentDT.Day, randomHour, randomMinute, 0);
             return (Managers.Time.CurrentDT < triggerTime);
         };
-        SimAction_TriggerData triggerData = new SimAction_TriggerData(invalidConditionMessage, delayCondition);
+        SimAction_TriggerData triggerData = new SimAction_TriggerData(null, delayCondition);
 
 
         UnityAction option01 = () => {
@@ -199,7 +193,7 @@ public class Sim_TEST : MonoBehaviour
             popupOptionConfig01,
             popupOptionConfig02,
         };
-        SimAction_PopupConfig popupConfig = new SimAction_PopupConfig(SimActionID.Test_Popup05, popupOptionsList, true, "Test MTTH Event", "This is a test event that is triggered based on Mean Time To Happen.  After 3 days, this event has a 50% chance to trigger, and it only triggers at a random time during business hours.", Asset_png.Popup_Vinyl, Asset_wav.event_generic);
+        SimAction_PopupConfig popupConfig = new SimAction_PopupConfig(popupOptionsList, true, "Test MTTH Event", "This is a test event that is triggered based on Mean Time To Happen.  After 3 days, this event has a 50% chance to trigger, and it only triggers at a random time during business hours.", Asset_png.Popup_Vinyl, Asset_wav.event_generic);
 
         SimAction simAction = new SimAction(ids, triggerData, callbacks, null, popupConfig);
         SimEvent_MTTH SimEvent_MTTH01 = new SimEvent_MTTH(simAction, Managers.Time.CurrentDT, Managers.Time.CurrentDT.AddDays(3));
@@ -208,59 +202,36 @@ public class Sim_TEST : MonoBehaviour
     private void SIM_TestPopup05_option01()
     {
         SimAction_IDs ids = new SimAction_IDs(SimActionID.Test_Popup05_1, 1);
-
-        Func<string> invalidConditionMessage = () => { return ""; };
-        Func<bool> delayCondition = () => { return false; };
-        SimAction_TriggerData triggerData = new SimAction_TriggerData(invalidConditionMessage, delayCondition);
-        SimAction_PopupConfig popupConfig = new SimAction_PopupConfig(SimActionID.Test_Popup05_1, null, true, "Option Selected", "You chose option one.", Asset_png.Popup_Vinyl, Asset_wav.event_generic);
-        SimAction simAction = new SimAction(ids, triggerData, null, null, popupConfig);
+        SimAction_PopupConfig popupConfig = new SimAction_PopupConfig(null, true, "Option Selected", "You chose option one.", Asset_png.Popup_Vinyl, Asset_wav.event_generic);
+        SimAction simAction = new SimAction(ids, null, null, null, popupConfig);
         SimEvent_Immediate SimEvent_Immediate = new SimEvent_Immediate(simAction);
     }
     private void SIM_TestPopup05_option02()
     {
         SimAction_IDs ids = new SimAction_IDs(SimActionID.Test_Popup05_2, 1);
-
-        Func<string> invalidConditionMessage = () => { return ""; };
-        Func<bool> delayCondition = () => { return false; };
-        SimAction_TriggerData triggerData = new SimAction_TriggerData(invalidConditionMessage, delayCondition);
-        SimAction_PopupConfig popupConfig = new SimAction_PopupConfig(SimActionID.Test_Popup05_2, null, true, "Option Selected", "You chose option two.", Asset_png.Popup_Vinyl, Asset_wav.event_generic);
-        SimAction simAction = new SimAction(ids, triggerData, null, null, popupConfig);
+        SimAction_PopupConfig popupConfig = new SimAction_PopupConfig(null, true, "Option Selected", "You chose option two.", Asset_png.Popup_Vinyl, Asset_wav.event_generic);
+        SimAction simAction = new SimAction(ids, null, null, null, popupConfig);
         SimEvent_Immediate SimEvent_Immediate = new SimEvent_Immediate(simAction);
     }
 
-
-    private void SIM_ScheduleTravel(SimActionID simActionID, int npc, DateTime triggerDate, CityName city)
-    {
-        SimAction_IDs ids = new SimAction_IDs(simActionID, 1);
-
-        Func<string> invalidConditionMessage = () => { return ""; };
-        Func<bool> delayCondition = () => { return false; };
-        SimAction_TriggerData triggerData = new SimAction_TriggerData(invalidConditionMessage, delayCondition);
-        SimAction_PopupConfig popupConfig = new SimAction_PopupConfig(simActionID, null, false, "Test Travel Event", "This is a test travel event that is scheduled to fire on " + triggerDate.ToShortDateString() + " at 8:30AM - but not pause time.  The even will last for one hour.", Asset_png.Popup_Vinyl, Asset_wav.event_generic);
-        SimAction simAction = new SimAction(ids, triggerData, null, null, popupConfig);
-        SimEvent_Scheduled SimEvent_Scheduled01 = new SimEvent_Scheduled(simAction, triggerDate);
-    }
     private void SIM_ScheduleProduction(SimActionID simActionID, int npc, DateTime triggerDate)
     {
         SimAction_IDs ids = new SimAction_IDs(simActionID, 1);
-
-        Func<string> invalidConditionMessage = () => { return ""; };
-        Func<bool> delayCondition = () => { return false; };
         TimeSpan duration = new TimeSpan(3, 0, 0);
-        SimAction_TriggerData triggerData = new SimAction_TriggerData(invalidConditionMessage, delayCondition, duration);
-        SimAction_PopupConfig popupConfig = new SimAction_PopupConfig(simActionID, null, false, "Test Production Event", "This is a test production  event that is scheduled to fire on " + triggerDate.ToShortDateString() + " at 6:00PM - but not pause time.  The even will last for three hours.", Asset_png.Popup_Vinyl, Asset_wav.event_generic);
-        SimAction simAction = new SimAction(ids, triggerData, null, null, popupConfig);
+        SimAction_TriggerData triggerData = new SimAction_TriggerData(null, null, duration);
+        SimAction_Descriptions descriptions = new SimAction_Descriptions("oversee recording session");
+        SimAction_PopupConfig popupConfig = new SimAction_PopupConfig(null, false, "Test Production Event", "This is a test production  event that is scheduled to fire on " + triggerDate.ToShortDateString() + " at 6:00PM - but not pause time.  The even will last for three hours.", Asset_png.Popup_Vinyl, Asset_wav.event_generic);
+        SimAction simAction = new SimAction(ids, triggerData, null, descriptions, popupConfig);
         SimEvent_Scheduled SimEvent_Scheduled01 = new SimEvent_Scheduled(simAction, triggerDate);
     }
     private void SIM_ScheduleGig(SimActionID simActionID, int npc, DateTime triggerDate)
     {
         SimAction_IDs ids = new SimAction_IDs(simActionID, 1);
-        Func<string> invalidConditionMessage = () => { return ""; };
-        Func<bool> delayCondition = () => { return false; };
         TimeSpan duration = new TimeSpan(2, 0, 0);
-        SimAction_TriggerData triggerData = new SimAction_TriggerData(invalidConditionMessage, delayCondition, duration);
-        SimAction_PopupConfig popupConfig = new SimAction_PopupConfig(simActionID, null, false, "Test Gig Event", "This is a test gig event that is scheduled to fire on " + triggerDate.ToShortDateString() + " at 11:15AM - but not pause time.  The even will last for two hours.", Asset_png.Popup_Vinyl, Asset_wav.event_generic);
-        SimAction simAction = new SimAction(ids, triggerData, null, null, popupConfig);
+        SimAction_TriggerData triggerData = new SimAction_TriggerData(null, null, duration);
+        SimAction_Descriptions descriptions = new SimAction_Descriptions("attend battle of the bands");
+        SimAction_PopupConfig popupConfig = new SimAction_PopupConfig(null, false, "Test Gig Event", "This is a test gig event that is scheduled to fire on " + triggerDate.ToShortDateString() + " at 11:15AM - but not pause time.  The even will last for two hours.", Asset_png.Popup_Vinyl, Asset_wav.event_generic);
+        SimAction simAction = new SimAction(ids, triggerData, null, descriptions, popupConfig);
         SimEvent_Scheduled SimEvent_Scheduled01 = new SimEvent_Scheduled(simAction, triggerDate);
     }
 
