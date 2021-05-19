@@ -7,6 +7,7 @@ using UnityEngine;
 public enum SimActionID
 {
     Undefined,
+    SimAction,
     Test_Popup01,
     Test_Popup02,
     Test_Popup03,
@@ -61,7 +62,11 @@ public class SimAction {
     }
     public bool IsForNPCid(int npcID)
     {
-        return (NPCid() == npcID);
+        return (_ids.NPCid == npcID);
+    }
+    public bool IsPlayerCharacter()
+    {
+        return Managers.Sim.NPC.IsPlayerCharacter(_ids.NPCid);
     }
 
     //TriggerData Functions
@@ -116,7 +121,7 @@ public class SimAction {
             {
                 _callbacks.TriggerCallback();
             }
-            if (IsForNPCid(1) && HasPopup())
+            if (IsPlayerCharacter() && HasPopup())
             {
                 Managers.UI.Popup.BuildAndDisplay(this);
             }
@@ -127,9 +132,7 @@ public class SimAction {
         }
         else
         {
-            Cancel();
-            //Create Popup config with isValid_InvalidMessage()
-            //run it through Managers.UI.BuildAndDisplay
+            Cancel(false);
         }
     }
     public UnityAction OptionCallback(int i)
@@ -145,10 +148,68 @@ public class SimAction {
         
     }
 
-    public void Cancel()
+    public void Cancel(bool hasConfirmationPopup = true)
+    {
+        if (!WillHappenLater())
+        {
+            return;
+        }
+        else if (IsPlayerCharacter() && hasConfirmationPopup)
+        {
+            SIM_ConfirmCancel();
+        }
+        else
+        {
+            finalizeCancel();
+        }
+    }
+    private void finalizeCancel()
     {
         _callbacks.CancelCallback();
         _isCanceled = true;
+    }
+    public void SIM_ConfirmCancel()
+    {
+        //IDs
+        SimAction_IDs ids = new SimAction_IDs(SimActionID.SimAction, NPCid());
+
+        //Callbacks
+        UnityAction option01 = () => {
+            finalizeCancel();
+        };
+        UnityAction option02 = () => {
+            Debug.Log("Cancel canceled.");
+        };
+        List<UnityAction> optionCallbacks = new List<UnityAction>
+        {
+            option01,
+            option02
+        };
+        SimAction_Callbacks callBacks = new SimAction_Callbacks(null, optionCallbacks, null);
+
+        //Popup Config
+        SimAction_PopupConfig popupConfig = null;
+        if (IsPlayerCharacter())
+        {
+            string headerText = "Cancel?";
+            string bodyText = _descriptions.CancelDescription;
+
+            Action<GameObject> tt_option01 = (GameObject go) => { Managers.UI.Tooltip.SetTooltip(go, "Cancel plans to " + _descriptions.Description); };
+            Action<GameObject> tt_option02 = (GameObject go) => { Managers.UI.Tooltip.SetTooltip(go, "No, keep the plans."); };
+            SimAction_PopupOptionConfig popupOptionConfig01 = new SimAction_PopupOptionConfig("Cancel Plans", tt_option01);
+            SimAction_PopupOptionConfig popupOptionConfig02 = new SimAction_PopupOptionConfig("Keep Plans", tt_option02);
+
+            List<SimAction_PopupOptionConfig> popupOptionsConfig = new List<SimAction_PopupOptionConfig>
+            {
+                popupOptionConfig01,
+                popupOptionConfig02
+            };
+            popupConfig = new SimAction_PopupConfig(popupOptionsConfig, true, headerText, bodyText, Asset_png.Popup_Vinyl, Asset_wav.Click_04);
+        }
+
+        //Sim Action
+        SimAction simAction = new SimAction(ids, null, callBacks, null, popupConfig);
+        SimEvent_Immediate SimEvent_ConfirmCancel = new SimEvent_Immediate(simAction);
     }
 
     //Descriptons Functions

@@ -176,9 +176,9 @@ public class Sim_Travel : MonoBehaviour
 
 
 
-    public bool IsValidSubmission(int npcID, TransportationID transportationID, CityID fromCityID, CityID toCityID)
+    public bool IsValidTravel(int npcID, TransportationID transportationID, CityID fromCityID, CityID toCityID)
     {
-        string invalidMessage = IsValidSubmission_invalidMessage(npcID, transportationID, fromCityID, toCityID);
+        string invalidMessage = IsValidTravel_invalidMessage(npcID, transportationID, fromCityID, toCityID);
         if (invalidMessage == "error")
         {
             Debug.Log("Error: Vehicle not recognized");
@@ -192,7 +192,7 @@ public class Sim_Travel : MonoBehaviour
             return true;
         }
     }
-    public string IsValidSubmission_invalidMessage(int npcID, TransportationID transportationID, CityID fromCityID, CityID toCityID)
+    public string IsValidTravel_invalidMessage(int npcID, TransportationID transportationID, CityID fromCityID, CityID toCityID)
     {
         if (fromCityID == toCityID)
         {

@@ -547,6 +547,11 @@ public class UI_Calendar : MonoBehaviour
         ToggleCalendarPanel();
     }
 
+    private int npcID()
+    {
+        return Managers.Sim.NPC.PlayerCharacterID();
+    }
+
     //Calendar Helper Functions
     private DateTime DayBoxDTFromI(int i, bool ignoreTime = false)
     {
@@ -889,7 +894,7 @@ public class UI_Calendar : MonoBehaviour
             {
                 dayBoxIconImageComponent.enabled = false;
             }
-            List<SimEvent_Scheduled> thisDTPlayerScheduledEvents = Managers.Sim.GetScheduledSimEvents(1, thisDT);
+            List<SimEvent_Scheduled> thisDTPlayerScheduledEvents = Managers.Sim.GetScheduledSimEvents(npcID(), thisDT);
             var indexIcon = 0;
             bool hasGig = false;
             bool hasMedia = false;
@@ -1056,7 +1061,7 @@ public class UI_Calendar : MonoBehaviour
             }
         }
 
-        List<SimEvent_Scheduled> playerScheduledEvents = Managers.Sim.GetScheduledSimEvents(1, _calendarSelectedDay.Value);
+        List<SimEvent_Scheduled> playerScheduledEvents = Managers.Sim.GetScheduledSimEvents(npcID(), _calendarSelectedDay.Value);
         foreach (SimEvent_Scheduled scheduledEvent in playerScheduledEvents)
         {
             bool isExist = false;
@@ -1101,7 +1106,7 @@ public class UI_Calendar : MonoBehaviour
             }
         }
         //Day Before remainder
-        List<SimEvent_Scheduled> playerScheduledEvents_DayBefore = Managers.Sim.GetScheduledSimEvents(1, _calendarSelectedDay.Value.AddDays(-1));
+        List<SimEvent_Scheduled> playerScheduledEvents_DayBefore = Managers.Sim.GetScheduledSimEvents(npcID(), _calendarSelectedDay.Value.AddDays(-1));
         foreach (SimEvent_Scheduled scheduledEvent in playerScheduledEvents_DayBefore)
         {
             bool isExist = false;

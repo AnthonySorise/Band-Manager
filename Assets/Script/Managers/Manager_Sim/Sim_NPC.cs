@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class Sim_NPC : MonoBehaviour
 {
+    private int _playerCharacterID;
     private Dictionary<int, NPC> _npcs;
     private Dictionary<int, NPC> _npcGraveyard; //Eternal rest grant unto them, O Lord, and let perpetual light shine upon them. May their souls and the souls of all the faithful departed, through the mercy of God, rest in peace. Amen.
 
@@ -12,6 +13,7 @@ public class Sim_NPC : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        _playerCharacterID = 1;
         _npcs = new Dictionary<int, NPC>();
         _npcGraveyard = new Dictionary<int, NPC>();
 
@@ -36,8 +38,16 @@ public class Sim_NPC : MonoBehaviour
     }
     public NPC_BandManager GetPlayerCharacter()
     {
-        NPC_BandManager playerCharacter = _npcs[1] as NPC_BandManager;
+        NPC_BandManager playerCharacter = _npcs[_playerCharacterID] as NPC_BandManager;
         return playerCharacter;
+    }
+    public int PlayerCharacterID()
+    {
+        return _playerCharacterID;
+    }
+    public bool IsPlayerCharacter(int npcID)
+    {
+        return (npcID == _playerCharacterID);
     }
 
     // Update is called once per frame
