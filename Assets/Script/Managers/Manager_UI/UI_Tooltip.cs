@@ -194,12 +194,10 @@ public class TooltipBehavior : MonoBehaviour, IPointerEnterHandler, IPointerExit
     public List<string> TextList;
     public bool HasDelay;
     public bool IsActive;
-    private bool _isDestroyed;
 
     private void Start()
     {
         IsActive = true;
-        _isDestroyed = false;
     }
 
     public void OnPointerEnter(PointerEventData eventData)

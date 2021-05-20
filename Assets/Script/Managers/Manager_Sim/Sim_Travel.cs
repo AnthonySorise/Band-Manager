@@ -176,9 +176,9 @@ public class Sim_Travel : MonoBehaviour
 
 
 
-    public bool IsValidTravel(int npcID, TransportationID transportationID, CityID fromCityID, CityID toCityID)
+    public bool IsValidTravelSubmission(int npcID, TransportationID transportationID, CityID fromCityID, CityID toCityID)
     {
-        string invalidMessage = IsValidTravel_invalidMessage(npcID, transportationID, fromCityID, toCityID);
+        string invalidMessage = IsValidTravelSubmission_Message(npcID, transportationID, fromCityID, toCityID);
         if (invalidMessage == "error")
         {
             Debug.Log("Error: Vehicle not recognized");
@@ -192,7 +192,7 @@ public class Sim_Travel : MonoBehaviour
             return true;
         }
     }
-    public string IsValidTravel_invalidMessage(int npcID, TransportationID transportationID, CityID fromCityID, CityID toCityID)
+    public string IsValidTravelSubmission_Message(int npcID, TransportationID transportationID, CityID fromCityID, CityID toCityID)
     {
         if (fromCityID == toCityID)
         {
@@ -242,9 +242,8 @@ public class Sim_Travel : MonoBehaviour
         SimAction_IDs ids = new SimAction_IDs(SimActionID.NPC_Travel, npcID);
 
         //Trigger Data
-        Func<string> invalidConditionMessage = () => { return ""; };
         Func<bool> delayCondition = () => { return false; };
-        SimAction_TriggerData triggerData = new SimAction_TriggerData(invalidConditionMessage, delayCondition);
+        SimAction_TriggerData triggerData = new SimAction_TriggerData(delayCondition);
 
         //Callbacks
         UnityAction callback = () => { };
@@ -261,6 +260,10 @@ public class Sim_Travel : MonoBehaviour
         };
         UnityAction cancelCallback = () => { };
         SimAction_Callbacks callBacks = new SimAction_Callbacks(callback, optionCallbacks, cancelCallback);
+
+        //Descriptions
+        Func<string> invalidConditionMessage = () => { return ""; };
+        SimAction_Descriptions descriptions = new SimAction_Descriptions(null, null, invalidConditionMessage);
 
         //Popup Config
         string headerText = "Travel to " + toCityData.cityName;
@@ -294,10 +297,9 @@ public class Sim_Travel : MonoBehaviour
         SimAction_IDs ids = new SimAction_IDs(SimActionID.NPC_Travel, npcID);
 
         //Trigger Data
-        Func<string> invalidConditionMessage = () => { return ""; };
         Func<bool> delayCondition = () => { return false; };
         TimeSpan travelTime = TravelTime(transportationID, fromCityID, toCityID);
-        SimAction_TriggerData triggerData = new SimAction_TriggerData(invalidConditionMessage, delayCondition, travelTime);
+        SimAction_TriggerData triggerData = new SimAction_TriggerData(delayCondition, travelTime);
 
         //Callbacks
         UnityAction callback = () => {
@@ -308,7 +310,9 @@ public class Sim_Travel : MonoBehaviour
         SimAction_Callbacks callbacks = new SimAction_Callbacks(callback);
 
         //Descriptions
-        SimAction_Descriptions descriptions = new SimAction_Descriptions("travel to " + toCityData.cityName);
+        string description = "travel to " + toCityData.cityName;
+        Func<string> invalidConditionMessage = () => { return ""; };
+        SimAction_Descriptions descriptions = new SimAction_Descriptions(description,  null, invalidConditionMessage);
 
         //Sim Action
         SimAction simAction = new SimAction(ids, triggerData, callbacks, descriptions, null);
@@ -322,9 +326,8 @@ public class Sim_Travel : MonoBehaviour
         SimAction_IDs ids = new SimAction_IDs(SimActionID.NPC_Travel, npcID);
 
         //Trigger Data
-        Func<string> invalidConditionMessage = () => { return ""; };
         Func<bool> delayCondition = () => { return false; };
-        SimAction_TriggerData triggerData = new SimAction_TriggerData(invalidConditionMessage, delayCondition);
+        SimAction_TriggerData triggerData = new SimAction_TriggerData(delayCondition);
 
         //Callbacks
         UnityAction callback = () => {
@@ -334,6 +337,10 @@ public class Sim_Travel : MonoBehaviour
             Debug.Log("End Travel");
         };
         SimAction_Callbacks callbacks = new SimAction_Callbacks(callback);
+
+        //Descriptions
+        Func<string> invalidConditionMessage = () => { return ""; };
+        SimAction_Descriptions descriptions = new SimAction_Descriptions(null, null, invalidConditionMessage);
 
         //Popup Config
         string popupMessage = "Welcome to " + toCityData.cityName;

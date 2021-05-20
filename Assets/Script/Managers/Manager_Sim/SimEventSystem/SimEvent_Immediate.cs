@@ -7,7 +7,10 @@ public class SimEvent_Immediate {
 
     public SimEvent_Immediate(SimAction simAction) {
         _simAction = simAction;
-        _simAction.AttemptTrigger();
+        if(Managers.Sim.IsNoConflictingEvents(_simAction.NPCid(), Managers.Time.CurrentDT, _simAction.Duration()))
+        {
+            _simAction.AttemptTrigger();
+        }
         ConvertToScheduled();
     }
 

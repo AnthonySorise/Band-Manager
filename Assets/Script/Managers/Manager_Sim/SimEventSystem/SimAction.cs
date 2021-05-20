@@ -35,8 +35,8 @@ public class SimAction {
 
     public SimAction(
         SimAction_IDs ids = null,
-        SimAction_TriggerData triggerData =null,
-        SimAction_Callbacks callbacks =null,
+        SimAction_TriggerData triggerData = null,
+        SimAction_Callbacks callbacks = null,
         SimAction_Descriptions descriptions = null,
         SimAction_PopupConfig popupConfig = null
     )
@@ -86,6 +86,10 @@ public class SimAction {
     {
         return (_triggeredDT != null && Managers.Time.CurrentDT.CompareTo(_triggeredDT + _triggerData.Duration) > 0);
     }
+    public bool CanBeCanceled()
+    {
+        return _triggerData.CanBeCanceled;
+    }
     public bool IsCanceled()
     {
         return _isCanceled;
@@ -93,11 +97,11 @@ public class SimAction {
 
     public string IsValid_InvalidMessage()
     {
-        return _triggerData.InvalidConditionMessage();
+        return _descriptions.InvalidConditionMessage();
     }
     public bool IsValid()
     {
-        return (_triggerData.InvalidConditionMessage() == "");
+        return (_descriptions.InvalidConditionMessage() == "");
     }
     public bool _shouldDelay()
     {
@@ -114,7 +118,11 @@ public class SimAction {
     }
     private void _trigger()
     {
-        if (IsValid())
+        if (!IsValid())
+        {
+            SIM_CancelDueToInvalid();
+        }
+        else
         {
             _triggeredDT = Managers.Time.CurrentDT;
             if (_callbacks != null && _callbacks.TriggerCallback != null)
@@ -130,10 +138,6 @@ public class SimAction {
                 //choose option using option's AI modifiers
             }
         }
-        else
-        {
-            Cancel(false);
-        }
     }
     public UnityAction OptionCallback(int i)
     {
@@ -145,12 +149,36 @@ public class SimAction {
         {
             return null;
         }
-        
+
+    }
+
+    private void SIM_CancelDueToInvalid()
+    {
+        //IDs
+        SimAction_IDs ids = new SimAction_IDs(SimActionID.SimAction, NPCid());
+
+        //Callbacks
+        UnityAction callback = () => { Cancel(false); };
+        SimAction_Callbacks callbacks = new SimAction_Callbacks(callback);
+
+        //Popup Config
+        SimAction_PopupConfig popupConfig = null;
+        if (IsPlayerCharacter())
+        {
+            string headerText = "Unable  to " + _descriptions.Description;
+            string bodyText = "Cannot " + _descriptions.Description + " because " + IsValid_InvalidMessage();
+
+            popupConfig = new SimAction_PopupConfig(null, true, headerText, bodyText, Asset_png.Popup_Vinyl, Asset_wav.Click_04);
+        }
+
+        //Sim Action
+        SimAction simAction = new SimAction(ids, null, callbacks, null, popupConfig);
+        SimEvent_Immediate SimEvent_CancelDueToInvalid = new SimEvent_Immediate(simAction);
     }
 
     public void Cancel(bool hasConfirmationPopup = true)
     {
-        if (!WillHappenLater())
+        if (!WillHappenLater() || !CanBeCanceled())
         {
             return;
         }
@@ -251,18 +279,18 @@ public class SimAction_IDs
 
 public class SimAction_TriggerData  
 {
-    public Func<string> InvalidConditionMessage { get; private set; }
     public Func<bool> DelayCondition { get; private set; }
     public TimeSpan Duration { get; private set; }
+    public bool CanBeCanceled { get; private set; }
 
     public SimAction_TriggerData(
-        Func<string> invalidConditionMessage = null,
         Func<bool> delayCondition = null,
-        TimeSpan? duration = null)
+        TimeSpan? duration = null,
+        bool canBeCanceled = true)
     {
-        InvalidConditionMessage = (invalidConditionMessage == null) ? () => { return ""; } : invalidConditionMessage;
         DelayCondition = (delayCondition == null) ? () => { return false; } : delayCondition;
         Duration = (duration == null) ? new TimeSpan(0, 0, 0) : duration.Value;
+        CanBeCanceled = CanBeCanceled;
     }
 }
 
@@ -286,17 +314,18 @@ public class SimAction_Callbacks
 public class SimAction_Descriptions
 {
     public string Description { get; private set; }
-    //public string DescriptionPresentTense { get; private set; }
     public string CancelDescription { get; private set; }
+    public Func<string> InvalidConditionMessage { get; private set; }
 
     public SimAction_Descriptions(
         string description = null, 
-        //string description_presentTense = null, 
-        string cancelDescription = null)
+        string cancelDescription = null,
+        Func<string> invalidConditionMessage = null)
+
     {
         Description = (description == null) ? "" : description;
-        //DescriptionPresentTense = (description_presentTense == null) ? "" : description_presentTense;
         CancelDescription = (cancelDescription == null) ? "" : cancelDescription;
+        InvalidConditionMessage = (invalidConditionMessage == null) ? () => { return ""; } : invalidConditionMessage;
     }
 }
 

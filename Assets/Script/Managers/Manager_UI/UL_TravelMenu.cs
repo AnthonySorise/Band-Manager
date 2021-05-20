@@ -161,7 +161,7 @@ public class UI_TravelMenu : MonoBehaviour{
     private void handleSubmitButton()
     {
         CityID currentCity = Managers.Sim.NPC.GetPlayerCharacter().CurrentCity;
-        if (Managers.Sim.Travel.IsValidTravel(npcID(), _transportationID, currentCity, _toCity))
+        if (Managers.Sim.Travel.IsValidTravelSubmission(npcID(), _transportationID, currentCity, _toCity))
         {
             _departureTime = Managers.Time.CurrentDT;
             Managers.Sim.Travel.SIM_QueryTravel(npcID(), _transportationID, currentCity, _toCity);
@@ -193,7 +193,7 @@ public class UI_TravelMenu : MonoBehaviour{
         _text_TravelToCityState.text = Managers.Data.CityData[_toCity].stateName;
         _text_TravelToCityPopulation.text = Managers.Data.CityData[_toCity].population.ToString("n0");
 
-        if (Managers.Sim.Travel.IsValidTravel(npcID(), _transportationID, currentCity, _toCity))
+        if (Managers.Sim.Travel.IsValidTravelSubmission(npcID(), _transportationID, currentCity, _toCity))
         {
             TimeSpan timeSpan = Managers.Sim.Travel.TravelTime(_transportationID, currentCity, _toCity);
             if(playerCharacter.CityEnRoute != null)
@@ -214,7 +214,7 @@ public class UI_TravelMenu : MonoBehaviour{
         }
         else
         {
-            _text_TravelTime.text = Managers.Sim.Travel.IsValidTravel_invalidMessage(npcID(), _transportationID, currentCity, _toCity);
+            _text_TravelTime.text = Managers.Sim.Travel.IsValidTravelSubmission_Message(npcID(), _transportationID, currentCity, _toCity);
             _text_TravelCost.text = " ";
         }
     }
@@ -320,7 +320,7 @@ public class UI_TravelMenu : MonoBehaviour{
             }
             else
             {
-                if (playerCharacter.CityEnRoute == null && Managers.Sim.Travel.IsValidTravel(npcID(), _transportationID, currentCityID, cityID)){
+                if (playerCharacter.CityEnRoute == null && Managers.Sim.Travel.IsValidTravelSubmission(npcID(), _transportationID, currentCityID, cityID)){
                     _cityButtons[cityID].image.color = _color_cityButtonValidVehicle;
                 }
                 else
@@ -331,7 +331,7 @@ public class UI_TravelMenu : MonoBehaviour{
         }
 
         //submission button
-        bool submitShouldBeInactive = (Managers.Sim.Travel.IsValidTravel(npcID(), _transportationID, currentCityID, _toCity) == false) || playerCharacter.CityEnRoute != null;
+        bool submitShouldBeInactive = (Managers.Sim.Travel.IsValidTravelSubmission(npcID(), _transportationID, currentCityID, _toCity) == false) || playerCharacter.CityEnRoute != null;
         string submitButtonTooltipText = "";
         if (playerCharacter.CityEnRoute != null)
         {
@@ -339,7 +339,7 @@ public class UI_TravelMenu : MonoBehaviour{
         }
         else
         {
-            submitButtonTooltipText = Managers.Sim.Travel.IsValidTravel_invalidMessage(npcID(), _transportationID, currentCityID, _toCity);
+            submitButtonTooltipText = Managers.Sim.Travel.IsValidTravelSubmission_Message(npcID(), _transportationID, currentCityID, _toCity);
         }
         if (_button_submit.IsInteractable())
         {

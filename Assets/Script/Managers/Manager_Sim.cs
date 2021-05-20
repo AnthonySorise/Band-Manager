@@ -5,9 +5,7 @@ using UnityEngine;
 using UnityEngine.Events;
 
 [System.Serializable]//allows this class to be turned into JSON.  Attributes below that are private/protected need "[SerializeField]"
-//https://docs.unity3d.com/ScriptReference/JsonUtility.html
-//https://docs.unity3d.com/Manual/JSONSerialization.html
-//https://gamedev.stackexchange.com/questions/126178/unity-how-to-serialize-show-private-fields-and-custom-types-in-inspector
+
 public class Manager_Sim : MonoBehaviour, IManager {
     public ManagerState State { get; private set; }
 
@@ -89,9 +87,14 @@ public class Manager_Sim : MonoBehaviour, IManager {
         return returnList.OrderBy(o => o.ScheduledDT).ToList();
     }
 
-    public SimEvent_Scheduled ConflictingEvent(int npcID, DateTime dateTime, TimeSpan duration)
+    public List<SimEvent_Scheduled> ConflictingEvents(int npcID, DateTime dateTime, TimeSpan duration)
     {
-        SimEvent_Scheduled conflictingEvent = null;
+        List<SimEvent_Scheduled> conflictingEvents = new List<SimEvent_Scheduled>();
+        if (duration == TimeSpan.Zero)
+        {
+            return conflictingEvents;
+        }
+
         List<SimEvent_Scheduled> scheduledEvents = GetScheduledSimEvents(npcID);
         foreach (SimEvent_Scheduled scheduledEvent in scheduledEvents)
         {
@@ -104,14 +107,14 @@ public class Manager_Sim : MonoBehaviour, IManager {
 
                 if (aStart < bEnd && bStart < aEnd)
                 {
-                    conflictingEvent = scheduledEvent;
+                    conflictingEvents.Add(scheduledEvent);
                 }
             }
         }
-        return conflictingEvent;
+        return conflictingEvents;
     }
-    public bool IsAvailableForEvent(int npcID, DateTime dateTime, TimeSpan duration)
+    public bool IsNoConflictingEvents(int npcID, DateTime dateTime, TimeSpan duration)
     {
-        return (ConflictingEvent(npcID, dateTime, duration) == null);
+        return ConflictingEvents(npcID, dateTime, duration).Count == 0;
     }
 }
