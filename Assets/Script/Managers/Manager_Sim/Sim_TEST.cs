@@ -15,8 +15,8 @@ public class Sim_TEST : MonoBehaviour
         //SIM_TestPopup04(new DateTime(1985, 10, 27));
         SIM_TestPopup05();
         //SIM_ScheduleTravel(SimActionID.NPC_Travel, new List<int>() { 1 }, new DateTime(1985, 10, 24, 8, 30, 0), CityName.Chicago);
-        SIM_ScheduleProduction(SimActionID.NPC_Produce, 1, new DateTime(1985, 10, 24, 18, 0, 0));
-        SIM_ScheduleGig(SimActionID.NPC_Gig, 1, new DateTime(1985, 10, 25, 11, 15, 0));
+        SIM_ScheduleProduction(SimActionID.NPC_Produce, 1, new DateTime(1985, 10, 24, 18, 0, 0), CityID.Detroit_MI);
+        SIM_ScheduleGig(SimActionID.NPC_Gig, 1, new DateTime(1985, 10, 25, 11, 15, 0), CityID.Detroit_MI);
     }
 
     //Sim Event Functions
@@ -212,22 +212,22 @@ public class Sim_TEST : MonoBehaviour
         SimEvent_Immediate SimEvent_Immediate = new SimEvent_Immediate(simAction);
     }
 
-    private void SIM_ScheduleProduction(SimActionID simActionID, int npc, DateTime triggerDate)
+    private void SIM_ScheduleProduction(SimActionID simActionID, int npc, DateTime triggerDate, CityID location)
     {
         SimAction_IDs ids = new SimAction_IDs(simActionID, 1);
         TimeSpan duration = new TimeSpan(3, 0, 0);
-        SimAction_TriggerData triggerData = new SimAction_TriggerData(null, duration);
-        SimAction_Descriptions descriptions = new SimAction_Descriptions("oversee recording session");
+        SimAction_TriggerData triggerData = new SimAction_TriggerData(null, duration, location);
+        SimAction_Descriptions descriptions = new SimAction_Descriptions("oversee recording session", "You will lose your deposit, and Martin Hannet will be pissed.");
         SimAction_PopupConfig popupConfig = new SimAction_PopupConfig(null, false, "Test Production Event", "This is a test production  event that is scheduled to fire on " + triggerDate.ToShortDateString() + " at 6:00PM - but not pause time.  The even will last for three hours.", Asset_png.Popup_Vinyl, Asset_wav.event_generic);
         SimAction simAction = new SimAction(ids, triggerData, null, descriptions, popupConfig);
         SimEvent_Scheduled SimEvent_Scheduled01 = new SimEvent_Scheduled(simAction, triggerDate);
     }
-    private void SIM_ScheduleGig(SimActionID simActionID, int npc, DateTime triggerDate)
+    private void SIM_ScheduleGig(SimActionID simActionID, int npc, DateTime triggerDate, CityID location)
     {
         SimAction_IDs ids = new SimAction_IDs(simActionID, 1);
         TimeSpan duration = new TimeSpan(2, 0, 0);
-        SimAction_TriggerData triggerData = new SimAction_TriggerData(null, duration);
-        SimAction_Descriptions descriptions = new SimAction_Descriptions("attend battle of the bands");
+        SimAction_TriggerData triggerData = new SimAction_TriggerData(null, duration, location);
+        SimAction_Descriptions descriptions = new SimAction_Descriptions("attend battle of the bands", "There will be consequences....  And I can dynamically list them here!");
         SimAction_PopupConfig popupConfig = new SimAction_PopupConfig(null, false, "Test Gig Event", "This is a test gig event that is scheduled to fire on " + triggerDate.ToShortDateString() + " at 11:15AM - but not pause time.  The even will last for two hours.", Asset_png.Popup_Vinyl, Asset_wav.event_generic);
         SimAction simAction = new SimAction(ids, triggerData, null, descriptions, popupConfig);
         SimEvent_Scheduled SimEvent_Scheduled01 = new SimEvent_Scheduled(simAction, triggerDate);

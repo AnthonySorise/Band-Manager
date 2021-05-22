@@ -72,7 +72,7 @@ public class Sim_Travel : MonoBehaviour
         SimEvent_Scheduled finalDestinationEvent = nonTravelEvents[0];
         if (nonTravelEvents.Count > 0 && finalDestinationEvent.SimAction.Location() != null)
         {
-            CityID finalDestination = finalDestinationEvent.SimAction.Location().Value;
+            CityID finalDestination = finalDestinationEvent.SimAction.LocationID().Value;
             if (cityTo != finalDestination)
             {
                 TimeSpan trip01Time = TravelTime(transportationID, cityFrom, cityTo);
@@ -269,16 +269,12 @@ public class Sim_Travel : MonoBehaviour
         UnityAction option01 = () => {
             Managers.Sim.Travel.SIM_InitiateTravel(npcID, transportationID, fromCityID, toCityID);
         };
-        UnityAction option02 = () => {
-            Debug.Log("Travel canceled.");
-        };
         List<UnityAction> optionCallbacks = new List<UnityAction>
         {
             option01,
-            option02
+            null
         };
-        UnityAction cancelCallback = () => { };
-        SimAction_Callbacks callBacks = new SimAction_Callbacks(callback, optionCallbacks, cancelCallback);
+        SimAction_Callbacks callBacks = new SimAction_Callbacks(callback, optionCallbacks);
 
         //Descriptions
         Func<string> invalidConditionMessage = () => { return ""; };

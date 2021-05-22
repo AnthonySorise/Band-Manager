@@ -86,9 +86,13 @@ public class SimAction {
     {
         return (_triggeredDT != null && Managers.Time.CurrentDT.CompareTo(_triggeredDT + _triggerData.Duration) > 0);
     }
-    public CityID? Location()
+    public CityID? LocationID()
     {
-        return _triggerData.Location;
+        return _triggerData.LocationID;
+    }
+    public Data_City Location()
+    {
+        return (LocationID() != null) ? Managers.Data.CityData[_triggerData.LocationID.Value] : null;
     }
     public bool IsCanceled()
     {
@@ -97,11 +101,25 @@ public class SimAction {
 
     public string IsValid_InvalidMessage()
     {
-        return _descriptions.InvalidConditionMessage();
+        string invalidMessage = "";
+        NPC npc = Managers.Sim.NPC.GetNPC(NPCid());
+
+        //**Default isValids - all simevents share these and they take precendence
+        if (NPCid() != -1 && Location() != null && ID() != SimActionID.NPC_Travel)
+        {
+            if (npc.CurrentCity != _triggerData.LocationID || npc.CityEnRoute != null)
+            {
+                invalidMessage = "not in " + Location().cityName;
+            }
+        }
+        //**
+
+
+        return (invalidMessage != "") ? invalidMessage : _descriptions.InvalidConditionMessage();
     }
     public bool IsValid()
     {
-        return (_descriptions.InvalidConditionMessage() == "");
+        return (IsValid_InvalidMessage() == "");
     }
     public bool _shouldDelay()
     {
@@ -165,10 +183,14 @@ public class SimAction {
         SimAction_PopupConfig popupConfig = null;
         if (IsPlayerCharacter())
         {
+            Action<GameObject> tt_option01 = (GameObject go) => { Managers.UI.Tooltip.SetTooltip(go, CancelDescription()); };
+            SimAction_PopupOptionConfig option = new SimAction_PopupOptionConfig(null, tt_option01);
+            List<SimAction_PopupOptionConfig> options = new List<SimAction_PopupOptionConfig> { option };
+
             string headerText = "Unable  to " + _descriptions.Description;
             string bodyText = "Cannot " + _descriptions.Description + " because " + IsValid_InvalidMessage();
 
-            popupConfig = new SimAction_PopupConfig(null, true, headerText, bodyText, Asset_png.Popup_Vinyl, Asset_wav.Click_04);
+            popupConfig = new SimAction_PopupConfig(options, true, headerText, bodyText, Asset_png.Popup_Vinyl, Asset_wav.Click_04);
         }
 
         //Sim Action
@@ -281,16 +303,16 @@ public class SimAction_TriggerData
 {
     public Func<bool> DelayCondition { get; private set; }
     public TimeSpan Duration { get; private set; }
-    public CityID? Location { get; private set; }
+    public CityID? LocationID { get; private set; }
 
     public SimAction_TriggerData(
         Func<bool> delayCondition = null,
         TimeSpan? duration = null,
-        CityID? location = null)
+        CityID? locationID = null)
     {
         DelayCondition = (delayCondition == null) ? () => { return false; } : delayCondition;
         Duration = (duration == null) ? new TimeSpan(0, 0, 0) : duration.Value;
-        Location = location;
+        LocationID = locationID;
     }
 }
 
