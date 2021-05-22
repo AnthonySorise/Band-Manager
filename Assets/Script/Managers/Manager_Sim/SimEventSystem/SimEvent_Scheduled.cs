@@ -34,9 +34,15 @@ public class SimEvent_Scheduled
 
     private void Store() {
         Managers.Sim.StoreSimEvent_Scheduled(this);
+        Check();
+        if (Managers.UI && Managers.UI.Calendar)//Conditional in place for now, because loading in scheduled Sim Events Immediately - won't be necessary after building out menu screen / game loading
+        {
+            Managers.UI.Calendar.UpdateCalendarPanel(true, true, true);
+        }
     }
     private void Remove(){
         Managers.Sim.RemoveSimEvent_Scheduled(this);
+        Managers.UI.Calendar.UpdateCalendarPanel(true, true, true);
     }
 
     private bool IsTimeToTrigger() {

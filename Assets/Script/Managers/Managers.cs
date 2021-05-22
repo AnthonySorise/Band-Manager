@@ -28,7 +28,7 @@ public class Managers : MonoBehaviour {
 
     private List<IManager> _preStartSequence;//loads first and synchronously
     private List<IManager> _startSequence;//loads asynchronously 
-    private List<IManager> _postStartSequence;//loads first and synchronously
+    private List<IManager> _postStartSequence;//loads last and synchronously
 
     private bool _failed;
 

@@ -195,7 +195,6 @@ public class SimAction {
     {
         _callbacks.CancelCallback();
         _isCanceled = true;
-        Managers.UI.Calendar.UpdateCalendarPanel(true, true, true);
     }
     public void SIM_ConfirmCancel()
     {

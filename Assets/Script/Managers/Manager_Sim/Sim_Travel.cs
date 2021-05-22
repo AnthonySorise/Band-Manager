@@ -379,8 +379,6 @@ public class Sim_Travel : MonoBehaviour
         //Sim Action
         SimAction simAction = new SimAction(ids, triggerData, callbacks, null, popupConfig);
         SimEvent_Scheduled SimEvent_FinishTravel = new SimEvent_Scheduled(simAction, triggerDate);
-
-        Managers.UI.Calendar.UpdateCalendarPanel(true, true, true);
     }
 
      
