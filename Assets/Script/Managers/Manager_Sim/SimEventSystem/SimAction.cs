@@ -107,7 +107,12 @@ public class SimAction {
         //**Default isValids - all simevents share these and they take precendence
         if (NPCid() != -1 && Location() != null && ID() != SimActionID.NPC_Travel)
         {
-            if (npc.CurrentCity != _triggerData.LocationID || npc.CityEnRoute != null)
+            SimAction eventHappeningNow = Managers.Sim.EventHappeningNow(NPCid());
+            if (eventHappeningNow != null)
+            {
+                invalidMessage = "busy " + Description();
+            }
+            else if (npc.CurrentCity != _triggerData.LocationID || npc.CityEnRoute != null)
             {
                 invalidMessage = "not in " + Location().cityName;
             }
@@ -187,7 +192,7 @@ public class SimAction {
             SimAction_PopupOptionConfig option = new SimAction_PopupOptionConfig(null, tt_option01);
             List<SimAction_PopupOptionConfig> options = new List<SimAction_PopupOptionConfig> { option };
 
-            string headerText = "Unable  to " + _descriptions.Description;
+            string headerText = "Unable to " + _descriptions.Description;
             string bodyText = "Cannot " + _descriptions.Description + " because " + IsValid_InvalidMessage();
 
             popupConfig = new SimAction_PopupConfig(options, true, headerText, bodyText, Asset_png.Popup_Vinyl, Asset_wav.Click_04);
@@ -244,7 +249,7 @@ public class SimAction {
             string headerText = "Cancel?";
             string bodyText = _descriptions.CancelDescription;
 
-            Action<GameObject> tt_option01 = (GameObject go) => { Managers.UI.Tooltip.SetTooltip(go, "Cancel plans to " + _descriptions.Description); };
+            Action<GameObject> tt_option01 = (GameObject go) => { Managers.UI.Tooltip.SetTooltip(go, CancelDescription()); };
             Action<GameObject> tt_option02 = (GameObject go) => { Managers.UI.Tooltip.SetTooltip(go, "No, keep the plans."); };
             SimAction_PopupOptionConfig popupOptionConfig01 = new SimAction_PopupOptionConfig("Cancel Plans", tt_option01);
             SimAction_PopupOptionConfig popupOptionConfig02 = new SimAction_PopupOptionConfig("Keep Plans", tt_option02);
@@ -384,7 +389,7 @@ public class SimAction_PopupOptionConfig {
         string buttonText = null, 
         Action<GameObject> setTooltips = null)
     {
-        ButtonText = buttonText;
+        ButtonText = (buttonText == null) ? "OK" : buttonText;
         SetToolTips = setTooltips;
     }
 }

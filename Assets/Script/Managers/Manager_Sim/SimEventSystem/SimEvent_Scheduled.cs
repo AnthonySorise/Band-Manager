@@ -65,16 +65,21 @@ public class SimEvent_Scheduled
     private void SIM_HandleScheduleConflict()
     {
         List<SimEvent_Scheduled> conflictingEvents = Managers.Sim.ConflictingEvents(SimAction.NPCid(), ScheduledDT, SimAction.Duration());
-        SimAction eventHappeningNow = null;
-        foreach (SimEvent_Scheduled simEvent in conflictingEvents)
+        List<SimEvent_Scheduled> conflictingNonTravelEvents = conflictingEvents.Where(item => item.SimAction.ID() != SimActionID.NPC_Travel).ToList();
+        SimAction currentEvent = Managers.Sim.EventHappeningNow(SimAction.NPCid());
+        bool hasPopup = SimAction.IsPlayerCharacter();
+        bool currentlyInTheConflictingEvent = false;
+        if (currentEvent != null)
         {
-            if (simEvent.SimAction.IsHappeningNow())
+            foreach (SimEvent_Scheduled simEvent in conflictingEvents)
             {
-                eventHappeningNow = simEvent.SimAction;
+                if (simEvent.SimAction.IsHappeningNow())
+                {
+                    currentlyInTheConflictingEvent = true;
+                }
             }
         }
-        List<SimEvent_Scheduled> conflictingNonTravelEvents = conflictingEvents.Where(item => item.SimAction.ID() != SimActionID.NPC_Travel).ToList();
-        bool givePlayerChoice = (!_isForceSchedule && eventHappeningNow == null && SimAction.IsPlayerCharacter() && conflictingNonTravelEvents.Count > 0);
+        bool givePlayerChoice = (!_isForceSchedule && !currentlyInTheConflictingEvent && conflictingNonTravelEvents.Count > 0);
 
         //IDs
         SimAction_IDs ids = new SimAction_IDs(SimActionID.SimAction, SimAction.NPCid());
@@ -95,52 +100,77 @@ public class SimEvent_Scheduled
             UnityAction option01 = cancelConflictingEventsAndStore;
             callbackOptions = new List<UnityAction> { option01, null };
         }
-        else if(eventHappeningNow == null)
+        else if(_isForceSchedule)
         {
             callback = cancelConflictingEventsAndStore;
         }
         SimAction_Callbacks callbacks = new SimAction_Callbacks(callback, callbackOptions);
 
         //Popup Config
+        List<SimAction_PopupOptionConfig> options = null;
+        string headerText = "";
+        string bodyText = "";
         SimAction_PopupConfig popupConfig = null;
-        if (givePlayerChoice)
+        if (hasPopup)
         {
-            Action<GameObject> tt_option01 = (GameObject go) => { Managers.UI.Tooltip.SetTooltip(go, "New plans!"); };//ToDo expand this to include cancel descriptions (tooltip key value pairs)
-            Action<GameObject> tt_option02 = (GameObject go) => { Managers.UI.Tooltip.SetTooltip(go, "Keep current plans"); };
-            SimAction_PopupOptionConfig option01 = new SimAction_PopupOptionConfig("New Plans!", tt_option01);
-            SimAction_PopupOptionConfig option02 = new SimAction_PopupOptionConfig("Nevermind", tt_option02);
-            List<SimAction_PopupOptionConfig> options = new List<SimAction_PopupOptionConfig> { option01, option02 };
-
-            string headerText = "Schedule Conflict";
-            string scheduledDescriptionsText = "\n" + conflictingNonTravelEvents[0].SimAction.Description();
-            if (conflictingNonTravelEvents.Count > 0)
+            if (!_isForceSchedule && !givePlayerChoice)
             {
-                for (int i = 1; i < conflictingNonTravelEvents.Count; i++)
+                headerText = "Unable to " + SimAction.Description();
+                if (currentlyInTheConflictingEvent)
                 {
-                    scheduledDescriptionsText += "\n" + conflictingNonTravelEvents[i];
+                    bodyText = "Cannot " + SimAction.Description() + " because busy " + currentEvent.Description();
+                }
+                if (_isForceSchedule)
+                {
+                    bodyText = "Cannot " + SimAction.Description();
+                }                
+            }
+            else
+            {
+                headerText = "Schedule Conflict";
+                string willCancelTextList = "";
+                string willBeLateForTextList = "";
+                string willCancelTextList_IfCancel = "";
+                string willBeLateForTextList_IfCancel = "";
+
+                for (int i = 0; i < conflictingNonTravelEvents.Count; i++)
+                {
+                    if (SimAction.ID() == SimActionID.NPC_Travel && SimAction.LocationID() == conflictingNonTravelEvents[i].SimAction.LocationID())
+                    {
+                        willBeLateForTextList += "\n" + conflictingNonTravelEvents[i].SimAction.Description();
+                        willCancelTextList_IfCancel += "\n" + conflictingNonTravelEvents[i].SimAction.CancelDescription();
+                    }
+                    else
+                    {
+                        willCancelTextList += "\n" + conflictingNonTravelEvents[i].SimAction.Description();
+                        willBeLateForTextList_IfCancel += "\n" + conflictingNonTravelEvents[i].SimAction.CancelDescription();
+                    }
+
+                }
+                string tooltipText = SimAction.Description() + "\n" + willCancelTextList_IfCancel + "\n" + willBeLateForTextList_IfCancel;
+                Action<GameObject> tt_option01 = (GameObject go) => { Managers.UI.Tooltip.SetTooltip(go, tooltipText); };
+                SimAction_PopupOptionConfig option01 = new SimAction_PopupOptionConfig("Lets Go!", tt_option01);
+                SimAction_PopupOptionConfig option02 = null;
+                if (!_isForceSchedule)
+                {
+                    Action<GameObject> tt_option02 = (GameObject go) => { Managers.UI.Tooltip.SetTooltip(go, "Nevermind"); };
+                    option02 = new SimAction_PopupOptionConfig("Nevermind", tt_option02);
+                }
+                options = new List<SimAction_PopupOptionConfig> { option01, option02 };
+
+                if (willCancelTextList != "")
+                {
+                    bodyText += "Already scheduled to " + willCancelTextList + ", change plans to " + SimAction.Description() + "?\n";
+                }
+
+                if (willBeLateForTextList != "")
+                {
+                    bodyText += "Won't arrive in " + SimAction.Location().cityName + " in time for " + willBeLateForTextList;
                 }
             }
-
-            string bodyText = "Already scheduled to " + scheduledDescriptionsText + ", change plans to " + SimAction.Description() + "?";
-            popupConfig = new SimAction_PopupConfig(options, true, headerText, bodyText, Asset_png.Popup_Vinyl, Asset_wav.Click_04);
-        }
-        else if (eventHappeningNow != null)
-        {
-            string headerText = "Schedule Conflict";
-            string scheduledDescriptionsText = "\n" + conflictingNonTravelEvents[0].SimAction.Description();
-            if (conflictingNonTravelEvents.Count > 0)
-            {
-                for (int i = 1; i < conflictingNonTravelEvents.Count; i++)
-                {
-                    scheduledDescriptionsText += "\n" + conflictingNonTravelEvents[i];
-                }
-            }
-
-            string bodyText = "Unable to " + SimAction.Description() + " because currently " + eventHappeningNow.Description() ;
-            popupConfig = new SimAction_PopupConfig(null, true, headerText, bodyText, Asset_png.Popup_Vinyl, Asset_wav.Click_04);
         }
 
-
+        popupConfig = new SimAction_PopupConfig(options, true, headerText, bodyText, Asset_png.Popup_Vinyl, Asset_wav.Click_04);
         //Sim Action
         SimAction simAction = new SimAction(ids, null, callbacks, null, popupConfig);
         SimEvent_Immediate SimEvent_HandleScheduleConflict = new SimEvent_Immediate(simAction);

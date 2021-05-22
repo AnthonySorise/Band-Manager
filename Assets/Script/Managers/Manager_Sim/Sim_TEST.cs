@@ -217,7 +217,7 @@ public class Sim_TEST : MonoBehaviour
         SimAction_IDs ids = new SimAction_IDs(simActionID, 1);
         TimeSpan duration = new TimeSpan(3, 0, 0);
         SimAction_TriggerData triggerData = new SimAction_TriggerData(null, duration, location);
-        SimAction_Descriptions descriptions = new SimAction_Descriptions("oversee recording session", "You will lose your deposit, and Martin Hannet will be pissed.");
+        SimAction_Descriptions descriptions = new SimAction_Descriptions("attend recording session", "You will lose your deposit, and Martin Hannet will be pissed.");
         SimAction_PopupConfig popupConfig = new SimAction_PopupConfig(null, false, "Test Production Event", "This is a test production  event that is scheduled to fire on " + triggerDate.ToShortDateString() + " at 6:00PM - but not pause time.  The even will last for three hours.", Asset_png.Popup_Vinyl, Asset_wav.event_generic);
         SimAction simAction = new SimAction(ids, triggerData, null, descriptions, popupConfig);
         SimEvent_Scheduled SimEvent_Scheduled01 = new SimEvent_Scheduled(simAction, triggerDate);

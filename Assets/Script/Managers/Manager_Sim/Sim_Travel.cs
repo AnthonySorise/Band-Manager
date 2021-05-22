@@ -322,7 +322,7 @@ public class Sim_Travel : MonoBehaviour
         //Trigger Data
         Func<bool> delayCondition = () => { return false; };
         TimeSpan travelTime = TravelTime(transportationID, fromCityID, toCityID);
-        SimAction_TriggerData triggerData = new SimAction_TriggerData(delayCondition, travelTime, fromCityID);
+        SimAction_TriggerData triggerData = new SimAction_TriggerData(delayCondition, travelTime, toCityID);
 
         //Callbacks
         UnityAction callback = () => {

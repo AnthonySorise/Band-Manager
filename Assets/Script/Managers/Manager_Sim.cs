@@ -101,7 +101,8 @@ public class Manager_Sim : MonoBehaviour, IManager {
         List<SimEvent_Scheduled> scheduledEvents = GetScheduledSimEvents(npcID);
         foreach (SimEvent_Scheduled scheduledEvent in scheduledEvents)
         {
-            if (scheduledEvent.ScheduledDT.Date == dateTime.Date)//starts same day
+            if (scheduledEvent.ScheduledDT.Date == dateTime.Date && 
+                scheduledEvent.SimAction.Duration() != TimeSpan.Zero)//starts same day and takes up time
             {
                 DateTime aStart = dateTime;
                 DateTime aEnd = dateTime + duration;
@@ -119,5 +120,18 @@ public class Manager_Sim : MonoBehaviour, IManager {
     public bool IsNoConflictingEvents(int npcID, DateTime dateTime, TimeSpan duration)
     {
         return ConflictingEvents(npcID, dateTime, duration).Count == 0;
+    }
+    public SimAction EventHappeningNow(int npcID)
+    {
+        SimAction eventHappeningNow = null;
+        List<SimEvent_Scheduled> events = GetScheduledSimEvents(npcID);
+        foreach (SimEvent_Scheduled simEvent in events)
+        {
+            if (simEvent.SimAction.IsHappeningNow() && simEvent.SimAction.Duration() != TimeSpan.Zero)
+            {
+                eventHappeningNow = simEvent.SimAction;
+            }
+        }
+        return eventHappeningNow;
     }
 }
