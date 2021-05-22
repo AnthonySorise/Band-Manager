@@ -71,16 +71,19 @@ public class Manager_Sim : MonoBehaviour, IManager {
         IsProcessingTick = false;
     }
 
-    public List<SimEvent_Scheduled> GetScheduledSimEvents(int npcID, DateTime? dateTime = null)
+    public List<SimEvent_Scheduled> GetScheduledSimEvents(int npcID, DateTime? dateTime = null, SimActionID? simActionID = null)
     {
         List<SimEvent_Scheduled> returnList = new List<SimEvent_Scheduled>();
         foreach (SimEvent_Scheduled simEvent in _simEvents_Scheduled)
         {
-            if (simEvent.SimAction.IsForNPCid(npcID))
+            if (simEvent.SimAction.IsForNPCid(npcID) && !simEvent.SimAction.IsCanceled())
             {
                 if(dateTime ==  null || simEvent.ScheduledDT.Date.CompareTo(dateTime.Value.Date) == 0)
                 {
-                    returnList.Add(simEvent);
+                    if (simActionID == null || simEvent.SimAction.ID() == simActionID.Value)
+                    {
+                        returnList.Add(simEvent);
+                    }
                 }
             }
         }

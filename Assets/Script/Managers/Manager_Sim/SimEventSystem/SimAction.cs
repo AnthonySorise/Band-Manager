@@ -86,9 +86,9 @@ public class SimAction {
     {
         return (_triggeredDT != null && Managers.Time.CurrentDT.CompareTo(_triggeredDT + _triggerData.Duration) > 0);
     }
-    public bool CanBeCanceled()
+    public CityID? Location()
     {
-        return _triggerData.CanBeCanceled;
+        return _triggerData.Location;
     }
     public bool IsCanceled()
     {
@@ -178,7 +178,7 @@ public class SimAction {
 
     public void Cancel(bool hasConfirmationPopup = true)
     {
-        if (!WillHappenLater() || !CanBeCanceled())
+        if (!WillHappenLater())
         {
             return;
         }
@@ -195,6 +195,7 @@ public class SimAction {
     {
         _callbacks.CancelCallback();
         _isCanceled = true;
+        Managers.UI.Calendar.UpdateCalendarPanel(true, true, true);
     }
     public void SIM_ConfirmCancel()
     {
@@ -281,16 +282,16 @@ public class SimAction_TriggerData
 {
     public Func<bool> DelayCondition { get; private set; }
     public TimeSpan Duration { get; private set; }
-    public bool CanBeCanceled { get; private set; }
+    public CityID? Location { get; private set; }
 
     public SimAction_TriggerData(
         Func<bool> delayCondition = null,
         TimeSpan? duration = null,
-        bool canBeCanceled = true)
+        CityID? location = null)
     {
         DelayCondition = (delayCondition == null) ? () => { return false; } : delayCondition;
         Duration = (duration == null) ? new TimeSpan(0, 0, 0) : duration.Value;
-        CanBeCanceled = CanBeCanceled;
+        Location = location;
     }
 }
 

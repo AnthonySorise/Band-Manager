@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -63,6 +64,24 @@ public class Sim_Travel : MonoBehaviour
             Debug.Log("Error: Unrecognized Automobile ID");
             return timeSpan;
         }
+    }
+    public bool IsEnoughTimeToTravelAndMakeNextEvent(int npcID, TransportationID transportationID, CityID cityFrom, CityID cityTo)
+    {
+        List<SimEvent_Scheduled> events = Managers.Sim.GetScheduledSimEvents(npcID);
+        List<SimEvent_Scheduled> nonTravelEvents = events.Where(item => item.SimAction.ID() == SimActionID.NPC_Travel).ToList();
+        SimEvent_Scheduled finalDestinationEvent = nonTravelEvents[0];
+        if (nonTravelEvents.Count > 0 && finalDestinationEvent.SimAction.Location() != null)
+        {
+            CityID finalDestination = finalDestinationEvent.SimAction.Location().Value;
+            if (cityTo != finalDestination)
+            {
+                TimeSpan trip01Time = TravelTime(transportationID, cityFrom, cityTo);
+                TimeSpan trip02Time = TravelTime(transportationID, cityTo, finalDestination);
+                DateTime finalDestinationArrivalTime = Managers.Time.CurrentDT.Add(trip01Time + trip02Time + TimeSpan.FromMinutes(15));
+                return (DateTime.Compare(finalDestinationArrivalTime, finalDestinationEvent.ScheduledDT) <= 0);
+            }
+        }
+        return true;
     }
 
     public float TravelCost(TransportationID transportationID, CityID cityFrom, CityID cityTo)
@@ -243,7 +262,7 @@ public class Sim_Travel : MonoBehaviour
 
         //Trigger Data
         Func<bool> delayCondition = () => { return false; };
-        SimAction_TriggerData triggerData = new SimAction_TriggerData(delayCondition);
+        SimAction_TriggerData triggerData = new SimAction_TriggerData(delayCondition, null, fromCityID);
 
         //Callbacks
         UnityAction callback = () => { };
@@ -285,6 +304,14 @@ public class Sim_Travel : MonoBehaviour
         };
         SimAction_PopupConfig popupConfig = new SimAction_PopupConfig(popupOptionsConfig, true, headerText, bodyText, Asset_png.Popup_Vinyl, Asset_wav.Click_04);
 
+        //**cancel other travel events
+        List<SimEvent_Scheduled> scheduledTravelEvents =  Managers.Sim.GetScheduledSimEvents(npcID, null, SimActionID.NPC_Travel).Where(item => item.SimAction.ID() == SimActionID.NPC_Travel).ToList();
+        foreach (SimEvent_Scheduled scheduledEvent in scheduledTravelEvents)
+        {
+            scheduledEvent.SimAction.Cancel();
+        }
+        //**
+
         //Sim Action
         SimAction simAction = new SimAction(ids, triggerData, callBacks, null, popupConfig);
         SimEvent_Immediate SimEvent_QueryTravel = new SimEvent_Immediate(simAction);
@@ -299,7 +326,7 @@ public class Sim_Travel : MonoBehaviour
         //Trigger Data
         Func<bool> delayCondition = () => { return false; };
         TimeSpan travelTime = TravelTime(transportationID, fromCityID, toCityID);
-        SimAction_TriggerData triggerData = new SimAction_TriggerData(delayCondition, travelTime);
+        SimAction_TriggerData triggerData = new SimAction_TriggerData(delayCondition, travelTime, fromCityID);
 
         //Callbacks
         UnityAction callback = () => {
@@ -327,14 +354,11 @@ public class Sim_Travel : MonoBehaviour
 
         //Trigger Data
         Func<bool> delayCondition = () => { return false; };
-        SimAction_TriggerData triggerData = new SimAction_TriggerData(delayCondition);
+        SimAction_TriggerData triggerData = new SimAction_TriggerData(delayCondition, null, toCityID);
 
         //Callbacks
         UnityAction callback = () => {
             Managers.Sim.NPC.GetNPC(npcID).TravelEnd();
-        };
-        UnityAction option01 = () => {
-            Debug.Log("End Travel");
         };
         SimAction_Callbacks callbacks = new SimAction_Callbacks(callback);
 
