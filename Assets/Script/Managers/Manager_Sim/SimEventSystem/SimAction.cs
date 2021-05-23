@@ -51,6 +51,7 @@ public class SimAction {
         _triggeredDT = null;
     }
 
+
     //ID Functions
     public SimActionID ID()
     {
@@ -68,6 +69,7 @@ public class SimAction {
     {
         return Managers.Sim.NPC.IsPlayerCharacter(_ids.NPCid);
     }
+
 
     //TriggerData Functions
     public TimeSpan Duration()
@@ -99,68 +101,75 @@ public class SimAction {
         return _isCanceled;
     }
 
+    public bool _shouldDelay()
+    {
+        return _triggerData.DelayCondition();
+    }
     public string IsValid_InvalidMessage()
     {
-        string invalidMessage = "";
-        NPC npc = Managers.Sim.NPC.GetNPC(NPCid());
-
-        //**Default isValids - all simevents share these and they take precendence
-        if (NPCid() != -1 && Location() != null && ID() != SimActionID.NPC_Travel)
-        {
-            SimAction eventHappeningNow = Managers.Sim.EventHappeningNow(NPCid());
-            if (eventHappeningNow != null)
-            {
-                invalidMessage = "busy " + Description();
-            }
-            else if (npc.CurrentCity != _triggerData.LocationID || npc.CityEnRoute != null)
-            {
-                invalidMessage = "not in " + Location().cityName;
-            }
-        }
-        //**
-
-
-        return (invalidMessage != "") ? invalidMessage : _descriptions.InvalidConditionMessage();
+        return _descriptions.InvalidConditionMessage();
     }
     public bool IsValid()
     {
         return (IsValid_InvalidMessage() == "");
     }
-    public bool _shouldDelay()
-    {
-        return _triggerData.DelayCondition();
-    }
+
 
     //Callback Functions
+    public void ValidCheck(bool isTriggerNow = false)
+    {
+        if (isTriggerNow)
+        {
+            string invalidMessage = "";
+            NPC npc = Managers.Sim.NPC.GetNPC(NPCid());
+            //***Global Trigger Validation
+            if (NPCid() != -1 && Location() != null)
+            {
+                if (ID() != SimActionID.NPC_Travel && (npc.CurrentCity != _triggerData.LocationID || npc.CityEnRoute != null))
+                {
+                    invalidMessage = "not in " + Location().cityName;
+                    
+                }
+            }
+            //***
+            if (invalidMessage != "")
+            {
+                SIM_CancelDueToInvalid(invalidMessage);
+            }
+        }
+        if (!_isCanceled && !IsValid())
+        {
+            SIM_CancelDueToInvalid();
+        }
+    }
+
     public void AttemptTrigger()
     {
         if (!_shouldDelay())
         {
-            _trigger();
+            ValidCheck(true);
+            if (!_isCanceled)
+            {
+                _trigger();
+            }
         }
     }
     private void _trigger()
     {
-        if (!IsValid())
+        _triggeredDT = Managers.Time.CurrentDT;
+        if (_callbacks != null && _callbacks.TriggerCallback != null)
         {
-            SIM_CancelDueToInvalid();
+            _callbacks.TriggerCallback();
+        }
+        if (IsPlayerCharacter() && HasPopup())
+        {
+            Managers.UI.Popup.BuildAndDisplay(this);
         }
         else
         {
-            _triggeredDT = Managers.Time.CurrentDT;
-            if (_callbacks != null && _callbacks.TriggerCallback != null)
-            {
-                _callbacks.TriggerCallback();
-            }
-            if (IsPlayerCharacter() && HasPopup())
-            {
-                Managers.UI.Popup.BuildAndDisplay(this);
-            }
-            else
-            {
-                //choose option using option's AI modifiers
-            }
+            //choose option using option's AI modifiers
         }
+        
     }
     public UnityAction OptionCallback(int i)
     {
@@ -175,25 +184,27 @@ public class SimAction {
 
     }
 
-    private void SIM_CancelDueToInvalid()
+    private void SIM_CancelDueToInvalid(string customInvalidMessage = "")
     {
         //IDs
         SimAction_IDs ids = new SimAction_IDs(SimActionID.SimAction, NPCid());
 
         //Callbacks
-        UnityAction callback = () => { Cancel(false); };
+        UnityAction callback = () => { finalizeCancel(); };
         SimAction_Callbacks callbacks = new SimAction_Callbacks(callback);
 
         //Popup Config
         SimAction_PopupConfig popupConfig = null;
         if (IsPlayerCharacter())
         {
-            Action<GameObject> tt_option01 = (GameObject go) => { Managers.UI.Tooltip.SetTooltip(go, CancelDescription()); };
+            string invalidMessage = customInvalidMessage != "" ? customInvalidMessage : IsValid_InvalidMessage();
+
+            Action <GameObject> tt_option01 = (GameObject go) => { Managers.UI.Tooltip.SetTooltip(go, CancelDescription()); };
             SimAction_PopupOptionConfig option = new SimAction_PopupOptionConfig(null, tt_option01);
             List<SimAction_PopupOptionConfig> options = new List<SimAction_PopupOptionConfig> { option };
 
             string headerText = "Unable to " + _descriptions.Description;
-            string bodyText = "Cannot " + _descriptions.Description + " because " + IsValid_InvalidMessage();
+            string bodyText = "Cannot " + _descriptions.Description + " because " + invalidMessage;
 
             popupConfig = new SimAction_PopupConfig(options, true, headerText, bodyText, Asset_png.Popup_Vinyl, Asset_wav.Click_04);
         }
@@ -217,11 +228,6 @@ public class SimAction {
         {
             finalizeCancel();
         }
-    }
-    private void finalizeCancel()
-    {
-        _callbacks.CancelCallback();
-        _isCanceled = true;
     }
     public void SIM_ConfirmCancel()
     {
@@ -266,6 +272,12 @@ public class SimAction {
         SimAction simAction = new SimAction(ids, null, callBacks, null, popupConfig);
         SimEvent_Immediate SimEvent_ConfirmCancel = new SimEvent_Immediate(simAction);
     }
+    private void finalizeCancel()
+    {
+        _callbacks.CancelCallback();
+        _isCanceled = true;
+    }
+
 
     //Descriptons Functions
     public string Description()
@@ -276,6 +288,7 @@ public class SimAction {
     {
         return _descriptions.CancelDescription;
     }
+
 
     //PopupConfig Functions
     public bool HasPopup()
@@ -290,6 +303,8 @@ public class SimAction {
 }
 
 
+
+//*****SimAction Components*****
 public class SimAction_IDs
 {
     public SimActionID ID { get; private set; }
