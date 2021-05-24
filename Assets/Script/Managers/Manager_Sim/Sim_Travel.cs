@@ -300,14 +300,6 @@ public class Sim_Travel : MonoBehaviour
         };
         SimAction_PopupConfig popupConfig = new SimAction_PopupConfig(popupOptionsConfig, true, headerText, bodyText, Asset_png.Popup_Vinyl, Asset_wav.Click_04);
 
-        //**cancel other travel events
-        List<SimEvent_Scheduled> scheduledTravelEvents =  Managers.Sim.GetScheduledSimEvents(npcID, null, SimActionID.NPC_Travel).Where(item => item.SimAction.ID() == SimActionID.NPC_Travel).ToList();
-        foreach (SimEvent_Scheduled scheduledEvent in scheduledTravelEvents)
-        {
-            scheduledEvent.SimAction.Cancel();
-        }
-        //**
-
         //Sim Action
         SimAction simAction = new SimAction(ids, triggerData, callBacks, null, popupConfig);
         SimEvent_Immediate SimEvent_QueryTravel = new SimEvent_Immediate(simAction);

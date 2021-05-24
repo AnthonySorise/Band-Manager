@@ -20,7 +20,6 @@ public class SimEvent_Scheduled
         ScheduledDT = scheduledDT;
         _isForceSchedule = isForceSchedule;
 
-
         if (Managers.Sim.IsNoConflictingEvents(SimAction.NPCid(), ScheduledDT, SimAction.Duration()))
         {
             Store();
@@ -33,7 +32,20 @@ public class SimEvent_Scheduled
 
 
     private void Store() {
+        if (SimAction.NPCid() != -1)
+        {
+            if (SimAction.ID() == SimActionID.NPC_Travel)//<-There can be only one
+            {
+                List<SimEvent_Scheduled> sameEventTypes = Managers.Sim.GetScheduledSimEvents(SimAction.NPCid(), null, SimAction.ID()).Where(item => item.SimAction.Duration() != TimeSpan.Zero).ToList();
+                foreach (SimEvent_Scheduled scheduledEvent in sameEventTypes)
+                {
+                    scheduledEvent.SimAction.Cancel();
+                }
+            }
+        }
+
         Managers.Sim.StoreSimEvent_Scheduled(this);
+
         Check();
         if (Managers.UI && Managers.UI.Calendar)//Conditional in place for now, because loading in scheduled Sim Events Immediately - won't be necessary after building out menu screen / game loading
         {
