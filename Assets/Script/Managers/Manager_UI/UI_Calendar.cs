@@ -1102,7 +1102,7 @@ public class UI_Calendar : MonoBehaviour
                 //set color
                 calendarTimelineEvent.GetComponent<Image>().color = Managers.UI.Colors_events[scheduledEvent.SimAction.ID()];
                 //set tooltip
-                Managers.UI.Tooltip.SetTooltip(calendarTimelineEvent, scheduledEvent.SimAction);
+                Managers.UI.Tooltip.SetTooltip(calendarTimelineEvent, scheduledEvent);
             }
         }
         //Day Before remainder
@@ -1142,7 +1142,7 @@ public class UI_Calendar : MonoBehaviour
                 //set color
                 calendarTimelineEvent.GetComponent<Image>().color = Managers.UI.Colors_events[scheduledEvent.SimAction.ID()];
                 //set tooltip
-                Managers.UI.Tooltip.SetTooltip(calendarTimelineEvent, scheduledEvent.SimAction);
+                Managers.UI.Tooltip.SetTooltip(calendarTimelineEvent, scheduledEvent);
             }
         }
     }
