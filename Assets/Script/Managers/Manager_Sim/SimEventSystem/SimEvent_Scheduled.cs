@@ -32,7 +32,7 @@ public class SimEvent_Scheduled
 
 
     private void Store() {
-        if (SimAction.NPCid() != -1)
+        if (SimAction.NPCid() != -1 && !SimAction.IsCanceled())
         {
             if (SimAction.ID() == SimActionID.NPC_Travel)//<-There can be only one
             {
@@ -141,25 +141,39 @@ public class SimEvent_Scheduled
             {
                 headerText = "Schedule Conflict";
                 string willCancelTextList = "";
-                string willBeLateForTextList = "";
                 string willCancelTextList_IfCancel = "";
+                string willBeLateForTextList = "";
                 string willBeLateForTextList_IfCancel = "";
 
                 for (int i = 0; i < conflictingNonTravelEvents.Count; i++)
                 {
                     if (SimAction.ID() == SimActionID.NPC_Travel && SimAction.LocationID() == conflictingNonTravelEvents[i].SimAction.LocationID())
                     {
-                        willBeLateForTextList += "\n" + conflictingNonTravelEvents[i].SimAction.Description();
-                        willCancelTextList_IfCancel += "\n" + conflictingNonTravelEvents[i].SimAction.CancelDescription();
+                        willBeLateForTextList += conflictingNonTravelEvents[i].SimAction.Description();
+                        willBeLateForTextList_IfCancel += "\n" + conflictingNonTravelEvents[i].SimAction.CancelDescription();
                     }
                     else
                     {
-                        willCancelTextList += "\n" + conflictingNonTravelEvents[i].SimAction.Description();
-                        willBeLateForTextList_IfCancel += "\n" + conflictingNonTravelEvents[i].SimAction.CancelDescription();
+                        willCancelTextList += conflictingNonTravelEvents[i].SimAction.Description();
+                        willCancelTextList_IfCancel += "\n" + conflictingNonTravelEvents[i].SimAction.CancelDescription();
                     }
 
                 }
-                string tooltipText = SimAction.Description() + "\n" + willCancelTextList_IfCancel + "\n" + willBeLateForTextList_IfCancel;
+
+                string tooltipText = "";
+                if (SimAction.Description() != "")
+                {
+                    tooltipText += SimAction.Description() + "\n\n";
+                }
+                if (willCancelTextList_IfCancel != "")
+                {
+                    tooltipText += willCancelTextList_IfCancel + "\n";
+                }
+                if (willBeLateForTextList_IfCancel != "")
+                {
+                    tooltipText += "Will still be canceled" + willBeLateForTextList_IfCancel;
+                }
+
                 Action<GameObject> tt_option01 = (GameObject go) => { Managers.UI.Tooltip.SetTooltip(go, tooltipText); };
                 SimAction_PopupOptionConfig option01 = new SimAction_PopupOptionConfig("Lets Go!", tt_option01);
                 SimAction_PopupOptionConfig option02 = null;
@@ -172,13 +186,14 @@ public class SimEvent_Scheduled
 
                 if (willCancelTextList != "")
                 {
-                    bodyText += "Already scheduled to " + willCancelTextList + ", change plans to " + SimAction.Description() + "?\n";
+                    bodyText += "Already scheduled to " + willCancelTextList + "\n";
                 }
 
                 if (willBeLateForTextList != "")
                 {
-                    bodyText += "Won't arrive in " + SimAction.Location().cityName + " in time for " + willBeLateForTextList;
+                    bodyText += "Won't arrive in " + SimAction.Location().cityName + " in time to " + willBeLateForTextList + "\n";
                 }
+                willBeLateForTextList += "change plans to " + SimAction.Description() + "?";
             }
         }
 

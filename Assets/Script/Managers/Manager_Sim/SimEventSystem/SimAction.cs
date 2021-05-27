@@ -143,7 +143,7 @@ public class SimAction {
         }
     }
 
-    public void AttemptTrigger()
+    public bool AttemptTrigger()
     {
         if (!_shouldDelay())
         {
@@ -151,8 +151,10 @@ public class SimAction {
             if (!_isCanceled)
             {
                 _trigger();
+                return true;
             }
         }
+        return false;
     }
     private void _trigger()
     {
