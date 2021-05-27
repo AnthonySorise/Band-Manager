@@ -190,11 +190,6 @@ public class Sim_Travel : MonoBehaviour
         return validTransportations;
     }
 
-
-
-
-
-
     public bool IsValidTravelSubmission(int npcID, TransportationID transportationID, CityID fromCityID, CityID toCityID)
     {
         string invalidMessage = IsValidTravelSubmission_Message(npcID, transportationID, fromCityID, toCityID);
@@ -247,6 +242,19 @@ public class Sim_Travel : MonoBehaviour
         else { return "error"; }
     }
 
+    public string isValidSIMTravel_Message(bool isTriggeringNow, int npcID, TransportationID transportationID, CityID fromCityID, CityID toCityID)
+    {
+        //TO DO Travel Validation
+        if (isTriggeringNow)
+        {
+
+        }
+        else
+        {
+
+        }
+        return "";
+    }
 
 
     public void SIM_QueryTravel(int npcID, TransportationID transportationID, CityID fromCityID, CityID toCityID)
@@ -277,7 +285,9 @@ public class Sim_Travel : MonoBehaviour
         SimAction_Callbacks callBacks = new SimAction_Callbacks(callback, optionCallbacks);
 
         //Descriptions
-        Func<string> invalidConditionMessage = () => { return ""; };
+        Func<bool, string> invalidConditionMessage = (isTriggeringNow) => {
+            return isValidSIMTravel_Message(isTriggeringNow, npcID, transportationID, fromCityID, toCityID);
+        };
         SimAction_Descriptions descriptions = new SimAction_Descriptions(null, null, invalidConditionMessage);
 
         //Popup Config
@@ -326,8 +336,7 @@ public class Sim_Travel : MonoBehaviour
 
         //Descriptions
         string description = "travel to " + toCityData.cityName;
-        Func<string> invalidConditionMessage = () => { return ""; };
-        SimAction_Descriptions descriptions = new SimAction_Descriptions(description,  null, invalidConditionMessage);
+        SimAction_Descriptions descriptions = new SimAction_Descriptions(description,  null, null);
 
         //Sim Action
         SimAction simAction = new SimAction(ids, triggerData, callbacks, descriptions, null);
@@ -349,10 +358,6 @@ public class Sim_Travel : MonoBehaviour
             Managers.Sim.NPC.GetNPC(npcID).TravelEnd();
         };
         SimAction_Callbacks callbacks = new SimAction_Callbacks(callback);
-
-        //Descriptions
-        Func<string> invalidConditionMessage = () => { return ""; };
-        SimAction_Descriptions descriptions = new SimAction_Descriptions(null, null, invalidConditionMessage);
 
         //Popup Config
         string popupMessage = "Welcome to " + toCityData.cityName;

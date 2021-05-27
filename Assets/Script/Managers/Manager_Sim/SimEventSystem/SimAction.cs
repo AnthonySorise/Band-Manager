@@ -105,20 +105,20 @@ public class SimAction {
     {
         return _triggerData.DelayCondition();
     }
-    public string IsValid_InvalidMessage()
+    public string IsValid_InvalidMessage(bool isTriggeringNow = false)
     {
-        return _descriptions.InvalidConditionMessage();
+        return _descriptions.InvalidConditionMessage(isTriggeringNow);
     }
-    public bool IsValid()
+    public bool IsValid(bool isTriggeringNow = false)
     {
-        return (IsValid_InvalidMessage() == "");
+        return (IsValid_InvalidMessage(isTriggeringNow) == "");
     }
 
 
     //Callback Functions
-    public void ValidCheck(bool isTriggerNow = false)
+    public void ValidCheck(bool isTriggeringNow = false)
     {
-        if (isTriggerNow)
+        if (isTriggeringNow)
         {
             string invalidMessage = "";
             NPC npc = Managers.Sim.NPC.GetNPC(NPCid());
@@ -137,7 +137,7 @@ public class SimAction {
                 SIM_CancelDueToInvalid(invalidMessage);
             }
         }
-        if (!_isCanceled && !IsValid())
+        if (!_isCanceled && !IsValid(isTriggeringNow))
         {
             SIM_CancelDueToInvalid();
         }
@@ -359,17 +359,17 @@ public class SimAction_Descriptions
 {
     public string Description { get; private set; }
     public string CancelDescription { get; private set; }
-    public Func<string> InvalidConditionMessage { get; private set; }
+    public Func<bool, string> InvalidConditionMessage { get; private set; }//bool:isTriggeringNow
 
     public SimAction_Descriptions(
         string description = null, 
         string cancelDescription = null,
-        Func<string> invalidConditionMessage = null)
+        Func<bool, string> invalidConditionMessage = null)
 
     {
         Description = (description == null) ? "" : description;
         CancelDescription = (cancelDescription == null) ? "" : cancelDescription;
-        InvalidConditionMessage = (invalidConditionMessage == null) ? () => { return ""; } : invalidConditionMessage;
+        InvalidConditionMessage = (invalidConditionMessage == null) ? (isTriggeringNow) => { return ""; } : invalidConditionMessage;
     }
 }
 

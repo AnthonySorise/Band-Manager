@@ -150,12 +150,12 @@ public class SimEvent_Scheduled
                     if (SimAction.ID() == SimActionID.NPC_Travel && SimAction.LocationID() == conflictingNonTravelEvents[i].SimAction.LocationID())
                     {
                         willBeLateForTextList += conflictingNonTravelEvents[i].SimAction.Description();
-                        willBeLateForTextList_IfCancel += "\n" + conflictingNonTravelEvents[i].SimAction.CancelDescription();
+                        willBeLateForTextList_IfCancel += conflictingNonTravelEvents[i].SimAction.CancelDescription();
                     }
                     else
                     {
                         willCancelTextList += conflictingNonTravelEvents[i].SimAction.Description();
-                        willCancelTextList_IfCancel += "\n" + conflictingNonTravelEvents[i].SimAction.CancelDescription();
+                        willCancelTextList_IfCancel += conflictingNonTravelEvents[i].SimAction.CancelDescription();
                     }
 
                 }
@@ -163,15 +163,15 @@ public class SimEvent_Scheduled
                 string tooltipText = "";
                 if (SimAction.Description() != "")
                 {
-                    tooltipText += SimAction.Description() + "\n\n";
+                    tooltipText += SimAction.Description() + "\n";
                 }
                 if (willCancelTextList_IfCancel != "")
                 {
-                    tooltipText += willCancelTextList_IfCancel + "\n";
+                    tooltipText += "\n" + willCancelTextList_IfCancel;
                 }
                 if (willBeLateForTextList_IfCancel != "")
                 {
-                    tooltipText += "Will still be canceled" + willBeLateForTextList_IfCancel;
+                    tooltipText += "\n" + willBeLateForTextList_IfCancel;
                 }
 
                 Action<GameObject> tt_option01 = (GameObject go) => { Managers.UI.Tooltip.SetTooltip(go, tooltipText); };
@@ -186,12 +186,12 @@ public class SimEvent_Scheduled
 
                 if (willCancelTextList != "")
                 {
-                    bodyText += "Already scheduled to " + willCancelTextList + "\n";
+                    bodyText += "Already scheduled to " + willCancelTextList + ".\nStill " + SimAction.Description() + "?";
                 }
 
                 if (willBeLateForTextList != "")
                 {
-                    bodyText += "Won't arrive in " + SimAction.Location().cityName + " in time to " + willBeLateForTextList + "\n";
+                    bodyText += "Won't arrive in " + SimAction.Location().cityName + " in time to " + willBeLateForTextList + ".\n" + SimAction.Description() + " anyway?";
                 }
                 willBeLateForTextList += "change plans to " + SimAction.Description() + "?";
             }

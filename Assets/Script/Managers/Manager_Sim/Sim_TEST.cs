@@ -30,7 +30,7 @@ public class Sim_TEST : MonoBehaviour
         
         Func<bool> delayCondition = () => { return false; };
         SimAction_TriggerData triggerData = new SimAction_TriggerData(delayCondition);
-        Func<string> invalidMessageCondition = () => { return ""; };
+        Func<bool, string> invalidMessageCondition = (isTriggeringNow) => { return ""; };
         SimAction_Descriptions descriptions = new SimAction_Descriptions(null, null, invalidMessageCondition);
         SimAction_PopupConfig popupConfig = new SimAction_PopupConfig(null, false, "Test Scheduled Event", "This is a test event that is scheduled to fire on " + triggerDate.ToShortDateString() + " but not pause time.", Asset_png.Popup_Vinyl, Asset_wav.event_generic);
         SimAction simAction = new SimAction(ids, triggerData, null, null, popupConfig);
