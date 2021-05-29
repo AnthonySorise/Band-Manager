@@ -65,24 +65,37 @@ public class Sim_Travel : MonoBehaviour
             return timeSpan;
         }
     }
-    public bool IsEnoughTimeToTravelAndMakeNextEvent(int npcID, TransportationID transportationID, CityID cityFrom, CityID cityTo)
+    public DateTime DepartureTimeForScheduledEvent(TransportationID transportationID, CityID fromCityID, CityID toCityID, DateTime eventStartTime, bool skipSleep = false)
     {
-        List<SimEvent_Scheduled> events = Managers.Sim.GetScheduledSimEvents(npcID);
-        List<SimEvent_Scheduled> nonTravelEvents = events.Where(item => item.SimAction.ID() == SimActionID.NPC_Travel).ToList();
-        SimEvent_Scheduled finalDestinationEvent = nonTravelEvents[0];
-        if (nonTravelEvents.Count > 0 && finalDestinationEvent.SimAction.Location() != null)
+        TimeSpan travelDuration = TravelTime(transportationID, fromCityID, toCityID);
+        DateTime departureTime = eventStartTime - travelDuration - TimeSpan.FromMinutes(15);
+
+        if (!skipSleep)
         {
-            CityID finalDestination = finalDestinationEvent.SimAction.LocationID().Value;
-            if (cityTo != finalDestination)
-            {
-                TimeSpan trip01Time = TravelTime(transportationID, cityFrom, cityTo);
-                TimeSpan trip02Time = TravelTime(transportationID, cityTo, finalDestination);
-                DateTime finalDestinationArrivalTime = Managers.Time.CurrentDT.Add(trip01Time + trip02Time + TimeSpan.FromMinutes(15));
-                return (DateTime.Compare(finalDestinationArrivalTime, finalDestinationEvent.ScheduledDT) <= 0);
-            }
+            departureTime = Managers.Sim.NPC.AvoidSleepTime(departureTime, travelDuration);
         }
-        return true;
+        //To Do - What if conflicting event?
+        return departureTime;
     }
+
+    //public bool IsEnoughTimeToTravelAndMakeNextEvent(int npcID, TransportationID transportationID, CityID cityFrom, CityID cityTo)
+    //{
+    //    List<SimEvent_Scheduled> events = Managers.Sim.GetScheduledSimEvents(npcID);
+    //    List<SimEvent_Scheduled> nonTravelEvents = events.Where(item => item.SimAction.ID() == SimActionID.NPC_Travel).ToList();
+    //    SimEvent_Scheduled finalDestinationEvent = nonTravelEvents[0];
+    //    if (nonTravelEvents.Count > 0 && finalDestinationEvent.SimAction.Location() != null)
+    //    {
+    //        CityID finalDestination = finalDestinationEvent.SimAction.LocationID().Value;
+    //        if (cityTo != finalDestination)
+    //        {
+    //            TimeSpan trip01Time = TravelTime(transportationID, cityFrom, cityTo);
+    //            TimeSpan trip02Time = TravelTime(transportationID, cityTo, finalDestination);
+    //            DateTime finalDestinationArrivalTime = Managers.Time.CurrentDT.Add(trip01Time + trip02Time + TimeSpan.FromMinutes(15));
+    //            return (DateTime.Compare(finalDestinationArrivalTime, finalDestinationEvent.ScheduledDT) <= 0);
+    //        }
+    //    }
+    //    return true;
+    //}
 
     public float TravelCost(TransportationID transportationID, CityID cityFrom, CityID cityTo)
     {
@@ -242,7 +255,7 @@ public class Sim_Travel : MonoBehaviour
         else { return "error"; }
     }
 
-    public string isValidSIMTravel_Message(bool isTriggeringNow, int npcID, TransportationID transportationID, CityID fromCityID, CityID toCityID)
+    public string isValidSIMTravel_Message(int npcID, TransportationID transportationID, CityID fromCityID, CityID toCityID, bool isTriggeringNow = false)
     {
         //TO DO Travel Validation
         if (isTriggeringNow)
@@ -286,7 +299,7 @@ public class Sim_Travel : MonoBehaviour
 
         //Descriptions
         Func<bool, string> invalidConditionMessage = (isTriggeringNow) => {
-            return isValidSIMTravel_Message(isTriggeringNow, npcID, transportationID, fromCityID, toCityID);
+            return isValidSIMTravel_Message(npcID, transportationID, fromCityID, toCityID, isTriggeringNow);
         };
         SimAction_Descriptions descriptions = new SimAction_Descriptions(null, null, invalidConditionMessage);
 
@@ -383,3 +396,6 @@ public class Sim_Travel : MonoBehaviour
         
     }
 }
+
+
+
