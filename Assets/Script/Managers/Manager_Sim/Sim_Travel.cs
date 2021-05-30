@@ -65,18 +65,22 @@ public class Sim_Travel : MonoBehaviour
             return timeSpan;
         }
     }
-    public DateTime DepartureTimeForScheduledEvent(TransportationID transportationID, CityID fromCityID, CityID toCityID, DateTime eventStartTime, bool skipSleep = false)
+    private DateTime _departureTimeForScheduledEvent(int npcID, TransportationID transportationID, CityID fromCityID, CityID toCityID, DateTime eventStartTime, bool skipSleep = false)
     {
         TimeSpan travelDuration = TravelTime(transportationID, fromCityID, toCityID);
         DateTime departureTime = eventStartTime - travelDuration - TimeSpan.FromMinutes(15);
 
         if (!skipSleep)
         {
-            departureTime = Managers.Sim.NPC.AvoidSleepTime(departureTime, travelDuration);
+            DateTime avoidSleepTimeDT = Managers.Sim.NPC.AvoidSleepTime(departureTime, travelDuration);
+            if (avoidSleepTimeDT < Managers.Time.CurrentDT)
+            {
+                departureTime = avoidSleepTimeDT;
+            }
         }
-        //To Do - What if conflicting event?
         return departureTime;
     }
+
 
     //public bool IsEnoughTimeToTravelAndMakeNextEvent(int npcID, TransportationID transportationID, CityID cityFrom, CityID cityTo)
     //{

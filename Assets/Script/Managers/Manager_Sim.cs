@@ -71,7 +71,7 @@ public class Manager_Sim : MonoBehaviour, IManager {
         IsProcessingTick = false;
     }
 
-    public List<SimEvent_Scheduled> GetScheduledSimEvents(int npcID, DateTime? dateTime = null, SimActionID? simActionID = null)
+    public List<SimEvent_Scheduled> GetScheduledSimEvents(int npcID, SimActionID? simActionID = null, DateTime? dateTime = null)
     {
         List<SimEvent_Scheduled> returnList = new List<SimEvent_Scheduled>();
         foreach (SimEvent_Scheduled simEvent in _simEvents_Scheduled)
@@ -88,6 +88,11 @@ public class Manager_Sim : MonoBehaviour, IManager {
             }
         }
         return returnList.OrderBy(o => o.ScheduledDT).ToList();
+    }
+    public SimEvent_Scheduled GetNextScheduledSimEvent(int npcID, SimActionID? simActionID = null)
+    {
+        List<SimEvent_Scheduled> scheduledEvents = GetScheduledSimEvents(npcID, simActionID);
+        return (scheduledEvents.Count > 0) ? scheduledEvents[0] : null;
     }
 
     public List<SimEvent_Scheduled> ConflictingEvents(int npcID, DateTime dateTime, TimeSpan duration)

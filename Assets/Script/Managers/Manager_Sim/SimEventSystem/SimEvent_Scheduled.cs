@@ -36,7 +36,7 @@ public class SimEvent_Scheduled
         {
             if (SimAction.ID() == SimActionID.NPC_Travel)//<-There can be only one
             {
-                List<SimEvent_Scheduled> sameEventTypes = Managers.Sim.GetScheduledSimEvents(SimAction.NPCid(), null, SimAction.ID()).Where(item => item.SimAction.Duration() != TimeSpan.Zero).ToList();
+                List<SimEvent_Scheduled> sameEventTypes = Managers.Sim.GetScheduledSimEvents(SimAction.NPCid(), SimAction.ID()).Where(item => item.SimAction.Duration() != TimeSpan.Zero).ToList();
                 foreach (SimEvent_Scheduled scheduledEvent in sameEventTypes)
                 {
                     scheduledEvent.SimAction.Cancel();
