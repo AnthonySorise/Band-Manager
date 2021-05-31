@@ -165,7 +165,7 @@ public class UI_TravelMenu : MonoBehaviour
         if (Managers.Sim.Travel.IsValidTravelSubmission(npcID(), _transportationID, currentCity, _toCity))
         {
             _departureTime = Managers.Time.CurrentDT;
-            Managers.Sim.Travel.SIM_QueryTravel(npcID(), _transportationID, currentCity, _toCity);
+            Managers.Sim.Travel.SIM_QueryImmediateTravel(npcID(), _transportationID, currentCity, _toCity);
         }
     }
 
