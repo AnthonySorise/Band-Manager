@@ -400,7 +400,12 @@ public class Sim_Travel : MonoBehaviour
         string bodyText = "Lets get a move on!";
         if (character.IsAttachedVehicleBeingRemoved(transportationID))
         {
-            bodyText += "\n\n" + Managers.Sim.Travel.TransportationModels[character.AttachedTransportation.Value].Name + " will be returned to " + characterBaseCityData.cityName;
+            Transportation transportation = TransportationModels[character.AttachedTransportation.Value];
+            bodyText += "\n\n" + transportation.Name + " will be returned to " + characterBaseCityData.cityName;
+        }
+        if (Managers.Sim.NPC.IsOverlappedWithSleepTime(Managers.Time.CurrentDT, travelTime))
+        {
+            bodyText += "\n\nIt's a bit late to be traveling that distance, hit the road anyway?";
         }
 
         Action<GameObject> tt_option01 = (GameObject go) => { Managers.UI.Tooltip.SetTooltip(go, "Start travel to " + toCityData.cityName); };

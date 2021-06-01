@@ -6,7 +6,7 @@ using UnityEngine;
 public class Sim_NPC : MonoBehaviour
 {
     private TimeSpan _npcBedtime;
-    private TimeSpan _npcWakeupTime;
+    private TimeSpan _npcSleepDuration;
 
     private int _playerCharacterID;
     private Dictionary<int, NPC> _npcs;
@@ -17,7 +17,7 @@ public class Sim_NPC : MonoBehaviour
     void Start()
     {
         _npcBedtime = new TimeSpan(2, 0, 0);
-        _npcWakeupTime = new TimeSpan(8, 0, 0);
+        _npcSleepDuration = TimeSpan.FromHours(6);
 
         _playerCharacterID = 1;
         _npcs = new Dictionary<int, NPC>();
@@ -56,29 +56,32 @@ public class Sim_NPC : MonoBehaviour
         return (npcID == _playerCharacterID);
     }
 
-    public bool IsSleepTime(DateTime dateTime)
+    public bool IsOverlappedWithSleepTime(DateTime dateTime, TimeSpan duration)
     {
-        if (_npcWakeupTime < _npcBedtime)//bed before midnight
+        DateTime sleepStart = dateTime.Date + _npcBedtime;
+        DateTime sleepEnd = dateTime.Date + _npcBedtime + _npcSleepDuration;
+        DateTime eventStart = dateTime;
+        DateTime eventEnd = dateTime + duration;
+
+        DateTime wakeupTime = dateTime.Date + _npcBedtime + _npcSleepDuration;
+        if (dateTime > wakeupTime)
         {
-            return dateTime.TimeOfDay >= _npcBedtime || dateTime.TimeOfDay < _npcWakeupTime;
+            sleepStart = sleepStart.AddDays(1);
+            sleepEnd = sleepEnd.AddDays(1);
         }
-        else
-        {
-            return dateTime.TimeOfDay >= _npcBedtime && dateTime.TimeOfDay < _npcWakeupTime;
-        }
+        return sleepStart < eventEnd && eventStart < sleepEnd;
     }
     public TimeSpan TimeSinceBedtime(DateTime dateTime)
     {
-        if (IsSleepTime(dateTime))
+        if (IsOverlappedWithSleepTime(dateTime, TimeSpan.Zero))
         {
-            if (_npcWakeupTime < _npcBedtime && dateTime.TimeOfDay < _npcWakeupTime)//bedtime before midnight and it's after midnight
+            DateTime bedTime = dateTime.Date + _npcBedtime;
+            DateTime wakeupTime = bedTime + _npcSleepDuration;
+            if (dateTime > wakeupTime)
             {
-                return dateTime.TimeOfDay + (TimeSpan.FromDays(1) - dateTime.TimeOfDay);
+                bedTime.AddDays(1);
             }
-            else
-            {
-                return dateTime.TimeOfDay - _npcBedtime;
-            }
+            return dateTime - bedTime;
         }
         else
         {
@@ -89,9 +92,9 @@ public class Sim_NPC : MonoBehaviour
     {
         DateTime DT = startDT;
 
-        bool startsDuringSleep = Managers.Sim.NPC.IsSleepTime(startDT);
-        bool endsDuringSleep = Managers.Sim.NPC.IsSleepTime(startDT + timeSpan);
-        bool coversWholeSleepPeriod = !startsDuringSleep && !endsDuringSleep && timeSpan > (_npcBedtime - startDT.TimeOfDay);
+        bool startsDuringSleep = IsOverlappedWithSleepTime(startDT, TimeSpan.Zero);
+        bool endsDuringSleep = IsOverlappedWithSleepTime(startDT + timeSpan, TimeSpan.Zero);
+        bool coversWholeSleepPeriod = !startsDuringSleep && !endsDuringSleep && IsOverlappedWithSleepTime(startDT, TimeSpan.Zero);
 
         if (startsDuringSleep)
         {
@@ -103,7 +106,7 @@ public class Sim_NPC : MonoBehaviour
         }
         else if (coversWholeSleepPeriod)
         {
-            DT = DT - timeSpan + (_npcBedtime - startDT.TimeOfDay);
+            DT = (startDT.Date + _npcBedtime) - timeSpan;
         }
 
         return DT;
