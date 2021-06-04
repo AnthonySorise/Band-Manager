@@ -16,7 +16,7 @@ public class Sim_TEST : MonoBehaviour
         SIM_TestPopup05();
         //SIM_ScheduleTravel(SimActionID.NPC_Travel, new List<int>() { 1 }, new DateTime(1985, 10, 24, 8, 30, 0), CityName.Chicago);
         SIM_ScheduleProduction(SimActionID.NPC_Produce, 1, new DateTime(1985, 10, 24, 18, 0, 0), CityID.Detroit_MI);
-        SIM_ScheduleGig(SimActionID.NPC_Gig, 1, new DateTime(1985, 10, 25, 11, 15, 0), CityID.Detroit_MI);
+        SIM_ScheduleGig(SimActionID.NPC_Gig, 1, new DateTime(1985, 10, 25, 11, 15, 0), CityID.Chicago_IL);
     }
 
     //Sim Event Functions

@@ -92,7 +92,8 @@ public class Manager_Sim : MonoBehaviour, IManager {
     public SimEvent_Scheduled GetNextScheduledSimEvent(int npcID, SimActionID? simActionID = null)
     {
         List<SimEvent_Scheduled> scheduledEvents = GetScheduledSimEvents(npcID, simActionID);
-        return (scheduledEvents.Count > 0) ? scheduledEvents[0] : null;
+        SimEvent_Scheduled nextEvent = (scheduledEvents.Count > 0) ? scheduledEvents[0] : null;
+        return ((nextEvent != null && scheduledEvents.Count > 1 && nextEvent.SimAction.IsHappeningNow()) ? scheduledEvents[1] : nextEvent);
     }
 
     public List<SimEvent_Scheduled> ConflictingEvents(int npcID, DateTime dateTime, TimeSpan duration)
