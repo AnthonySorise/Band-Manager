@@ -40,7 +40,7 @@ public class Sim_NPC : MonoBehaviour
 
     public NPC GetNPC(int npcID)
     {
-        return _npcs[npcID];
+        return _npcs!=null ? _npcs.ContainsKey(npcID) ? _npcs[npcID] : null : null;
     }
     public NPC_BandManager GetPlayerCharacter()
     {

@@ -155,8 +155,6 @@ public class SimAction {
             if (!_isCanceled)
             {
                 _trigger();
-
-                _openTravelMenuQueries();
             }
         }
     }
@@ -176,24 +174,6 @@ public class SimAction {
             //choose option using option's AI modifiers
         }
         
-    }
-
-    private void _openTravelMenuQueries()
-    {
-        NPC character = Managers.Sim.NPC.GetNPC(NPCid());
-        SimEvent_Scheduled nextEvent = Managers.Sim.GetNextScheduledSimEvent(NPCid());
-        if (nextEvent != null &&
-            nextEvent.SimAction.Location() != Location() &&
-            nextEvent.SimAction.ID() != SimActionID.NPC_Travel &&
-            ID() != SimActionID.NPC_Travel &&
-            nextEvent.SimAction.Duration() != TimeSpan.Zero)
-        {
-            SIM_QueryOpenTravelMenuForScheduleTravel(Managers.Time.CurrentDT + nextEvent.SimAction.Duration() + TimeSpan.FromMinutes(10));
-        }
-        else if (nextEvent == null && character != null && character.CurrentCity != character.BaseCity)
-        {
-            SIM_QueryOpenTravelMenuForScheduleTravel(Managers.Time.CurrentDT + nextEvent.SimAction.Duration() + TimeSpan.FromMinutes(10), true);
-        }
     }
 
     public UnityAction OptionCallback(int i)
@@ -227,8 +207,6 @@ public class SimAction {
     {
         _callbacks.CancelCallback();
         _isCanceled = true;
-
-        _openTravelMenuQueries();
     }
 
 
@@ -256,13 +234,10 @@ public class SimAction {
         UnityAction option01 = () => {
             finalizeCancel();
         };
-        UnityAction option02 = () => {
-            Debug.Log("Cancel canceled.");
-        };
         List<UnityAction> optionCallbacks = new List<UnityAction>
         {
             option01,
-            option02
+            null
         };
         SimAction_Callbacks callBacks = new SimAction_Callbacks(null, optionCallbacks);
 
@@ -321,17 +296,6 @@ public class SimAction {
         SimAction simAction = new SimAction(ids, null, callbacks, popupConfig);
         SimEvent_Immediate SimEvent_CancelDueToInvalid = new SimEvent_Immediate(simAction);
     }
-
-    private void SIM_QueryOpenTravelMenuForScheduleTravel(DateTime triggerDT, bool travelHome = false)
-    {
-        //IDs
-        SimAction_IDs ids = new SimAction_IDs(SimActionID.SimAction, NPCid());
-        //TO DO - WIP
-
-
-    }
-
-
 }
 
 

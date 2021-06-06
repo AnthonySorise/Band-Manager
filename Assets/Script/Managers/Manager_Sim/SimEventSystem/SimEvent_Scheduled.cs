@@ -14,7 +14,7 @@ public class SimEvent_Scheduled
         SimAction simAction, 
         DateTime scheduledDT,
         bool isForceSchedule = false
-        )
+    )
     {
         SimAction = simAction;
         ScheduledDT = scheduledDT;
@@ -24,6 +24,7 @@ public class SimEvent_Scheduled
         {
             Store();
             SimAction.ValidCheck();
+            SIM_QueryOpenTravelMenu(SimAction);
         }
         else
         {
@@ -55,6 +56,7 @@ public class SimEvent_Scheduled
     }
     private void Remove(){
         Managers.Sim.RemoveSimEvent_Scheduled(this);
+        SIM_QueryOpenTravelMenu(SimAction);
         Managers.UI.Calendar.UpdateCalendarPanel(true, true, true);
     }
 
@@ -204,4 +206,66 @@ public class SimEvent_Scheduled
         SimEvent_Immediate SimEvent_HandleScheduleConflict = new SimEvent_Immediate(simAction);
     }
 
+    public void SIM_QueryOpenTravelMenu(SimAction simActionThatTriggeredThis)
+    {
+        int npcID = simActionThatTriggeredThis.NPCid();
+        NPC character = Managers.Sim.NPC.GetNPC(npcID);
+        if (simActionThatTriggeredThis.Duration() == TimeSpan.Zero || character ==  null || Managers.Sim.EventHappeningNow(npcID) != null)
+        {
+            return;
+        }        
+        SimEvent_Scheduled nextEvent = Managers.Sim.GetNextScheduledSimEvent(npcID);
+        if (nextEvent != null && nextEvent.SimAction.LocationID() != null && nextEvent.SimAction.LocationID() != character.CurrentCity ||//next event is is another city
+            nextEvent == null && character.CurrentCity != character.BaseCity)//there is not another event, and character is not in home city
+            {
+            //IDs
+            SimAction_IDs ids = new SimAction_IDs(SimActionID.SimAction, npcID);
+
+            //Callbacks
+            UnityAction option01 = () => {
+                Managers.UI.TravelMenu.Toggle();
+            };
+            List<UnityAction> optionCallbacks = new List<UnityAction>
+            {
+            option01,
+            null
+            };
+            SimAction_Callbacks callBacks = new SimAction_Callbacks(null, optionCallbacks);
+
+            //Popup Config
+            SimAction_PopupConfig popupConfig = null;
+            if (Managers.Sim.NPC.IsPlayerCharacter(npcID))
+            {
+
+                string nextEventCityName = nextEvent != null ? nextEvent.SimAction.Location().cityName : null;
+                string nextEventDescription = nextEvent != null ? nextEvent.SimAction.Description() : null;
+
+                Action<GameObject> tt_option01 = (GameObject go) => { Managers.UI.Tooltip.SetTooltip(go, "travel to " + nextEventCityName); };
+                SimAction_PopupOptionConfig option = new SimAction_PopupOptionConfig(null, tt_option01);
+                List<SimAction_PopupOptionConfig> options = new List<SimAction_PopupOptionConfig> { option };
+
+                string headerText;
+                string bodyText;
+                if (nextEvent != null)
+                {
+                    headerText = "Travel to " + nextEventCityName + "?";
+                    bodyText = "Schedule travel to " + nextEventCityName + " to " + nextEventDescription + "?";
+                }
+                else
+                {
+                    headerText = "Travel home to " + nextEventCityName + "?";
+                    bodyText = "Time to go home?";
+                }
+                popupConfig = new SimAction_PopupConfig(options, true, headerText, bodyText, Asset_png.Popup_Vinyl, Asset_wav.Click_04);
+            }
+
+            //Sim Action
+            SimAction simAction = new SimAction(ids, null, callBacks, popupConfig);
+
+            if (nextEvent != null)
+            {
+                SimEvent_Scheduled SimEvent_QueryOpenTravelMenuForScheduleTravel = new SimEvent_Scheduled(simAction, Managers.Time.CurrentDT + TimeSpan.FromMinutes(10));
+            }
+        }
+    }
 }
