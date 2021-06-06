@@ -23,6 +23,7 @@ public class SimEvent_Scheduled
         if (Managers.Sim.IsNoConflictingEvents(SimAction.NPCid(), ScheduledDT, SimAction.Duration()))
         {
             Store();
+            SimAction.ValidCheck();
         }
         else
         {
@@ -199,7 +200,7 @@ public class SimEvent_Scheduled
 
         popupConfig = new SimAction_PopupConfig(options, true, headerText, bodyText, Asset_png.Popup_Vinyl, Asset_wav.Click_04);
         //Sim Action
-        SimAction simAction = new SimAction(ids, null, callbacks, null, popupConfig);
+        SimAction simAction = new SimAction(ids, null, callbacks, popupConfig);
         SimEvent_Immediate SimEvent_HandleScheduleConflict = new SimEvent_Immediate(simAction);
     }
 

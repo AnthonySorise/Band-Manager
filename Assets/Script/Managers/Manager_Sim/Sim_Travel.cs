@@ -179,7 +179,7 @@ public class Sim_Travel : MonoBehaviour
         return false;
     }
 
-    public List<TransportationID> ValidTransportations (int bandManagerID)
+    public List<TransportationID> ValidTransportationSubmissions (int bandManagerID)
     {
         List<TransportationID> validTransportations = new List<TransportationID>();
         NPC_BandManager character = Managers.Sim.NPC.GetNPC(bandManagerID) as NPC_BandManager;
@@ -207,9 +207,9 @@ public class Sim_Travel : MonoBehaviour
         return validTransportations;
     }
 
-    public bool IsValidTravelSubmission(int npcID, TransportationID transportationID, CityID fromCityID, CityID toCityID)
+    public bool IsValidTravelSubmission(int npcID, TransportationID transportationID, CityID toCityID)
     {
-        string invalidMessage = IsValidTravelSubmission_Message(npcID, transportationID, fromCityID, toCityID);
+        string invalidMessage = IsValidTravelSubmission_Message(npcID, transportationID, toCityID);
         if (invalidMessage == "error")
         {
             Debug.Log("Error: Vehicle not recognized");
@@ -223,8 +223,10 @@ public class Sim_Travel : MonoBehaviour
             return true;
         }
     }
-    public string IsValidTravelSubmission_Message(int npcID, TransportationID transportationID, CityID fromCityID, CityID toCityID)
+    public string IsValidTravelSubmission_Message(int npcID, TransportationID transportationID, CityID toCityID)
     {
+        NPC character = Managers.Sim.NPC.GetNPC(npcID);
+        CityID fromCityID = character.CurrentCity;
         if (fromCityID == toCityID)
         {
             return "Must select city to travel to";
@@ -259,8 +261,18 @@ public class Sim_Travel : MonoBehaviour
         else { return "error"; }
     }
 
-    public string isValidSIMTravel_Message(int npcID, TransportationID transportationID, CityID fromCityID, CityID toCityID, bool isTriggeringNow = false)
+    private string isValidSIMTravel_Message(int npcID, TransportationID transportationID, CityID toCityID, bool isTriggeringNow = false)
     {
+        NPC character = Managers.Sim.NPC.GetNPC(npcID);
+        CityID fromCityID = character.CurrentCity;
+
+        if (character == null || character.CurrentCity == toCityID)
+        {
+            return "false";
+        }
+
+
+
         //TO DO Travel Validation
         if (isTriggeringNow)
         {
@@ -272,10 +284,31 @@ public class Sim_Travel : MonoBehaviour
         }
         return "";
     }
+    private string isValidSIMScheduleTravel_Message(int npcID, TransportationID transportationID)
+    {
+        NPC character = Managers.Sim.NPC.GetNPC(npcID);
+        SimEvent_Scheduled nextScheduledEvent = Managers.Sim.GetNextScheduledSimEvent(npcID);
 
+        if (character == null || nextScheduledEvent == null || nextScheduledEvent.SimAction.LocationID() == null)
+        {
+            return "false";
+        }
 
+        CityID fromCityID = character.CurrentCity;
+        CityID toCityID = nextScheduledEvent.SimAction.LocationID().Value;
+        DateTime departureTimeWithSleep = _departureTimeForScheduledEvent(npcID, transportationID, fromCityID, toCityID, nextScheduledEvent.ScheduledDT);
+        DateTime departureTimeNoSleep = _departureTimeForScheduledEvent(npcID, transportationID, fromCityID, toCityID, nextScheduledEvent.ScheduledDT, true);
 
-    public void SIM_QueryScheduleTravel(int npcID, TransportationID transportationID)
+        if(
+            nextScheduledEvent.SimAction.ID() == SimActionID.NPC_Travel ||
+            (departureTimeNoSleep == null && departureTimeWithSleep == null))
+        {
+            return "false";
+        }
+        return isValidSIMTravel_Message(npcID, transportationID, toCityID);
+    }
+
+    public void SIM_ConfirmScheduleTravel(int npcID, TransportationID transportationID)
     {
         NPC_BandManager character = Managers.Sim.NPC.GetNPC(npcID) as NPC_BandManager;
         SimEvent_Scheduled nextScheduledEvent = Managers.Sim.GetNextScheduledSimEvent(npcID);
@@ -291,96 +324,93 @@ public class Sim_Travel : MonoBehaviour
         DateTime departureTimeWithSleep = _departureTimeForScheduledEvent(npcID, transportationID, fromCityID, toCityID.Value, nextScheduledEvent.ScheduledDT);
         DateTime departureTimeNoSleep = _departureTimeForScheduledEvent(npcID, transportationID, fromCityID, toCityID.Value, nextScheduledEvent.ScheduledDT, true);
 
-        if (toCityID != null &&
-            toCityID.Value != fromCityID &&
-            nextScheduledEvent.SimAction.ID() != SimActionID.NPC_Travel
-            && (departureTimeNoSleep != null  || departureTimeWithSleep != null))
+
+        //IDs
+        SimAction_IDs ids = new SimAction_IDs(SimActionID.NPC_Travel, npcID, fromCityID);
+
+        //Trigger Data
+        Func<bool, string> invalidConditionMessage = (isTriggeringNow) => {
+            return isValidSIMScheduleTravel_Message(npcID, transportationID);
+        };
+        Func<bool> delayCondition = () => { return false; };
+        SimAction_TriggerData triggerData = new SimAction_TriggerData(invalidConditionMessage, delayCondition, null);
+
+        //Callbacks
+        UnityAction callback = () => { };
+
+        List<UnityAction> optionCallbacks = new List<UnityAction>();
+        if (departureTimeWithSleep != null)
         {
-            //IDs
-            SimAction_IDs ids = new SimAction_IDs(SimActionID.NPC_Travel, npcID);
-
-            //Trigger Data
-            Func<bool> delayCondition = () => { return false; };
-            SimAction_TriggerData triggerData = new SimAction_TriggerData(delayCondition, null, fromCityID);
-
-            //Callbacks
-            UnityAction callback = () => { };
-
-            List<UnityAction> optionCallbacks = new List<UnityAction>();
-            if (departureTimeWithSleep != null)
-            {
-                UnityAction option01 = () => {
-                    SIM_InitiateTravel(npcID, transportationID, fromCityID, toCityID.Value, departureTimeWithSleep);
-                };
-                optionCallbacks.Add(option01);
-            }
-            if (departureTimeNoSleep != null)
-            {
-                UnityAction option02 = () => {
-                    SIM_InitiateTravel(npcID, transportationID, fromCityID, toCityID.Value, departureTimeNoSleep);
-                };
-                optionCallbacks.Add(option02);
-            }
-            optionCallbacks.Add(null);
-
-            SimAction_Callbacks callBacks = new SimAction_Callbacks(callback, optionCallbacks);
-
-            //Descriptions
-            Func<bool, string> invalidConditionMessage = (isTriggeringNow) => {
-                return isValidSIMTravel_Message(npcID, transportationID, fromCityID, toCityID.Value);
+            UnityAction option01 = () => {
+                SIM_InitiateTravel(npcID, transportationID, toCityID.Value, departureTimeWithSleep);
             };
-            SimAction_Descriptions descriptions = new SimAction_Descriptions(null, null, invalidConditionMessage);
-
-            //Popup Config
-            string headerText = "Schedule Travel to " + toCityData.cityName;
-            string bodyText = "Schedule travel to " + toCityData.cityName + " for " + nextScheduledEvent.SimAction.Description() + "?";
-            if (character.IsAttachedVehicleBeingRemoved(transportationID))
-            {
-                bodyText += "\n\n" + Managers.Sim.Travel.TransportationModels[character.AttachedTransportation.Value].Name + " will be returned to " + fromCityData.cityName;
-            }
-            List<SimAction_PopupOptionConfig> popupOptionsConfig = new List<SimAction_PopupOptionConfig>();
-            if (departureTimeWithSleep != null)
-            {
-                Action<GameObject> tt_option01 = (GameObject go) => { Managers.UI.Tooltip.SetTooltip(go, "Schedule travel" + toCityData.cityName + " " + nextScheduledEvent.SimAction.Description() + "."); };
-                SimAction_PopupOptionConfig popupOptionConfig01 = new SimAction_PopupOptionConfig("Schedule Travel.", tt_option01);
-                popupOptionsConfig.Add(popupOptionConfig01);
-            }
-            if (departureTimeNoSleep != null)
-            {
-                Action<GameObject> tt_option02 = (GameObject go) => { Managers.UI.Tooltip.SetTooltip(go, "Schedule travel" + toCityData.cityName + " " + nextScheduledEvent.SimAction.Description() + ".  Will lose sleep during travel." );};
-                SimAction_PopupOptionConfig popupOptionConfig02 = new SimAction_PopupOptionConfig("Schedule Travel.", tt_option02);
-                popupOptionsConfig.Add(popupOptionConfig02);
-            }
-            Action<GameObject> tt_option03 = (GameObject go) => { Managers.UI.Tooltip.SetTooltip(go, "Cancel travel."); };
-            SimAction_PopupOptionConfig popupOptionConfig03 = new SimAction_PopupOptionConfig("Let's not.", tt_option03);
-            popupOptionsConfig.Add(popupOptionConfig03);
-
-            SimAction_PopupConfig popupConfig = new SimAction_PopupConfig(popupOptionsConfig, true, headerText, bodyText, Asset_png.Popup_Vinyl, Asset_wav.Click_04);
-
-            //Sim Action
-            SimAction simAction = new SimAction(ids, triggerData, callBacks, null, popupConfig);
-            SimEvent_Immediate SimEvent_QueryScheduleTravel = new SimEvent_Immediate(simAction); 
+            optionCallbacks.Add(option01);
         }
+        if (departureTimeNoSleep != null)
+        {
+            UnityAction option02 = () => {
+                SIM_InitiateTravel(npcID, transportationID, toCityID.Value, departureTimeNoSleep);
+            };
+            optionCallbacks.Add(option02);
+        }
+        optionCallbacks.Add(null);
+
+        SimAction_Callbacks callBacks = new SimAction_Callbacks(callback, optionCallbacks);
+
+
+        //Popup Config
+        string headerText = "Schedule Travel to " + toCityData.cityName;
+        string bodyText = "Schedule travel to " + toCityData.cityName + " for " + nextScheduledEvent.SimAction.Description() + "?";
+        if (character.IsAttachedVehicleBeingRemoved(transportationID))
+        {
+            bodyText += "\n\n" + Managers.Sim.Travel.TransportationModels[character.AttachedTransportation.Value].Name + " will be returned to " + fromCityData.cityName;
+        }
+        List<SimAction_PopupOptionConfig> popupOptionsConfig = new List<SimAction_PopupOptionConfig>();
+        if (departureTimeWithSleep != null)
+        {
+            Action<GameObject> tt_option01 = (GameObject go) => { Managers.UI.Tooltip.SetTooltip(go, "Schedule travel" + toCityData.cityName + " " + nextScheduledEvent.SimAction.Description() + "."); };
+            SimAction_PopupOptionConfig popupOptionConfig01 = new SimAction_PopupOptionConfig("Schedule Travel.", tt_option01);
+            popupOptionsConfig.Add(popupOptionConfig01);
+        }
+        if (departureTimeNoSleep != null)
+        {
+            Action<GameObject> tt_option02 = (GameObject go) => { Managers.UI.Tooltip.SetTooltip(go, "Schedule travel" + toCityData.cityName + " " + nextScheduledEvent.SimAction.Description() + ".  Will lose sleep during travel." );};
+            SimAction_PopupOptionConfig popupOptionConfig02 = new SimAction_PopupOptionConfig("Schedule Travel.", tt_option02);
+            popupOptionsConfig.Add(popupOptionConfig02);
+        }
+        Action<GameObject> tt_option03 = (GameObject go) => { Managers.UI.Tooltip.SetTooltip(go, "Cancel travel."); };
+        SimAction_PopupOptionConfig popupOptionConfig03 = new SimAction_PopupOptionConfig("Let's not.", tt_option03);
+        popupOptionsConfig.Add(popupOptionConfig03);
+
+        SimAction_PopupConfig popupConfig = new SimAction_PopupConfig(popupOptionsConfig, true, headerText, bodyText, Asset_png.Popup_Vinyl, Asset_wav.Click_04);
+
+        //Sim Action
+        SimAction simAction = new SimAction(ids, triggerData, callBacks, popupConfig);
+        SimEvent_Immediate SimEvent_QueryScheduleTravel = new SimEvent_Immediate(simAction); 
     }
-    public void SIM_QueryImmediateTravel(int npcID, TransportationID transportationID, CityID fromCityID, CityID toCityID)
+    public void SIM_ConfirmImmediateTravel(int npcID, TransportationID transportationID, CityID toCityID)
     {
         NPC_BandManager character = Managers.Sim.NPC.GetNPC(npcID) as NPC_BandManager;
+        CityID fromCityID = character.CurrentCity;
         Data_City characterBaseCityData = Managers.Data.CityData[character.BaseCity];
         Data_City toCityData = Managers.Data.CityData[toCityID];
         TimeSpan travelTime = TravelTime(transportationID, fromCityID, toCityID);
         DateTime arrivalTime = Managers.Time.CurrentDT.Add(travelTime);
 
         //IDs
-        SimAction_IDs ids = new SimAction_IDs(SimActionID.NPC_Travel, npcID);
+        SimAction_IDs ids = new SimAction_IDs(SimActionID.NPC_Travel, npcID, fromCityID);
 
         //Trigger Data
+        Func<bool, string> invalidConditionMessage = (isTriggeringNow) => {
+            return isValidSIMTravel_Message(npcID, transportationID, toCityID, isTriggeringNow);
+        };
         Func<bool> delayCondition = () => { return false; };
-        SimAction_TriggerData triggerData = new SimAction_TriggerData(delayCondition, null, fromCityID);
+        SimAction_TriggerData triggerData = new SimAction_TriggerData(invalidConditionMessage, delayCondition);
 
         //Callbacks
         UnityAction callback = () => { };
         UnityAction option01 = () => {
-            SIM_InitiateTravel(npcID, transportationID, fromCityID, toCityID);
+            SIM_InitiateTravel(npcID, transportationID, toCityID);
         };
         List<UnityAction> optionCallbacks = new List<UnityAction>
         {
@@ -388,12 +418,6 @@ public class Sim_Travel : MonoBehaviour
             null
         };
         SimAction_Callbacks callBacks = new SimAction_Callbacks(callback, optionCallbacks);
-
-        //Descriptions
-        Func<bool, string> invalidConditionMessage = (isTriggeringNow) => {
-            return isValidSIMTravel_Message(npcID, transportationID, fromCityID, toCityID, isTriggeringNow);
-        };
-        SimAction_Descriptions descriptions = new SimAction_Descriptions(null, null, invalidConditionMessage);
 
         //Popup Config
         string headerText = "Travel to " + toCityData.cityName;
@@ -421,36 +445,34 @@ public class Sim_Travel : MonoBehaviour
         SimAction_PopupConfig popupConfig = new SimAction_PopupConfig(popupOptionsConfig, true, headerText, bodyText, Asset_png.Popup_Vinyl, Asset_wav.Click_04);
 
         //Sim Action
-        SimAction simAction = new SimAction(ids, triggerData, callBacks, null, popupConfig);
-
-        SimEvent_Immediate SimEvent_QueryImmediateTravel = new SimEvent_Immediate(simAction);
+        SimAction simAction = new SimAction(ids, triggerData, callBacks, popupConfig);
+        SimEvent_Immediate SimEvent_ConfirmImmediateTravel = new SimEvent_Immediate(simAction);
     }
-    public void SIM_InitiateTravel(int npcID, TransportationID transportationID, CityID fromCityID, CityID toCityID, DateTime? scheduledDT = null)
+    public void SIM_InitiateTravel(int npcID, TransportationID transportationID, CityID toCityID, DateTime? scheduledDT = null)
     {
+        NPC_BandManager character = Managers.Sim.NPC.GetNPC(npcID) as NPC_BandManager;
+        CityID fromCityID = character.CurrentCity;
         Data_City toCityData = Managers.Data.CityData[toCityID];
 
         //IDs
-        SimAction_IDs ids = new SimAction_IDs(SimActionID.NPC_Travel, npcID);
+        string description = "travel to " + toCityData.cityName;
+        SimAction_IDs ids = new SimAction_IDs(SimActionID.NPC_Travel, npcID, toCityID, description);
 
         //Trigger Data
         Func<bool> delayCondition = () => { return false; };
         TimeSpan travelTime = TravelTime(transportationID, fromCityID, toCityID);
-        SimAction_TriggerData triggerData = new SimAction_TriggerData(delayCondition, travelTime, toCityID);
+        SimAction_TriggerData triggerData = new SimAction_TriggerData(null, delayCondition, travelTime);
 
         //Callbacks
         UnityAction callback = () => {
             DateTime arrivalTime = Managers.Time.CurrentDT.Add(travelTime);
             Managers.Sim.NPC.GetNPC(npcID).TravelStart(toCityID, transportationID);
-            SIM_FinishTravel(npcID, transportationID, fromCityID, toCityID, arrivalTime);
+            SIM_FinishTravel(npcID, transportationID, toCityID, arrivalTime);
         };
         SimAction_Callbacks callbacks = new SimAction_Callbacks(callback);
-
-        //Descriptions
-        string description = "travel to " + toCityData.cityName;
-        SimAction_Descriptions descriptions = new SimAction_Descriptions(description,  null, null);
-
+       
         //Sim Action
-        SimAction simAction = new SimAction(ids, triggerData, callbacks, descriptions, null);
+        SimAction simAction = new SimAction(ids, triggerData, callbacks);
         if(scheduledDT == null)
         {
             SimEvent_Immediate SimEvent_InitiateTravel = new SimEvent_Immediate(simAction);
@@ -461,16 +483,16 @@ public class Sim_Travel : MonoBehaviour
         }
         
     }
-    public void SIM_FinishTravel(int npcID, TransportationID transportationID, CityID fromCityID, CityID toCityID, DateTime triggerDate)
+    public void SIM_FinishTravel(int npcID, TransportationID transportationID, CityID toCityID, DateTime triggerDate)
     {
         Data_City toCityData = Managers.Data.CityData[toCityID];
 
         //IDs
-        SimAction_IDs ids = new SimAction_IDs(SimActionID.NPC_Travel, npcID);
+        SimAction_IDs ids = new SimAction_IDs(SimActionID.NPC_Travel, npcID, toCityID);
 
         //Trigger Data
         Func<bool> delayCondition = () => { return false; };
-        SimAction_TriggerData triggerData = new SimAction_TriggerData(delayCondition, null, toCityID);
+        SimAction_TriggerData triggerData = new SimAction_TriggerData(null, delayCondition);
 
         //Callbacks
         UnityAction callback = () => {
@@ -489,7 +511,7 @@ public class Sim_Travel : MonoBehaviour
         SimAction_PopupConfig popupConfig = new SimAction_PopupConfig(popupOptionsConfig, true, popupMessage, "", Asset_png.Popup_Vinyl, Asset_wav.Click_04);
 
         //Sim Action
-        SimAction simAction = new SimAction(ids, triggerData, callbacks, null, popupConfig);
+        SimAction simAction = new SimAction(ids, triggerData, callbacks, popupConfig);
         SimEvent_Scheduled SimEvent_FinishTravel = new SimEvent_Scheduled(simAction, triggerDate);
     }
 
