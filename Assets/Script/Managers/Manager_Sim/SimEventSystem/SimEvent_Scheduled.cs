@@ -221,6 +221,21 @@ public class SimEvent_Scheduled
             //IDs
             SimAction_IDs ids = new SimAction_IDs(SimActionID.SimAction, npcID);
 
+            Func<bool, string> invalidCheck = (isTriggeringNow) => {
+                if (simActionThatTriggeredThis.Duration() == TimeSpan.Zero || character == null || Managers.Sim.EventHappeningNow(npcID) != null)
+                {
+                    return "false";
+                }
+                if (nextEvent != null && nextEvent.SimAction.LocationID() != null && nextEvent.SimAction.LocationID() != character.CurrentCity ||//next event is is another city
+                    nextEvent == null && character.CurrentCity != character.BaseCity)//there is not another event, and character is not in home city
+                {
+                    return "";
+                }
+                return "false";
+            };
+
+            SimAction_TriggerData triggerData = new SimAction_TriggerData(invalidCheck);
+
             //Callbacks
             UnityAction option01 = () => {
                 Managers.UI.TravelMenu.Toggle();
@@ -237,7 +252,7 @@ public class SimEvent_Scheduled
             if (Managers.Sim.NPC.IsPlayerCharacter(npcID))
             {
 
-                string nextEventCityName = nextEvent != null ? nextEvent.SimAction.Location().cityName : null;
+                string nextEventCityName = nextEvent != null ? nextEvent.SimAction.Location().cityName : Managers.Data.CityData[character.HomeCity].cityName;
                 string nextEventDescription = nextEvent != null ? nextEvent.SimAction.Description() : null;
 
                 Action<GameObject> tt_option01 = (GameObject go) => { Managers.UI.Tooltip.SetTooltip(go, "travel to " + nextEventCityName); };
@@ -260,12 +275,8 @@ public class SimEvent_Scheduled
             }
 
             //Sim Action
-            SimAction simAction = new SimAction(ids, null, callBacks, popupConfig);
-
-            if (nextEvent != null)
-            {
-                SimEvent_Scheduled SimEvent_QueryOpenTravelMenuForScheduleTravel = new SimEvent_Scheduled(simAction, Managers.Time.CurrentDT + TimeSpan.FromMinutes(10));
-            }
+            SimAction simAction = new SimAction(ids, triggerData, callBacks, popupConfig);
+            SimEvent_Scheduled SimEvent_QueryOpenTravelMenuForScheduleTravel = new SimEvent_Scheduled(simAction, Managers.Time.CurrentDT + TimeSpan.FromMinutes(10));
         }
     }
 }
