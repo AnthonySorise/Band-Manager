@@ -238,7 +238,7 @@ public class SimEvent_Scheduled
 
             //Callbacks
             UnityAction option01 = () => {
-                Managers.UI.TravelMenu.Toggle();
+                Managers.UI.TravelMenu.Toggle(true, (nextEvent != null), (nextEvent==null));
             };
             List<UnityAction> optionCallbacks = new List<UnityAction>
             {

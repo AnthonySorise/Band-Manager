@@ -284,7 +284,12 @@ public class Sim_Travel : MonoBehaviour
         }
         return "";
     }
-    private string isValidSIMScheduleTravel_Message(int npcID, TransportationID transportationID)
+    public bool IsValidSIMScheduleTravel(int npcID, TransportationID transportationID)
+    {
+        return IsValidSIMScheduleTravel_Message(npcID, transportationID) == "";
+    }
+
+    public string IsValidSIMScheduleTravel_Message(int npcID, TransportationID transportationID)
     {
         NPC character = Managers.Sim.NPC.GetNPC(npcID);
         SimEvent_Scheduled nextScheduledEvent = Managers.Sim.GetNextScheduledSimEvent(npcID);
@@ -330,7 +335,7 @@ public class Sim_Travel : MonoBehaviour
 
         //Trigger Data
         Func<bool, string> invalidConditionMessage = (isTriggeringNow) => {
-            return isValidSIMScheduleTravel_Message(npcID, transportationID);
+            return IsValidSIMScheduleTravel_Message(npcID, transportationID);
         };
         Func<bool> delayCondition = () => { return false; };
         SimAction_TriggerData triggerData = new SimAction_TriggerData(invalidConditionMessage, delayCondition, null);

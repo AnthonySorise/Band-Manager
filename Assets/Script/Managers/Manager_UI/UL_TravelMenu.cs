@@ -10,6 +10,7 @@ public class UI_TravelMenu : MonoBehaviour
 
     private CityID _toCity;
     private TransportationID _transportationID;
+    private bool _isScheduleForNextEvent;
 
     private Color _color_cityButtonCurrentCity = Color.green;
     private Color _color_cityButtonToCity = Color.yellow;
@@ -32,8 +33,10 @@ public class UI_TravelMenu : MonoBehaviour
     private TextMeshProUGUI _text_TravelCost;
     private TMP_Dropdown _dropDown_TravelTo;
     private TMP_Dropdown _dropDown_TravelMethod;
-    private TMP_Dropdown _dropDown_InTimeFor;
     private TMP_Dropdown _dropDown_TravelWith;
+    private Toggle _toggle_ScheduleForNextEvent;
+    private TextMeshProUGUI _text_ScheduleForNextEventCity;
+    private TextMeshProUGUI _text_ScheduleForNextEventDate;
     private Button _button_submit;
     private Button _button_close;
 
@@ -42,6 +45,7 @@ public class UI_TravelMenu : MonoBehaviour
     private string _button_submit_tooltipText = "";
 
     //update vars
+    private DateTime? _OnLastUpdate_NextEventDT;
     private CityID _OnLastUpdate_CurrentCity;
     private CityID _OnLastUpdate_ToCity;
     private CityID? _OnLastUpdate_CityEnRoute;
@@ -52,20 +56,45 @@ public class UI_TravelMenu : MonoBehaviour
     {
         _toCity = Managers.Sim.NPC.GetPlayerCharacter().CurrentCity;
         _transportationID = TransportationID.Automobile_ShadyVan;
+        _isScheduleForNextEvent = false;
         prefab_Menu_Travel = Resources.Load<GameObject>("Prefabs/UI/TravelMenu");
         _cityButtons = new Dictionary<CityID, Button>();
         MenuGO = null;
     }
 
-    public void Toggle()
+    public void Toggle(bool forceOpen = false, bool isScheduleForNextEvent = false, bool isGoHome = false)
     {
-        //if (Managers.UI.IsScreenCovered() == true)
-        //{
-        //    return;
-        //}
-        if (MenuGO)
+        if (MenuGO && !forceOpen)
         {
             Destroy();
+            return;
+        }
+
+        NPC_BandManager playerCharacter = Managers.Sim.NPC.GetPlayerCharacter();
+        SimEvent_Scheduled nextEvent = Managers.Sim.GetNextScheduledSimEvent(playerCharacter.ID);
+
+        if (isScheduleForNextEvent)
+        {
+
+            if(nextEvent != null && nextEvent.SimAction.LocationID() != null)
+            {
+                _toCity = nextEvent.SimAction.LocationID().Value;
+                _isScheduleForNextEvent = true;
+                _toggle_ScheduleForNextEvent.isOn = true;
+            }
+        }
+        else if (isGoHome)
+        {
+            _toCity = playerCharacter.HomeCity;
+
+
+        }
+
+
+        if (MenuGO)
+        {
+            updateTexts();
+            updateButtons();
             return;
         }
 
@@ -94,8 +123,10 @@ public class UI_TravelMenu : MonoBehaviour
         _text_TravelCost = GameObject.Find("TravelMenu_Info_TravelCost_Value").GetComponent<TextMeshProUGUI>();
         _dropDown_TravelTo = GameObject.Find("TravelMenu_Buttons_TravelTo_Dropdown").GetComponent<TMP_Dropdown>();
         _dropDown_TravelMethod = GameObject.Find("TravelMenu_Buttons_TravelMethod_Dropdown").GetComponent<TMP_Dropdown>();
-        _dropDown_InTimeFor = GameObject.Find("TravelMenu_Buttons_InTimeFor_Dropdown").GetComponent<TMP_Dropdown>();
         _dropDown_TravelWith = GameObject.Find("TravelMenu_Buttons_TravelWith_Dropdown").GetComponent<TMP_Dropdown>();
+        _toggle_ScheduleForNextEvent = GameObject.Find("TravelMenu_Buttons_ScheduleForNextEvent_Toggle").GetComponent<Toggle>();
+        _text_ScheduleForNextEventCity = GameObject.Find("TravelMenu_Buttons_ScheduleForNextEvent_ToggleText_City").GetComponent<TextMeshProUGUI>();
+        _text_ScheduleForNextEventDate = GameObject.Find("TravelMenu_Buttons_ScheduleForNextEvent_ToggleText_Date").GetComponent<TextMeshProUGUI>();
         _button_submit = GameObject.Find("TravelMenu_Buttons_Submit_Button").GetComponent<Button>();
         _button_close = GameObject.Find("TravelMenu_Header_CloseButton").GetComponent<Button>();
 
@@ -129,7 +160,6 @@ public class UI_TravelMenu : MonoBehaviour
 
         _dropDown_TravelTo.ClearOptions();
         _dropDown_TravelMethod.ClearOptions();
-        _dropDown_InTimeFor.ClearOptions();
         _dropDown_TravelWith.ClearOptions();
 
         _dropDown_TravelTo.AddOptions(cityOptions);
@@ -141,14 +171,21 @@ public class UI_TravelMenu : MonoBehaviour
             _transportationID = _validTransportOptions[i];
         });
 
-        _button_close.onClick.AddListener(Destroy);
+        _toggle_ScheduleForNextEvent.isOn = _isScheduleForNextEvent;
+        _text_ScheduleForNextEventCity = GameObject.Find("TravelMenu_Buttons_ScheduleForNextEvent_ToggleText_City").GetComponent<TextMeshProUGUI>();
+        _text_ScheduleForNextEventDate = GameObject.Find("TravelMenu_Buttons_ScheduleForNextEvent_ToggleText_Date").GetComponent<TextMeshProUGUI>();
+
+        _toggle_ScheduleForNextEvent.onValueChanged.AddListener(handleToggleScheduleForNextEvent);
+
         _button_submit.onClick.AddListener(handleSubmitButton);
+        _button_close.onClick.AddListener(Destroy);
 
         //menuGO
         MenuGO = menu;
 
-        updateTexts();
         updateButtons();
+        updateTexts();
+        
 
         //trigger sound
         Managers.Audio.PlayAudio(Asset_wav.Click_04, AudioChannel.SFX);
@@ -157,6 +194,23 @@ public class UI_TravelMenu : MonoBehaviour
     private int npcID()
     {
         return Managers.Sim.NPC.PlayerCharacterID();
+    }
+
+    private void handleToggleScheduleForNextEvent(bool isOn)
+    {
+        NPC_BandManager playerCharacter = Managers.Sim.NPC.GetPlayerCharacter();
+        SimEvent_Scheduled nextEvent = Managers.Sim.GetNextScheduledSimEvent(playerCharacter.ID);
+
+        _isScheduleForNextEvent = isOn;
+
+        if (_isScheduleForNextEvent && nextEvent.SimAction.LocationID() != null)
+        {
+            _toCity = nextEvent.SimAction.LocationID().Value;
+        }
+
+
+        updateButtons();
+        updateTexts();
     }
 
     private void handleSubmitButton()
@@ -225,7 +279,31 @@ public class UI_TravelMenu : MonoBehaviour
         CityID currentCityID = playerCharacter.CurrentCity;
         Data_City currentCityData = Managers.Data.CityData[currentCityID];
         Data_City toCityData = Managers.Data.CityData[_toCity];
+        SimEvent_Scheduled nextEvent = Managers.Sim.GetNextScheduledSimEvent(playerCharacter.ID);
 
+        //schedule toggle
+        if (Managers.Sim.Travel.IsValidSIMScheduleTravel(playerCharacter.ID, _transportationID))//TO DO : Fix
+        {
+            _toggle_ScheduleForNextEvent.interactable = true;
+            _toggle_ScheduleForNextEvent.isOn = _isScheduleForNextEvent;
+
+            _text_ScheduleForNextEventCity.text = nextEvent.SimAction.LocationID() != null ? "Travel to " + Managers.Data.CityData[nextEvent.SimAction.LocationID().Value].cityName : "";
+            _text_ScheduleForNextEventDate.text = "for " + nextEvent.ScheduledDT.DayOfWeek.ToString() + ", " + nextEvent.ScheduledDT.ToString("MM/dd");
+        }
+        else
+        {
+            Debug.Log("BUG");//TO DO FIX
+            _toggle_ScheduleForNextEvent.isOn = false;
+            _toggle_ScheduleForNextEvent.interactable = false;
+
+            _text_ScheduleForNextEventCity.text = "";
+            _text_ScheduleForNextEventDate.text = "";
+        }
+        if (_toggle_ScheduleForNextEvent.isOn && nextEvent.SimAction.LocationID() != null)
+        {
+            _toCity = nextEvent.SimAction.LocationID().Value;
+            toCityData = Managers.Data.CityData[_toCity];
+        }
 
         for (var i = 0; i < _dropDown_TravelTo.options.Count; i++)
         {
@@ -270,15 +348,6 @@ public class UI_TravelMenu : MonoBehaviour
             _dropDown_TravelMethod.value = 0;
         }
 
-        if (_dropDown_InTimeFor.options.Count == 0)
-        {
-            _dropDown_InTimeFor.interactable = false;
-        }
-        else
-        {
-            _dropDown_InTimeFor.interactable = true;
-        }
-
         if (_dropDown_TravelWith.options.Count == 0)
         {
             _dropDown_TravelWith.interactable = false;
@@ -288,29 +357,33 @@ public class UI_TravelMenu : MonoBehaviour
             _dropDown_TravelWith.interactable = true;
         }
 
+        if (_dropDown_TravelTo.IsInteractable())
+        {
+            if (playerCharacter.CityEnRoute != null)
+            {
+                string tooltipMessage = "Currently traveling to " + toCityData.cityName;
+
+                _dropDown_TravelTo.interactable = false;
+                Managers.UI.Tooltip.SetTooltip(_dropDown_TravelTo.gameObject, tooltipMessage);
+            }
+            else if (_isScheduleForNextEvent)
+            {
+                string tooltipMessage = "Schedule travel to " + toCityData.cityName + " for " + nextEvent.SimAction.Description();
+                _dropDown_TravelTo.interactable = false;
+                Managers.UI.Tooltip.SetTooltip(_dropDown_TravelTo.gameObject, tooltipMessage);
+            }
+        }
+        else
+        {
+            if (playerCharacter.CityEnRoute == null && !_isScheduleForNextEvent)
+            {
+                _dropDown_TravelTo.interactable = true;
+                Managers.UI.Tooltip.DisableTooltip(_dropDown_TravelTo.gameObject);
+            }
+        }
 
         foreach (CityID cityID in CityID.GetValues(typeof(CityID)))
         {
-            //dropdowns
-            if (_dropDown_TravelTo.IsInteractable())
-            {
-                if (playerCharacter.CityEnRoute != null)
-                {
-                    string tooltipMessage = "Currently traveling to " + toCityData.cityName;
-
-                    _dropDown_TravelTo.interactable = false;
-                    Managers.UI.Tooltip.SetTooltip(_dropDown_TravelTo.gameObject, tooltipMessage);
-                }
-            }
-            else
-            {
-                if (playerCharacter.CityEnRoute == null)
-                {
-                    _dropDown_TravelTo.interactable = true;
-                    Managers.UI.Tooltip.DisableTooltip(_dropDown_TravelTo.gameObject);
-                }
-            }
-
             //city buttons
             if (cityID == currentCityID)
             {//current city selected    
@@ -364,6 +437,7 @@ public class UI_TravelMenu : MonoBehaviour
             {
                 _button_submit_tooltipText = submitButtonTooltipText;
                 Managers.UI.Tooltip.SetTooltip(_button_submit.gameObject, _button_submit_tooltipText);
+                //TO DO: Update submit button for scheduled travel
             }
         }
     }
@@ -379,8 +453,10 @@ public class UI_TravelMenu : MonoBehaviour
 
 
         NPC_BandManager playerCharacter = Managers.Sim.NPC.GetPlayerCharacter();
+        SimEvent_Scheduled nextEvent = Managers.Sim.GetNextScheduledSimEvent(playerCharacter.ID);
 
-        if (_OnLastUpdate_CurrentCity != playerCharacter.CurrentCity ||
+        if ((nextEvent != null && _OnLastUpdate_NextEventDT != nextEvent.ScheduledDT) ||
+            _OnLastUpdate_CurrentCity != playerCharacter.CurrentCity ||
             _OnLastUpdate_ToCity != _toCity ||
             _OnLastUpdate_CityEnRoute != playerCharacter.CityEnRoute ||
             _OnLastUpdate_NumTransportationProperties != playerCharacter.Properties.Count ||
@@ -389,6 +465,7 @@ public class UI_TravelMenu : MonoBehaviour
             updateButtons();
             updateTexts();
 
+            _OnLastUpdate_NextEventDT = nextEvent.ScheduledDT;
             _OnLastUpdate_CurrentCity = playerCharacter.CurrentCity;
             _OnLastUpdate_ToCity = _toCity;
             _OnLastUpdate_CityEnRoute = playerCharacter.CityEnRoute;
