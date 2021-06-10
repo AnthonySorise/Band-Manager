@@ -79,7 +79,7 @@
     <Compile Include="Assets\Script\Managers\Manager_Assets.cs" />
     <Compile Include="Assets\Script\Managers\Manager_Audio.cs" />
     <Compile Include="Assets\Script\Managers\Manager_GO.cs" />
-    <Compile Include="Assets\Script\Managers\Manager_UI\UL_TravelMenu.cs" />
+    <Compile Include="Assets\Script\Managers\Manager_UI\UI_TravelMenu.cs" />
     <Compile Include="Assets\Script\Managers\Manager_Sim\SimEventSystem\SimEvent_Scheduled.cs" />
     <Compile Include="Assets\Script\Utilities\SetAnchor.cs" />
     <Compile Include="Assets\Script\Managers\Manager_UI\UI_Calendar.cs" />
@@ -108,7 +108,7 @@
     <Compile Include="Assets\Script\Managers\Manager_Sim\Sim_TEST.cs" />
     <Compile Include="Assets\LeanTween\Framework\LeanTest.cs" />
     <Compile Include="Assets\LeanTween\Examples\Scripts\TestingZLegacy.cs" />
-    <Compile Include="Assets\Script\Managers\Manager_UI\UL_Popup.cs" />
+    <Compile Include="Assets\Script\Managers\Manager_UI\UI_Popup.cs" />
     <Compile Include="Assets\LeanTween\Examples\Scripts\PathSpline2d.cs" />
     <Compile Include="Assets\Script\GameObjectComponents\ClickableGO.cs" />
     <Compile Include="Assets\Script\Managers\Manager_Sim\SimEventSystem\SimEvent_MTTH.cs" />
