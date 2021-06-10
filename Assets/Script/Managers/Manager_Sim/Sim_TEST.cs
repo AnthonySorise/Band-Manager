@@ -214,7 +214,7 @@ public class Sim_TEST : MonoBehaviour
         SimAction_IDs ids = new SimAction_IDs(simActionID, 1, location, "attend recording session", "You will lose your deposit, and Martin Hannet will be pissed.");
         TimeSpan duration = new TimeSpan(3, 0, 0);
         SimAction_TriggerData triggerData = new SimAction_TriggerData(null, null, duration);
-        SimAction_PopupConfig popupConfig = new SimAction_PopupConfig(null, false, "Test Production Event", "This is a test production  event that is scheduled to fire on " + triggerDate.ToShortDateString() + " at 6:00PM - but not pause time.  The even will last for three hours.", Asset_png.Popup_Vinyl, Asset_wav.event_generic);
+        SimAction_PopupConfig popupConfig = new SimAction_PopupConfig(null, true, "Test Production Event", "This is a test production  event that is scheduled to fire on " + triggerDate.ToShortDateString() + " at 6:00PM - but not pause time.  The even will last for three hours.", Asset_png.Popup_Vinyl, Asset_wav.event_generic);
         SimAction simAction = new SimAction(ids, triggerData, null, popupConfig);
         SimEvent_Scheduled SimEvent_Scheduled01 = new SimEvent_Scheduled(simAction, triggerDate);
     }
@@ -223,7 +223,7 @@ public class Sim_TEST : MonoBehaviour
         SimAction_IDs ids = new SimAction_IDs(simActionID, 1, location, "attend battle of the bands", "There will be consequences....  And I can dynamically list them here!");
         TimeSpan duration = new TimeSpan(2, 0, 0);
         SimAction_TriggerData triggerData = new SimAction_TriggerData(null, null, duration);
-        SimAction_PopupConfig popupConfig = new SimAction_PopupConfig(null, false, "Test Gig Event", "This is a test gig event that is scheduled to fire on " + triggerDate.ToShortDateString() + " at 11:15AM - but not pause time.  The even will last for two hours.", Asset_png.Popup_Vinyl, Asset_wav.event_generic);
+        SimAction_PopupConfig popupConfig = new SimAction_PopupConfig(null, true, "Test Gig Event", "This is a test gig event that is scheduled to fire on " + triggerDate.ToShortDateString() + " at 11:15AM - but not pause time.  The even will last for two hours.", Asset_png.Popup_Vinyl, Asset_wav.event_generic);
         SimAction simAction = new SimAction(ids, triggerData, null, popupConfig);
         SimEvent_Scheduled SimEvent_Scheduled01 = new SimEvent_Scheduled(simAction, triggerDate);
     }
