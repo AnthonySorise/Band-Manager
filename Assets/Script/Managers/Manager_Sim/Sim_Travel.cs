@@ -293,20 +293,21 @@ public class Sim_Travel : MonoBehaviour
     {
         NPC character = Managers.Sim.NPC.GetNPC(npcID);
         SimEvent_Scheduled nextScheduledEvent = Managers.Sim.GetNextScheduledSimEvent(npcID);
+        SimEvent_Scheduled currentEvent = Managers.Sim.GetSimEventHappeningNow(npcID);
 
         if (character == null || nextScheduledEvent == null || nextScheduledEvent.SimAction.LocationID() == null)
         {
             return "false";
         }
-
+        
         CityID fromCityID = character.CurrentCity;
         CityID toCityID = nextScheduledEvent.SimAction.LocationID().Value;
         DateTime departureTimeWithSleep = _departureTimeForScheduledEvent(npcID, transportationID, fromCityID, toCityID, nextScheduledEvent.ScheduledDT);
         DateTime departureTimeNoSleep = _departureTimeForScheduledEvent(npcID, transportationID, fromCityID, toCityID, nextScheduledEvent.ScheduledDT, true);
 
-        if(
-            nextScheduledEvent.SimAction.ID() == SimActionID.NPC_Travel ||
-            (departureTimeNoSleep == null && departureTimeWithSleep == null))
+        if (nextScheduledEvent.SimAction.ID() == SimActionID.NPC_Travel ||
+        currentEvent !=  null ||
+        (departureTimeNoSleep == null && departureTimeWithSleep == null))
         {
             return "false";
         }
@@ -417,16 +418,17 @@ public class Sim_Travel : MonoBehaviour
         UnityAction option01 = () => {
             SIM_InitiateTravel(npcID, transportationID, toCityID);
         };
-        //TO DO
-        //UnityAction option02 = () => {
-            
-        //};
-        List<UnityAction> optionCallbacks = new List<UnityAction>
-        {
-            option01,
-            //option02,
-            null
+        UnityAction option02 = () => {
+            SIM_InitiateTravel(npcID, transportationID, toCityID, Managers.Sim.NPC.NextWaketime());
         };
+        List<UnityAction> optionCallbacks = new List<UnityAction>();
+        optionCallbacks.Add(option01);
+        if (Managers.Sim.NPC.IsOverlappedWithSleepTime(Managers.Time.CurrentDT, travelTime))
+        {
+            optionCallbacks.Add(option02);
+        }
+        optionCallbacks.Add(null);
+
         SimAction_Callbacks callBacks = new SimAction_Callbacks(callback, optionCallbacks);
 
         //Popup Config
@@ -443,21 +445,22 @@ public class Sim_Travel : MonoBehaviour
         }
 
         Action<GameObject> tt_option01 = (GameObject go) => { Managers.UI.Tooltip.SetTooltip(go, "Start travel to " + toCityData.cityName); };
-
-        //Action<GameObject> tt_option02 = (GameObject go) => { Managers.UI.Tooltip.SetTooltip(go, "Get a full night's rest and leave first thing in the morning."); };
-
+        Action<GameObject> tt_option02 = (GameObject go) => { Managers.UI.Tooltip.SetTooltip(go, "Get a full night's rest and leave first thing in the morning."); };
         Action<GameObject> tt_option03 = (GameObject go) => { Managers.UI.Tooltip.SetTooltip(go, "Cancel travel."); };
 
         SimAction_PopupOptionConfig popupOptionConfig01 = new SimAction_PopupOptionConfig("Let's Go!", tt_option01);
-        //SimAction_PopupOptionConfig popupOptionConfig02 = new SimAction_PopupOptionConfig("Let's Wait", tt_option02);
+        SimAction_PopupOptionConfig popupOptionConfig02 = new SimAction_PopupOptionConfig("Let's Wait", tt_option02);
         SimAction_PopupOptionConfig popupOptionConfig03 = new SimAction_PopupOptionConfig("Let's Not", tt_option03);
 
-        List<SimAction_PopupOptionConfig> popupOptionsConfig = new List<SimAction_PopupOptionConfig>
+        List<SimAction_PopupOptionConfig> popupOptionsConfig = new List<SimAction_PopupOptionConfig>();
+
+        popupOptionsConfig.Add(popupOptionConfig01);
+        if(Managers.Sim.NPC.IsOverlappedWithSleepTime(Managers.Time.CurrentDT, travelTime))
         {
-            popupOptionConfig01,
-            //popupOptionConfig02,
-            popupOptionConfig03
-        };
+            popupOptionsConfig.Add(popupOptionConfig02);
+        }
+        popupOptionsConfig.Add(popupOptionConfig03);
+
         SimAction_PopupConfig popupConfig = new SimAction_PopupConfig(popupOptionsConfig, true, headerText, bodyText, Asset_png.Popup_Vinyl, Asset_wav.Click_04);
 
         //Sim Action

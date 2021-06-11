@@ -76,7 +76,7 @@ public class Manager_Sim : MonoBehaviour, IManager {
         List<SimEvent_Scheduled> returnList = new List<SimEvent_Scheduled>();
         foreach (SimEvent_Scheduled simEvent in _simEvents_Scheduled)
         {
-            if (simEvent.SimAction.IsForNPCid(npcID) && !simEvent.SimAction.IsCanceled())
+            if (simEvent.SimAction.Duration() != TimeSpan.Zero && simEvent.SimAction.IsForNPCid(npcID) && !simEvent.SimAction.IsCanceled())
             {
                 if(dateTime ==  null || simEvent.ScheduledDT.Date.CompareTo(dateTime.Value.Date) == 0)
                 {
@@ -89,11 +89,29 @@ public class Manager_Sim : MonoBehaviour, IManager {
         }
         return returnList.OrderBy(o => o.ScheduledDT).ToList();
     }
+    public SimEvent_Scheduled GetSimEventHappeningNow(int npcID)
+    {
+        List<SimEvent_Scheduled> scheduledEvents = GetScheduledSimEvents(npcID);
+        SimEvent_Scheduled nextEvent = (scheduledEvents.Count > 0) ? scheduledEvents[0] : null;
+        if (nextEvent != null && nextEvent.SimAction.IsHappeningNow())
+        {
+            return nextEvent;
+        }
+        return null;
+    }
     public SimEvent_Scheduled GetNextScheduledSimEvent(int npcID, SimActionID? simActionID = null)
     {
         List<SimEvent_Scheduled> scheduledEvents = GetScheduledSimEvents(npcID, simActionID);
         SimEvent_Scheduled nextEvent = (scheduledEvents.Count > 0) ? scheduledEvents[0] : null;
-        return ((nextEvent != null && scheduledEvents.Count > 1 && nextEvent.SimAction.IsHappeningNow()) ? scheduledEvents[1] : nextEvent);
+
+        if (nextEvent == null || !nextEvent.SimAction.IsHappeningNow())
+        {
+            return nextEvent;
+        }
+        else
+        {
+            return scheduledEvents.Count > 1 ? scheduledEvents[1] : null;
+        }
     }
 
     public List<SimEvent_Scheduled> ConflictingEvents(int npcID, DateTime dateTime, TimeSpan duration)

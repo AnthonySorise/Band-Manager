@@ -291,6 +291,8 @@ public class UI_TravelMenu : MonoBehaviour
             _toggle_ScheduleForNextEvent.interactable = true;
             _toggle_ScheduleForNextEvent.isOn = _isScheduleForNextEvent;
 
+            Managers.UI.Tooltip.SetTooltip(_toggle_ScheduleForNextEvent.gameObject, "Schedule travel to " + nextEvent.SimAction.Description() + " on " + nextEvent.ScheduledDT.ToString("MM/dd") + " to " + nextEvent.SimAction.Location().cityName);
+
             _text_ScheduleForNextEventCity.text = nextEvent.SimAction.LocationID() != null ? "Travel to " + Managers.Data.CityData[nextEvent.SimAction.LocationID().Value].cityName : "";
             _text_ScheduleForNextEventDate.text = "for " + nextEvent.ScheduledDT.DayOfWeek.ToString() + ", " + nextEvent.ScheduledDT.ToString("MM/dd");
         }
@@ -298,6 +300,8 @@ public class UI_TravelMenu : MonoBehaviour
         {
             _toggle_ScheduleForNextEvent.isOn = false;
             _toggle_ScheduleForNextEvent.interactable = false;
+
+            Managers.UI.Tooltip.SetTooltip(_toggle_ScheduleForNextEvent.gameObject, "Next event does not require scheduling travel");
 
             _text_ScheduleForNextEventCity.text = "";
             _text_ScheduleForNextEventDate.text = "";
@@ -440,7 +444,6 @@ public class UI_TravelMenu : MonoBehaviour
             {
                 _button_submit_tooltipText = submitButtonTooltipText;
                 Managers.UI.Tooltip.SetTooltip(_button_submit.gameObject, _button_submit_tooltipText);
-                //TO DO: Update submit button for scheduled travel
             }
         }
     }

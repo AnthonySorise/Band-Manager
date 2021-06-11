@@ -190,6 +190,11 @@ public class SimAction {
 
     public void Cancel(bool hasConfirmationPopup = true)
     {
+        if (ID() == SimActionID.NPC_Travel)
+        {
+            hasConfirmationPopup = false;
+        }
+
         if (!WillHappenLater())
         {
             return;
@@ -208,9 +213,6 @@ public class SimAction {
         _callbacks.CancelCallback();
         _isCanceled = true;
     }
-
-
-
 
 
     //PopupConfig Functions

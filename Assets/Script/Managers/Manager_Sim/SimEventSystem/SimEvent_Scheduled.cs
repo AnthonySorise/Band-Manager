@@ -41,7 +41,7 @@ public class SimEvent_Scheduled
                 List<SimEvent_Scheduled> sameEventTypes = Managers.Sim.GetScheduledSimEvents(SimAction.NPCid(), SimAction.ID()).Where(item => item.SimAction.Duration() != TimeSpan.Zero).ToList();
                 foreach (SimEvent_Scheduled scheduledEvent in sameEventTypes)
                 {
-                    scheduledEvent.SimAction.Cancel();
+                    scheduledEvent.SimAction.Cancel(false);
                 }
             }
         }
@@ -210,14 +210,27 @@ public class SimEvent_Scheduled
     {
         int npcID = simActionThatTriggeredThis.NPCid();
         NPC character = Managers.Sim.NPC.GetNPC(npcID);
-        if (simActionThatTriggeredThis.Duration() == TimeSpan.Zero || character ==  null || Managers.Sim.EventHappeningNow(npcID) != null)
+        if (simActionThatTriggeredThis.Duration() == TimeSpan.Zero || character == null || Managers.Sim.EventHappeningNow(npcID) != null)
         {
             return;
-        }        
-        SimEvent_Scheduled nextEvent = Managers.Sim.GetNextScheduledSimEvent(npcID);
-        if (nextEvent != null && nextEvent.SimAction.LocationID() != null && nextEvent.SimAction.LocationID() != character.CurrentCity ||//next event is is another city
-            nextEvent == null && character.CurrentCity != character.BaseCity)//there is not another event, and character is not in home city
-            {
+        }
+
+        Func<bool> isValid = () =>
+        {
+            SimEvent_Scheduled nextEvent = Managers.Sim.GetNextScheduledSimEvent(npcID);
+            SimEvent_Scheduled nextTravelEvent = Managers.Sim.GetNextScheduledSimEvent(npcID, SimActionID.NPC_Travel);
+
+            bool nextEventIsInAnotherCity = (nextEvent != null && nextEvent.SimAction.LocationID() != null && nextEvent.SimAction.LocationID() != character.CurrentCity);
+            bool scheduledTravelAlreadyMade = (nextEvent != null && nextTravelEvent != null && nextEvent.SimAction.LocationID() == nextTravelEvent.SimAction.LocationID());
+            bool timeToGoHome = (nextEvent == null && character.CurrentCity != character.BaseCity);
+
+            return (nextEventIsInAnotherCity && !scheduledTravelAlreadyMade) || timeToGoHome;
+        };
+
+        if (isValid())
+        {
+            SimEvent_Scheduled nextEvent = Managers.Sim.GetNextScheduledSimEvent(npcID);
+
             //IDs
             SimAction_IDs ids = new SimAction_IDs(SimActionID.SimAction, npcID);
 
@@ -226,8 +239,7 @@ public class SimEvent_Scheduled
                 {
                     return "false";
                 }
-                if (nextEvent != null && nextEvent.SimAction.LocationID() != null && nextEvent.SimAction.LocationID() != character.CurrentCity ||//next event is is another city
-                    nextEvent == null && character.CurrentCity != character.BaseCity)//there is not another event, and character is not in home city
+                if (isValid())
                 {
                     return "";
                 }

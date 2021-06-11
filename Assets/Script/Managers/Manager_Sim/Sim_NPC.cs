@@ -56,6 +56,22 @@ public class Sim_NPC : MonoBehaviour
         return (npcID == _playerCharacterID);
     }
 
+    public DateTime NextBedtime()
+    {
+        if(Managers.Time.CurrentDT.TimeOfDay < (_npcBedtime + _npcSleepDuration))
+        {
+            return Managers.Time.CurrentDT.Date + _npcBedtime;
+        }
+        else
+        {
+            return Managers.Time.CurrentDT.Date + _npcBedtime + TimeSpan.FromDays(1);
+        }
+    }
+    public DateTime NextWaketime()
+    {
+        return NextBedtime() + _npcSleepDuration;
+    }
+
     public bool IsOverlappedWithSleepTime(DateTime dateTime, TimeSpan duration)
     {
         DateTime sleepStart = dateTime.Date + _npcBedtime;
