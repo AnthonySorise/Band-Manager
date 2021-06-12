@@ -61,7 +61,7 @@ public class UI_Popup : MonoBehaviour {
 
         Transform buttonsTransform = popup_buttonContainer.GetComponent<Transform>();
         UnityAction closePopup = () => {
-            MonoBehaviour.Destroy(popup.gameObject);
+            Destroy(popup.gameObject);
             Managers.Audio.PlayAudio(Asset_wav.Click_02, AudioChannel.UI);
         };
 
@@ -116,14 +116,7 @@ public class UI_PopupOption
             {
                 Managers.UI.ScreenUncover();
             }
-            if (Managers.Time.IsPaused)
-            {
-                //Managers.Time.Play();
-            }
-            if (optionCallback != null)
-            {
-                optionCallback();
-            }
+            optionCallback?.Invoke();
         }
 
         GameObject button = MonoBehaviour.Instantiate(Managers.UI.prefab_Button);
@@ -132,15 +125,11 @@ public class UI_PopupOption
 
         button.GetComponent<Button>().onClick.AddListener(ButtonPress);
 
-        if (popupOptionConfig.SetToolTips != null)
+        if(popupOptionConfig != null)
         {
-            popupOptionConfig.SetToolTips(button.gameObject);
+            popupOptionConfig.SetToolTips?.Invoke(button.gameObject);
         }
-
         TextMeshProUGUI tmpText = button.GetComponentInChildren<TextMeshProUGUI>();
-        if (!String.IsNullOrEmpty(popupOptionConfig.ButtonText))
-        {
-            tmpText.text = popupOptionConfig.ButtonText;
-        }
+        tmpText.text = popupOptionConfig != null ? popupOptionConfig.ButtonText : "Let's not" ;
     }
 }

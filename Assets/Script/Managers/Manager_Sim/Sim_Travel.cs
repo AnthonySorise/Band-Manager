@@ -446,11 +446,9 @@ public class Sim_Travel : MonoBehaviour
 
         Action<GameObject> tt_option01 = (GameObject go) => { Managers.UI.Tooltip.SetTooltip(go, "Start travel to " + toCityData.cityName); };
         Action<GameObject> tt_option02 = (GameObject go) => { Managers.UI.Tooltip.SetTooltip(go, "Get a full night's rest and leave first thing in the morning."); };
-        Action<GameObject> tt_option03 = (GameObject go) => { Managers.UI.Tooltip.SetTooltip(go, "Cancel travel."); };
 
         SimAction_PopupOptionConfig popupOptionConfig01 = new SimAction_PopupOptionConfig("Let's Go!", tt_option01);
         SimAction_PopupOptionConfig popupOptionConfig02 = new SimAction_PopupOptionConfig("Let's Wait", tt_option02);
-        SimAction_PopupOptionConfig popupOptionConfig03 = new SimAction_PopupOptionConfig("Let's Not", tt_option03);
 
         List<SimAction_PopupOptionConfig> popupOptionsConfig = new List<SimAction_PopupOptionConfig>();
 
@@ -459,7 +457,7 @@ public class Sim_Travel : MonoBehaviour
         {
             popupOptionsConfig.Add(popupOptionConfig02);
         }
-        popupOptionsConfig.Add(popupOptionConfig03);
+        popupOptionsConfig.Add(null);
 
         SimAction_PopupConfig popupConfig = new SimAction_PopupConfig(popupOptionsConfig, true, headerText, bodyText, Asset_png.Popup_Vinyl, Asset_wav.Click_04);
 

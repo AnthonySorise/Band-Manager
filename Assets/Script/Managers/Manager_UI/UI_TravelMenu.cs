@@ -301,7 +301,7 @@ public class UI_TravelMenu : MonoBehaviour
             _toggle_ScheduleForNextEvent.isOn = false;
             _toggle_ScheduleForNextEvent.interactable = false;
 
-            Managers.UI.Tooltip.SetTooltip(_toggle_ScheduleForNextEvent.gameObject, "Next event does not require scheduling travel");
+            Managers.UI.Tooltip.SetTooltip(_toggle_ScheduleForNextEvent.gameObject, (nextEvent != null) ? "Next event does not require scheduling travel" : "No events scheduled");
 
             _text_ScheduleForNextEventCity.text = "";
             _text_ScheduleForNextEventDate.text = "";
