@@ -49,15 +49,24 @@ public class SimEvent_Scheduled
         Managers.Sim.StoreSimEvent_Scheduled(this);
 
         Check();
-        if (Managers.UI && Managers.UI.Calendar)//Conditional in place for now, because loading in scheduled Sim Events Immediately - won't be necessary after building out menu screen / game loading
+
+        if (SimAction.IsPlayerCharacter())
         {
-            Managers.UI.Calendar.UpdateCalendarPanel(true, true, true);
+            if (Managers.UI && Managers.UI.Calendar)//Conditional in place for now, because loading in scheduled Sim Events Immediately - won't be necessary after building out menu screen / game loading
+            {
+                Managers.UI.Calendar.UpdateCalendarPanel(true, true, true);
+            }
         }
+
     }
     private void Remove(){
         Managers.Sim.RemoveSimEvent_Scheduled(this);
         SIM_QueryOpenTravelMenu(SimAction);
-        Managers.UI.Calendar.UpdateCalendarPanel(true, true, true);
+
+        if (SimAction.IsPlayerCharacter())
+        {
+            Managers.UI.Calendar.UpdateCalendarPanel(true, true, true);
+        }
     }
 
     private bool IsTimeToTrigger() {

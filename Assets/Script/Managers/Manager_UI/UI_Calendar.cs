@@ -169,6 +169,9 @@ public class UI_Calendar : MonoBehaviour
     private GameObject[][] _calendarDayBoxIcons = new GameObject[14][];
     private Image[][] _calendarDayBoxIcons_ImageComponent = new Image[14][];
 
+    //update vars
+    int _onLastUpdate_playerScheduledEvents = 0;
+
     void Start()
     {
         prefab_CalendarTimelineEvent = Resources.Load<GameObject>("Prefabs/UI/CalendarTimelineEvent");
@@ -1052,16 +1055,21 @@ public class UI_Calendar : MonoBehaviour
                 }
             }
         }
-        foreach (RectTransform child in calendarTimelineTransform)
-        {
-            if (child.gameObject.name.Contains("CalendarTimelineEvent_")
-                && timeLineFill > child.anchoredPosition.x + child.sizeDelta.x)
-            {
-                Destroy(child.gameObject);
-            }
-        }
 
         List<SimEvent_Scheduled> playerScheduledEvents = Managers.Sim.GetScheduledSimEvents(npcID(), null, _calendarSelectedDay.Value);
+
+        if (_onLastUpdate_playerScheduledEvents != playerScheduledEvents.Count)
+        {
+            foreach (RectTransform child in calendarTimelineTransform)
+            {
+                if (child.gameObject.name.Contains("CalendarTimelineEvent_"))
+                {
+                    Destroy(child.gameObject);
+                }
+            }
+            _onLastUpdate_playerScheduledEvents = playerScheduledEvents.Count;
+        }
+
         foreach (SimEvent_Scheduled scheduledEvent in playerScheduledEvents)
         {
             bool isExist = false;
@@ -1103,6 +1111,10 @@ public class UI_Calendar : MonoBehaviour
                 calendarTimelineEvent.GetComponent<Image>().color = Managers.UI.Colors_events[scheduledEvent.SimAction.ID()];
                 //set tooltip
                 Managers.UI.Tooltip.SetTooltip(calendarTimelineEvent, scheduledEvent);
+                //cancel btn
+                UI_Calendar_TimelineEventBehavior behavior = calendarTimelineEvent.GetComponent<UI_Calendar_TimelineEventBehavior>();
+                behavior.ScheduledEvent = scheduledEvent;
+                behavior.CancelButton = calendarTimelineEvent.transform.GetChild(0).gameObject;
             }
         }
         //Day Before remainder

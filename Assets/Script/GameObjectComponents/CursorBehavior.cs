@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -22,7 +20,7 @@ public class CursorBehavior : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        SetCursor(Asset_png.Cursor_Default);
+        SetCursor(Asset_png.Cursor_Default);    
     }
 
     public void OnDestroy()

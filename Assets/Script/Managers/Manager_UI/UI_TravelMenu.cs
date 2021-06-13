@@ -45,12 +45,12 @@ public class UI_TravelMenu : MonoBehaviour
     private string _button_submit_tooltipText = "";
 
     //update vars
-    private DateTime? _OnLastUpdate_NextEventDT;
-    private CityID _OnLastUpdate_CurrentCity;
-    private CityID _OnLastUpdate_ToCity;
-    private CityID? _OnLastUpdate_CityEnRoute;
-    private TransportationID _OnLastUpdate_TransportationID;
-    private int _OnLastUpdate_NumTransportationProperties;
+    private DateTime? _onLastUpdate_NextEventDT;
+    private CityID _onLastUpdate_CurrentCity;
+    private CityID _onLastUpdate_ToCity;
+    private CityID? _onLastUpdate_CityEnRoute;
+    private TransportationID _onLastUpdate_TransportationID;
+    private int _onLastUpdate_NumTransportationProperties;
 
     private void Start()
     {
@@ -459,31 +459,31 @@ public class UI_TravelMenu : MonoBehaviour
         NPC_BandManager playerCharacter = Managers.Sim.NPC.GetPlayerCharacter();
         SimEvent_Scheduled nextEvent = Managers.Sim.GetNextScheduledSimEvent(playerCharacter.ID);
         bool isNextEventNew = false;
-        if (nextEvent != null && _OnLastUpdate_NextEventDT != null)
+        if (nextEvent != null && _onLastUpdate_NextEventDT != null)
         {
-            isNextEventNew = nextEvent.ScheduledDT != _OnLastUpdate_NextEventDT;
+            isNextEventNew = nextEvent.ScheduledDT != _onLastUpdate_NextEventDT;
         }
-        else if (nextEvent !=  null && _OnLastUpdate_NextEventDT == null || nextEvent == null && _OnLastUpdate_NextEventDT != null)
+        else if (nextEvent !=  null && _onLastUpdate_NextEventDT == null || nextEvent == null && _onLastUpdate_NextEventDT != null)
         {
             isNextEventNew = true;
         }
 
         if ( isNextEventNew ||
-            _OnLastUpdate_CurrentCity != playerCharacter.CurrentCity ||
-            _OnLastUpdate_ToCity != _toCity ||
-            _OnLastUpdate_CityEnRoute != playerCharacter.CityEnRoute ||
-            _OnLastUpdate_NumTransportationProperties != playerCharacter.Properties.Count ||
-            _OnLastUpdate_TransportationID != _transportationID)
+            _onLastUpdate_CurrentCity != playerCharacter.CurrentCity ||
+            _onLastUpdate_ToCity != _toCity ||
+            _onLastUpdate_CityEnRoute != playerCharacter.CityEnRoute ||
+            _onLastUpdate_NumTransportationProperties != playerCharacter.Properties.Count ||
+            _onLastUpdate_TransportationID != _transportationID)
         {
             updateButtons();
             updateTexts();
 
-            _OnLastUpdate_NextEventDT = nextEvent?.ScheduledDT;
-            _OnLastUpdate_CurrentCity = playerCharacter.CurrentCity;
-            _OnLastUpdate_ToCity = _toCity;
-            _OnLastUpdate_CityEnRoute = playerCharacter.CityEnRoute;
-            _OnLastUpdate_NumTransportationProperties = playerCharacter.Properties.Count;
-            _OnLastUpdate_TransportationID = _transportationID;
+            _onLastUpdate_NextEventDT = nextEvent?.ScheduledDT;
+            _onLastUpdate_CurrentCity = playerCharacter.CurrentCity;
+            _onLastUpdate_ToCity = _toCity;
+            _onLastUpdate_CityEnRoute = playerCharacter.CityEnRoute;
+            _onLastUpdate_NumTransportationProperties = playerCharacter.Properties.Count;
+            _onLastUpdate_TransportationID = _transportationID;
         }
         else if (playerCharacter.CityEnRoute != null)
         {

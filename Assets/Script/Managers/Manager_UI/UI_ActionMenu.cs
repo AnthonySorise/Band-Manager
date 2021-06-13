@@ -117,8 +117,8 @@ public class UI_ActionMenu : MonoBehaviour
             x = targetHeight,
             y = vectorY
         };
-        LeanTween.size(menuContainer.GetComponent<RectTransform>(), Vector2, 0.5f).setEase(LeanTweenType.easeInOutExpo);
-        LeanTween.scaleY(subMenuContainer, scaleY, 0.5f).setEase(LeanTweenType.easeInOutExpo);
+        LeanTween.size(menuContainer.GetComponent<RectTransform>(), Vector2, 0.25f).setEase(LeanTweenType.easeInOutExpo);
+        LeanTween.scaleY(subMenuContainer, scaleY, 0.25f).setEase(LeanTweenType.easeInOutExpo);
         isExpanded = !isExpanded;
         if (isExpanded)
         {

@@ -33,7 +33,7 @@ public class Manager_UI : MonoBehaviour, IManager
 
     //Colors
     public Dictionary<SimActionID, Color32> Colors_events;
-
+    
     //UI Prefabs
     public GameObject prefab_Button;
 
@@ -66,14 +66,16 @@ public class Manager_UI : MonoBehaviour, IManager
         //mainFont = Resources.Load<Font>("Fonts/ConcertOne-Regular");
 
         //colors
+        float eventColorOpacity = .25f;
+        Byte opacityByte = Convert.ToByte(eventColorOpacity * 255);
         Colors_events = new Dictionary<SimActionID, Color32>
         {
-            [SimActionID.NPC_Gig] = new Color32(215, 103, 54, 255),
-            [SimActionID.NPC_Media] = new Color32(142, 181, 71, 255),
-            [SimActionID.NPC_Produce] = new Color32(1, 36, 84, 255),
-            [SimActionID.NPC_Scout] = new Color32(73, 74, 77, 255),
-            [SimActionID.NPC_Special] = new Color32(251, 210, 102, 255),
-            [SimActionID.NPC_Travel] = new Color32(131, 183, 153, 255)
+            [SimActionID.NPC_Gig] = new Color32(215, 103, 54, opacityByte),
+            [SimActionID.NPC_Media] = new Color32(142, 181, 71, opacityByte),
+            [SimActionID.NPC_Produce] = new Color32(1, 36, 84, opacityByte),
+            [SimActionID.NPC_Scout] = new Color32(73, 74, 77, opacityByte),
+            [SimActionID.NPC_Special] = new Color32(251, 210, 102, opacityByte),
+            [SimActionID.NPC_Travel] = new Color32(131, 183, 153, opacityByte)
         };
 
         //UI Prefabs
