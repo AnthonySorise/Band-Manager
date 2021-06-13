@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public class UI_Calendar_TimelineEventBehavior : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
-    public SimEvent_Scheduled ScheduledEvent;
+    public SimEvent_Scheduled ScheduledEvent = null;
     public GameObject CancelButton;
 
     private void Start()
@@ -21,7 +21,7 @@ public class UI_Calendar_TimelineEventBehavior : MonoBehaviour, IPointerEnterHan
 
     private void onGOEnter()
     {
-        if (!ScheduledEvent.SimAction.IsHappeningNow())
+        if (ScheduledEvent == null || !ScheduledEvent.SimAction.IsHappeningNow())
         {
             gameObject.GetComponent<Image>().CrossFadeAlpha(2f, 0.2f, true);
             LeanTween.scaleX(CancelButton, 1, 0.25f).setEase(LeanTweenType.easeInOutExpo);
