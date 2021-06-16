@@ -1111,10 +1111,9 @@ public class UI_Calendar : MonoBehaviour
                 calendarTimelineEvent.GetComponent<Image>().color = Managers.UI.Colors_events[scheduledEvent.SimAction.ID()];
                 //set tooltip
                 Managers.UI.Tooltip.SetTooltip(calendarTimelineEvent, scheduledEvent);
-                //cancel btn
+                //cancel button
                 UI_Calendar_TimelineEventBehavior behavior = calendarTimelineEvent.GetComponent<UI_Calendar_TimelineEventBehavior>();
-                behavior.ScheduledEvent = scheduledEvent;
-                behavior.CancelButton = calendarTimelineEvent.transform.GetChild(0).gameObject;
+                behavior.Init(scheduledEvent);
             }
         }
         //Day Before remainder

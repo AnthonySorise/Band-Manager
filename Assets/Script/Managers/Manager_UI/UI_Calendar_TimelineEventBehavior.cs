@@ -5,32 +5,41 @@ using UnityEngine.UI;
 public class UI_Calendar_TimelineEventBehavior : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     public SimEvent_Scheduled ScheduledEvent = null;
-    public GameObject CancelButton;
+    public GameObject CancelButton = null;
+    bool isAcitve = false;
 
-    private void Start()
+    public void Init(SimEvent_Scheduled scheduledEvent)
     {
-        if (CancelButton)
-        {
-            LeanTween.scaleX(CancelButton, 0, 0f).setEase(LeanTweenType.easeInOutExpo);
+        ScheduledEvent = scheduledEvent;
+        CancelButton = gameObject.transform.Find("CalendarTimelineEvent_CloseButton").gameObject;
 
-            CancelButton.GetComponent<Button>().onClick.AddListener(() => {
-                ScheduledEvent.SimAction.Cancel();
-            });
-        }
+        LeanTween.scaleX(CancelButton, 0, 0f).setEase(LeanTweenType.easeInOutExpo);
+
+        CancelButton.GetComponent<Button>().onClick.AddListener(() => {
+            ScheduledEvent.SimAction.Cancel();
+        });
+
+        isAcitve = true;
     }
 
     private void onGOEnter()
     {
-        if (ScheduledEvent == null || !ScheduledEvent.SimAction.IsHappeningNow())
+        if (isAcitve)
         {
             gameObject.GetComponent<Image>().CrossFadeAlpha(2f, 0.2f, true);
-            LeanTween.scaleX(CancelButton, 1, 0.25f).setEase(LeanTweenType.easeInOutExpo);
+            if (!ScheduledEvent.SimAction.IsHappeningNow())
+            {
+                LeanTween.scaleX(CancelButton, 1, 0.25f).setEase(LeanTweenType.easeInOutExpo);
+            }
         }
     }
     private void onGOExit()
     {
-        gameObject.GetComponent<Image>().CrossFadeAlpha(1f, 0.2f, true);
-        LeanTween.scaleX(CancelButton, 0, 0.25f).setEase(LeanTweenType.easeInOutExpo);
+        if (isAcitve)
+        {
+            gameObject.GetComponent<Image>().CrossFadeAlpha(1f, 0.2f, true);
+            LeanTween.scaleX(CancelButton, 0, 0.25f).setEase(LeanTweenType.easeInOutExpo);
+        }
     }
 
     public void OnPointerEnter(PointerEventData eventData)
