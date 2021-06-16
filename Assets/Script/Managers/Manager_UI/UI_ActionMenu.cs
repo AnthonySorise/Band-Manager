@@ -85,32 +85,34 @@ public class UI_ActionMenu : MonoBehaviour
         Managers.UI.InitiateButton(ref _actionMenuProduceMusicVideoButton, "Button_ActionMenu_Produce_MusicVideo");
 
         //Action Menu Click Listeners
-        _actionMenuSocialButton.onClick.AddListener(Click_ToggleActionMenu_Social);
-        _actionMenuScoutButton.onClick.AddListener(Click_ToggleActionMenu_Scout);
-        _actionMenuBusinessButton.onClick.AddListener(Click_ToggleActionMenu_Business);
-        _actionMenuManagementButton.onClick.AddListener(Click_ToggleActionMenu_Management);
-        _actionMenuGigButton.onClick.AddListener(Click_ToggleActionMenu_Gig);
-        _actionMenuProduceButton.onClick.AddListener(Click_ToggleActionMenu_Produce);
+        _actionMenuSocialButton.onClick.AddListener(click_ToggleActionMenu_Social);
+        _actionMenuScoutButton.onClick.AddListener(click_ToggleActionMenu_Scout);
+        _actionMenuBusinessButton.onClick.AddListener(click_ToggleActionMenu_Business);
+        _actionMenuManagementButton.onClick.AddListener(click_ToggleActionMenu_Management);
+        _actionMenuGigButton.onClick.AddListener(click_ToggleActionMenu_Gig);
+        _actionMenuProduceButton.onClick.AddListener(click_ToggleActionMenu_Produce);
         //Action SubMenus Click Listeners
-        _actionMenuScoutTravelButton.onClick.AddListener(Click_ToggleActionSubMenu_Scout_Travel);
+        _actionMenuScoutTravelButton.onClick.AddListener(click_ToggleActionSubMenu_Scout_Travel);
 
         //Retract Action Menus
-        ToggleActionMenu_Social(true);
-        ToggleActionMenu_Scout(true);
-        ToggleActionMenu_Business(true);
-        ToggleActionMenu_Management(true);
-        ToggleActionMenu_Gig(true);
-        ToggleActionMenu_Produce(true);
+        toggleActionMenu_Social(true);
+        toggleActionMenu_Scout(true);
+        toggleActionMenu_Business(true);
+        toggleActionMenu_Management(true);
+        toggleActionMenu_Gig(true);
+        toggleActionMenu_Produce(true);
     }
 
 
-    private void ToggleActionMenu(GameObject menuContainer, GameObject subMenuContainer, Button menuMainButton, ref bool isExpanded, int targetHeight, bool forceClose = false)
+    private void toggleActionMenu(GameObject menuContainer, GameObject subMenuContainer, Button menuMainButton, ref bool isExpanded, int numButtonsInContainer, bool forceClose = false)
     {
+        int buttonHeight = 35;
+        int targetHeight = numButtonsInContainer * buttonHeight;
         if (!isExpanded && forceClose)
         {
             return;
         }
-        int vectorY = (isExpanded || forceClose) ? 45 : (targetHeight - 45);
+        int vectorY = (isExpanded || forceClose) ? buttonHeight : (targetHeight - buttonHeight);
         int scaleY = (isExpanded || forceClose) ? 0 : 1;
         var Vector2 = new Vector2
         {
@@ -130,97 +132,83 @@ public class UI_ActionMenu : MonoBehaviour
         }
     }
 
-    private void ToggleActionMenu_Social(bool forceClose = false)
+    private void toggleActionMenuByIndex(int index, bool forceClose = false)
     {
-        ToggleActionMenu(_actionMenuSocialContainer, _actionMenuSocialSubMenu, _actionMenuSocialButton, ref _isActionMenuSocialExpanded, 135, forceClose);
-        ToggleActionMenu(_actionMenuScoutContainer, _actionMenuScoutSubMenu, _actionMenuScoutButton, ref _isActionMenuScoutExpanded, 135, true);
-        ToggleActionMenu(_actionMenuBusinessContainer, _actionMenuBusinessSubMenu, _actionMenuBusinessButton, ref _isActionMenuBusinessExpanded, 180, true);
-        ToggleActionMenu(_actionMenuManagementContainer, _actionMenuManagementSubMenu, _actionMenuManagementButton, ref _isActionMenuManagementExpanded, 180, true);
-        ToggleActionMenu(_actionMenuGigContainer, _actionMenuGigSubMenu, _actionMenuGigButton, ref _isActionMenuGigExpanded, 135, true);
-        ToggleActionMenu(_actionMenuProduceContainer, _actionMenuProduceSubMenu, _actionMenuProduceButton, ref _isActionMenuProduceExpanded, 135, true);
+        toggleActionMenu(_actionMenuSocialContainer, _actionMenuSocialSubMenu, _actionMenuSocialButton, ref _isActionMenuSocialExpanded, 3, 
+            (index == 0) ? forceClose : true);
+        toggleActionMenu(_actionMenuScoutContainer, _actionMenuScoutSubMenu, _actionMenuScoutButton, ref _isActionMenuScoutExpanded, 3, 
+            (index == 1) ? forceClose : true);
+        toggleActionMenu(_actionMenuBusinessContainer, _actionMenuBusinessSubMenu, _actionMenuBusinessButton, ref _isActionMenuBusinessExpanded, 4, 
+            (index == 2) ? forceClose : true);
+        toggleActionMenu(_actionMenuManagementContainer, _actionMenuManagementSubMenu, _actionMenuManagementButton, ref _isActionMenuManagementExpanded, 4, 
+            (index == 3) ? forceClose : true);
+        toggleActionMenu(_actionMenuGigContainer, _actionMenuGigSubMenu, _actionMenuGigButton, ref _isActionMenuGigExpanded, 3, 
+            (index == 4) ? forceClose : true);
+        toggleActionMenu(_actionMenuProduceContainer, _actionMenuProduceSubMenu, _actionMenuProduceButton, ref _isActionMenuProduceExpanded, 3, 
+            (index == 5) ? forceClose : true);
     }
-    private void ToggleActionMenu_Scout(bool forceClose = false)
+
+    private void toggleActionMenu_Social(bool forceClose = false)
     {
-        ToggleActionMenu(_actionMenuSocialContainer, _actionMenuSocialSubMenu, _actionMenuSocialButton, ref _isActionMenuSocialExpanded, 135, true);
-        ToggleActionMenu(_actionMenuScoutContainer, _actionMenuScoutSubMenu, _actionMenuScoutButton, ref _isActionMenuScoutExpanded, 135, forceClose);
-        ToggleActionMenu(_actionMenuBusinessContainer, _actionMenuBusinessSubMenu, _actionMenuBusinessButton, ref _isActionMenuBusinessExpanded, 180, true);
-        ToggleActionMenu(_actionMenuManagementContainer, _actionMenuManagementSubMenu, _actionMenuManagementButton, ref _isActionMenuManagementExpanded, 180, true);
-        ToggleActionMenu(_actionMenuGigContainer, _actionMenuGigSubMenu, _actionMenuGigButton, ref _isActionMenuGigExpanded, 135, true);
-        ToggleActionMenu(_actionMenuProduceContainer, _actionMenuProduceSubMenu, _actionMenuProduceButton, ref _isActionMenuProduceExpanded, 135, true);
+        toggleActionMenuByIndex(0, forceClose);
     }
-    private void ToggleActionMenu_Business(bool forceClose = false)
+    private void toggleActionMenu_Scout(bool forceClose = false)
     {
-        ToggleActionMenu(_actionMenuSocialContainer, _actionMenuSocialSubMenu, _actionMenuSocialButton, ref _isActionMenuSocialExpanded, 135, true);
-        ToggleActionMenu(_actionMenuScoutContainer, _actionMenuScoutSubMenu, _actionMenuScoutButton, ref _isActionMenuScoutExpanded, 135, true);
-        ToggleActionMenu(_actionMenuBusinessContainer, _actionMenuBusinessSubMenu, _actionMenuBusinessButton, ref _isActionMenuBusinessExpanded, 180, forceClose);
-        ToggleActionMenu(_actionMenuManagementContainer, _actionMenuManagementSubMenu, _actionMenuManagementButton, ref _isActionMenuManagementExpanded, 180, true);
-        ToggleActionMenu(_actionMenuGigContainer, _actionMenuGigSubMenu, _actionMenuGigButton, ref _isActionMenuGigExpanded, 135, true);
-        ToggleActionMenu(_actionMenuProduceContainer, _actionMenuProduceSubMenu, _actionMenuProduceButton, ref _isActionMenuProduceExpanded, 135, true);
+        toggleActionMenuByIndex(1, forceClose);
     }
-    private void ToggleActionMenu_Management(bool forceClose = false)
+    private void toggleActionMenu_Business(bool forceClose = false)
     {
-        ToggleActionMenu(_actionMenuSocialContainer, _actionMenuSocialSubMenu, _actionMenuSocialButton, ref _isActionMenuSocialExpanded, 135, true);
-        ToggleActionMenu(_actionMenuScoutContainer, _actionMenuScoutSubMenu, _actionMenuScoutButton, ref _isActionMenuScoutExpanded, 135, true);
-        ToggleActionMenu(_actionMenuBusinessContainer, _actionMenuBusinessSubMenu, _actionMenuBusinessButton, ref _isActionMenuBusinessExpanded, 180, true);
-        ToggleActionMenu(_actionMenuManagementContainer, _actionMenuManagementSubMenu, _actionMenuManagementButton, ref _isActionMenuManagementExpanded, 180, forceClose);
-        ToggleActionMenu(_actionMenuGigContainer, _actionMenuGigSubMenu, _actionMenuGigButton, ref _isActionMenuGigExpanded, 135, true);
-        ToggleActionMenu(_actionMenuProduceContainer, _actionMenuProduceSubMenu, _actionMenuProduceButton, ref _isActionMenuProduceExpanded, 135, true);
+        toggleActionMenuByIndex(2, forceClose);
     }
-    private void ToggleActionMenu_Gig(bool forceClose = false)
+    private void toggleActionMenu_Management(bool forceClose = false)
     {
-        ToggleActionMenu(_actionMenuSocialContainer, _actionMenuSocialSubMenu, _actionMenuSocialButton, ref _isActionMenuSocialExpanded, 135, true);
-        ToggleActionMenu(_actionMenuScoutContainer, _actionMenuScoutSubMenu, _actionMenuScoutButton, ref _isActionMenuScoutExpanded, 135, true);
-        ToggleActionMenu(_actionMenuBusinessContainer, _actionMenuBusinessSubMenu, _actionMenuBusinessButton, ref _isActionMenuBusinessExpanded, 180, true);
-        ToggleActionMenu(_actionMenuManagementContainer, _actionMenuManagementSubMenu, _actionMenuManagementButton, ref _isActionMenuManagementExpanded, 180, true);
-        ToggleActionMenu(_actionMenuGigContainer, _actionMenuGigSubMenu, _actionMenuGigButton, ref _isActionMenuGigExpanded, 135, forceClose);
-        ToggleActionMenu(_actionMenuProduceContainer, _actionMenuProduceSubMenu, _actionMenuProduceButton, ref _isActionMenuProduceExpanded, 135, true);
+        toggleActionMenuByIndex(3, forceClose);
     }
-    private void ToggleActionMenu_Produce(bool forceClose = false)
+    private void toggleActionMenu_Gig(bool forceClose = false)
     {
-        ToggleActionMenu(_actionMenuSocialContainer, _actionMenuSocialSubMenu, _actionMenuSocialButton, ref _isActionMenuSocialExpanded, 135, true);
-        ToggleActionMenu(_actionMenuScoutContainer, _actionMenuScoutSubMenu, _actionMenuScoutButton, ref _isActionMenuScoutExpanded, 135, true);
-        ToggleActionMenu(_actionMenuBusinessContainer, _actionMenuBusinessSubMenu, _actionMenuBusinessButton, ref _isActionMenuBusinessExpanded, 180, true);
-        ToggleActionMenu(_actionMenuManagementContainer, _actionMenuManagementSubMenu, _actionMenuManagementButton, ref _isActionMenuManagementExpanded, 180, true);
-        ToggleActionMenu(_actionMenuGigContainer, _actionMenuGigSubMenu, _actionMenuGigButton, ref _isActionMenuGigExpanded, 135, true);
-        ToggleActionMenu(_actionMenuProduceContainer, _actionMenuProduceSubMenu, _actionMenuProduceButton, ref _isActionMenuProduceExpanded, 135, forceClose);
+        toggleActionMenuByIndex(4, forceClose);
+    }
+    private void toggleActionMenu_Produce(bool forceClose = false)
+    {
+        toggleActionMenuByIndex(5, forceClose);
     }
 
     //main action button click listeners
-    private void Click_ToggleActionMenu_Social()
+    private void click_ToggleActionMenu_Social()
     {
-        ToggleActionMenu_Social();
+        toggleActionMenu_Social();
         EventSystem.current.SetSelectedGameObject(null);//prevent selecting the button
     }
-    private void Click_ToggleActionMenu_Scout()
+    private void click_ToggleActionMenu_Scout()
     {
-        ToggleActionMenu_Scout();
+        toggleActionMenu_Scout();
         EventSystem.current.SetSelectedGameObject(null);//prevent selecting the button
     }
-    private void Click_ToggleActionMenu_Business()
+    private void click_ToggleActionMenu_Business()
     {
-        ToggleActionMenu_Business();
+        toggleActionMenu_Business();
         EventSystem.current.SetSelectedGameObject(null);//prevent selecting the button
     }
-    private void Click_ToggleActionMenu_Management()
+    private void click_ToggleActionMenu_Management()
     {
-        ToggleActionMenu_Management();
+        toggleActionMenu_Management();
         EventSystem.current.SetSelectedGameObject(null);//prevent selecting the button
     }
-    private void Click_ToggleActionMenu_Gig()
+    private void click_ToggleActionMenu_Gig()
     {
-        ToggleActionMenu_Gig();
+        toggleActionMenu_Gig();
         EventSystem.current.SetSelectedGameObject(null);//prevent selecting the button
     }
-    private void Click_ToggleActionMenu_Produce()
+    private void click_ToggleActionMenu_Produce()
     {
-        ToggleActionMenu_Produce();
+        toggleActionMenu_Produce();
         EventSystem.current.SetSelectedGameObject(null);//prevent selecting the button
     }
 
     //submenu click listeners
-    private void Click_ToggleActionSubMenu_Scout_Travel()
+    private void click_ToggleActionSubMenu_Scout_Travel()
     {
-        ToggleActionMenu_Social(true);
+        toggleActionMenu_Social(true);
         Managers.UI.TravelMenu.Toggle();
     }
 
