@@ -13,7 +13,7 @@ public class UI_Calendar_TimelineEventBehavior : MonoBehaviour, IPointerEnterHan
         ScheduledEvent = scheduledEvent;
         CancelButton = gameObject.transform.Find("CalendarTimelineEvent_CloseButton").gameObject;
 
-        LeanTween.scaleX(CancelButton, 0, 0f).setEase(LeanTweenType.easeInOutExpo);
+        LeanTween.scaleX(CancelButton, 0, 0f);
 
         CancelButton.GetComponent<Button>().onClick.AddListener(() => {
             ScheduledEvent.SimAction.Cancel();

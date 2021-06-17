@@ -1154,6 +1154,9 @@ public class UI_Calendar : MonoBehaviour
                 calendarTimelineEvent.GetComponent<Image>().color = Managers.UI.Colors_events[scheduledEvent.SimAction.ID()];
                 //set tooltip
                 Managers.UI.Tooltip.SetTooltip(calendarTimelineEvent, scheduledEvent);
+                //cancel button
+                UI_Calendar_TimelineEventBehavior behavior = calendarTimelineEvent.GetComponent<UI_Calendar_TimelineEventBehavior>();
+                behavior.Init(scheduledEvent);
             }
         }
     }
