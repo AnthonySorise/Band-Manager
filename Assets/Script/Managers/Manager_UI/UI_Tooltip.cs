@@ -56,7 +56,7 @@ public class UI_Tooltip : MonoBehaviour
         string header = simEvent.SimAction.Description();
         List<Func<string>> textListFunctions = new List<Func<string>>();
         textListFunctions.Add(() => simEvent.SimAction.IsHappeningNow() ? "Happening Now" : StringUtilities.TimeSpanToString(simEvent.ScheduledDT - Managers.Time.CurrentDT));
-        if (Managers.Sim.NPC.GetPlayerCharacter().CurrentCity != simEvent.SimAction.LocationID())
+        if (Managers.Sim.NPC.GetPlayerCharacter().CurrentCity != simEvent.SimAction.LocationID() && simEvent.SimAction.ID() != SimActionID.NPC_Travel)
         {
             textListFunctions.Add(() => "in " + simEvent.SimAction.Location().cityName);
         }
