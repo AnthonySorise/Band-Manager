@@ -232,6 +232,13 @@ public class Sim_Travel : MonoBehaviour
             return "Must select city to travel to";
         }
 
+        SimAction eventHappeningNow = Managers.Sim.EventHappeningNow(npcID);
+
+        if (eventHappeningNow != null)
+        {
+            return "Busy " + eventHappeningNow.Description();
+        }
+
         TimeSpan travelTime = TravelTime(transportationID, fromCityID, toCityID);
         TimeSpan automobileTravelTime = TravelTime(TransportationID.Automobile_ShadyVan, fromCityID, toCityID);
 
@@ -284,31 +291,38 @@ public class Sim_Travel : MonoBehaviour
         }
         return "";
     }
+
     public bool IsValidSIMScheduleTravel(int npcID, TransportationID transportationID)
     {
         return IsValidSIMScheduleTravel_Message(npcID, transportationID) == "";
     }
-
     public string IsValidSIMScheduleTravel_Message(int npcID, TransportationID transportationID)
     {
         NPC character = Managers.Sim.NPC.GetNPC(npcID);
         SimEvent_Scheduled nextScheduledEvent = Managers.Sim.GetNextScheduledSimEvent(npcID);
         SimEvent_Scheduled currentEvent = Managers.Sim.GetSimEventHappeningNow(npcID);
 
-        if (character == null || nextScheduledEvent == null || nextScheduledEvent.SimAction.LocationID() == null)
+        if (character == null || (nextScheduledEvent != null && nextScheduledEvent.SimAction.LocationID() == null))
         {
             return "false";
+        }
+        else if (nextScheduledEvent == null)
+        {
+            return "No events scheduled";
         }
         
         CityID fromCityID = character.CurrentCity;
         CityID toCityID = nextScheduledEvent.SimAction.LocationID().Value;
-        DateTime departureTimeNoSleep = departureTimeForScheduledEvent(npcID, transportationID, fromCityID, toCityID, nextScheduledEvent.ScheduledDT, true);
 
-        if (nextScheduledEvent.SimAction.ID() == SimActionID.NPC_Travel ||
-        currentEvent !=  null ||
-        departureTimeNoSleep < Managers.Time.CurrentDT)
+        if(fromCityID == toCityID && nextScheduledEvent.SimAction.ID() != SimActionID.NPC_Travel)
         {
-            return "false";
+            return "Next event does not require travel";
+        }
+
+        DateTime departureTimeNoSleep = departureTimeForScheduledEvent(npcID, transportationID, fromCityID, toCityID, nextScheduledEvent.ScheduledDT, true);
+        if (departureTimeNoSleep < Managers.Time.CurrentDT)
+        {
+            return "Won't make it in time";
         }
         return isValidSIMTravel_Message(npcID, transportationID, toCityID);
     }
@@ -329,9 +343,6 @@ public class Sim_Travel : MonoBehaviour
         DateTime departureTimeWithSleep = departureTimeForScheduledEvent(npcID, transportationID, fromCityID, toCityID.Value, nextScheduledEvent.ScheduledDT);
         DateTime departureTimeNoSleep = departureTimeForScheduledEvent(npcID, transportationID, fromCityID, toCityID.Value, nextScheduledEvent.ScheduledDT, true);
 
-        Debug.Log("With Sleep: " + departureTimeWithSleep);
-        Debug.Log("No Sleep: " + departureTimeNoSleep);
-
         //IDs
         SimAction_IDs ids = new SimAction_IDs(SimActionID.NPC_Travel, npcID, fromCityID);
 
@@ -350,6 +361,7 @@ public class Sim_Travel : MonoBehaviour
         {
             UnityAction option01 = () => {
                 SIM_InitiateTravel(npcID, transportationID, toCityID.Value, departureTimeWithSleep);
+                Managers.UI.TravelMenu.Destroy();
             };
             optionCallbacks.Add(option01);
         }
@@ -357,6 +369,7 @@ public class Sim_Travel : MonoBehaviour
         {
             UnityAction option02 = () => {
                 SIM_InitiateTravel(npcID, transportationID, toCityID.Value, departureTimeNoSleep);
+                Managers.UI.TravelMenu.Destroy();
             };
             optionCallbacks.Add(option02);
         }
@@ -417,16 +430,19 @@ public class Sim_Travel : MonoBehaviour
 
         //Callbacks
         UnityAction callback = () => { };
+
+        List<UnityAction> optionCallbacks = new List<UnityAction>();
         UnityAction option01 = () => {
             SIM_InitiateTravel(npcID, transportationID, toCityID);
+            Managers.UI.TravelMenu.Destroy();
         };
-        UnityAction option02 = () => {
-            SIM_InitiateTravel(npcID, transportationID, toCityID, Managers.Sim.NPC.NextWaketime());
-        };
-        List<UnityAction> optionCallbacks = new List<UnityAction>();
         optionCallbacks.Add(option01);
         if (Managers.Sim.NPC.IsOverlappedWithSleepTime(Managers.Time.CurrentDT, travelTime))
         {
+            UnityAction option02 = () => {
+                SIM_InitiateTravel(npcID, transportationID, toCityID, Managers.Sim.NPC.NextWaketime());
+                Managers.UI.TravelMenu.Destroy();
+            };
             optionCallbacks.Add(option02);
         }
         optionCallbacks.Add(null);
@@ -441,25 +457,27 @@ public class Sim_Travel : MonoBehaviour
             Transportation transportation = TransportationModels[character.AttachedTransportation.Value];
             bodyText += "\n\n" + transportation.Name + " will be returned to " + characterBaseCityData.cityName;
         }
-        if (Managers.Sim.NPC.IsOverlappedWithSleepTime(Managers.Time.CurrentDT, travelTime))
+        if (optionCallbacks.Count == 3)
         {
             bodyText += "\n\nIt's a bit late to be traveling that distance, hit the road anyway?";
         }
 
-        Action<GameObject> tt_option01 = (GameObject go) => { Managers.UI.Tooltip.SetTooltip(go, "Start travel to " + toCityData.cityName); };
-        Action<GameObject> tt_option02 = (GameObject go) => { Managers.UI.Tooltip.SetTooltip(go, "Get a full night's rest and leave first thing in the morning."); };
-
-        SimAction_PopupOptionConfig popupOptionConfig01 = new SimAction_PopupOptionConfig("Let's Go!", tt_option01);
-        SimAction_PopupOptionConfig popupOptionConfig02 = new SimAction_PopupOptionConfig("Let's Wait", tt_option02);
-
         List<SimAction_PopupOptionConfig> popupOptionsConfig = new List<SimAction_PopupOptionConfig>();
 
+        Action<GameObject> tt_option01 = (GameObject go) => { Managers.UI.Tooltip.SetTooltip(go, "Start travel to " + toCityData.cityName); };
+        SimAction_PopupOptionConfig popupOptionConfig01 = new SimAction_PopupOptionConfig("Let's Go!", tt_option01);
         popupOptionsConfig.Add(popupOptionConfig01);
-        if(Managers.Sim.NPC.IsOverlappedWithSleepTime(Managers.Time.CurrentDT, travelTime))
+
+        if (optionCallbacks.Count == 3)
         {
+            Action<GameObject> tt_option02 = (GameObject go) => { Managers.UI.Tooltip.SetTooltip(go, "Get a full night's rest and leave first thing in the morning."); };
+            SimAction_PopupOptionConfig popupOptionConfig02 = new SimAction_PopupOptionConfig("Let's Wait", tt_option02);
             popupOptionsConfig.Add(popupOptionConfig02);
         }
-        popupOptionsConfig.Add(null);
+
+        Action<GameObject> tt_option03 = (GameObject go) => { Managers.UI.Tooltip.SetTooltip(go, ""); };
+        SimAction_PopupOptionConfig popupOptionConfig03 = new SimAction_PopupOptionConfig("Let's Not", tt_option03);
+        popupOptionsConfig.Add(popupOptionConfig03);
 
         SimAction_PopupConfig popupConfig = new SimAction_PopupConfig(popupOptionsConfig, true, headerText, bodyText, Asset_png.Popup_Vinyl, Asset_wav.Click_04);
 
