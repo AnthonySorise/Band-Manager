@@ -84,11 +84,16 @@ public class UI_Tooltip : MonoBehaviour
     }
     private void initTooltipBehavior(GameObject go, string header, List<string> textList, bool hasDelay = false, List<Func<string>>textListFunctions = null)
     {
+        if(String.IsNullOrEmpty(header) && (textList.Count == 0 || (textList.Count == 1 && string.IsNullOrEmpty(textList[0])))){
+            return;
+        }
+
         TooltipBehavior tooltipBehavior = go.GetComponent<TooltipBehavior>();
         if (tooltipBehavior == null)
         {
             tooltipBehavior = go.AddComponent<TooltipBehavior>();
         }
+
         tooltipBehavior.Header = header;
         tooltipBehavior.TextList = textList;
         tooltipBehavior.TextListFunctions = textListFunctions;

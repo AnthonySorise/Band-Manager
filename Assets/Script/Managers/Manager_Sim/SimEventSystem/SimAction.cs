@@ -190,11 +190,6 @@ public class SimAction {
 
     public void Cancel(bool hasConfirmationPopup = true)
     {
-        if (ID() == SimActionID.NPC_Travel)
-        {
-            hasConfirmationPopup = false;
-        }
-
         if (!WillHappenLater())
         {
             return;
@@ -249,6 +244,10 @@ public class SimAction {
         {
             string headerText = "Cancel?";
             string bodyText = CancelDescription();
+            if (String.IsNullOrEmpty(bodyText))
+            {
+                bodyText = "Cancel " + Description() + "?";
+            }
 
             Action<GameObject> tt_option01 = (GameObject go) => { Managers.UI.Tooltip.SetTooltip(go, CancelDescription()); };
             Action<GameObject> tt_option02 = (GameObject go) => { Managers.UI.Tooltip.SetTooltip(go, "No, keep the plans."); };
