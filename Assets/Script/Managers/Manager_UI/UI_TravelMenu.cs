@@ -470,11 +470,11 @@ public class UI_TravelMenu : MonoBehaviour
         }
 
         if ( isNextEventNew ||
-            _onLastUpdate_CurrentCity != playerCharacter.CurrentCity ||
-            _onLastUpdate_ToCity != _toCity ||
-            _onLastUpdate_CityEnRoute != playerCharacter.CityEnRoute ||
-            _onLastUpdate_NumTransportationProperties != playerCharacter.Properties.Count ||
-            _onLastUpdate_TransportationID != _transportationID)
+            _onLastUpdate_CurrentCity != playerCharacter.CurrentCity ||                         //new current city
+            _onLastUpdate_ToCity != _toCity ||                                                  //new to city
+            _onLastUpdate_CityEnRoute != playerCharacter.CityEnRoute ||                         //traveling status
+            _onLastUpdate_NumTransportationProperties != playerCharacter.Properties.Count ||    //new transportations
+            _onLastUpdate_TransportationID != _transportationID)                                //selected transport
         {
             updateButtons();
             updateTexts();
@@ -485,10 +485,6 @@ public class UI_TravelMenu : MonoBehaviour
             _onLastUpdate_CityEnRoute = playerCharacter.CityEnRoute;
             _onLastUpdate_NumTransportationProperties = playerCharacter.Properties.Count;
             _onLastUpdate_TransportationID = _transportationID;
-        }
-        else if (playerCharacter.CityEnRoute != null)
-        {
-            updateTexts();
         }
     }
 
