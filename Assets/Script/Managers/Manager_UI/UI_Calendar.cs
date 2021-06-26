@@ -1092,6 +1092,7 @@ public class UI_Calendar : MonoBehaviour
             {
                 //create and place scheduled item
                 GameObject calendarTimelineEvent = MonoBehaviour.Instantiate(prefab_CalendarTimelineEvent);
+                calendarTimelineEvent.AddComponent<UI_Calendar_TimelineEventBehavior>();
                 calendarTimelineEvent.name = "CalendarTimelineEvent_" + scheduledEvent.ScheduledDT.ToString();
                 RectTransform CalendarTimelineEvent_RectTransform = calendarTimelineEvent.GetComponent<RectTransform>();
                 CalendarTimelineEvent_RectTransform.SetParent(calendarTimelineTransform, false);
