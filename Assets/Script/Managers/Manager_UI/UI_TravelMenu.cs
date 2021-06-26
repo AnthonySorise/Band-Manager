@@ -459,34 +459,61 @@ public class UI_TravelMenu : MonoBehaviour
 
         NPC_BandManager playerCharacter = Managers.Sim.NPC.GetPlayerCharacter();
         SimEvent_Scheduled nextEvent = Managers.Sim.GetNextScheduledSimEvent(playerCharacter.ID);
-        bool isNextEventNew = false;
+
+        bool isNextEventChange = false;
         if (nextEvent != null && _onLastUpdate_NextEventDT != null)
         {
-            isNextEventNew = nextEvent.ScheduledDT != _onLastUpdate_NextEventDT;
+            isNextEventChange = nextEvent.ScheduledDT != _onLastUpdate_NextEventDT;
         }
         else if (nextEvent !=  null && _onLastUpdate_NextEventDT == null || nextEvent == null && _onLastUpdate_NextEventDT != null)
         {
-            isNextEventNew = true;
+            isNextEventChange = true;
         }
 
-        if ( isNextEventNew ||
-            _onLastUpdate_CurrentCity != playerCharacter.CurrentCity ||                         //new current city
-            _onLastUpdate_ToCity != _toCity ||                                                  //new to city
-            _onLastUpdate_CityEnRoute != playerCharacter.CityEnRoute ||                         //traveling status
-            _onLastUpdate_NumTransportationProperties != playerCharacter.Properties.Count ||    //new transportations
-            _onLastUpdate_TransportationID != _transportationID)                                //selected transport
+        bool isCurrentCityChange = false;
+        if (_onLastUpdate_CurrentCity != playerCharacter.CurrentCity)
+        {
+            isCurrentCityChange = true;
+            _onLastUpdate_CurrentCity = playerCharacter.CurrentCity;
+        }
+
+        bool isToCityChange = false;
+        if (_onLastUpdate_ToCity != _toCity)
+        {
+            isToCityChange = true;
+            _onLastUpdate_ToCity = _toCity;
+        }
+
+        bool isTravelingStatusChange = false;
+        if (_onLastUpdate_CityEnRoute != playerCharacter.CityEnRoute)
+        {
+            isTravelingStatusChange = true;
+            _onLastUpdate_CityEnRoute = playerCharacter.CityEnRoute;
+        }
+
+        bool isNumTransportsChange = false;
+        if (_onLastUpdate_NumTransportationProperties != playerCharacter.Properties.Count)
+        {
+            isNumTransportsChange = true;
+            _onLastUpdate_NumTransportationProperties = playerCharacter.Properties.Count;
+        }
+
+        bool isSelectedTransportChange = false;
+        if (_onLastUpdate_TransportationID != _transportationID)
+        {
+            isSelectedTransportChange = true;
+            _onLastUpdate_TransportationID = _transportationID;
+        }
+
+        if (isNextEventChange ||
+            isCurrentCityChange ||
+            isToCityChange ||
+            isTravelingStatusChange ||
+            isNumTransportsChange ||
+            isSelectedTransportChange)
         {
             updateButtons();
             updateTexts();
-
-            _onLastUpdate_NextEventDT = nextEvent?.ScheduledDT;
-            _onLastUpdate_CurrentCity = playerCharacter.CurrentCity;
-            _onLastUpdate_ToCity = _toCity;
-            _onLastUpdate_CityEnRoute = playerCharacter.CityEnRoute;
-            _onLastUpdate_NumTransportationProperties = playerCharacter.Properties.Count;
-            _onLastUpdate_TransportationID = _transportationID;
         }
     }
-
-
 }

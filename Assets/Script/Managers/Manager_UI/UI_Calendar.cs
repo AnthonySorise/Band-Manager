@@ -13,8 +13,9 @@ public class UI_Calendar : MonoBehaviour
     //Calendar UI Variables
     private DateTime? _calendarLastUpdateDT = null;
     private DateTime? _calendarSelectedDay = null;
-    private DateTime? _calendarSelectedDay_previous = null;
     private int _calendarPage = 0;
+
+    private int _timelineWidth = 0;
 
     public GameObject prefab_CalendarTimelineEvent;
 
@@ -170,7 +171,8 @@ public class UI_Calendar : MonoBehaviour
     private Image[][] _calendarDayBoxIcons_ImageComponent = new Image[14][];
 
     //update vars
-    int _onLastUpdate_playerScheduledEvents = 0;
+    int _onLastUpdate_PlayerScheduledEvents = 0;
+    private DateTime? _onLastUpdate_SelectedDayPrevious = null;
 
     void Start()
     {
@@ -509,6 +511,8 @@ public class UI_Calendar : MonoBehaviour
             }
         }
 
+        _timelineWidth = (int)(_calendarTimeline.GetComponent<RectTransform>().sizeDelta.x);
+
         //tooltips
         Managers.UI.Tooltip.SetTooltip(_toggleCalendarButton.gameObject, "Toggle Calendar", InputCommand.ToggleCalendar, "", true);
         Managers.UI.Tooltip.SetTooltip(_calendarPagePreviousButton.gameObject, "Previous Week", InputCommand.CalendarPagePrevious, "", true);
@@ -828,13 +832,12 @@ public class UI_Calendar : MonoBehaviour
         }
     }
 
-    public void UpdateCalendarPanel(bool isUpdateWeek01 = true, bool isUpdateWeek02 = true, bool forceUpdateCalendarTimeline = false)
+    private void UpdateCalendarPanel(bool isUpdateWeek01 = true, bool isUpdateWeek02 = true)
     {
         DateTime startOfDay = Managers.Time.CurrentDT.Date;
         DateTime endOfTheDay = Managers.Time.CurrentDT.AddDays(1).Date;
         float timePercentage = (float)(Managers.Time.CurrentDT.Ticks - startOfDay.Ticks) / (float)(endOfTheDay.Ticks - startOfDay.Ticks);
         int calendarBoxWidth = (int)(_calendarWeek01Sunday.GetComponent<RectTransform>().sizeDelta.x);
-        int timelineWidth = (int)(_calendarTimeline.GetComponent<RectTransform>().sizeDelta.x);
 
         //Date tracking
         if (_calendarLastUpdateDT == null)
@@ -1025,8 +1028,14 @@ public class UI_Calendar : MonoBehaviour
                 }
             }
         }
+    }
 
-        //Update Timeline
+    private void updateTimelineOverlay()
+    {
+        DateTime startOfDay = Managers.Time.CurrentDT.Date;
+        DateTime endOfTheDay = Managers.Time.CurrentDT.AddDays(1).Date;
+        float timePercentage = (float)(Managers.Time.CurrentDT.Ticks - startOfDay.Ticks) / (float)(endOfTheDay.Ticks - startOfDay.Ticks);
+
         //Update Timeline - Date
         _calendarTimelineSelectedDateText.text = _calendarSelectedDay.Value.ToString("MM/dd/yyyy");
         //Update Timeline - Overlay
@@ -1034,48 +1043,55 @@ public class UI_Calendar : MonoBehaviour
         int timeLineFill = 0;
         if (DateTime.Compare(_calendarSelectedDay.Value, Managers.Time.CurrentDT.Date) == 0)
         {
-            timeLineFill = (int)(timelineWidth * timePercentage);
+            timeLineFill = (int)(_timelineWidth * timePercentage);
         }
         timelineTimeOverlayRectTransform.sizeDelta = new Vector2(timeLineFill, timelineTimeOverlayRectTransform.sizeDelta.y);
-        //Update Timeline - Scheduled Items
-        Transform calendarTimelineTransform = _calendarTimeline.GetComponent<RectTransform>();
-        bool isNewCalendarSelectedDay = false;
-        if (_calendarSelectedDay_previous != _calendarSelectedDay)
-        {
-            isNewCalendarSelectedDay = true;
-            _calendarSelectedDay_previous = _calendarSelectedDay;
-        }
-        if (isNewCalendarSelectedDay || forceUpdateCalendarTimeline)
-        {
-            foreach (Transform child in calendarTimelineTransform)
-            {
-                if (child.gameObject.name.Contains("CalendarTimelineEvent_"))
-                {
-                    Destroy(child.gameObject);
-                }
-            }
-        }
+    }
 
+    private void clearTimelineItems()
+    {
+        Transform calendarTimelineTransform = _calendarTimeline.GetComponent<RectTransform>();
         List<SimEvent_Scheduled> playerScheduledEvents = Managers.Sim.GetScheduledSimEvents(npcID(), null, _calendarSelectedDay.Value);
 
-        if (_onLastUpdate_playerScheduledEvents != playerScheduledEvents.Count)
+        foreach (RectTransform child in calendarTimelineTransform)
         {
-            foreach (RectTransform child in calendarTimelineTransform)
+            if (child.gameObject.name.Contains("CalendarTimelineEvent_"))
             {
-                if (child.gameObject.name.Contains("CalendarTimelineEvent_"))
-                {
-                    Destroy(child.gameObject);
-                }
+                Destroy(child.gameObject);
             }
-            _onLastUpdate_playerScheduledEvents = playerScheduledEvents.Count;
+        }
+        _onLastUpdate_PlayerScheduledEvents = playerScheduledEvents.Count;
+    }
+
+    private void updateTimelineItems()
+    {
+        //Update Timeline - Scheduled Items
+        Transform calendarTimelineTransform = _calendarTimeline.GetComponent<RectTransform>();
+
+        //Day Selected
+        List<SimEvent_Scheduled> playerScheduledEvents = Managers.Sim.GetScheduledSimEvents(npcID(), null, _calendarSelectedDay.Value);
+        foreach (SimEvent_Scheduled scheduledEvent in playerScheduledEvents)
+        {
+            instantiateTimelineItems(scheduledEvent);
+        }
+        //Day Before Selected remainder
+        List<SimEvent_Scheduled> playerScheduledEvents_DayBefore = Managers.Sim.GetScheduledSimEvents(npcID(), null, _calendarSelectedDay.Value.AddDays(-1));
+        foreach (SimEvent_Scheduled scheduledEvent in playerScheduledEvents_DayBefore)
+        {
+            instantiateTimelineItems(scheduledEvent, true);
         }
 
-        foreach (SimEvent_Scheduled scheduledEvent in playerScheduledEvents)
+        void instantiateTimelineItems(SimEvent_Scheduled scheduledEvent, bool instantiatingRemainder = false)
         {
             bool isExist = false;
             foreach (RectTransform child in calendarTimelineTransform)
             {
-                if (child.gameObject.name == "CalendarTimelineEvent_" + scheduledEvent.ScheduledDT.ToString())
+                string nameToCheck = "CalendarTimelineEvent_" + scheduledEvent.ScheduledDT.ToString();
+                if (instantiatingRemainder)
+                {
+                    nameToCheck += "_Remainder";
+                }
+                if (child.gameObject.name == nameToCheck)
                 {
                     isExist = true;
                 }
@@ -1087,8 +1103,13 @@ public class UI_Calendar : MonoBehaviour
                     hasRemainder = true;
                 }
             }
-            TimeSpan duration = scheduledEvent.SimAction.Duration();
-            if (!isExist && duration != TimeSpan.Zero && Managers.UI.Colors_events.ContainsKey(scheduledEvent.SimAction.ID()))
+
+            if (instantiatingRemainder && !hasRemainder)
+            {
+                return;
+            }
+
+            if (!isExist && Managers.UI.Colors_events.ContainsKey(scheduledEvent.SimAction.ID()))
             {
                 //create and place scheduled item
                 GameObject calendarTimelineEvent = MonoBehaviour.Instantiate(prefab_CalendarTimelineEvent);
@@ -1098,63 +1119,37 @@ public class UI_Calendar : MonoBehaviour
                 CalendarTimelineEvent_RectTransform.SetParent(calendarTimelineTransform, false);
                 //set width
                 TimeSpan fullDay = new TimeSpan(24, 0, 0);
-                if (hasRemainder)
+                TimeSpan duration;
+                if (instantiatingRemainder)
                 {
-                    duration = fullDay - scheduledEvent.ScheduledDT.TimeOfDay;
+                    duration = scheduledEvent.ScheduledDT.Add(scheduledEvent.SimAction.Duration()).TimeOfDay;
                 }
-                int width = (int)(timelineWidth * (duration.TotalSeconds / fullDay.TotalSeconds));
+                else{
+                    duration = scheduledEvent.SimAction.Duration();
+                    if (hasRemainder)
+                    {
+                        duration = fullDay - scheduledEvent.ScheduledDT.TimeOfDay;
+                    }
+                }
+
+                int width = (int)(_timelineWidth * (duration.TotalSeconds / fullDay.TotalSeconds));
                 CalendarTimelineEvent_RectTransform.sizeDelta = new Vector2(width, CalendarTimelineEvent_RectTransform.sizeDelta.y);
-                //set position
-                TimeSpan timeSinceMidnight = scheduledEvent.ScheduledDT - scheduledEvent.ScheduledDT.Date;
-                int startPosition = (int)(timelineWidth * (timeSinceMidnight.TotalSeconds / fullDay.TotalSeconds));
-                CalendarTimelineEvent_RectTransform.anchoredPosition = new Vector2(startPosition, 0);
-                //set color
-                calendarTimelineEvent.GetComponent<Image>().color = Managers.UI.Colors_events[scheduledEvent.SimAction.ID()];
-                //set tooltip
-                Managers.UI.Tooltip.SetTooltip(calendarTimelineEvent, scheduledEvent);
-                //cancel button
-                UI_Calendar_TimelineEventBehavior behavior = calendarTimelineEvent.GetComponent<UI_Calendar_TimelineEventBehavior>();
-                behavior.Init(scheduledEvent);
-            }
-        }
-        //Day Before remainder
-        List<SimEvent_Scheduled> playerScheduledEvents_DayBefore = Managers.Sim.GetScheduledSimEvents(npcID(), null, _calendarSelectedDay.Value.AddDays(-1));
-        foreach (SimEvent_Scheduled scheduledEvent in playerScheduledEvents_DayBefore)
-        {
-            bool isExist = false;
-            foreach (RectTransform child in calendarTimelineTransform)
-            {
-                if (child.gameObject.name == "CalendarTimelineEvent_" + scheduledEvent.ScheduledDT.ToString() + "_Remainder")
-                {
-                    isExist = true;
-                }
-            }
-            bool hasRemainder = false;
-            {
-                if (scheduledEvent.ScheduledDT.Day != scheduledEvent.ScheduledDT.Add(scheduledEvent.SimAction.Duration()).Day)
-                {
-                    hasRemainder = true;
-                }
-            }
-            if (hasRemainder && !isExist && Managers.UI.Colors_events.ContainsKey(scheduledEvent.SimAction.ID()))
-            {
-                //create and place scheduled item
-                GameObject calendarTimelineEvent = MonoBehaviour.Instantiate(prefab_CalendarTimelineEvent);
-                calendarTimelineEvent.name = "CalendarTimelineEvent_" + scheduledEvent.ScheduledDT.ToString() + "_Remainder";
-                RectTransform CalendarTimelineEvent_RectTransform = calendarTimelineEvent.GetComponent<RectTransform>();
-                CalendarTimelineEvent_RectTransform.SetParent(calendarTimelineTransform, false);
-                //set width
-                TimeSpan fullDay = new TimeSpan(24, 0, 0);
-                TimeSpan duration = scheduledEvent.ScheduledDT.Add(scheduledEvent.SimAction.Duration()).TimeOfDay;
-                int width = (int)(timelineWidth * (duration.TotalSeconds / fullDay.TotalSeconds));
-                CalendarTimelineEvent_RectTransform.sizeDelta = new Vector2(width, CalendarTimelineEvent_RectTransform.sizeDelta.y);
+
                 //set position
                 int startPosition = 0;
+                if (!instantiatingRemainder)
+                {
+                    TimeSpan timeSinceMidnight = scheduledEvent.ScheduledDT - scheduledEvent.ScheduledDT.Date;
+                    startPosition = (int)(_timelineWidth * (timeSinceMidnight.TotalSeconds / fullDay.TotalSeconds));
+                }
                 CalendarTimelineEvent_RectTransform.anchoredPosition = new Vector2(startPosition, 0);
+
                 //set color
                 calendarTimelineEvent.GetComponent<Image>().color = Managers.UI.Colors_events[scheduledEvent.SimAction.ID()];
+
                 //set tooltip
                 Managers.UI.Tooltip.SetTooltip(calendarTimelineEvent, scheduledEvent);
+
                 //cancel button
                 UI_Calendar_TimelineEventBehavior behavior = calendarTimelineEvent.GetComponent<UI_Calendar_TimelineEventBehavior>();
                 behavior.Init(scheduledEvent);
@@ -1174,9 +1169,34 @@ public class UI_Calendar : MonoBehaviour
         }
     }
 
-    void Update()
+    private void Update()
     {
-        
+        bool isSelectedDayChange = false;
+        if (_onLastUpdate_SelectedDayPrevious != _calendarSelectedDay)
+        {
+            isSelectedDayChange = true;
+            _onLastUpdate_SelectedDayPrevious = _calendarSelectedDay;
+        }
+
+        bool isNewScheduledEvent = false;
+        List<SimEvent_Scheduled> playerScheduledEvents = Managers.Sim.GetScheduledSimEvents(npcID(), null, _calendarSelectedDay.Value);
+        if (_onLastUpdate_PlayerScheduledEvents != playerScheduledEvents.Count)
+        {
+            isNewScheduledEvent = true;
+            _onLastUpdate_PlayerScheduledEvents = playerScheduledEvents.Count;
+        }
+
+        if (!Managers.Time.IsPaused || isSelectedDayChange || isNewScheduledEvent)
+        {
+            updateTimelineOverlay();
+        }
+
+        if (isSelectedDayChange || isNewScheduledEvent)
+        {
+            clearTimelineItems();
+            updateTimelineItems();
+        }
+
     }
 }
 
