@@ -11,10 +11,10 @@ using UnityEngine.UI;
 public class UI_Calendar : MonoBehaviour
 {
     //Calendar UI Variables
-    private DateTime? _calendarLastUpdateDT = null;
     private DateTime? _calendarSelectedDay = null;
     private int _calendarPage = 0;
 
+    private int calendarBoxWidth = 0;
     private int _timelineWidth = 0;
 
     public GameObject prefab_CalendarTimelineEvent;
@@ -171,9 +171,10 @@ public class UI_Calendar : MonoBehaviour
     private Image[][] _calendarDayBoxIcons_ImageComponent = new Image[14][];
 
     //update vars
-    int _onLastUpdate_NumPlayerScheduledEvents = 0;
+    private DayOfWeek? _onLastUpdate_DayOfWeek = null;
     private DateTime? _onLastUpdate_SelectedDayPrevious = null;
-
+    int _onLastUpdate_NumPlayerScheduledEvents = 0;
+    
     void Start()
     {
         prefab_CalendarTimelineEvent = Resources.Load<GameObject>("Prefabs/UI/CalendarTimelineEvent");
@@ -511,6 +512,7 @@ public class UI_Calendar : MonoBehaviour
             }
         }
 
+        calendarBoxWidth = (int)(_calendarWeek01Sunday.GetComponent<RectTransform>().sizeDelta.x);
         _timelineWidth = (int)(_calendarTimeline.GetComponent<RectTransform>().sizeDelta.x);
 
         //tooltips
@@ -755,15 +757,24 @@ public class UI_Calendar : MonoBehaviour
 
         void animationPhaseTwo()
         {
-            UpdateCalendarPanel(isForward, !isForward);
+            updateCalendarTexts(isForward, !isForward);
+            updateCalendarEventIcons(isForward, !isForward);
+            updateCalendarOverlays(isForward, !isForward);
+
             fadeInCalendarWeek(weekLeaving, 0f);
             fadeOutCalendarWeek(weekMoving, 0f);
             LeanTween.move(weekMoving.GetComponent<RectTransform>(), weekMovingLocation, 0f).setDelay(0f).setOnComplete(animationPhaseThree);
         }
         void animationPhaseThree()
         {
-            UpdateCalendarPanel(!isForward, isForward);
+            updateCalendarTexts(!isForward, isForward);
+            updateCalendarEventIcons(!isForward, isForward);
+            updateCalendarOverlays(!isForward, isForward);
+
             fadeInCalendarWeek(weekMoving, 0, true);
+
+            updateCalendarSelectedDay();
+
             _isAnimatingCalendarPagination = false;
         }
 
@@ -832,32 +843,16 @@ public class UI_Calendar : MonoBehaviour
         }
     }
 
-    private void UpdateCalendarPanel(bool isUpdateWeek01 = true, bool isUpdateWeek02 = true)
+
+    private void updateCalendarDateChangePagination(bool isNewDay, bool isNewWeek)
     {
-        DateTime startOfDay = Managers.Time.CurrentDT.Date;
-        DateTime endOfTheDay = Managers.Time.CurrentDT.AddDays(1).Date;
-        float timePercentage = (float)(Managers.Time.CurrentDT.Ticks - startOfDay.Ticks) / (float)(endOfTheDay.Ticks - startOfDay.Ticks);
-        int calendarBoxWidth = (int)(_calendarWeek01Sunday.GetComponent<RectTransform>().sizeDelta.x);
-
-        //Date tracking
-        if (_calendarLastUpdateDT == null)
+        if (isNewDay)
         {
-            _calendarLastUpdateDT = Managers.Time.CurrentDT;
-        }
-        if (_calendarSelectedDay == null)
-        {
-            _calendarSelectedDay = Managers.Time.CurrentDT.Date;
-        }
-        DayOfWeek lastDayOfWeek = _calendarLastUpdateDT.Value.DayOfWeek;
-        _calendarLastUpdateDT = Managers.Time.CurrentDT;
-
-        if (lastDayOfWeek != Managers.Time.CurrentDT.DayOfWeek)//new day
-        {
-            if (DateTime.Compare(_calendarSelectedDay.Value, Managers.Time.CurrentDT) == -1)
+            if (_calendarSelectedDay == null || DateTime.Compare(_calendarSelectedDay.Value, Managers.Time.CurrentDT) == -1)
             {
                 _calendarSelectedDay = Managers.Time.CurrentDT.Date;
             }
-            if (lastDayOfWeek == DayOfWeek.Saturday && Managers.Time.CurrentDT.DayOfWeek == DayOfWeek.Sunday)//new week
+            if (isNewWeek)
             {
                 if (_calendarPage > 0)
                 {
@@ -870,22 +865,20 @@ public class UI_Calendar : MonoBehaviour
                 else
                 {
                     CalendarPaginationAnimation();
-                    return;
                 }
             }
         }
+    }
 
-
-        //Update weeks
+    private void updateCalendarTexts(bool isUpdateWeek01 = true, bool isUpdateWeek02 = true)
+    {
         int iStart = isUpdateWeek01 ? 0 : 7;
         int iEnd = isUpdateWeek02 ? 14 : 7;
         for (var i = iStart; i < iEnd; i++)
         {
             DateTime thisDT = DayBoxDTFromI(i);
 
-            //DayBox Text
             _calendarDayOfMonthTexts[i].text = thisDT.Day.ToString();
-
             if (i == 0 || thisDT.Day == 1)
             {
                 _calendarMonthTexts[i].text = thisDT.ToString("MMM");
@@ -894,8 +887,69 @@ public class UI_Calendar : MonoBehaviour
             {
                 _calendarMonthTexts[i].text = "";
             }
+        }
+    }
+    private void updateCalendarSelectedDay()
+    {
+        if (_calendarSelectedDay == null)
+        {
+            _calendarSelectedDay = Managers.Time.CurrentDT.Date;
+        }
+        for (var i = 0; i < 14; i++)
+        {
+            DateTime thisDT = DayBoxDTFromI(i);
+            if (DateTime.Compare(thisDT.Date, _calendarSelectedDay.Value) == 0)
+            {
+                _calendarDayBoxes[i].GetComponent<Outline>().enabled = true;
+            }
+            else
+            {
+                _calendarDayBoxes[i].GetComponent<Outline>().enabled = false;
+            }
+        }
+    }
 
-            //Event Icons
+    private void updateCalendarOverlays(bool isUpdateWeek01 = true, bool isUpdateWeek02 = true)
+    {
+        if (isUpdateWeek01)
+        {
+            DateTime startOfDay = Managers.Time.CurrentDT.Date;
+            DateTime endOfTheDay = Managers.Time.CurrentDT.AddDays(1).Date;
+            float timePercentage = (float)(Managers.Time.CurrentDT.Ticks - startOfDay.Ticks) / (float)(endOfTheDay.Ticks - startOfDay.Ticks);
+
+            for (var i = 0; i < _calendarTimeOverlays.Length; i++)
+            {
+                DateTime thisDT = DayBoxDTFromI(i);
+                RectTransform timeOverlayRectTransform = _calendarTimeOverlays[i].GetComponent<RectTransform>();
+                if (_calendarPage > 0 || DateTime.Compare(thisDT, Managers.Time.CurrentDT) == 1)
+                {
+                    timeOverlayRectTransform.sizeDelta = new Vector2(0, timeOverlayRectTransform.sizeDelta.y);
+                    _calendarDayBoxes[i].GetComponent<CursorBehavior>().ForceDefault = false;
+                }
+                else if (DateTime.Compare(thisDT, Managers.Time.CurrentDT) == -1)
+                {
+                    timeOverlayRectTransform.sizeDelta = new Vector2(calendarBoxWidth, timeOverlayRectTransform.sizeDelta.y);
+                    _calendarDayBoxes[i].GetComponent<CursorBehavior>().ForceDefault = true;
+                }
+                else if (thisDT.Day == Managers.Time.CurrentDT.Day &&
+                    thisDT.Month == Managers.Time.CurrentDT.Month &&
+                    thisDT.Year == Managers.Time.CurrentDT.Year)
+                {
+                    timeOverlayRectTransform.sizeDelta = new Vector2((int)(calendarBoxWidth * timePercentage), timeOverlayRectTransform.sizeDelta.y);
+                    _calendarDayBoxes[i].GetComponent<CursorBehavior>().ForceDefault = false;
+                }
+            }
+        }
+    }
+
+    private void updateCalendarEventIcons(bool isUpdateWeek01 = true, bool isUpdateWeek02 = true)
+    {
+        int iStart = isUpdateWeek01 ? 0 : 7;
+        int iEnd = isUpdateWeek02 ? 14 : 7;
+        for (var i = iStart; i < iEnd; i++)
+        {
+            DateTime thisDT = DayBoxDTFromI(i);
+
             foreach (Image dayBoxIconImageComponent in _calendarDayBoxIcons_ImageComponent[i])
             {
                 dayBoxIconImageComponent.enabled = false;
@@ -911,7 +965,7 @@ public class UI_Calendar : MonoBehaviour
 
             foreach (SimEvent_Scheduled simEvent in thisDTPlayerScheduledEvents)
             {
-                if(simEvent.SimAction.Duration() != TimeSpan.Zero)
+                if (simEvent.SimAction.Duration() != TimeSpan.Zero)
                 {
                     switch (simEvent.SimAction.ID())
                     {
@@ -990,43 +1044,6 @@ public class UI_Calendar : MonoBehaviour
                     }
                 }
             }
-
-            //Selected DayBox
-            if (DateTime.Compare(thisDT.Date, _calendarSelectedDay.Value) == 0)
-            {
-                _calendarDayBoxes[i].GetComponent<Outline>().enabled = true;
-            }
-            else
-            {
-                _calendarDayBoxes[i].GetComponent<Outline>().enabled = false;
-            }
-        }
-
-        //Update overlays
-        if (isUpdateWeek01)
-        {
-            for (var i = 0; i < _calendarTimeOverlays.Length; i++)
-            {
-                DateTime thisDT = DayBoxDTFromI(i);
-                RectTransform timeOverlayRectTransform = _calendarTimeOverlays[i].GetComponent<RectTransform>();
-                if (_calendarPage > 0 || DateTime.Compare(thisDT, Managers.Time.CurrentDT) == 1)
-                {
-                    timeOverlayRectTransform.sizeDelta = new Vector2(0, timeOverlayRectTransform.sizeDelta.y);
-                    _calendarDayBoxes[i].GetComponent<CursorBehavior>().ForceDefault = false;
-                }
-                else if (DateTime.Compare(thisDT, Managers.Time.CurrentDT) == -1)
-                {
-                    timeOverlayRectTransform.sizeDelta = new Vector2(calendarBoxWidth, timeOverlayRectTransform.sizeDelta.y);
-                    _calendarDayBoxes[i].GetComponent<CursorBehavior>().ForceDefault = true;
-                }
-                else if (thisDT.Day == Managers.Time.CurrentDT.Day &&
-                    thisDT.Month == Managers.Time.CurrentDT.Month &&
-                    thisDT.Year == Managers.Time.CurrentDT.Year)
-                {
-                    timeOverlayRectTransform.sizeDelta = new Vector2((int)(calendarBoxWidth * timePercentage), timeOverlayRectTransform.sizeDelta.y);
-                    _calendarDayBoxes[i].GetComponent<CursorBehavior>().ForceDefault = false;
-                }
-            }
         }
     }
 
@@ -1048,8 +1065,9 @@ public class UI_Calendar : MonoBehaviour
         timelineTimeOverlayRectTransform.sizeDelta = new Vector2(timeLineFill, timelineTimeOverlayRectTransform.sizeDelta.y);
     }
 
-    private void clearTimelineItems()
+    private void updateTimelineItems()
     {
+        //clear overlays
         Transform calendarTimelineTransform = _calendarTimeline.GetComponent<RectTransform>();
         List<SimEvent_Scheduled> playerScheduledEvents = Managers.Sim.GetScheduledSimEvents(npcID(), null, _calendarSelectedDay.Value);
 
@@ -1061,20 +1079,13 @@ public class UI_Calendar : MonoBehaviour
                 Destroy(child.gameObject);
             }
         }
-    }
 
-    private void updateTimelineItems()
-    {
-        //Update Timeline - Scheduled Items
-        Transform calendarTimelineTransform = _calendarTimeline.GetComponent<RectTransform>();
-
-        //Day Selected
-        List<SimEvent_Scheduled> playerScheduledEvents = Managers.Sim.GetScheduledSimEvents(npcID(), null, _calendarSelectedDay.Value);
+        //Instantiate today's timeline items
         foreach (SimEvent_Scheduled scheduledEvent in playerScheduledEvents)
         {
             instantiateTimelineItems(scheduledEvent);
         }
-        //Day Before Selected remainder
+        //Instantiate yesterday's timeline remainder items
         List<SimEvent_Scheduled> playerScheduledEvents_DayBefore = Managers.Sim.GetScheduledSimEvents(npcID(), null, _calendarSelectedDay.Value.AddDays(-1));
         foreach (SimEvent_Scheduled scheduledEvent in playerScheduledEvents_DayBefore)
         {
@@ -1156,22 +1167,21 @@ public class UI_Calendar : MonoBehaviour
         }
     }
 
-    void OnGUI()
-    {
-        if (_isAnimatingCalendarPagination)
-        {
-            UpdateCalendarPanel(false, false);
-        }
-        else
-        {
-            UpdateCalendarPanel();
-        }
-    }
-
+    //UPDATE
     private void Update()
     {
-        NPC_BandManager playerCharacter = Managers.Sim.NPC.GetPlayerCharacter();
-        SimEvent_Scheduled nextEvent = Managers.Sim.GetNextScheduledSimEvent(playerCharacter.ID);
+        //update vars
+        bool isDayChanged = false;
+        bool isWeekChanged = false;
+        if (_onLastUpdate_DayOfWeek != Managers.Time.CurrentDT.DayOfWeek)
+        {
+            isDayChanged = true;
+            if (_onLastUpdate_DayOfWeek == DayOfWeek.Saturday && Managers.Time.CurrentDT.DayOfWeek == DayOfWeek.Sunday)
+            {
+                isWeekChanged = true;
+            }
+            _onLastUpdate_DayOfWeek = Managers.Time.CurrentDT.DayOfWeek;
+        }
 
         bool isNumScheduledEventsChanged = false;
         List<SimEvent_Scheduled> playerScheduledEvents = Managers.Sim.GetScheduledSimEvents(npcID(), null);
@@ -1181,27 +1191,44 @@ public class UI_Calendar : MonoBehaviour
             _onLastUpdate_NumPlayerScheduledEvents = playerScheduledEvents.Count;
         }
 
-        bool isSelectedDayIndexChange = false;
+        bool isSelectedDayChange = false;
         if (_onLastUpdate_SelectedDayPrevious != _calendarSelectedDay)
         {
-            isSelectedDayIndexChange = true;
+            isSelectedDayChange = true;
             _onLastUpdate_SelectedDayPrevious = _calendarSelectedDay;
         }
+        //end update vars
 
-        if (!Managers.Time.IsPaused || isSelectedDayIndexChange)
+        updateCalendarDateChangePagination(isDayChanged, isWeekChanged);
+
+        if (!_isAnimatingCalendarPagination)
         {
+            if (isDayChanged)
+            {
+                updateCalendarTexts();
+            }
+            if (isSelectedDayChange)
+            {
+                updateCalendarSelectedDay();
+            }
+        }
+
+        if (!Managers.Time.IsPaused || isSelectedDayChange)
+        {
+            updateCalendarOverlays();
             updateTimelineOverlay();
         }
 
-        if (isNumScheduledEventsChanged || isSelectedDayIndexChange)
+        if (isNumScheduledEventsChanged || isSelectedDayChange)
         {
-            clearTimelineItems();
+            updateCalendarEventIcons();
             updateTimelineItems();
         }
     }
 }
 
 
+//Behaviors
 public class UI_Calendar_TimelineEventBehavior : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     public SimEvent_Scheduled ScheduledEvent = null;
