@@ -171,6 +171,7 @@ public class UI_Calendar : MonoBehaviour
     private Image[][] _calendarDayBoxIcons_ImageComponent = new Image[14][];
 
     //update vars
+    private DateTime? _onLastUpdate_NextEventDT;
     private DayOfWeek? _onLastUpdate_DayOfWeek = null;
     private DateTime? _onLastUpdate_SelectedDayPrevious = null;
     int _onLastUpdate_NumPlayerScheduledEvents = 0;
@@ -1170,7 +1171,28 @@ public class UI_Calendar : MonoBehaviour
     //UPDATE
     private void Update()
     {
+        NPC_BandManager playerCharacter = Managers.Sim.NPC.GetPlayerCharacter();
+        SimEvent_Scheduled nextEvent = Managers.Sim.GetNextScheduledSimEvent(playerCharacter.ID);
+
         //update vars
+        bool isNextEventChange = false;
+        if (nextEvent != null && _onLastUpdate_NextEventDT != null)
+        {
+            isNextEventChange = nextEvent.ScheduledDT != _onLastUpdate_NextEventDT.Value;
+        }
+        else if (nextEvent != null && _onLastUpdate_NextEventDT == null || nextEvent == null && _onLastUpdate_NextEventDT != null)
+        {
+            isNextEventChange = true;
+        }
+        if (isNextEventChange)
+        {
+            _onLastUpdate_NextEventDT = null;
+            if (nextEvent != null)
+            {
+                _onLastUpdate_NextEventDT = nextEvent.ScheduledDT;
+            }
+        }
+
         bool isDayChanged = false;
         bool isWeekChanged = false;
         if (_onLastUpdate_DayOfWeek != Managers.Time.CurrentDT.DayOfWeek)
@@ -1219,7 +1241,7 @@ public class UI_Calendar : MonoBehaviour
             updateTimelineOverlay();
         }
 
-        if (isNumScheduledEventsChanged || isSelectedDayChange)
+        if (isNextEventChange || isNumScheduledEventsChanged || isSelectedDayChange)
         {
             updateCalendarEventIcons();
             updateTimelineItems();
