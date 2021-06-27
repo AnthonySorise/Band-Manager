@@ -232,11 +232,11 @@ public class Sim_Travel : MonoBehaviour
             return "Must select city to travel to";
         }
 
-        SimAction eventHappeningNow = Managers.Sim.EventHappeningNow(npcID);
+        SimEvent_Scheduled eventHappeningNow = Managers.Sim.GetSimEventHappeningNow(npcID);
 
         if (eventHappeningNow != null)
         {
-            return "Busy " + eventHappeningNow.Description();
+            return "Busy " + eventHappeningNow.SimAction.Description();
         }
 
         TimeSpan travelTime = TravelTime(transportationID, fromCityID, toCityID);

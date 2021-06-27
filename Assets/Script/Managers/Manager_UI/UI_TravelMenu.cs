@@ -463,11 +463,19 @@ public class UI_TravelMenu : MonoBehaviour
         bool isNextEventChange = false;
         if (nextEvent != null && _onLastUpdate_NextEventDT != null)
         {
-            isNextEventChange = nextEvent.ScheduledDT != _onLastUpdate_NextEventDT;
+            isNextEventChange = nextEvent.ScheduledDT != _onLastUpdate_NextEventDT.Value;
         }
-        else if (nextEvent !=  null && _onLastUpdate_NextEventDT == null || nextEvent == null && _onLastUpdate_NextEventDT != null)
+        else if (nextEvent != null && _onLastUpdate_NextEventDT == null || nextEvent == null && _onLastUpdate_NextEventDT != null)
         {
             isNextEventChange = true;
+        }
+        if (isNextEventChange)
+        {
+            _onLastUpdate_NextEventDT = null;
+            if (nextEvent != null)
+            {
+                _onLastUpdate_NextEventDT = nextEvent.ScheduledDT;
+            }
         }
 
         bool isCurrentCityChange = false;

@@ -77,7 +77,7 @@ public class SimEvent_Scheduled
         {
             return;
         }
-        SimAction currentEvent = Managers.Sim.EventHappeningNow(SimAction.NPCid());
+        SimEvent_Scheduled currentEvent = Managers.Sim.GetSimEventHappeningNow(SimAction.NPCid());
         bool hasPopup = SimAction.IsPlayerCharacter();
         bool currentlyInTheConflictingEvent = false;
         if (currentEvent != null)
@@ -139,7 +139,7 @@ public class SimEvent_Scheduled
                 headerText = "Unable to " + SimAction.Description();
                 if (currentlyInTheConflictingEvent)
                 {
-                    bodyText = "Cannot " + SimAction.Description() + " because busy " + currentEvent.Description();
+                    bodyText = "Cannot " + SimAction.Description() + " because busy " + currentEvent.SimAction.Description();
                 }
                 if (_isForceSchedule)
                 {
@@ -231,7 +231,7 @@ public class SimEvent_Scheduled
             bool nextEventIsInAnotherCity = (nextEvent != null && nextEvent.SimAction.LocationID() != null && nextEvent.SimAction.LocationID() != character.CurrentCity);
             bool scheduledTravelAlreadyMade = (nextEvent != null && nextTravelEvent != null && nextEvent.SimAction.LocationID() == nextTravelEvent.SimAction.LocationID());
             bool timeToGoHome = (nextEvent == null && character.CurrentCity != character.BaseCity);
-            bool currentlyBusy = Managers.Sim.EventHappeningNow(npcID) != null;
+            bool currentlyBusy = Managers.Sim.GetSimEventHappeningNow(npcID) != null;
 
             return !currentlyBusy && ((nextEventIsInAnotherCity && !scheduledTravelAlreadyMade) || timeToGoHome);
         };

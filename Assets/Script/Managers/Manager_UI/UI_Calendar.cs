@@ -171,7 +171,7 @@ public class UI_Calendar : MonoBehaviour
     private Image[][] _calendarDayBoxIcons_ImageComponent = new Image[14][];
 
     //update vars
-    int _onLastUpdate_PlayerScheduledEvents = 0;
+    int _onLastUpdate_NumPlayerScheduledEvents = 0;
     private DateTime? _onLastUpdate_SelectedDayPrevious = null;
 
     void Start()
@@ -1057,10 +1057,10 @@ public class UI_Calendar : MonoBehaviour
         {
             if (child.gameObject.name.Contains("CalendarTimelineEvent_"))
             {
+                child.gameObject.SetActive(false);
                 Destroy(child.gameObject);
             }
         }
-        _onLastUpdate_PlayerScheduledEvents = playerScheduledEvents.Count;
     }
 
     private void updateTimelineItems()
@@ -1084,14 +1084,14 @@ public class UI_Calendar : MonoBehaviour
         void instantiateTimelineItems(SimEvent_Scheduled scheduledEvent, bool instantiatingRemainder = false)
         {
             bool isExist = false;
+            string nameToCheck = "CalendarTimelineEvent_" + scheduledEvent.ScheduledDT.ToString();
+            if (instantiatingRemainder)
+            {
+                nameToCheck += "_Remainder";
+            }
             foreach (RectTransform child in calendarTimelineTransform)
             {
-                string nameToCheck = "CalendarTimelineEvent_" + scheduledEvent.ScheduledDT.ToString();
-                if (instantiatingRemainder)
-                {
-                    nameToCheck += "_Remainder";
-                }
-                if (child.gameObject.name == nameToCheck)
+                if (child.gameObject.name == nameToCheck && child.gameObject.activeSelf)
                 {
                     isExist = true;
                 }
@@ -1108,7 +1108,6 @@ public class UI_Calendar : MonoBehaviour
             {
                 return;
             }
-
             if (!isExist && Managers.UI.Colors_events.ContainsKey(scheduledEvent.SimAction.ID()))
             {
                 //create and place scheduled item
@@ -1171,32 +1170,34 @@ public class UI_Calendar : MonoBehaviour
 
     private void Update()
     {
-        bool isSelectedDayChange = false;
+        NPC_BandManager playerCharacter = Managers.Sim.NPC.GetPlayerCharacter();
+        SimEvent_Scheduled nextEvent = Managers.Sim.GetNextScheduledSimEvent(playerCharacter.ID);
+
+        bool isNumScheduledEventsChanged = false;
+        List<SimEvent_Scheduled> playerScheduledEvents = Managers.Sim.GetScheduledSimEvents(npcID(), null);
+        if (_onLastUpdate_NumPlayerScheduledEvents != playerScheduledEvents.Count)
+        {
+            isNumScheduledEventsChanged = true;
+            _onLastUpdate_NumPlayerScheduledEvents = playerScheduledEvents.Count;
+        }
+
+        bool isSelectedDayIndexChange = false;
         if (_onLastUpdate_SelectedDayPrevious != _calendarSelectedDay)
         {
-            isSelectedDayChange = true;
+            isSelectedDayIndexChange = true;
             _onLastUpdate_SelectedDayPrevious = _calendarSelectedDay;
         }
 
-        bool isNewScheduledEvent = false;
-        List<SimEvent_Scheduled> playerScheduledEvents = Managers.Sim.GetScheduledSimEvents(npcID(), null, _calendarSelectedDay.Value);
-        if (_onLastUpdate_PlayerScheduledEvents != playerScheduledEvents.Count)
-        {
-            isNewScheduledEvent = true;
-            _onLastUpdate_PlayerScheduledEvents = playerScheduledEvents.Count;
-        }
-
-        if (!Managers.Time.IsPaused || isSelectedDayChange || isNewScheduledEvent)
+        if (!Managers.Time.IsPaused || isSelectedDayIndexChange)
         {
             updateTimelineOverlay();
         }
 
-        if (isSelectedDayChange || isNewScheduledEvent)
+        if (isNumScheduledEventsChanged || isSelectedDayIndexChange)
         {
             clearTimelineItems();
             updateTimelineItems();
         }
-
     }
 }
 

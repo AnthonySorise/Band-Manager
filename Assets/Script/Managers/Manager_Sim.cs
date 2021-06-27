@@ -93,7 +93,7 @@ public class Manager_Sim : MonoBehaviour, IManager {
     {
         List<SimEvent_Scheduled> scheduledEvents = GetScheduledSimEvents(npcID);
         SimEvent_Scheduled nextEvent = (scheduledEvents.Count > 0) ? scheduledEvents[0] : null;
-        if (nextEvent != null && nextEvent.SimAction.IsHappeningNow())
+        if (nextEvent != null && nextEvent.SimAction.IsHappeningNow() && nextEvent.SimAction.Duration() != TimeSpan.Zero)
         {
             return nextEvent;
         }
@@ -144,18 +144,5 @@ public class Manager_Sim : MonoBehaviour, IManager {
     public bool IsNoConflictingEvents(int npcID, DateTime dateTime, TimeSpan duration)
     {
         return ConflictingEvents(npcID, dateTime, duration).Count == 0;
-    }
-    public SimAction EventHappeningNow(int npcID)
-    {
-        SimAction eventHappeningNow = null;
-        List<SimEvent_Scheduled> events = GetScheduledSimEvents(npcID);
-        foreach (SimEvent_Scheduled simEvent in events)
-        {
-            if (simEvent.SimAction.IsHappeningNow() && simEvent.SimAction.Duration() != TimeSpan.Zero)
-            {
-                eventHappeningNow = simEvent.SimAction;
-            }
-        }
-        return eventHappeningNow;
     }
 }
