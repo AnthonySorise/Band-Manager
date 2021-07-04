@@ -185,7 +185,7 @@ public class UI_TimeControl : MonoBehaviour
         Managers.Time.DecreaseSpeed();
     }
 
-    // Update is called once per frame
+    //UPDATE
     void OnGUI()
     {
         if (Managers.Time.IsPaused)
@@ -195,16 +195,16 @@ public class UI_TimeControl : MonoBehaviour
         else
         {
             _toggleStatusText.text = Managers.Time.CurrentSpeedLevel.ToString();
-        }
 
-        string timeString = Managers.Time.CurrentDT.ToString("h:mm tt");
-        if (!(timeString.Contains("10:") || timeString.Contains("11:") || timeString.Contains("12:")))
-        {
-            timeString = "".PadLeft(2) + timeString;
-        }
-        _timeText.text = timeString;
+            string timeString = Managers.Time.CurrentDT.ToString("h:mm tt");
+            if (!(timeString.Contains("10:") || timeString.Contains("11:") || timeString.Contains("12:")))
+            {
+                timeString = "".PadLeft(2) + timeString;
+            }
+            _timeText.text = timeString;
 
-        _dayOfWeekText.text = Managers.Time.CurrentDT.DayOfWeek.ToString();
-        _dateText.text = Managers.Time.CurrentDT.ToString("MMMM/d/yyyy");
+            _dayOfWeekText.text = Managers.Time.CurrentDT.DayOfWeek.ToString();
+            _dateText.text = Managers.Time.CurrentDT.ToString("MMMM/d/yyyy");
+        }
     }
 }

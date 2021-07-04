@@ -537,8 +537,8 @@ public class UI_Calendar : MonoBehaviour
                 {
                     return;
                 }
-                else if (DateTime.Compare(thisDT, Managers.Time.CurrentDT) == 1
-                || (thisDT.Day == Managers.Time.CurrentDT.Day &&
+                else if (DateTime.Compare(thisDT, Managers.Time.CurrentDT) == 1 || 
+                    (thisDT.Day == Managers.Time.CurrentDT.Day &&
                     thisDT.Month == Managers.Time.CurrentDT.Month &&
                     thisDT.Year == Managers.Time.CurrentDT.Year))
                 {
@@ -555,11 +555,6 @@ public class UI_Calendar : MonoBehaviour
 
         //Retract Calendar
         ToggleCalendarPanel();
-    }
-
-    private int npcID()
-    {
-        return Managers.Sim.NPC.PlayerCharacterID();
     }
 
     //Calendar Helper Functions
@@ -955,7 +950,7 @@ public class UI_Calendar : MonoBehaviour
             {
                 dayBoxIconImageComponent.enabled = false;
             }
-            List<SimEvent_Scheduled> thisDTPlayerScheduledEvents = Managers.Sim.GetScheduledSimEvents(npcID(), null, thisDT);
+            List<SimEvent_Scheduled> thisDTPlayerScheduledEvents = Managers.Sim.GetScheduledSimEvents(Managers.Sim.NPC.PlayerCharacterID(), null, thisDT);
             var indexIcon = 0;
             bool hasGig = false;
             bool hasMedia = false;
@@ -1070,7 +1065,7 @@ public class UI_Calendar : MonoBehaviour
     {
         //clear overlays
         Transform calendarTimelineTransform = _calendarTimeline.GetComponent<RectTransform>();
-        List<SimEvent_Scheduled> playerScheduledEvents = Managers.Sim.GetScheduledSimEvents(npcID(), null, _calendarSelectedDay.Value);
+        List<SimEvent_Scheduled> playerScheduledEvents = Managers.Sim.GetScheduledSimEvents(Managers.Sim.NPC.PlayerCharacterID(), null, _calendarSelectedDay.Value);
 
         foreach (RectTransform child in calendarTimelineTransform)
         {
@@ -1087,7 +1082,7 @@ public class UI_Calendar : MonoBehaviour
             instantiateTimelineItems(scheduledEvent);
         }
         //Instantiate yesterday's timeline remainder items
-        List<SimEvent_Scheduled> playerScheduledEvents_DayBefore = Managers.Sim.GetScheduledSimEvents(npcID(), null, _calendarSelectedDay.Value.AddDays(-1));
+        List<SimEvent_Scheduled> playerScheduledEvents_DayBefore = Managers.Sim.GetScheduledSimEvents(Managers.Sim.NPC.PlayerCharacterID(), null, _calendarSelectedDay.Value.AddDays(-1));
         foreach (SimEvent_Scheduled scheduledEvent in playerScheduledEvents_DayBefore)
         {
             instantiateTimelineItems(scheduledEvent, true);
@@ -1169,7 +1164,7 @@ public class UI_Calendar : MonoBehaviour
     }
 
     //UPDATE
-    private void Update()
+    void OnGUI()
     {
         NPC_BandManager playerCharacter = Managers.Sim.NPC.GetPlayerCharacter();
         SimEvent_Scheduled nextEvent = Managers.Sim.GetNextScheduledSimEvent(playerCharacter.ID);
@@ -1206,7 +1201,7 @@ public class UI_Calendar : MonoBehaviour
         }
 
         bool isNumScheduledEventsChanged = false;
-        List<SimEvent_Scheduled> playerScheduledEvents = Managers.Sim.GetScheduledSimEvents(npcID(), null);
+        List<SimEvent_Scheduled> playerScheduledEvents = Managers.Sim.GetScheduledSimEvents(Managers.Sim.NPC.PlayerCharacterID(), null);
         if (_onLastUpdate_NumPlayerScheduledEvents != playerScheduledEvents.Count)
         {
             isNumScheduledEventsChanged = true;
