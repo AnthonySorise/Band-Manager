@@ -5,16 +5,16 @@ m_ProjectFiles:
     m_ContentTrackingEnabled: 1
     m_ModificationDate:
       serializedVersion: 2
-      ticks: 637587646820455910
-    m_Hash: 267479943
+      ticks: 637609656187936411
+    m_Hash: 130705685
   m_LockFileStatus:
     m_FilePath: C:/_GameDev/Band-Manager/Packages/packages-lock.json
     m_PathExists: 1
     m_ContentTrackingEnabled: 1
     m_ModificationDate:
       serializedVersion: 2
-      ticks: 637587647044154810
-    m_Hash: 2394240843
+      ticks: 637609656313833506
+    m_Hash: 2631599913
 m_EmbeddedPackageManifests:
   m_ManifestsStatus: {}
 m_PackageAssets:
@@ -521,7 +521,7 @@ m_PackageAssets:
         version: 1.1.1
       resolvedDependencies:
       - name: com.unity.test-framework
-        version: 1.1.24
+        version: 1.1.26
       - name: com.unity.ext.nunit
         version: 1.0.6
       - name: com.unity.modules.imgui
@@ -549,12 +549,12 @@ m_PackageAssets:
         url: https://github.cds.internal.unity3d.com/unity/com.unity.ide.rider.git
         revision: abb44f053e9a41d2e00e149e32a19bcec76e98b4
         path: 
-    - packageId: com.unity.ide.visualstudio@2.0.8
+    - packageId: com.unity.ide.visualstudio@2.0.9
       testable: 0
       isDirectDependency: 1
-      version: 2.0.8
+      version: 2.0.9
       source: 1
-      resolvedPath: C:\_GameDev\Band-Manager\Library\PackageCache\com.unity.ide.visualstudio@2.0.8
+      resolvedPath: C:\_GameDev\Band-Manager\Library\PackageCache\com.unity.ide.visualstudio@2.0.9
       assetPath: Packages/com.unity.ide.visualstudio
       name: com.unity.ide.visualstudio
       displayName: Visual Studio Editor
@@ -606,7 +606,7 @@ m_PackageAssets:
         version: 1.1.9
       resolvedDependencies:
       - name: com.unity.test-framework
-        version: 1.1.24
+        version: 1.1.26
       - name: com.unity.ext.nunit
         version: 1.0.6
       - name: com.unity.modules.imgui
@@ -626,13 +626,13 @@ m_PackageAssets:
       entitlements:
         isAllowed: 1
       isAssetStorePackage: 0
-      datePublishedTicks: 637562620210000000
+      datePublishedTicks: 637580705480000000
       documentationUrl: 
       hasRepository: 1
       repository:
         type: git
         url: https://github.cds.internal.unity3d.com/unity/com.unity.ide.visualstudio.git
-        revision: 5cdf5d932e6ecbbd83bbe6a40eec2a94b4979501
+        revision: c7cd4c6319806423b3d918b3e9599244e3993d41
         path: 
     - packageId: com.unity.ide.vscode@1.2.3
       testable: 0
@@ -775,12 +775,12 @@ m_PackageAssets:
         url: https://github.cds.internal.unity3d.com/unity/com.unity.multiplayer-hlapi.git
         revision: 0358096b3626d60d1345cfa6df97fcb2dc89152e
         path: 
-    - packageId: com.unity.purchasing@3.1.0
+    - packageId: com.unity.purchasing@3.2.2
       testable: 0
       isDirectDependency: 1
-      version: 3.1.0
+      version: 3.2.2
       source: 1
-      resolvedPath: C:\_GameDev\Band-Manager\Library\PackageCache\com.unity.purchasing@3.1.0
+      resolvedPath: C:\_GameDev\Band-Manager\Library\PackageCache\com.unity.purchasing@3.2.2
       assetPath: Packages/com.unity.purchasing
       name: com.unity.purchasing
       displayName: In App Purchasing
@@ -804,11 +804,12 @@ m_PackageAssets:
         \u25AA Automatic coupling with Unity Analytics to enable monitoring and decision-making
         based on trends in your revenue and purchase data across multiple platforms\n
         \u25AA Support for iOS, Mac, tvOS, Google Play, Windows, Amazon, and Samsung
-        Galaxy app stores\n \u25AA Support to work with the Unity Distribution Portal
-        to synchronize catalogs and transactions with other app stores\n \u25AA Client-side
-        receipt validation for Apple App Store and Google Play\n\nAfter installing
-        this package, open the Services Window to enable In-App Purchasing to use
-        these features."
+        Galaxy app stores(*). (*) NOTE Samsung Galaxy is obsolete and will be removed
+        in v4. Please use Unity Distribution Platform for Samsung Galaxy Apps support.\n
+        \u25AA Support to work with the Unity Distribution Portal to synchronize
+        catalogs and transactions with other app stores\n \u25AA Client-side receipt
+        validation for Apple App Store and Google Play\n\nAfter installing this package,
+        open the Services Window to enable In-App Purchasing to use these features."
       status: 4
       errors: []
       versions:
@@ -886,7 +887,7 @@ m_PackageAssets:
         - 3.1.0
         - 3.2.1
         - 3.2.2
-        verified: 3.1.0
+        verified: 3.2.2
       dependencies:
       - name: com.unity.ugui
         version: 1.0.0
@@ -929,20 +930,20 @@ m_PackageAssets:
       entitlements:
         isAllowed: 1
       isAssetStorePackage: 0
-      datePublishedTicks: 637544658080000000
+      datePublishedTicks: 637584231740000000
       documentationUrl: 
       hasRepository: 1
       repository:
         type: git
         url: https://github.cds.internal.unity3d.com/unity/com.unity.purchasing.git
-        revision: 0fda3405fb97bcc9ca72bf03834fcfee6061bacc
+        revision: 6ad60ad670b28d3a131388481318ce0d0ca2bc0d
         path: 
-    - packageId: com.unity.test-framework@1.1.24
+    - packageId: com.unity.test-framework@1.1.26
       testable: 0
       isDirectDependency: 1
-      version: 1.1.24
+      version: 1.1.26
       source: 1
-      resolvedPath: C:\_GameDev\Band-Manager\Library\PackageCache\com.unity.test-framework@1.1.24
+      resolvedPath: C:\_GameDev\Band-Manager\Library\PackageCache\com.unity.test-framework@1.1.26
       assetPath: Packages/com.unity.test-framework
       name: com.unity.test-framework
       displayName: Test Framework
@@ -986,10 +987,11 @@ m_PackageAssets:
         - 1.1.22
         - 1.1.24
         - 1.1.26
+        - 1.1.27
         compatible:
-        - 1.1.24
         - 1.1.26
-        verified: 1.1.26
+        - 1.1.27
+        verified: 1.1.27
       dependencies:
       - name: com.unity.ext.nunit
         version: 1.0.6
@@ -1019,13 +1021,13 @@ m_PackageAssets:
       entitlements:
         isAllowed: 1
       isAssetStorePackage: 0
-      datePublishedTicks: 637505702940000000
+      datePublishedTicks: 637576439750000000
       documentationUrl: 
       hasRepository: 1
       repository:
         type: git
         url: git+https://github.com/Unity-Technologies/com.unity.test-framework.git
-        revision: e6fe8892689398c0d9aba4587e0ba69edc3d82b8
+        revision: ea9d07e64e6d63c4f2fd8b6bc57df0f452ff4fae
         path: 
     - packageId: com.unity.textmeshpro@3.0.6
       testable: 0
@@ -1265,6 +1267,7 @@ m_PackageAssets:
         - 1.6.0-pre.3
         - 1.6.0-pre.4
         - 1.6.0-pre.5
+        - 1.6.1
         compatible:
         - 1.4.8
         - 1.5.0-pre.2
@@ -1283,6 +1286,7 @@ m_PackageAssets:
         - 1.6.0-pre.3
         - 1.6.0-pre.4
         - 1.6.0-pre.5
+        - 1.6.1
         verified: 1.4.8
       dependencies:
       - name: com.unity.modules.director
@@ -3278,4 +3282,4 @@ m_PackageAssets:
   m_LocalPackages:
     m_LocalFileStatus: []
 m_ProjectPath: C:/_GameDev/Band-Manager/Packages
-m_EditorVersion: 2020.3.11f1 (99c7afb366b3)
+m_EditorVersion: 2020.3.13f1 (71691879b7f5)
